@@ -37,7 +37,5 @@ t[#t+1] = LoadFont("Isla/_sov_monomon 24px")..{
 	thump;effectclock,"bgm");
 };
 
-
-t[#t+1] = LoadActor("BGVisual");
-t[#t+1] = LoadActor("BG_Color");
+t[#t+1] = LoadActor("/BGAnimations/pop1");
 return t;

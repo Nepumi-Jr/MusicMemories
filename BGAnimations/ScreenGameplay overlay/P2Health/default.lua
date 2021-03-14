@@ -18,28 +18,39 @@ local t = Def.ActorFrame{
 				if isHot then
 					if life ~= 1 then
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(0)
+						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(0)
+						SCREENMAN:GetTopScreen():GetChild('LifeP2'):stoptweening():decelerate(0.5):diffusealpha(1)
 						isHot = false;
 					end
 				else
 					if life == 1 then
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(1)
+						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(1)
+						SCREENMAN:GetTopScreen():GetChild('LifeP2'):stoptweening():decelerate(0.5):diffusealpha(0)
 						isHot = true;
 					end
 				end
 
 			end
 		end;
+		Def.ActorFrame{
+			Name = "lifeBG";
+			Def.Quad{
+				InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15;zoomx,248;diffusealpha,1);
+				OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,0.7};effectcolor2,{1,1,1,0.2};effectperiod,1/16);
+			};
+		};
 		LoadActor("../P1Health/Life_Max2.png")..{
 			Name = "lifeMax";
-			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15/128;customtexturerect,0,0.9,0.9,1;texcoordvelocity,0,0.2);
-			OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,1};effectcolor2,{0.7,0.7,0.7,1};effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15/128;effectclock,"beat";customtexturerect,0,0.9,0.9,1;texcoordvelocity,0,0.2);
+			OnCommand=cmd(blend,"BlendMode_WeightedMultiply");
 		};
 		LoadActor("../P1Health/Life_MaxUp.png")..{
 			Name = "lifeMaxUp";
 			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;zoomy,15/256;x,PX;customtexturerect,0,0,0.9,0.1;texcoordvelocity,0,0.6);
-			OnCommand=cmd(blend,"BlendMode_WeightedMultiply");
+			OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,1};effectcolor2,{0.7,0.7,0.7,1};effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
 		};
 	};
 

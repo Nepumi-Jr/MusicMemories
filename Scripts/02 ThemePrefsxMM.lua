@@ -93,11 +93,11 @@ local Prefs =
 		Values = { false, true }
 	},
 	
-	JudgeStyle =
+	CustomJudgeAnimation =
 	{
-		Default = 0,
-		Choices = { "Default", "Outfox" ,"Stepmania5","DDR"},
-		Values = { 0 , 1 , 2 , 3}
+		Default = true,
+		Choices = { OptionNameString('Off'), OptionNameString('On')},
+		Values = { false, true}
 	},
 	OptionStyle =
 	{

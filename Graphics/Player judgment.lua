@@ -2,14 +2,14 @@ local c;
 local player = Var "Player";
 local SS = 0;
 local PTAM = false;
-local judType = "";
+local JudPath = "";
 
 local Woosh = THEME:GetPathS("LifeMeterBattery","lose");
 
 
 
-local Op = TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic;
-judType = GetPicJudPath(Op);
+local JudgeName = TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic;
+JudPath = GetPicJudPath(JudgeName);
 
 local function ShowProtiming()
 	  if GAMESTATE:IsDemonstration() then
@@ -33,48 +33,76 @@ end
 local muan = false;
 local tTotalJudgments = {};
 local guaek = 1;
-local JudgeCmdsYes = {
-	TapNoteScore_W1 = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W2 = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W3 = cmd(finishtweening;rotationz,5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0),
-	TapNoteScore_W4 = cmd(finishtweening;rotationz,7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W5 = cmd(finishtweening;rotationz,15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_Miss = cmd(finishtweening;rotationz,25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0)
-};
-local JudgeCmdsNo = {
-	TapNoteScore_W1 = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W2 = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W3 = cmd(finishtweening;rotationz,-5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0),
-	TapNoteScore_W4 = cmd(finishtweening;rotationz,-7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_W5 = cmd(finishtweening;rotationz,-15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;),
-	TapNoteScore_Miss = cmd(finishtweening;rotationz,-25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0;)
-};
-local OutfoxJudge = {--Ofcourse that is from outfox
-	TapNoteScore_W1 = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0;zoom,0.6;glowblink;effectperiod,0.05;effectcolor1,color("1,1,1,0");effectcolor2,color("1,1,1,0.15")),
-	TapNoteScore_W2 = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0;zoom,0.6*1.2),
-	TapNoteScore_W3 = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0;zoom,0.6*1.2),
-	TapNoteScore_W4 = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0;zoom,0.6*1.2),
-	TapNoteScore_W5 = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0;zoom,0.6*1.2),
-	TapNoteScore_Miss = cmd(stoptweening;zoom,0.8*1.2;diffusealpha,0.75;decelerate,0.15;zoom,0.75*1.2;diffusealpha,1;sleep,0.35;decelerate,0.3;diffusealpha,0)
-};
 
-local Sm5Judge = {--Much default
-	TapNoteScore_W1 = cmd(finishtweening;shadowlength,0;y,0;diffusealpha,1;zoom,0.9*1.2;smooth,0.05;zoom,0.75*1.2;sleep,0.8;smooth,0.1;zoomy,0.5*1.2;zoomx,1.3*1.2;diffusealpha,0;glowblink;effectperiod,0.05;effectcolor1,color("1,1,1,0");effectcolor2,color("1,1,1,0.25")),
-	TapNoteScore_W2 = cmd(finishtweening;y,0;shadowlength,0;diffusealpha,1;zoom,0.9*1.2;smooth,0.05;zoom,0.75*1.2;sleep,0.5;smooth,0.1;zoomy,0.5*1.2;zoomx,2*1.2;diffusealpha,0),
-	TapNoteScore_W3 = cmd(finishtweening;y,0;shadowlength,0;diffusealpha,1;zoom,0.9*1.2;smooth,0.05;zoom,0.75*1.2;sleep,0.5;smooth,0.1;zoomy,0.5*1.2;zoomx,2*1.2;diffusealpha,0;),
-	TapNoteScore_W4 = cmd(finishtweening;y,0;shadowlength,0;diffusealpha,1;zoom,0.9*1.2;smooth,0.05;zoom,0.75*1.2;sleep,0.5;smooth,0.1;zoomy,0.5*1.2;zoomx,2*1.2;diffusealpha,0;),
-	TapNoteScore_W5 = cmd(finishtweening;y,0;shadowlength,0;diffusealpha,1;zoom,0.75*1.2;vibrate;effectmagnitude,1,2,2;sleep,0.5;smooth,0.1;zoomy,0.5*1.2;zoomx,2*1.2;diffusealpha,0),
-	TapNoteScore_Miss = cmd(finishtweening;y,0;shadowlength,0;diffusealpha,1;zoom,0.75*1.2;y,-20;smooth,0.8;y,20;sleep,0.5;smooth,0.1;zoomy,0.5*1.2;zoomx,2*1.2;diffusealpha,0)
-};
+function getJudgeAnimation()
+	local result = {
+		W1LateCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
+		W2LateCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W3LateCommand = cmd(finishtweening;rotationz,5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W4LateCommand = cmd(finishtweening;rotationz,7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W5LateCommand = cmd(finishtweening;rotationz,15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		MissLateCommand = cmd(finishtweening;rotationz,25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+	
+		W1EarlyCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
+		W2EarlyCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W3EarlyCommand = cmd(finishtweening;rotationz,-5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W4EarlyCommand = cmd(finishtweening;rotationz,-7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W5EarlyCommand = cmd(finishtweening;rotationz,-15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		MissEarlyCommand = cmd(finishtweening;rotationz,-25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+	};
 
-local DDRJudge = {--And it from DDR Starlight
-	TapNoteScore_W1 = cmd(glowblink;effectperiod,0.025;effectcolor1,color("1,1,1,0");effectcolor2,color("1,1,1,0.2");diffusealpha,1;zoom,0.7*1.5;linear,0.066;zoom,0.6*1.5;sleep,0.434;diffusealpha,0),
-	TapNoteScore_W2 = cmd(stopeffect;diffusealpha,1;zoom,0.7*1.5;linear,0.066;zoom,0.6*1.5;sleep,0.434;diffusealpha,0),
-	TapNoteScore_W3 = cmd(stopeffect;diffusealpha,1;zoom,0.7*1.5;linear,0.066;zoom,0.6*1.5;sleep,0.434;diffusealpha,0),
-	TapNoteScore_W4 = cmd(stopeffect;zoom,0.6*1.5;diffusealpha,1;sleep,0.5;diffusealpha,0),
-	TapNoteScore_W5 = cmd(stopeffect;zoom,0.6*1.5;diffusealpha,1;sleep,0.5;diffusealpha,0),
-	TapNoteScore_Miss = cmd(stoptweening;stopeffect;zoom,0.6*1.5;linear,0.05;diffusealpha,1;linear,0.45;addy,26;linear,0;diffusealpha,0;addy,-26)
-};
+	if not ThemePrefs.Get("CustomJudgeAnimation") then
+		return result
+	end
+	
+
+	local JudAni = JudgeName:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
+	
+	local path = "/Appearance/Judgments/";
+	local files = FILEMAN:GetDirListing(path)
+
+	--Check in Appearance/Judgments/
+	for k,filename in ipairs(files) do
+		if string.match(filename, ".lua") and string.match(filename,JudAni) then
+			
+			local data = LoadActor(path..filename)
+			
+			for k,v in pairs(result) do
+				if data[k] ~= nil then
+					result[k] = data[k]
+				end
+			end
+
+			break
+		end
+	end
+	
+	local path = "/"..THEMEDIR().."Resource/JudF/Animate/";
+	local files = FILEMAN:GetDirListing(path)
+
+	--Check in mytheme/Resource/JudF/Animate/ (First Priority :) )
+	for k,filename in ipairs(files) do
+		if string.match(filename, ".lua") and string.match(filename,JudAni) then
+			
+			local data = LoadActor(path..filename)
+			
+			for k,v in pairs(result) do
+				if data[k] ~= nil then
+					result[k] = data[k]
+				end
+			end
+
+			break
+		end
+	end
+
+	return result
+
+end
+
+local UseJudgeCmd = getJudgeAnimation()
+
+
 
 local ProtimingCmds = {
 	TapNoteScore_W1 = THEME:GetMetric( "Protiming", "ProtimingW1Command" );
@@ -84,6 +112,7 @@ local ProtimingCmds = {
 	TapNoteScore_W5 = THEME:GetMetric( "Protiming", "ProtimingW5Command" );
 	TapNoteScore_Miss = THEME:GetMetric( "Protiming", "ProtimingMissCommand" );
 };
+
 
 
 
@@ -114,7 +143,7 @@ t[#t+1] = Def.ActorFrame {
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
 				self:Load(GetPicJudPath("Edit 2x6.png"));
 			else
-				self:Load(judType);
+				self:Load(JudPath);
 			end
 		end;
 		InitCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
@@ -126,7 +155,7 @@ t[#t+1] = Def.ActorFrame {
 		self:pause();
 		self:visible(false);
 
-		local JudF = Op:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
+		local JudF = JudgeName:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
 
 		local path = "/"..THEMEDIR().."Resource/JudF/EL/";
 		
@@ -279,7 +308,7 @@ t[#t+1] = Def.ActorFrame {
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
 				c.Judgment:Load(GetPicJudPath("Edit 2x6.png"));
 			else
-				c.Judgment:Load(judType);
+				c.Judgment:Load(JudPath);
 			end
 
 		end
@@ -342,29 +371,21 @@ t[#t+1] = Def.ActorFrame {
 		end
 		
 		if Op ~= "SM5ProTiming" then
-			if ThemePrefs.Get("JudgeStyle") == 0 or ThemePrefs.Get("JudgeStyle") == 4 then
-				if param.TapNoteScore ~= 'TapNoteScore_Miss' then
-					if param.Early then
-						JudgeCmdsYes[param.TapNoteScore](c.Judgment);
-					else
-						JudgeCmdsNo[param.TapNoteScore](c.Judgment);
-					end
-					muan = false;
+			if param.TapNoteScore ~= 'TapNoteScore_Miss' then
+				if param.Early then
+					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."EarlyCommand"](c.Judgment);
 				else
-					if muan then
-						JudgeCmdsYes[param.TapNoteScore](c.Judgment);
-						muan = false
-					else
-						JudgeCmdsNo[param.TapNoteScore](c.Judgment);
-						muan = true
-					end
+					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."LateCommand"](c.Judgment);
 				end
-			elseif ThemePrefs.Get("JudgeStyle") == 1 then
-				OutfoxJudge[param.TapNoteScore](c.Judgment);
-			elseif ThemePrefs.Get("JudgeStyle") == 2 then
-				Sm5Judge[param.TapNoteScore](c.Judgment);
-			elseif ThemePrefs.Get("JudgeStyle") == 3 then
-				DDRJudge[param.TapNoteScore](c.Judgment);
+				muan = false;
+			else
+				if muan then
+					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."EarlyCommand"](c.Judgment);
+					muan = false
+				else
+					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."LateCommand"](c.Judgment);
+					muan = true
+				end
 			end
 
 			c.Judgment:visible( true );
@@ -445,7 +466,7 @@ t[#t+1]=Def.ActorFrame {
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
 				self:Load(GetPicJudPath("Edit 2x6.png"));
 			else
-				self:Load(judType);
+				self:Load(JudPath);
 			end
 		end;
 		OnCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
@@ -454,7 +475,7 @@ t[#t+1]=Def.ActorFrame {
 			if param.cor ~= nil then
 				self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
 			else
-				self:Load(judType);
+				self:Load(JudPath);
 			end
 			if Op ~= "None" then self:setstate( param.fr ) end
 			self:visible(true):linear(0.5):addx(math.random(-150,150)):diffusealpha(0):rotationz(math.random( -15, 15 )):zoom(2)
