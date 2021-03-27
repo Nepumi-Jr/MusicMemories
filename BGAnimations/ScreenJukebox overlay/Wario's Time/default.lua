@@ -55,7 +55,7 @@ LoadActor("WarioTime")..{
 InitCommand=cmd(animate,false;SetTextureFiltering,false;x,-50*4);
 OnCommand=cmd(playcommand,"NepuB");
 NepuBCommand=function(self)
-self:hidden(WT[1] == 0)
+self:visible(not (WT[1] == 0))
 self:setstate(WT[1])
 self:diffuse(CWT2Cl(WT[6]))
 self:sleep(1/30)

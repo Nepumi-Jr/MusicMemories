@@ -36,7 +36,7 @@ local function Dim(pla)
 	end
 end;
 
-	local path = "/Themes/"..ThemeNamae().."/Resource/JudF"-- ThemeNamae That mean Theme's folder
+	local path = THEMEDIR().."/Resource/JudF"-- ThemeNamae That mean Theme's folder
 	local files = FILEMAN:GetDirListing(path.."/")
 	local JG = {}
 	

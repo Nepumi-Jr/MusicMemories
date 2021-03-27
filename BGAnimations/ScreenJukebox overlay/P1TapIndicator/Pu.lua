@@ -71,7 +71,7 @@ Def.Quad{--control panel
 OnCommand=cmd(zoom,0;playcommand,"Nep");
 NepCommand=function(self)
 	if Pum1Press[1] == 1 then MESSAGEMAN:Broadcast("DL1") else MESSAGEMAN:Broadcast("DL1re") end
-	if Pum1Press[2] == 1 then MESSAGEMAN:Broadcast("UL1") else MESSAGEMAN:Broadcast("UD1re") end
+	if Pum1Press[2] == 1 then MESSAGEMAN:Broadcast("UL1") else MESSAGEMAN:Broadcast("UL1re") end
 	if Pum1Press[3] == 1 then MESSAGEMAN:Broadcast("CT1") else MESSAGEMAN:Broadcast("CT1re") end
 	if Pum1Press[4] == 1 then MESSAGEMAN:Broadcast("UR1") else MESSAGEMAN:Broadcast("UR1re") end
 	if Pum1Press[5] == 1 then MESSAGEMAN:Broadcast("DR1") else MESSAGEMAN:Broadcast("DR1re") end
@@ -90,9 +90,9 @@ UL1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;x,-Sped*1.3;
 UL1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;x,-Sped;y,-Sped); 
 };
 LoadActor("inputoverlay-key")..{--Center
-InitCommand=cmd(SetTextureFiltering,false;zoom,Kayay*0.3);
-DL1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;zoom,Kayay*1.3); 
-DL1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;zoom,Kayay*1.3); 
+InitCommand=cmd(SetTextureFiltering,false;zoom,Kayay*0.2);
+CT1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;zoom,Kayay*1.2*0.2); 
+CT1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;zoom,Kayay*0.2); 
 };
 LoadActor("Arrow")..{--UpRight
 InitCommand=cmd(rotationz,(90)/2;SetTextureFiltering,false;x,Sped;y,-Sped;zoom,Kayay);

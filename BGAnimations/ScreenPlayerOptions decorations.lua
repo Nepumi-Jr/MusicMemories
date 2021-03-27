@@ -30,23 +30,8 @@ local P2I={
 }
 local PSpeed={{300,300},{300,300}}
 
+local JudgeAnimation = {};
 
-local JudgeCmdsYes = {
-	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1YesCommand");
-	TapNoteScore_W2 = THEME:GetMetric( "Judgment", "JudgmentW2YesCommand");
-	TapNoteScore_W3 = THEME:GetMetric( "Judgment", "JudgmentW3YesCommand");
-	TapNoteScore_W4 = THEME:GetMetric( "Judgment", "JudgmentW4YesCommand");
-	TapNoteScore_W5 = THEME:GetMetric( "Judgment", "JudgmentW4YesCommand");
-	TapNoteScore_Miss = THEME:GetMetric( "Judgment", "JudgmentMissYesCommand");
-};
-local JudgeCmdsNo = {
-	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1NoCommand");
-	TapNoteScore_W2 = THEME:GetMetric( "Judgment", "JudgmentW2NoCommand");
-	TapNoteScore_W3 = THEME:GetMetric( "Judgment", "JudgmentW3NoCommand");
-	TapNoteScore_W4 = THEME:GetMetric( "Judgment", "JudgmentW4NoCommand");
-	TapNoteScore_W5 = THEME:GetMetric( "Judgment", "JudgmentW4NoCommand");
-	TapNoteScore_Miss = THEME:GetMetric( "Judgment", "JudgmentMissNoCommand");
-};
 local TNSFrames = {
 	TapNoteScore_W1 = 0;
 	TapNoteScore_W2 = 1;
@@ -243,7 +228,7 @@ for i=1,#num_players do
 			end,Def.Sprite{
 		InitCommand=function(self)
 
-
+			
 
 
 		self:pause()
@@ -253,6 +238,10 @@ for i=1,#num_players do
 			--SM("RELOADING")
 			if param.Player == num_players[i] then
 				self:stoptweening():Load(GetPicJudPath(param.Jud)):visible(false):queuecommand("CYCLE");
+				self:stopeffect()
+				self:rotationz(0)--:3
+				JudgeAnimation[i] = getJudgeAnimation(param.Jud)
+
 			end
 		end,
 		CYCLECommand=function(self)
@@ -269,9 +258,9 @@ for i=1,#num_players do
 		self:setstate(iFrame):visible(true);
 
 					if EAR then
-						JudgeCmdsYes[TNS](self);
+						JudgeAnimation[i][ToEnumShortString(TNS).."EarlyCommand"](self);
 					else
-						JudgeCmdsNo[TNS](self);
+						JudgeAnimation[i][ToEnumShortString(TNS).."LateCommand"](self);
 					end
 				self:sleep(0.01):queuecommand("CYCLE")
 		end;

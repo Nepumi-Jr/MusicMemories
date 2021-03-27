@@ -27,6 +27,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 			end
 		end;
+		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;x,-80;);
 	};
 LoadFont("_differentiator 60px")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X+2.5-175-128));y,56.75214415523215378951351-4;zoom,0.25;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2);diffuse,PlayerColor(PLAYER_2));
@@ -56,5 +57,6 @@ LoadFont("_differentiator 60px")..{
 			end
 		end;
 	};
+	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
 };
 return t;

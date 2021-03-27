@@ -1,49 +1,150 @@
-local LP2=0;
-local ERR2 = {false,"RROR",129};
+local NumF="_computer pixel-7 30px";
+local NOWB = 0;
+
+local PN=PLAYER_2;
+local PX=SCREEN_CENTER_X*1.5-246.5*0.5+2.5;
+local clmain = GameColor.PlayerDarkColors.PLAYER_2 or {0,0,0,1};
+local clsub = GameColor.PlayerColors.PLAYER_2 or {1,1,1,1};
+local firstOne = 2;
+local isHot = true;
+
 local t = Def.ActorFrame{
-Def.Quad {
-InitCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X*0.5-126))-246.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#55FF55");horizalign,left;zoomy,23.75;zoomx,246.5/2);
-OnCommand=cmd(playcommand,"Meow");
-MeowCommand=function(self)
-LP2 = SCREENMAN:GetTopScreen():GetLifeMeter(PLAYER_2):GetLife()
-if LP2 == 1 or (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) then
-					self:effectclock("beat");
-					self:diffuseramp();
-					self:effectcolor1(0.1,1,0.1,1);
-					self:effectcolor2(0.3,1,0.3,1);
-					self:effectperiod(0.5);
-					self:effecttiming(0.25,0.50,0,0.25);
-					self:effectoffset(-0.25);
-		self:zoomx(246.5)
-else
-self:stopeffect()
-OMG = math.max(math.min(math.log(math.mod(math.max(GAMESTATE:GetSongBeat(),0),1)*(-10)+10),1),0)/3+0.6714
-self:zoomx(246.5/2*LP2*OMG*2)
-end
-self:sleep(1/60)
-self:queuecommand("Meow");
-end;
-};
-LoadFont(NumF)..{
-OnCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X*0.5));y,SCREEN_CENTER_Y-210.25;blend,"BlendMode_InvertDest";playcommand,'loop');
-		loopCommand=function(self)
-		if not GAMESTATE:IsHumanPlayer(PLAYER_2) then
-			self:settext("")
-		elseif TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden then
-		if math.mod(GAMESTATE:GetSongBeat(),1) < 0.5 and not ERR2[1] then
-		ERR2[3] = math.random(100,999)
-		ERR2[1] = true;
-		elseif math.mod(GAMESTATE:GetSongBeat(),1) > 0.5 then
-		ERR2[1] = false;
-		end
-		self:settext("-Error("..ERR2[3]..")-")
-		else
-		self:settext(FormatPercentScore(LP2))
-		end
-		self:sleep(0.02)
-		self:queuecommand('loop')
+
+	Def.ActorFrame{
+		LifeChangedMessageCommand=function(self,params)
+			if(params.Player == PN) then
+				local life = params.LifeMeter:GetLife()
+
+				if isHot then
+					if life ~= 1 then
+						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(0)
+						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(0)
+						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(0)
+						if SCREENMAN:GetTopScreen():GetChild('LifeP2') then
+							SCREENMAN:GetTopScreen():GetChild('LifeP2'):stoptweening():decelerate(0.5):diffusealpha(1)
+						end
+							isHot = false;
+					end
+				else
+					if life == 1 then
+						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(1)
+						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(1)
+						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(1)
+						if SCREENMAN:GetTopScreen():GetChild('LifeP2') then
+							SCREENMAN:GetTopScreen():GetChild('LifeP2'):stoptweening():decelerate(0.5):diffusealpha(0)
+						end
+						isHot = true;
+					end
+				end
+
+			end
+		end;
+		Def.ActorFrame{
+			Name = "lifeBG";
+			Def.Quad{
+				InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15;zoomx,248;diffusealpha,1);
+				OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,0.7};effectcolor2,{1,1,1,0.2};effectperiod,1/16);
+			};
+		};
+		LoadActor("../P1Health/Life_Max2.png")..{
+			Name = "lifeMax";
+			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15/128;effectclock,"beat";customtexturerect,0,0.9,0.9,1;texcoordvelocity,0,0.2);
+			OnCommand=cmd(blend,"BlendMode_WeightedMultiply");
+		};
+		LoadActor("../P1Health/Life_MaxUp.png")..{
+			Name = "lifeMaxUp";
+			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;zoomy,15/256;x,PX;customtexturerect,0,0,0.9,0.1;texcoordvelocity,0,0.6);
+			OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,1};effectcolor2,{0.7,0.7,0.7,1};effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+		};
+	};
+
+	LoadActor("../P1Health/Life_Bar.png")..{
+		InitCommand=cmd(x,PX;y,SCREEN_CENTER_Y-210.25+22;horizalign,left;cropright,1);
+		LifeChangedMessageCommand=function(self,params)
+			if (params.Player == PN) then
+
+				local life = params.LifeMeter:GetLife()
+
+				self:finishtweening()
+				
+				if firstOne > 0 then
+					self:linear(2.6)
+					firstOne = firstOne - 1
+				else
+					self:decelerate(0.1)
+				end
+				
+				self:cropright(1-life)
+
+
+			end
+		end;
+	};
+
+	Def.ActorFrame{
+		InitCommand=cmd(x,PX;y,SCREEN_CENTER_Y-210.25+22);
+		LifeChangedMessageCommand=function(self,params)
+			if(params.Player == PN) then
+
+				local this = self:GetChildren()
+				local life = params.LifeMeter:GetLife()
+
+				if life >= 2/3 then
+					this["lifeB"]:diffusealpha(scale(life,2/3,1,0,1))
+					this["lifeG"]:diffusealpha(scale(life,2/3,1,1,0))
+					this["lifeY"]:diffusealpha(0)
+					this["lifeR"]:diffusealpha(0)
+				elseif life >= 1/3 then
+					this["lifeB"]:diffusealpha(0)
+					this["lifeG"]:diffusealpha(scale(life,1/3,2/3,0,1))
+					this["lifeY"]:diffusealpha(scale(life,1/3,2/3,1,0))
+					this["lifeR"]:diffusealpha(0)
+				else
+					this["lifeB"]:diffusealpha(0)
+					this["lifeG"]:diffusealpha(0)
+					this["lifeY"]:diffusealpha(scale(life,0,1/3,0,1))
+					this["lifeR"]:diffusealpha(scale(life,0,1/3,1,0))
+				end
+
+
+				self:finishtweening()
+				
+				if firstOne > 0 then
+					self:linear(2.6)
+					firstOne = firstOne - 1
+				else
+					self:decelerate(0.1)
+				end
+				
+				self:x(PX+life*248)
+			end
 		end;
 
-};
+
+		LoadActor("../P1Health/Life_B.png")..{
+			Name = "lifeB";
+		};
+		LoadActor("../P1Health/Life_G.png")..{
+			Name = "lifeG";
+		};
+		LoadActor("../P1Health/Life_Y.png")..{
+			Name = "lifeY";
+		};
+		LoadActor("../P1Health/Life_R.png")..{
+			Name = "lifeR";
+		};
+
+	};
+
+
+	Def.Quad{
+		InitCommand=function(self)
+
+			self:visible(TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden);
+		end;
+		OnCommand=cmd(zoomy,23.75*0.64;zoomx,246.5;y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX
+			effectclock,"beat";diffuseramp;effectcolor1,clmain;effectcolor2,clsub;effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+		GETOUTOFGAMESMMessageCommand=cmd(stoptweening;sleep,0.7;accelerate,0.5;zoomy,0);
+	};
 };
 return t;

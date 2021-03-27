@@ -1,4 +1,4 @@
-local ratemod = string.match(GAMESTATE:GetSongOptionsString(), "%d.%d");
+ratemod = string.match(GAMESTATE:GetSongOptionsString(), "%d.%d");
 if ratemod then
 	ratemod = tonumber(ratemod);
 else
@@ -9,12 +9,14 @@ local Bpm1 = 0;
 local Bpm2 = 0;
 local Bpm = 0;
 
+local fz = 0.7;
 
 local t = Def.ActorFrame{
-LoadFont("_differentiator 60px")..{
-OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-210.25-8;diffuse,color("#FFFFFF");zoom,0.3;playcommand,'loop');
+	OnCommand=cmd(y,24);
+LoadFont("Common Normal")..{
+OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
 		loopCommand=function(self)
-		if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
+		--[[if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 		Bpm1 = GAMESTATE:GetPlayerState(PLAYER_1):GetSongPosition():GetCurBPS() * 60;
 		end
 		if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -27,7 +29,9 @@ OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-210.25-8;diffuse,color("#FFFFF
 		Bpm=Bpm2
 		elseif GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 		Bpm=Bpm1
-		end
+		end]]--GetTrueBPS
+		Bpm = GAMESTATE:GetSongPosition():GetCurBPS() * 60*
+		SCREENMAN:GetTopScreen():GetHasteRate();
 
 		if Bpm > 600 then
 		self:rainbowscroll(true)
@@ -39,6 +43,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-210.25-8;diffuse,color("#FFFFF
 		self:settext(round(Bpm))
 		end
 		self:diffuse(BPMColor(Bpm))
+		self:strokecolor(ColorTone(BPMColor(Bpm)))
 		
 		
 		self:sleep(1/30)
@@ -46,24 +51,13 @@ OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-210.25-8;diffuse,color("#FFFFF
 		end;
 
 };
-LoadFont("_differentiator 60px")..{
-Condition=(ratemod == 1);
-OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-210.25-8;diffuse,color("#FFFFFF");zoom,0.3;playcommand,'loop');
-		loopCommand=function(self)
-		self:diffusealpha(math.abs(math.sin(GAMESTATE:GetSongBeat()*3.14))*0.5)
-		self:settext(round(Bpm))
-		self:sleep(1/60)
-		self:queuecommand('loop')
-		end;
-
-};
 
 
 
 
-LoadFont("_differentiator 60px")..{
+LoadFont("Common Normal")..{
 Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FFFFFF");zoom,0.2;playcommand,'loop');
+OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.6;playcommand,'loop');
 		loopCommand=function(self)
 		self:settextf("%d x %.1f =",round(Bpm),ratemod)
 		self:diffuse(BPMColor(Bpm))
@@ -71,9 +65,9 @@ OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FF
 		self:queuecommand('loop')
 		end;
 };
-LoadFont("_differentiator 60px")..{
+LoadFont("Common Normal")..{
 Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X+50;y,SCREEN_CENTER_Y-210.25-6;diffuse,color("#FFFFFF");zoom,0.27;playcommand,'loop');
+OnCommand=cmd(x,SCREEN_CENTER_X+20;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
 		loopCommand=function(self)
 
 		if Bpm*ratemod > 600 then
@@ -88,30 +82,6 @@ OnCommand=cmd(x,SCREEN_CENTER_X+50;y,SCREEN_CENTER_Y-210.25-6;diffuse,color("#FF
 		end
 		self:diffuse(BPMColor(Bpm*ratemod))
 		self:sleep(1/30)
-		self:queuecommand('loop')
-		end;
-};
-LoadFont("_differentiator 60px")..{
-Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FFFFFF");zoom,0.2;playcommand,'loop');
-		loopCommand=function(self)
-		self:settextf("%d x %.1f =",round(Bpm),ratemod)
-		self:diffusealpha(math.abs(math.sin(GAMESTATE:GetSongBeat()*3.14))*0.5)
-		self:sleep(1/60)
-		self:queuecommand('loop')
-		end;
-};
-LoadFont("_differentiator 60px")..{
-Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X+50;y,SCREEN_CENTER_Y-210.25-6;diffuse,color("#FFFFFF");zoom,0.27;playcommand,'loop');
-		loopCommand=function(self)
-		if round(Bpm)*ratemod >= 1000 then
-		self:settextf("%.d",round(Bpm)*ratemod)
-		else
-		self:settextf("%.1f",round(Bpm)*ratemod)
-		end
-		self:diffusealpha(math.abs(math.sin(GAMESTATE:GetSongBeat()*3.14))*0.5)
-		self:sleep(1/60)
 		self:queuecommand('loop')
 		end;
 };

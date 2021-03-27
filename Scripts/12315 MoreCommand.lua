@@ -609,7 +609,7 @@ end
 function GetPicJudPath(namae)
 	
 	if namae == "!!default!!" then
-		return THEME:GetPathG("","Memory")
+		return THEME:GetPathG("Judge","Memory")
 	elseif namae == "None" then
 		return THEME:GetPathG("","_blank")
 	elseif namae == "SM5ProTiming" then
@@ -620,11 +620,11 @@ function GetPicJudPath(namae)
 		elseif FILEMAN:DoesFileExist("/Appearance/Judgments/"..namae) then
 			return "/Appearance/Judgments/"..namae
 		else
-			return THEME:GetPathG("","Memory")
+			return THEME:GetPathG("Judge","Memory")
 		end
 	end
 	
-	return THEME:GetPathG("","Memory")
+	return THEME:GetPathG("Judge","Memory")
 
 
 end
@@ -674,6 +674,73 @@ function printf(SF,...)
 	SCREENMAN:SystemMessage("\n\n\n\n\n"..string.format(tostring(SF),...))
 end
 
+
+function getJudgeAnimation(judgeName)--eg OutFox [double] 2x6 (res 640x516).png
+	--Default
+	local result = {
+		W1LateCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
+		W2LateCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W3LateCommand = cmd(finishtweening;rotationz,5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W4LateCommand = cmd(finishtweening;rotationz,7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W5LateCommand = cmd(finishtweening;rotationz,15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		MissLateCommand = cmd(finishtweening;rotationz,25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+	
+		W1EarlyCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
+		W2EarlyCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W3EarlyCommand = cmd(finishtweening;rotationz,-5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W4EarlyCommand = cmd(finishtweening;rotationz,-7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		W5EarlyCommand = cmd(finishtweening;rotationz,-15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
+		MissEarlyCommand = cmd(finishtweening;rotationz,-25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+	};
+
+	if not ThemePrefs.Get("CustomJudgeAnimation") then
+		return result
+	end
+	
+
+	local JudAni = JudgeFileShortName(judgeName)
+	
+	local path = "/Appearance/Judgments/";
+	local files = FILEMAN:GetDirListing(path)
+
+	--Check in Appearance/Judgments/
+	for k,filename in ipairs(files) do
+		if string.match(filename, ".lua") and string.match(filename,JudAni) then
+			
+			local data = LoadActor(path..filename)
+			
+			for k,v in pairs(result) do
+				if data[k] ~= nil then
+					result[k] = data[k]
+				end
+			end
+
+			break
+		end
+	end
+	
+	local path = "/"..THEMEDIR().."Resource/JudF/Animate/";
+	local files = FILEMAN:GetDirListing(path)
+
+	--Check in mytheme/Resource/JudF/Animate/ (First Priority :) )
+	for k,filename in ipairs(files) do
+		if string.match(filename, ".lua") and string.match(filename,JudAni) then
+			
+			local data = LoadActor(path..filename)
+			
+			for k,v in pairs(result) do
+				if data[k] ~= nil then
+					result[k] = data[k]
+				end
+			end
+
+			break
+		end
+	end
+
+	return result
+
+end
 
 --[[function LimText(St,lim,mod,fo,zom,n)
 St = String

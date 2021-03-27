@@ -344,7 +344,34 @@ for i = 1,2 do
 			to;
 
 			LoadFont("Common Large")..{
-				OnCommand=cmd(x,-230+40;y,-70;settext,"TapsOffset";horizalign,left;zoom,0.15;shadowlength,3;diffusealpha,0.5);
+				OnCommand=cmd(x,-230+20;y,-85;settext,"TapsOffset";horizalign,left;zoom,0.15;shadowlength,3;diffusealpha,1);
+			};
+
+			LoadFont("Common Normal")..{
+				OnCommand=cmd(x,170;y,-77;settext,"Early-";horizalign,left;zoom,0.7;shadowlength,3;diffusealpha,0.5);
+			};
+			LoadFont("Common Normal")..{
+				OnCommand=cmd(x,170;y,77;settext,"Late+";horizalign,left;zoom,0.7;shadowlength,3;diffusealpha,0.5);
+			};
+			LoadFont("Common Normal")..{
+				OnCommand=function(self)
+					self:x(-110):y(-77):horizalign(left):zoom(0.7)
+					:shadowlength(3):diffusealpha(1)
+
+					local mean = 0;
+					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+						mean = mean + v[2]
+					end
+					mean = mean / (#TP.Eva.TapTiming[PNS[i]])
+
+					local sd = 0;
+					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+						sd = sd + math.pow(v[2] - mean,2)
+					end
+					sd = math.sqrt( sd / (#TP.Eva.TapTiming[PNS[i]]) )
+
+					self:settextf("Mean = %.1f ms; SD = %.1f",mean*1000, sd*1000)
+				end;
 			};
 		};
 

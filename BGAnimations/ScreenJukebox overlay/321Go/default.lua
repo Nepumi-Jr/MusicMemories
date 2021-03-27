@@ -88,26 +88,30 @@ end;
 };
 
 
-LoadActor("count")..{
-SFBMessageCommand=cmd(Center;animate,false;diffuse,CL;diffusealpha,0;rotationz,-10;zoom,2);
-SamMessageCommand=cmd(diffusealpha,1;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-3)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-4))/1.5;zoom,1;rotationz,0);
-SongMessageCommand=cmd(setstate,1;rotationz,15;zoom,2;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-2)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-3))/1.5;zoom,1;rotationz,0);
-NuengMessageCommand=cmd(setstate,2;rotationz,-20;zoom,2;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-2))/1.5;zoom,1;rotationz,0);
-GoooMessageCommand=cmd(diffusealpha,0);
+LoadFont("Common Large")..{
+SFBMessageCommand=cmd(Center;animate,false;diffuse,CL;zoom,1;zoomx,0);
+SamMessageCommand=cmd(settext,"3";decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-3)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-4))/1.5;zoomx,1;);
+SongMessageCommand=cmd(settext,"2";zoomx,0;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-2)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-3))/1.5;zoomx,1;);
+NuengMessageCommand=cmd(settext,"1";zoomx,0;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-2))/1.5;zoomx,1;);
+GoooMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1))/1.5;zoomx,0);
 };
-
 
 Def.ActorFrame{
-SFBMessageCommand=cmd(Center;diffuse,CL;diffusealpha,0;rotationz,25;zoom,2);
-GoooMessageCommand=cmd(Center;diffusealpha,1;decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1))/1.5;zoom,1;rotationz,0);
-RIPRMessageCommand=cmd(decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+100;linear,0.2;diffusealpha,0);
-LoadActor("count")..{
-OnCommand=cmd(animate,false;setstate,3;cropright,0.5);
-RIPRMessageCommand=cmd(linear,0.8;addx,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X);rotationz,math.random(-80,80)/4);
+SFBMessageCommand=cmd(Center;diffuse,CL;);
+LoadFont("Common Large")..{
+OnCommand=cmd(x,-45;settext,'G';zoomy,0);
+GoooMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1))/1.5;zoomy,1);
+RIPRMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB+1)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB))/1.5;zoomx,0);
 };
-LoadActor("count")..{
-OnCommand=cmd(animate,false;setstate,3;cropleft,0.5);
-RIPRMessageCommand=cmd(linear,0.8;addx,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X);rotationz,math.random(-80,80)/4);
+LoadFont("Common Large")..{
+OnCommand=cmd(x,45;settext,'O';zoomy,0);
+GoooMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1))/1.5;zoomy,1);
+RIPRMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB+1)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB))/1.5;zoomx,0);
+};
+LoadFont("Common Large")..{
+OnCommand=cmd(x,105;settext,'!';zoomy,0);
+GoooMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB-1))/1.5;zoomy,1);
+RIPRMessageCommand=cmd(decelerate,(GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB+1)-GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(FB))/1.5;zoomx,0);
 };
 };
 

@@ -1,89 +1,151 @@
-local yao2 = 0;
-local Lim2 = 400;
-local profile2 = PROFILEMAN:GetProfile(PLAYER_2);
-local name2 = profile2:GetDisplayName();
-local Realname2;
-local Samname2;
-if not GAMESTATE:IsHumanPlayer(PLAYER_2) then
-Realname2="Bad Guy!";
-Samname2="Bad Guy!";
-elseif name2 == "" then
-Realname2="P1 Guy";
-Samname2="P1 Guy";
-else
-Realname2=name2;
-Samname2=name2;
-end--THESE for some (crazy) player has long name (Eg.IAmTheBesttttttttttt --> IAmTheBestt... )
+local yao1 = 0;
+local Lim1 = 400;
+local RealName1 = PN_Name(PLAYER_2);
+local SamName1 = PN_Name(PLAYER_2);
 function KodPercent(p)
 if p < 10 then
 return string.format("0%.2f",p).."%";
 elseif p >= 10 and p < 100 then
 return string.format("%.2f",p).."%";
-elseif p == 100 then
+elseif p >= 100 then
 return "100%!!";
 end
 end
 
+local IG;
+
 local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
-LoadFont("_rockwell 72px")..{--Dummy
-				InitCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X+2.5-175));y,56.75;zoom,0.6*(24/72);horizalign,right;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2);diffusealpha,0);
-				OnCommand=cmd(playcommand,"Loop");
-				LoopCommand=function(self)
-					self:settext(Samname2);
-					yao2 = self:GetWidth();
-					if yao2 > 400 then
-					Samname2 = string.sub(Realname2,1,string.len(Realname2)-1).."...";
-					Realname2 = string.sub(Realname2,1,string.len(Realname2)-1);
-					end
-				self:sleep(0.02)
-				self:queuecommand("Loop")
-				end;
-};
-LoadFont("_rockwell 72px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X+2.5-175));y,56.75;zoom,0.6*(24/72);horizalign,right;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2);diffuse,PlayerColor(PLAYER_2));
-				OnCommand=cmd(playcommand,"Loop");
-				LoopCommand=function(self)
-					
-					if GAMESTATE:IsHumanPlayer(PLAYER_2) == true then
-							self:settext( Samname2 );
-					end
-				if yao2 > 400 then
-				self:sleep(0.02)
-				self:queuecommand("Loop")
-				end
-				end;
-};
-LoadFont("_rockwell 72px")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X+(SCREEN_CENTER_X-(SCREEN_CENTER_X+2.5-175*1.25));y,56.75;zoom,0.8*(24/72);visible,GAMESTATE:IsPlayerEnabled(PLAYER_2);diffuse,PlayerColor(PLAYER_2));
-				OnCommand=cmd(playcommand,"Loop");
-				LoopCommand=function(self)
-				if TP.Battle.IsBattle and TP.Battle.Mode == "Ac" then
-				if TP.Battle.Hidden then
-				self:settext("??.??%");
+Def.ActorFrame{
+	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
+	InitCommand=cmd(x,SCREEN_CENTER_X*2+2.5-175*1.25+75;y,25;zoom,0.8);
+	BoomYeahMessageCommand=function(self,param)
+		if param.pn == PLAYER_2 then
+			self:zoom(0.9):decelerate(0.2):zoom(0.8)
+		end
+	end;
+	LoadFont("Combo Numbers")..{
+		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
+		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1););
+		OnCommand=function(self)
+
+			SCREENMAN:GetTopScreen():GetChild('ScoreP2'):x(SCREEN_CENTER_X*2+2.5-175*1.25-40)
+			SCREENMAN:GetTopScreen():GetChild('ScoreP2'):y(25)
+			SCREENMAN:GetTopScreen():GetChild('ScoreP2'):zoom(1)
+			--SCREENMAN:GetTopScreen():GetChild('ScoreP2'):visible(true);
+
+			self:queuecommand("Judgment");
+		end;
+		JudgmentMessageCommand=function(self)
+			self:sleep(0.05):queuecommand("RealJud")
+		end;
+		RealJudCommand=function(self)
+			if TP.Battle.IsBattle then
+				if (TP.Battle.Hidden and TP.Battle.Mode == "Ac") or (TP.Battle.Mode == "Dr" and TP.Battle.Hidden and not TP.Battle.IsfailorIsDraw) then
+					self:settext("xx.xx%");
+					SCREENMAN:GetTopScreen():GetChild('ScoreP2'):visible(false);
+					self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
 				else
+					self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))
+					if STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() <= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
+						self:pulse()
+						self:effecttiming(0.25,0.25,0.25,0.25);
+						self:effectmagnitude(1,1.15,1)
+						self:effectclock("beat")
+						self:diffuse(Color.Green or {0,1,0,1}):diffusetopedge(ColorLightTone(Color.Green or {0,1,0,1}));
+					else
+						self:diffuse(Color.Red or {1,0,0,1}):diffusetopedge(ColorLightTone(Color.Red or {1,0,0,1}));
+						self:stopeffect()
+					end
+				end
+			else
+				if IG ~= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetGrade() then
+					IG = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetGrade()
+					MESSAGEMAN:Broadcast("BoomYeah",{pn=PLAYER_2});
+					SCREENMAN:GetTopScreen():GetChild('ScoreP2'):zoom(1.1):decelerate(0.2):zoom(1.0)
+				end
+				SCREENMAN:GetTopScreen():GetChild('ScoreP2'):diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
+				self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
 				self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))
-				if STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() <= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() then
-		self:pulse()
-		self:effecttiming(0.25,0.25,0.25,0.25);
-		self:effectmagnitude(1,1.15,1)
-		self:effectclock("beat")
-		else
-		self:stopeffect()
-				end
-				end
-				else
-				self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))
-				end
-				self:sleep(0.02)
-				self:queuecommand("Loop")
-				end;
+			end
+		end;
+		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+	};
+	LoadFont("Combo Numbers")..{
+		Condition = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():IsEndless());
+		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2););
+		OnCommand=cmd(playcommand,"Tick");
+		TickCommand=function(self)
+			if IG ~= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetGrade() then
+				IG = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetGrade()
+				MESSAGEMAN:Broadcast("BoomYeah",{pn=PLAYER_2});
+			end
+			self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
+			self:settext(SecondsToMMSS(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetSurvivalSeconds()))
+		
+			self:sleep(0.04):queuecommand("Tick");
+		end;
+		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+	};
 };
 };
---t[#t+1] = LoadActor("Option.lua");
+t[#t+1] = LoadActor("Option.lua")..{
+	OnCommand=cmd(x,-28;y,445);
+	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-15;);
+};
+
+
+local x;
 if GAMESTATE:IsCourseMode() then
-t[#t+1] = LoadActor("Cr");
+x = GAMESTATE:GetCurrentTrail(PLAYER_2);
 else
-t[#t+1] = LoadActor("St");
+x = GAMESTATE:GetCurrentSteps(PLAYER_2);
 end
+
+t[#t+1] = Def.ActorFrame{
+		 LoadFont("_squares bold 72px")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+37;zoom,1;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1);diffuse,PlayerColor(PLAYER_1));
+		OnCommand=function(self)
+			local zom = 0.75;
+			if x:GetMeter() then
+
+				if x:GetMeter() <= 9 then
+				self:zoom(1*zom)
+				self:settext(x:GetMeter())
+				elseif x:GetMeter() <= 98 then
+				self:zoom(0.8*zom)
+				self:settext(x:GetMeter())
+				else
+				self:zoom(0.8*zom)
+				self:settext("??")
+				end
+			end
+		end;
+		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;x,SCREEN_RIGHT+80;);
+	};
+LoadFont("Common","Normal")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+17;zoom,0.75;diffuse,PlayerColor(PLAYER_1));
+		OnCommand=function(self)
+		local DIFFU = ""
+		if x:GetDifficulty() then
+			DIFFU = THEME:GetString("CustomDifficulty",ToEnumShortString(x:GetDifficulty()))
+			if  x:GetDifficulty() == "Difficulty_Edit" then
+				if x:GetDescription() ~= "" then
+					if string.len(x:GetDescription()) > 6 then
+						DIFFU = string.sub(x:GetDescription(),1,5).."..."
+					else
+						DIFFU = x:GetDescription();
+					end
+				end
+			end
+			self:settext(DIFFU)
+			self:maxwidth(70)
+		end
+		end;
+		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,SCREEN_RIGHT+100;);
+	};
+};
+
+
+
 return t;

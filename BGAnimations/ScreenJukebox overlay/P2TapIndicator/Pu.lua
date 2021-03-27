@@ -49,8 +49,8 @@ local Pum2Run = {false,false,false,false,false,false}
 local Sped = 27;
 local Kayay = 3;
 local Rew = {0.04,0.08} ;
-local Pum2Cl = BoostColor((Color[TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.ComboColorstring] or Color.White),1.4);
-local Pum2ClF = BoostColor((Color[TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.ComboColorstring] or Color.White),0.2);
+local Pum2Cl = BoostColor((Color[TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.ComboColorstring] or Color.White),1.4);
+local Pum2ClF = BoostColor((Color[TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.ComboColorstring] or Color.White),0.2);
 local t = Def.ActorFrame{};
 local CodePor;
 

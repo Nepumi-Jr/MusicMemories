@@ -1,4 +1,4 @@
-function Diff2Cli(d,i)
+local function Diff2Cli(d,i)
 CD = GameColor.Difficulty[d];
 return CD[i]
 end;
@@ -6,6 +6,54 @@ end;
 local CL;
 
 
+local function BtS(x)
+	return GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(x) or 0;
+end
+
+local function NumtoST(n)
+if math.mod(n,100) <= 10 then
+	if math.mod(n,10) == 1 then
+		return n.."st"
+	elseif math.mod(n,10) == 2 then
+		return n.."nd"
+	elseif math.mod(n,10) == 3 then
+		return n.."rd"
+	else
+		return n.."th"
+	end
+elseif math.mod(n,100) <= 20 then
+	return n.."th"
+else
+	if math.mod(n,10) == 1 then
+		return n.."st"
+	elseif math.mod(n,10) == 2 then
+		return n.."nd"
+	elseif math.mod(n,10) == 3 then
+		return n.."rd"
+	else
+		return n.."th"
+	end
+end
+end;
+
+local NS = GAMESTATE:GetCurrentStageIndex()+1;
+
+local RDText = "nil STAGE :(";
+	if TP.Battle.IsBattle then
+		RDText = NumtoST(NS).." ROUND";
+	elseif GAMESTATE:IsCourseMode() then
+		RDText = "Ready?"
+	elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then
+		RDText = NumtoST(NS).." STAGE";
+	else
+						local playMode = GAMESTATE:GetPlayMode()
+						local sStage = ""
+						sStage = GAMESTATE:GetCurrentStage()
+						if playMode ~= 'PlayMode_Regular' and playMode ~= 'PlayMode_Rave' and playMode ~= 'PlayMode_Battle' then
+						  sStage = playMode;
+						end
+		RDText = ToEnumShortString(sStage).." STAGE";
+	end
 
 
 local PPeng;
@@ -31,7 +79,7 @@ d = 0
 end
 
 
-local Sped = 50;--Use like zom
+local lenA,lenB;--Use like zom
 local zom = .7;--Use for change scale in other font
 
 
@@ -72,6 +120,8 @@ if FB >= 8 then
 	end
 	elseif GAMESTATE:GetSongBeat() >= FB-8 and GAMESTATE:GetSongBeat() < FB-4 then
 	if not APoDC then
+	lenA = BtS(FB-5)-BtS(FB-8);
+	lenB = BtS(FB-4)-BtS(FB-5);
 	MESSAGEMAN:Broadcast("App")
 	APoDC = true
 	end
@@ -131,68 +181,29 @@ if IsNetConnected() and ((SCREENMAN:GetTopScreen():GetChild('PlayerP1') and SCRE
 end
 end;
 };
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "R";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*-2.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,-10,-10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
 };
 };
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "e";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*-1.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,-6,10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
-};
-};
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "a";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*-0.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,-2,-10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
-};
-};
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "d";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*0.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,2,-10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
-};
-};
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "y";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*1.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,6,10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
-};
-};
-Def.ActorFrame{
-RIPMessageCommand=cmd(linear,0.8;x,math.random(-SCREEN_CENTER_X,SCREEN_CENTER_X));
-LoadFont("_century schoolbook 108px")..{
-Text = "?";
-SFBMessageCommand=cmd(x,SCREEN_CENTER_X+Sped*2.5;CenterY;diffuse,CL;zoom,d);
-DanceMessageCommand=cmd(effectclock,"beat";bounce;effectmagnitude,10,-10,0;effecttiming,0.02,0.08,0.25,0.65);
-AppMessageCommand=cmd(sleep,math.random(0,(lim/8)*50)/50;decelerate,(lim/2);zoom,zom);
-RIPMessageCommand=cmd(finishtweening;stopeffect;decelerate,0.2;y,SCREEN_CENTER_Y*.6;accelerate,0.6;y,SCREEN_BOTTOM+150;rotationz,math.random(-80,80)/4);
-};
-};
-};
+for i = 1,string.len( RDText ) do
+	Tune[#Tune+1]=Def.ActorFrame{
+		OnCommand=cmd(x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*40;CenterY;zoom,0.85;
+			diffuse,Meter2Color(
+				(GAMESTATE:GetCurrentSteps(PLAYER_1):GetMeter() or GAMESTATE:GetCurrentSteps(PLAYER_2):GetMeter())/2 +
+				(GAMESTATE:GetCurrentSteps(PLAYER_2):GetMeter() or GAMESTATE:GetCurrentSteps(PLAYER_1):GetMeter())/2 
+				)
+			);
+		AppMessageCommand=cmd(ease,lenA+lenB+0.1,80;x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*55;zoom,0.7);
+		DanceMessageCommand=cmd(x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*60;zoom,0.65);
+		LoadFont("Common Large")..{
+			InitCommand=cmd(settext,string.sub( RDText, i, i );diffusealpha,0);
+			AppMessageCommand=cmd(linear,math.min(0.7,lenA);diffusealpha,1;sleep,math.max(lenA-0.7,0.001);decelerate,lenB;zoomx,0);
+			DanceMessageCommand=cmd(diffusealpha,1;y,-115;effectclock,"beat";bounce;effectmagnitude,0,10*(math.mod(i,2)==0 and 1 or -1),0;effecttiming,0.02,0.08,0.25,0.65);
+			RIPMessageCommand=cmd(decelerate,0.5;zoomx,0);
+		};
+	};
+end
 
 
-};
+
+
+
 return Tune;

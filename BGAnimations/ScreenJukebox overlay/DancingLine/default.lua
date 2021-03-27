@@ -7,10 +7,10 @@ OnCommand=cmd(playcommand,"SBTL");
 SBTLCommand=function(self)
 SONGg = GAMESTATE:GetCurrentSong();
 self:zoomx(math.max(SCREEN_RIGHT*((GAMESTATE:GetCurMusicSeconds()/SONGg:GetLastSecond()))),0)
-if math.mod(GAMESTATE:GetSongBeat(),4) < 2 and not PZ then
+if math.mod(GAMESTATE:GetSongBeat(),4) < 0.5 and not PZ then
 self:diffuse(Color[RanCl[math.random(#RanCl)]])
 PZ = true;
-elseif math.mod(GAMESTATE:GetSongBeat(),4) >= 2 then
+elseif math.mod(GAMESTATE:GetSongBeat(),4) >= 0.5 then
 PZ = false;
 end
 

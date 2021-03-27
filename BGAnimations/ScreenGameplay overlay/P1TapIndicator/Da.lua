@@ -76,57 +76,64 @@ Dan1TF = {true,false}
 end
 
 t[#t+1] = Def.ActorFrame{
-OnCommand=function(self)
-SCREENMAN:GetTopScreen():AddInputCallback(InputDanP1)
-self:x(42)
-self:y(400)
-end;
-Def.Quad{--control panel
-OnCommand=cmd(zoom,0;playcommand,"Nep");
-NepCommand=function(self)
-	if Dan1Press[1] == 1 then MESSAGEMAN:Broadcast("L1") else MESSAGEMAN:Broadcast("L1re") end
-	if Dan1Press[2] == 1 then MESSAGEMAN:Broadcast("D1") else MESSAGEMAN:Broadcast("D1re") end
-	if Dan1Press[3] == 1 then MESSAGEMAN:Broadcast("U1") else MESSAGEMAN:Broadcast("U1re") end
-	if Dan1Press[4] == 1 then MESSAGEMAN:Broadcast("R1") else MESSAGEMAN:Broadcast("R1re") end
-	if Dan1Press[5] == 1 then MESSAGEMAN:Broadcast("LU1") else MESSAGEMAN:Broadcast("LU1re") end
-	if Dan1Press[6] == 1 then MESSAGEMAN:Broadcast("RU1") else MESSAGEMAN:Broadcast("RU1re") end
-self:sleep(1/30)
-self:queuecommand("Nep")
-end;
-};
-LoadActor("inputoverlay-key")..{--LEFT
-InitCommand=cmd(x,-Sped;zoom,Kayay;diffuse,Dan1ClF);
-L1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-L1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
-LoadActor("inputoverlay-key")..{--DOWN
-InitCommand=cmd(y,Sped;zoom,Kayay;diffuse,Dan1ClF);
-D1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-D1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
-LoadActor("inputoverlay-key")..{--Up
-Condition=(Dan1TF[1]);
-InitCommand=cmd(y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
-U1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-U1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
-LoadActor("inputoverlay-key")..{--RIGHT
-InitCommand=cmd(x,Sped;zoom,Kayay;diffuse,Dan1ClF);
-R1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-R1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
-LoadActor("inputoverlay-key")..{--UL
-Condition=(Dan1TF[2]);
-InitCommand=cmd(x,-Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
-LU1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-LU1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
-LoadActor("inputoverlay-key")..{--UR
-Condition=(Dan1TF[2]);
-InitCommand=cmd(x,Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
-RU1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Dan1Cl;zoom,Kayay*0.75); 
-RU1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Dan1ClF;zoom,Kayay); 
-};
+	OnCommand=function(self)
+		SCREENMAN:GetTopScreen():AddInputCallback(InputDanP1)
+		self:x(42)
+		self:y(400)
+
+		local upFunc = function(self)
+			local this = self:GetChildren()
+			local button = {"L","D","R"}
+			if Dan1TF[1] then
+				button[#button+1] = "U"
+			end
+			if Dan1TF[2] then
+				button[#button+1] = "UL"
+				button[#button+1] = "UR"
+			end
+
+
+			for i = 1,#button do
+				if Dan1Press[i] == 1 then
+					this[button[i]]:stoptweening():decelerate(Rew[1]):diffuse(Dan1Cl):zoom(Kayay*0.75)
+				else
+					this[button[i]]:stoptweening():bounceend(Rew[2]):diffuse(Dan1ClF):zoom(Kayay)
+				end
+			end
+		end
+
+		self:SetUpdateFunction(upFunc);
+	end;
+	OffCommand=function(self)
+		SCREENMAN:GetTopScreen():RemoveInputCallback(InputDanP1)
+	end;
+	LoadActor("inputoverlay-key")..{--LEFT
+		Name = "L";
+		InitCommand=cmd(x,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+	};
+	LoadActor("inputoverlay-key")..{--DOWN
+		Name = "D";
+		InitCommand=cmd(y,Sped;zoom,Kayay;diffuse,Dan1ClF);
+	};
+	LoadActor("inputoverlay-key")..{--Up
+		Name = "U";
+		Condition=(Dan1TF[1]);
+		InitCommand=cmd(y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+	};
+	LoadActor("inputoverlay-key")..{--RIGHT
+		Name = "R";
+		InitCommand=cmd(x,Sped;zoom,Kayay;diffuse,Dan1ClF); 
+	};
+	LoadActor("inputoverlay-key")..{--UL
+		Name = "UL";
+		Condition=(Dan1TF[2]);
+		InitCommand=cmd(x,-Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+	};
+	LoadActor("inputoverlay-key")..{--UR
+		Name = "UR";
+		Condition=(Dan1TF[2]);
+		InitCommand=cmd(x,Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+	};
 };
 
 return t;

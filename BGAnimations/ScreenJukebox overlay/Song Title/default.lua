@@ -51,23 +51,18 @@ end
 end;
 local t = Def.ActorFrame{
 LoadFont("_rockwell 20px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-40;zoom,0.45*(72/20));
+				InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-30;zoom,0.3*(72/20));
 		OnCommand=function(self)
 			self:queuecommand("NepuSong");
 		end;
 		CurrentSongChangedMessageCommand=cmd(queuecommand,"NepuSong");
 				
 				NepuSongCommand=function(self)
-				for i = 1,math.floor(GAMESTATE:GetCurrentSong():GetLastBeat())*2 do
-				Bpms[i] = GAMESTATE:GetCurrentSong():GetTimingData():GetBPMAtBeat(i/2)
-				end
 				self:settext(GAMESTATE:GetCurrentSong():GetDisplayMainTitle())
-				self:diffuse(Bpm2Cl(Xbarrr(Bpms)))
-					
 				end;
 };
 LoadFont("_rockwell 20px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-15;zoom,0.3*(72/20));
+				InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-15;zoom,0.15*(72/20));
 		OnCommand=function(self)
 if GAMESTATE:IsCourseMode() then
 			self:queuecommand("NepuC");
@@ -80,7 +75,7 @@ end
 		end;
 				NepuCCommand=function(self)
 				self:settext(GAMESTATE:GetCurrentCourse():GetDisplayFullTitle())
-				self:diffuse(Bpm2Cl(Xbarrr(Bpms)))
+				self:diffuse({1,1,1,1})
 				end;
 };
 };

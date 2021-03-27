@@ -1,250 +1,154 @@
 local plused = false;
 local dat = 1;
 local Change = math.random(10,25)
+
+local sc = {0,0};
+
 local hang = 12;
-local NumF = TFO(todayis(31,10),"_terror pro 20px","_determination mono 24px");--NumF;
-LoadActor("../_save/SampleText.lua")
-local Os = 0;
-if DayOfMonth() ~= day or MonthOfYear()-1 ~= mon or Year() ~= year then
-Os = 0
-Od = DayOfMonth()
-Om = MonthOfYear()-1
-Oy = Year()
-else
-Os = sec
-Od = day
-Om = mon
-Oy = year
+local NumF = "_thin pixel-7 24px"--NumF;
+
+local function NameString(str)
+	return THEME:GetString('ScreenGameplay',str)
 end
-local TiTe = {
-{0,0,0,0,0,0,":"},--Dance
-{0,0,0,0,0,0,":"},--Now
-{0,0,0,0,0,0,":"}--PlayTime
-};
-local t = Def.ActorFrame{};
+
+local function StrUti(str)
+	return THEME:GetString('RageUtil',"Num"..string.upper( string.sub(str,1,1) )..string.lower( string.sub(str,2,2) )) or str
+end;
+
+
+local function NumtoST(n)
+if math.mod(n,100) <= 10 then
+	if math.mod(n,10) == 1 then
+		return n..StrUti("st")
+	elseif math.mod(n,10) == 2 then
+		return n..StrUti("nd")
+	elseif math.mod(n,10) == 3 then
+		return n..StrUti("rd")
+	else
+		return n..StrUti("th")
+	end
+elseif math.mod(n,100) <= 20 then
+	return n..StrUti("th")
+else
+	if math.mod(n,10) == 1 then
+		return n..StrUti("st")
+	elseif math.mod(n,10) == 2 then
+		return n..StrUti("nd")
+	elseif math.mod(n,10) == 3 then
+		return n..StrUti("rd")
+	else
+		return n..StrUti("th")
+	end
+end
+end;
+
+
+local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 	t[#t+1] = Def.ActorFrame{
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*3.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*0;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*0;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*0;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][1]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][1]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][1]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*2.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*1;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*1;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*1;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][2]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][2]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][2]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-		
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*1.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*2;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*2;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*2;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][7]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][7]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][7]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-		
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*0.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*3;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*3;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*3;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][3]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][3]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][3]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-		
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*0.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*4;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*4;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*4;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][4]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][4]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][4]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-		
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*1.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*5;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*5;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*5;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][7]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][7]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][7]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-		
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*2.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*6;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*6;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*6;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][5]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][5]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][5]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-
-		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*3.5;zoom,0.8);
-			RealMessageCommand=cmd(sleep,0.1*7;decelerate,0.5;rotationx,-120);
-			PlayedMessageCommand=cmd(sleep,0.1*7;decelerate,0.5;rotationx,-240);
-			RemainMessageCommand=cmd(sleep,0.1*7;decelerate,0.5;rotationx,-360;sleep,0.00001;rotationx,0);
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back'); OnCommand=cmd(playcommand,"Row"); RowCommand=function(self)
-		self:settext(TiTe[1][6]):sleep(0.02):queuecommand("Row") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#FF8800");cullmode,'back';rotationx,120); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[2][6]):sleep(0.1):queuecommand("Rowi") end; };
-		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#33EE33");cullmode,'back';rotationx,240); OnCommand=cmd(playcommand,"Rowi"); RowiCommand=function(self)
-		self:settext(TiTe[3][6]):sleep(0.1):queuecommand("Rowi") end; };
-		};
-	};
-	t[#t+1] = LoadFont(NumF) .. {
-		InitCommand=cmd(Center);
-		OnCommand=cmd(playcommand,"Neptune");
-		NeptuneCommand=function(self)
-		Remind = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
-		Clockmin = math.floor((Remind)/60)
-		Clocksec = math.floor((Remind)-Clockmin*60)
-		ClockWTF = (string.format('%.2f',((Remind)-Clockmin*60) - Clocksec))*100
-		if ClockWTF >= 50 then
-			TiTe[1][7] = ":"
-		else
-			TiTe[1][7] = ""
-		end
-		if ClockWTF == 100 then
-			OutCW = 99
-		elseif ClockWTF < 100 then
-			OutCW = ClockWTF
-		end
-		TiTe[1][1] = math.floor(Clockmin/10)
-		TiTe[1][2] = Clockmin-(math.floor(Clockmin/10))*10
-		TiTe[1][3] = math.floor(Clocksec/10)
-		TiTe[1][4] = Clocksec-(math.floor(Clocksec/10))*10
-		TiTe[1][5] = math.floor(OutCW/10)
-		TiTe[1][6] = OutCW-(math.floor(OutCW/10))*10
-		if GAMESTATE:GetCurMusicSeconds() >= GAMESTATE:GetCurrentSong():GetLastSecond() and not plused then
-			plused = true
-			Os = Os + GAMESTATE:GetCurrentSong():GetLastSecond()
-	local file = RageFileUtil.CreateRageFile()
-	file:Open("/Themes/"..ThemeNamae().."/BGAnimations/_save/SampleText.lua", 2 ) --2 = write
-	file:PutLine("--Time all SET")
-	file:PutLine("sec = "..Os)
-	file:PutLine("day = "..Od)
-	file:PutLine("mon = "..Om)
-	file:PutLine("year = "..Oy)
-	file:PutLine("--End of SampleText")
-	file:Close();
-		elseif GAMESTATE:GetCurMusicSeconds() < GAMESTATE:GetCurrentSong():GetLastSecond() and plused then
-			plused = false
-		end
-		outsec = Os + math.min(math.max(GAMESTATE:GetCurMusicSeconds(),0),GAMESTATE:GetCurrentSong():GetLastSecond()) - TFO( GAMESTATE:GetCurMusicSeconds() > GAMESTATE:GetCurrentSong():GetLastSecond(), GAMESTATE:GetCurrentSong():GetLastSecond(),0)
-		outsech = math.floor(outsec/3600)
-		outsecm = (math.floor(outsec/60))-outsech*60
-		outsecs = math.floor(outsec)-(outsech*60*60+outsecm*60)
-		outsecw = (outsec - math.floor(outsec))*100
-		if outsecw == 100 then
-			RW = 99
-		elseif outsecw < 100 then
-			RW = outsecw
-		end
-		if outsecw > 50 then
-			TiTe[3][7] = ""
-		else
-			TiTe[3][7] = ":"
-		end
-		TiTe[3][1] = math.floor(outsech/10)
-		TiTe[3][2] = outsech-(math.floor(outsech/10))*10
-		TiTe[3][3] = math.floor(outsecm/10)
-		TiTe[3][4] = outsecm-(math.floor(outsecm/10))*10
-		TiTe[3][5] = math.floor(outsecs/10)
-		TiTe[3][6] = outsecs-(math.floor(outsecs/10))*10
-		
-		
-
-		if math.mod(Second(),2) == 1 then
-			TiTe[2][7] = ":"
-		else
-			TiTe[2][7] = ""
-		end
-		TiTe[2][1] = math.floor(Hour()/10)
-		TiTe[2][2] = Hour()-(math.floor(Hour()/10))*10
-		TiTe[2][3] = math.floor(Minute()/10)
-		TiTe[2][4] = Minute()-(math.floor(Minute()/10))*10
-		TiTe[2][5] = math.floor(Second()/10)
-		TiTe[2][6] = Second()-(math.floor(Second()/10))*10
-		if GAMESTATE:GetCurMusicSeconds() >= Change then
-			Change = Change + math.random(8,20)
-			if dat == 0 then
-				MESSAGEMAN:Broadcast("Remain")
-				dat = 1
-			elseif dat == 1 then
-				MESSAGEMAN:Broadcast("Real")
-				dat = 2
-			elseif dat == 2 then
-				MESSAGEMAN:Broadcast("Played")
-				dat = 0
-			end
-		elseif GAMESTATE:GetCurMusicSeconds() < 10 and Change > 25 then
-			Change = 0
-			dat = 1;
-			MESSAGEMAN:Broadcast("Remain")
-		end
-		--self:settext(outsec)
-		self:sleep(0.02)
-		self:queuecommand("Neptune")
+		OnCommand=function(self)
+			self:sleep(math.random(7*8,15*8)/8):decelerate(.5):rotationx(180)
+			self:sleep(math.random(7*8,15*8)/8):decelerate(.5):rotationx(360)
+			self:sleep(0.02):rotationx(0):queuecommand("On")
 		end;
+		Def.ActorFrame{
+			InitCommand=cmd(diffuse,Color.Orange;zoom,1.7;rotationx,180); 
+			LoadFont(NumF) .. {
+				OnCommand=cmd(x,-20;cullmode,'back';playcommand,"Row");
+				RowCommand=function(self)
+				--SM("\n\n\n\n\nISla "..string.format("HOUR is %d , %d",Hour(),math.mod(17,10)));
+				self:settextf("%d%d",math.floor(Hour()/10),Hour()%10):sleep(0.02):queuecommand("Row") 
+				end; 
+			};
+			LoadFont(NumF) .. {
+				OnCommand=cmd(x,-10;cullmode,'back';playcommand,"Row");
+				RowCommand=function(self)
+				self:settext(math.mod(Second(),2)==0 and " " or ":"):sleep(0.02):queuecommand("Row") 
+				end; 
+			};
+			LoadFont(NumF) .. {
+				OnCommand=cmd(x,0;cullmode,'back';playcommand,"Row");
+				RowCommand=function(self)
+				self:settextf("%d%d",math.floor(Minute()/10),math.mod(Minute(),10)):sleep(0.02):queuecommand("Row") 
+				end; 
+			};
+			LoadFont(NumF) .. {
+				OnCommand=cmd(x,10;cullmode,'back';playcommand,"Row");
+				RowCommand=function(self)
+				self:settext(math.mod(Second(),2)==0 and " " or ":"):sleep(0.02):queuecommand("Row") 
+				end; 
+			};
+			LoadFont(NumF) .. {
+				OnCommand=cmd(x,20;cullmode,'back';playcommand,"Row");
+				RowCommand=function(self)
+				self:settextf("%d%d",math.floor(Second()/10),math.mod(Second(),10)):sleep(0.02):queuecommand("Row") 
+				end; 
+			};
+		};
+		Def.ActorFrame{
+			InitCommand=cmd(); 
+			LoadFont("Common Normal") .. {
+				Condition = not (TP.Battle.IsBattle);
+				InitCommand=cmd(y,3;cullmode,'back');
+				OnCommand=function(self)
+					local NS = GAMESTATE:GetCurrentStageIndex()+1;
+					if IsNetConnected() then
+						self:settext("Online Mode"):diffuse(Color.Green)
+					elseif TP.Battle.IsBattle then
+						self:settextf("%s Round",NumtoST(NS)):diffuse(ModeIconColors["Rave"])
+					elseif GAMESTATE:IsCourseMode() then
+						if GAMESTATE:GetCurrentCourse():IsNonstop()  then
+							self:settext("NonStop!!"):diffuse(ModeIconColors["Nonstop"])
+						elseif GAMESTATE:GetCurrentCourse():IsOni()  then
+							self:settext("Survive!"):diffuse(ModeIconColors["Oni"])
+						elseif GAMESTATE:GetCurrentCourse():IsEndless() then
+							self:settext("Endless"):diffuse(ModeIconColors["Endless"])
+						end
+					elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then
+						self:settextf(NameString("SMemories"),NumtoST(NS)):diffuse(NumStageColor(NS))
+					else
+						local playMode = GAMESTATE:GetPlayMode()
+						local sStage = ""
+						sStage = GAMESTATE:GetCurrentStage()
+						if playMode ~= 'PlayMode_Regular' and playMode ~= 'PlayMode_Rave' and playMode ~= 'PlayMode_Battle' then
+						  sStage = playMode;
+						end
+						self:settext(ToEnumShortString(sStage).." Stage"):diffuse(NumStageColor(NS))
+					end
+				
+				end; 
+			};
+			LoadFont("Common Normal") .. {
+				Condition = TP.Battle.IsBattle;
+				InitCommand=cmd(y,3;cullmode,'back');
+				OnCommand=function(self)
+					--SM("\n\n\n\nISLALA:"..math.random( 10, 99 ));
+					sc = {0,0};
+					self:settextf("Vs",NumtoST(NS)):diffuse({1,1,1,1})		
+					for i = 1,#TP.Battle.Info do
+					if TP.Battle.Info[i][4] == 1 then
+					sc[1] = sc[1] +1
+					elseif TP.Battle.Info[i][4] == 2 then
+					sc[2] = sc[2] +1
+					end
+					end
+				end; 
+			};
+			LoadFont("Common Normal") .. {
+				Condition = TP.Battle.IsBattle;
+				InitCommand=cmd(x,-50;y,3;cullmode,'back');
+				OnCommand=function(self)
+					self:settext(sc[1]);
+					self:diffuse(PlayerColor(PLAYER_1));
+				end; 
+			};
+			LoadFont("Common Normal") .. {
+				Condition = TP.Battle.IsBattle;
+				InitCommand=cmd(x,50;y,3;cullmode,'back');
+				OnCommand=function(self)
+					self:settext(sc[2]);
+					self:diffuse(PlayerColor(PLAYER_2));
+				end; 
+			};
+		};
 	};
 return t;

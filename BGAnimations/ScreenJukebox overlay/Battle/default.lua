@@ -1,19 +1,14 @@
 local Knocked = false;
 local t = Def.ActorFrame{
-LoadActor("Under lay.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;diffuse,color("#5555FF");playcommand,"Helpp");
-		HelppCommand=function(self)	
-			if TP.Battle.Mode == "Ac" and not TP.Battle.IsfailorIsDraw then
-			GAMESTATE:GetPlayerState(PLAYER_1):GetPlayerOptions('ModsLevel_Song'):FailSetting('FailType_Off')
-			GAMESTATE:GetPlayerState(PLAYER_2):GetPlayerOptions('ModsLevel_Song'):FailSetting('FailType_Off')
-			end
-			self:sleep(0.5):queuecommand("Helpp")
-		end;
-		};
-LoadActor("Under lay.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
+	OnCommand=cmd(y,-10);
+LoadActor("../Border/Under lay2.png")..{
+		InitCommand=cmd(FullScreen;y,SCREEN_CENTER_Y+10;SetTextureFiltering,false;);
 		OnCommand=cmd(playcommand,'Super');
 		SuperCommand=function(self)
+		if TP.Battle.Mode == "Ac" and not TP.Battle.IsfailorIsDraw then
+		GAMESTATE:GetPlayerState(PLAYER_1):GetPlayerOptions('ModsLevel_Song'):FailSetting('FailType_Off')
+		GAMESTATE:GetPlayerState(PLAYER_2):GetPlayerOptions('ModsLevel_Song'):FailSetting('FailType_Off')
+		end
 		if TP.Battle.IsBattle and TP.Battle.Mode == "Ac" and not TP.Battle.Hidden then
 		--GAMESTATE:GetSongBeat() *100 / GAMESTATE:GetCurrentSong():GetLastBeat()
 				Yo = (1-math.mod(GAMESTATE:GetSongBeat(),1))/3

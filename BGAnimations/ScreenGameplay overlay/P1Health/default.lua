@@ -22,7 +22,9 @@ local t = Def.ActorFrame{
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(0)
-						SCREENMAN:GetTopScreen():GetChild('LifeP1'):stoptweening():decelerate(0.5):diffusealpha(1)
+						if SCREENMAN:GetTopScreen():GetChild('LifeP1') then
+							SCREENMAN:GetTopScreen():GetChild('LifeP1'):stoptweening():decelerate(0.5):diffusealpha(1)
+						end
 						isHot = false;
 					end
 				else
@@ -30,7 +32,9 @@ local t = Def.ActorFrame{
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(1)
-						SCREENMAN:GetTopScreen():GetChild('LifeP1'):stoptweening():decelerate(0.5):diffusealpha(0)
+						if SCREENMAN:GetTopScreen():GetChild('LifeP1') then
+							SCREENMAN:GetTopScreen():GetChild('LifeP1'):stoptweening():decelerate(0.5):diffusealpha(0)
+						end
 						isHot = true;
 					end
 				end

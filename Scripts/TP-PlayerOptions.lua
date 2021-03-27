@@ -2,6 +2,12 @@ local function OptionNameString(str)
 	return THEME:GetString('OptionNames',str)
 end
 
+function JudgeFileShortName(str)
+	-- use regexp to get only the name of the graphic, stripping out the extension
+	local real = str:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
+	return real;
+end
+
 function PlayerJudgment()
 	local paths = {THEMEDIR().."/Resource/JudF","/Appearance/Judgments"}
 	local judgmentGraphics = {}
@@ -17,7 +23,12 @@ function PlayerJudgment()
 	
 		for k,filename in ipairs(files) do
 			
-			if string.match(filename, " %dx%d") and string.match(filename, ".png") and not string.match(filename, "%[ECFA%]") and not string.match(filename, "%[Pro%]") then
+			if string.match(filename, " %dx%d") and 
+			string.match(filename, ".png") and 
+			not string.match(filename, "%[ECFA%]") and 
+			not string.match(filename, "%[Pro%]") and
+			not string.match(filename, "%[Advanced%]") and
+			not string.match(filename, "%[FAPlus%]") then
 				-- The 3_9 graphic is a special case;
 				filename = filename:gsub("3_9","3.9")
 				-- Love is a special case; it should always be first.
@@ -59,9 +70,8 @@ function PlayerJudgment()
 	judgmentGraphics[#judgmentGraphics+1] = "None"
 	
 	for k, v in pairs(judgmentGraphics) do
-		-- use regexp to get only the name of the graphic, stripping out the extension
-		local name = v:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
-		JudgmentName[#JudgmentName+1] = name;
+		
+		JudgmentName[#JudgmentName+1] = JudgeFileShortName(v);
 	end
 
 	local t = {

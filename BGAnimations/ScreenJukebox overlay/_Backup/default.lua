@@ -44,7 +44,7 @@ local percentP1 = 0;
 LoadActor("../../_save/Battle.lua")								
 ----------------------------------------- A Lot Of Font Here -------------------------------------------------
 local NumF = TFO(todayis(31,10),"_terror pro 20px","_determination mono 24px");--NumF;
-local TextF = TFO(todayis(31,10),"_the unseen 24px","_special elite 24px");
+local TextF = TFO(todayis(31,10),"_the unseen 24px","Common Normal");
 --------------------------------------------------------------------------------------------------------------
 
 local Wario = {0,0,0,0};

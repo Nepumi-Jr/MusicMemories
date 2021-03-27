@@ -18,6 +18,7 @@ end;
 
 
 local Char = -0.25
+local OFF = PREFSMAN:GetPreference('GlobalOffsetSeconds');
 
 local Tune = Def.ActorFrame{
 
@@ -75,7 +76,7 @@ end;
 
 
 LoadActor("Hat.mp3")..{
-lentMessageCommand=cmd(play);
+--lentMessageCommand=cmd(play);
 };
 
 
