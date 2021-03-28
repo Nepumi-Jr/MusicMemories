@@ -51,7 +51,6 @@ local t = Def.ActorFrame{
         
 
         Canva:SetNumVertices(#verts):SetVertices( verts )
-        printf("%d",math.random(0,50))
 
         self:sleep(1/30):queuecommand("Loop")
     end;

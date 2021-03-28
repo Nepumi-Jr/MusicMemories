@@ -95,7 +95,6 @@ function LoadProfileCustom(profile, dir)
 		-- and set them to the env table to make them accessible from anywhere in SM
 		f:destroy()
 		TP[pn].ActiveModifiers["IconDir"] = dir.."Memories/Icon.png";
-		MESSAGEMAN:Broadcast("RELOADPICOVER",{pn=ppn,vis = true})
 	end
 	
 	return true
@@ -106,7 +105,6 @@ function SaveProfileCustom(profile, dir)
 
 	local PrefPath =  dir .. path
 
-	SM("Saving in %s...",tostring(PrefPath))
 
 	local pn
 	

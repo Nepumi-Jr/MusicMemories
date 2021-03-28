@@ -116,16 +116,17 @@ Branch = {
 		--return CHARMAN:GetAllCharacters() ~= nil and "ScreenSelectCharacter" or "ScreenGameInformation"
 	end,
 	AfterSelectProfile = function()
-		if (GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2)) and not IsNetConnected() then
-			return "ScreenSelectBattleSM"
-		else
-		if ( THEME:GetMetric("Common","AutoSetStyle") == true ) then
-			-- use SelectStyle in online...
-			return IsNetConnected() and "ScreenSelectStyle" or "ScreenSelectPlayMode"
-		else
-			return "ScreenSelectStyle"
-		end
-		end
+		-- TODO : New Battle System Coming soon
+		-- if (GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2)) and not IsNetConnected() then
+		-- 	return "ScreenSelectBattleSM"
+		-- else
+			if ( THEME:GetMetric("Common","AutoSetStyle") == true ) then
+				-- use SelectStyle in online...
+				return IsNetConnected() and "ScreenSelectStyle" or "ScreenSelectPlayMode"
+			else
+				return "ScreenSelectStyle"
+			end
+		--end
 	end,
 	AfterProfileLoad = function()
 		return "ScreenSelectPlayMode"

@@ -46,7 +46,6 @@ if path == nil then return Def.ActorFrame{}; end
 		return Def.ActorFrame{};
 	end
 if not IQBrain then return Def.ActorFrame{}; end
-SCREENMAN:SystemMessage('There are '..#IQBrain);
 
 local t = Def.ActorFrame{};
 

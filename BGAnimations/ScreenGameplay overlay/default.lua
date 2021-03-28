@@ -16,21 +16,21 @@ local Funny=true;
 
 local t = Def.ActorFrame{};
 
-t[#t+1] = Def.Quad{
-	OnCommand=function(self)
-		self:visible(false);
-		for k, v in pairs( SCREENMAN:GetTopScreen():GetChild('PlayerP1'):GetChild('NoteField'):GetChild('Board'):GetChildren() ) do
-			--TexttoDeBUG = TexttoDeBUG..tostring(k).."\n";
+-- t[#t+1] = Def.Quad{
+-- 	OnCommand=function(self)
+-- 		self:visible(false);
+-- 		for k, v in pairs( SCREENMAN:GetTopScreen():GetChild('PlayerP1'):GetChild('NoteField'):GetChild('Board'):GetChildren() ) do
+-- 			--TexttoDeBUG = TexttoDeBUG..tostring(k).."\n";
 
-		end
-		local screen = SCREENMAN:GetTopScreen() -- grabs the current screen, which is probably ScreenGameplay
-        local field = screen:GetChild('PlayerP1'):GetChild('NoteField') -- grabs player 1's notefield, allowing you to (ab)use it
-       -- local column = field:get_columns() -- returns the columns in a table. column[1] would grab the left arrow, column[2] the right, etc etc
+-- 		end
+-- 		local screen = SCREENMAN:GetTopScreen() -- grabs the current screen, which is probably ScreenGameplay
+--         local field = screen:GetChild('PlayerP1'):GetChild('NoteField') -- grabs player 1's notefield, allowing you to (ab)use it
+--        -- local column = field:get_columns() -- returns the columns in a table. column[1] would grab the left arrow, column[2] the right, etc etc
 
-        -- put your super amazing functions here
-	end;
+--         -- put your super amazing functions here
+-- 	end;
 
-};
+-- };
 
 if not OldVer then
 if TexttoDeBUG ~= "" then
@@ -134,6 +134,15 @@ t[#t+1] = Def.Quad{
 		self:sleep(1/60):queuecommand("Narin")
 	end;
 };
+
+t[#t+1] = Def.Quad{
+	InitCommand=cmd(visible,false);
+	OnCommand=cmd(sleep,math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1);queuecommand,"Bruh");
+	BruhCommand=function()
+		MESSAGEMAN:Broadcast("SystemRePoss",{state = "GamePlay"})
+	end;
+};
+
 
 
 

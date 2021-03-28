@@ -29,9 +29,6 @@ return Def.ActorFrame{
 
                 TP.Eva.TapTiming[params.Player] = NN;
 
-                if params.TapNoteOffset == nil then
-                    printf("#%d{%s}%s",#NN,NN[#NN][1],tostring(params.HoldNoteScore))
-                end
 
                 
             end

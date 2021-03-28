@@ -1,5 +1,5 @@
 local function strpl(I,a)
-	return a..","..I
+	return I..","..a
 end;
 local PN = PLAYER_2;
 local Bpms = {};
@@ -22,7 +22,7 @@ local function N2P(n)
 if n == 1 then
 return ""
 else
-return string.format("%d",n*100).."% "
+return string.format("%d",math.floor(n*100)).."% "
 end
 end;
 
@@ -70,9 +70,9 @@ t[#t+1] = Def.Quad{
 			end
 
 				Isla = strpl(Isla,Op1:NoteSkin());
-				Isla = strpl(Isla,TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic or "tor12315za");
+				Isla = strpl(Isla,JudgeFileShortName(TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic) or "Memory");
 				if Op1:Cover()*100 ~= 0 then
-				Isla = strpl(Isla,N2P(Op1:Cover()).."Hide Background");
+					Isla = strpl(Isla,N2P(Op1:Cover()).."Hide Background");
 				end
 
 				if Op1:Overhead() then
@@ -145,7 +145,7 @@ t[#t+1] = Def.Quad{
 				Op1:Wave() ~= 0 or
 				Op1:Xmode() ~= 0
 			then
-				Isla = strpl(Isla,"...And more");
+				Isla = strpl(Isla,"And more...");
 			end
 			STR[#STR+1] = Isla;
 			STRC[#STRC+1] = PlayerColor(PN);
@@ -400,19 +400,20 @@ t[#t+1] = Def.Quad{
 				STRC[#STRC+1] = Color.Green or {0,1,0,1};
 			end
 
+
 		end;
 };
 
 local LoopI = 1;
 
-t[#t+1] = LoadFont("_comic sans ms 24px")..{
-	InitCommand=cmd(x,SCREEN_RIGHT-10;y,7;zoom,0.8*0.6;horizalign,right);
+t[#t+1] = LoadFont("Common Normal")..{
+	InitCommand=cmd(x,SCREEN_RIGHT-10;y,7;zoom,0.8*0.6;horizalign,right;maxwidth,800);
 	OnCommand=function(self)
 
 		self:settext(STR[1]):diffuse(STRC[1])
 
 		if #STR > 1 then
-			self:sleep(math.random(1,15)/10+2+string.len(STR[LoopI])/12);
+			self:sleep(math.random(1,15)/10+7);
 			self:accelerate(0.5)
 			self:rotationx(90);
 			LoopI = math.mod(LoopI + 1 - 1,#STR)+1;
@@ -425,7 +426,7 @@ t[#t+1] = LoadFont("_comic sans ms 24px")..{
 		self:settext(STR[LoopI]):diffuse(STRC[LoopI])
 		self:rotationx(0);
 
-		self:sleep(math.random(1,15)/10+2+string.len(STR[LoopI])/12);
+		self:sleep(math.random(1,15)/10+5);
 		self:accelerate(0.5)
 		self:rotationx(90);
 		LoopI = math.mod(LoopI + 1 - 1,#STR)+1;

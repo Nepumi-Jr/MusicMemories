@@ -26,7 +26,7 @@ Def.ActorFrame{
 	end;
 	LoadFont("Combo Numbers")..{
 		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1););
+		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2););
 		OnCommand=function(self)
 
 			SCREENMAN:GetTopScreen():GetChild('ScoreP2'):x(SCREEN_CENTER_X*2+2.5-175*1.25-40)
@@ -47,7 +47,7 @@ Def.ActorFrame{
 					self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
 				else
 					self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))
-					if STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() <= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
+					if STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() <= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
 						self:pulse()
 						self:effecttiming(0.25,0.25,0.25,0.25);
 						self:effectmagnitude(1,1.15,1)
@@ -90,8 +90,9 @@ Def.ActorFrame{
 };
 };
 t[#t+1] = LoadActor("Option.lua")..{
-	OnCommand=cmd(x,-28;y,445);
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-15;);
+	InitCommand=cmd(x,-5;y,70;diffusealpha,1);
+	OnCommand=cmd(sleep,math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1);decelerate,1;diffusealpha,0.3);
+	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-150;);
 };
 
 
@@ -104,7 +105,7 @@ end
 
 t[#t+1] = Def.ActorFrame{
 		 LoadFont("_squares bold 72px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+37;zoom,1;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1);diffuse,PlayerColor(PLAYER_1));
+		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+37;zoom,1;visible,GAMESTATE:IsPlayerEnabled(PLAYER_2);diffuse,PlayerColor(PLAYER_2));
 		OnCommand=function(self)
 			local zom = 0.75;
 			if x:GetMeter() then
@@ -124,7 +125,7 @@ t[#t+1] = Def.ActorFrame{
 		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;x,SCREEN_RIGHT+80;);
 	};
 LoadFont("Common","Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+17;zoom,0.75;diffuse,PlayerColor(PLAYER_1));
+		InitCommand=cmd(x,SCREEN_CENTER_X+377;y,SCREEN_TOP+17;zoom,0.75;diffuse,PlayerColor(PLAYER_2));
 		OnCommand=function(self)
 		local DIFFU = ""
 		if x:GetDifficulty() then

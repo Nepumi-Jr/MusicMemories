@@ -4,7 +4,7 @@ local t = Def.ActorFrame{
         StartTransitioningCommand=cmd(play);
     };
     LoadActor("DeadBody")..{
-        InitCommand=cmd(FullScreen;y,SCREEN_CENTER-50;pause;visible,false;setstate,0);
+        InitCommand=cmd(FullScreen;y,SCREEN_CENTER_Y-50;pause;visible,false;setstate,0);
         OnCommand=cmd(visible,true;pause;setstate,0;sleep,Sppped;queuecommand,"F1");
         F1Command=cmd(setstate,1;sleep,Sppped;queuecommand,"F2");
         F2Command=cmd(setstate,2;sleep,Sppped;queuecommand,"F3");

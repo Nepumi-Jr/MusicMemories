@@ -293,5 +293,12 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+t[#t+1] = Def.Quad{
+	InitCommand=cmd(visible,false);
+	OnCommand=function()
+		MESSAGEMAN:Broadcast("SystemRePoss",{state = "ProfileLoaded"});
+	end;
+};
+
 
 return t

@@ -5,9 +5,6 @@ local function CreditsText( pn )
 		LoadFont(Var "LoadingScreen","credits") .. {
 			InitCommand=function(self)
 				self:name("Credits" .. PlayerNumberToString(pn))
-				
-				
-				
 				ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen");
 				
 				if pn == PLAYER_1 then
@@ -19,21 +16,6 @@ local function CreditsText( pn )
 			UpdateTextCommand=function(self)
 				local str = ScreenSystemLayerHelpers.GetCreditsMessage(pn);
 				self:settext(str);
-				
-				if str == "PRESS START" 
-				or str == "NOT PRESENT" 
-				or str == "INSERT CARD" 
-				or str == ""
-				or str == "FREE PLAY"
-				then
-					MESSAGEMAN:Broadcast("RELOADPICOVER",{pn=pn,vis = false})
-					if pn == PLAYER_1 then
-						self:x(RemX[1]);
-					else
-						self:x(RemX[2]);
-					end
-				end
-				
 			end;
 			UpdateVisibleCommand=function(self)
 				local screen = SCREENMAN:GetTopScreen();
@@ -45,12 +27,33 @@ local function CreditsText( pn )
 
 				self:visible( bShow );
 			end;
-			RELOADPICOVERMessageCommand=function(self,isla)
-				if pn == isla.pn and isla.vis then
+			SystemRePossMessageCommand=function(self, params)
+				if (params.state == "ProfileLoaded" or params.state == "AfterGame") and GAMESTATE:IsPlayerEnabled(pn) then
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(1)
 					if pn == PLAYER_1 then
 						self:x(RemX[1]+scclae);
 					else
 						self:x(RemX[2]-scclae);
+					end
+				elseif params.state == "GamePlay" and GAMESTATE:IsPlayerEnabled(pn) then
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(0.7)
+					if pn == PLAYER_1 then
+						self:x(RemX[1]);
+					else
+						self:x(RemX[2]);
+					end
+				else
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(1)
+					if pn == PLAYER_1 then
+						self:x(RemX[1]);
+					else
+						self:x(RemX[2]);
 					end
 				end
 			end;
@@ -66,24 +69,37 @@ local function CreditsText( pn )
 					self:horizalign(right):vertalign(bottom)
 					self:x(SCREEN_RIGHT):y(SCREEN_BOTTOM);
 				end
-				self:visible(false);
+				self:diffusealpha(0);
 			end;
-			RELOADPICOVERMessageCommand=function(self,isla)
-				if pn == isla.pn then--TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.JudgmentGraphic
-					--[[if isla.pn == PLAYER_1 then
-						SM("\n\nLoading "..tostring(TP[ToEnumShortString(pn)].ActiveModifiers.IconDir).."\n"..ToEnumShortString(pn))
-					end]]
-					
+			SystemRePossMessageCommand=function(self, params)
+				if params.state == "ProfileLoaded" and GAMESTATE:IsPlayerEnabled(pn) then
 					if FILEMAN:DoesFileExist(TP[ToEnumShortString(pn)].ActiveModifiers.IconDir) then
 						self:Load(TP[ToEnumShortString(pn)].ActiveModifiers.IconDir);
+					elseif FILEMAN:DoesFileExist("Appearance/Avatars/"..PN_Name(pn)..".png") then
+						self:Load("Appearance/Avatars/"..PN_Name(pn)..".png");
+						
 					else
 						self:Load(THEME:GetPathG("Missing","Icon"));
 					end
 					self:zoomtoheight(scclae):zoomtowidth(scclae);
-					self:visible(isla.vis);
+					
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(1)
+				elseif params.state == "GamePlay"and GAMESTATE:IsPlayerEnabled(pn) then
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(0)
+				elseif params.state == "AfterGame" and GAMESTATE:IsPlayerEnabled(pn) then
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(1)
+				else
+					self:stoptweening()
+					self:decelerate(0.5)
+					self:diffusealpha(0)
 				end
 			end;
-			
 		}
 	};
 	return text;

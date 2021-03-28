@@ -436,6 +436,7 @@ local t = Def.ActorFrame{
         local DIV = math.ceil( MaxSegment/MaxBorder );
         local Scaling =  MaxBorder/(MaxSegment/DIV);
 
+
         local this = self:GetChildren()
         
         Vers = {};
@@ -582,7 +583,7 @@ local t = Def.ActorFrame{
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+3,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile],0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
                     CCL
                     })
 
@@ -593,7 +594,7 @@ local t = Def.ActorFrame{
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+5,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile],0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+6,

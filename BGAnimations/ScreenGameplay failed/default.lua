@@ -219,7 +219,7 @@ if ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" and not IsNetConnec
 		AFTERFAILMessageCommand=cmd(CenterX;y,SCREEN_CENTER_Y+15+80;zoom,5;diffuse,Color.Magenta;diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,3;sleep,Ror;decelerate,0.5;diffusealpha,1;diffuse,Color.Green;zoom,2);
 		YestoNewMessageCommand=cmd(stoptweening;decelerate,0.25;diffuse,Color.Green;diffusealpha,1;zoom,2);
 		NotoNewMessageCommand=cmd(stoptweening;decelerate,0.25;diffuse,Color.Magenta;diffusealpha,1;zoom,1.5);
-		HideMenuuuMessageCommand=cmd(stoptweening;hidden,true);
+		HideMenuuuMessageCommand=cmd(stoptweening;visible,false);
 	};
 	LoadFont("Common Normal")..{
 	Text="-Give it up-";
@@ -227,7 +227,7 @@ if ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" and not IsNetConnec
 		AFTERFAILMessageCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60+80;zoom,5;diffuse,Color.Magenta;diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,5;sleep,Ror;decelerate,0.5;diffusealpha,1;zoom,1.5);
 		YestoSWYDMessageCommand=cmd(stoptweening;decelerate,0.25;diffuse,Color.Green;diffusealpha,1;zoom,2);
 		NotoSWYDMessageCommand=cmd(stoptweening;decelerate,0.25;diffuse,Color.Magenta;diffusealpha,1;zoom,1.5);
-		HideMenuuuMessageCommand=cmd(stoptweening;hidden,true);
+		HideMenuuuMessageCommand=cmd(stoptweening;visible,false);
 	};
 	Def.Quad{
 	InitCommand=cmd(zoom,999999;diffuse,color("#55555500"));

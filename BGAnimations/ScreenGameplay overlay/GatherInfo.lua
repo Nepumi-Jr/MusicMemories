@@ -98,7 +98,10 @@ return Def.ActorFrame{
                         if FILEMAN:DoesFileExist(PathA..PathB..PathC) then
                             
                             local TOD = LoadActor(PathA..PathB..PathC);
-                            printf("%s and %s",tostring(TOD),tostring(TOD[#TOD][3]))
+                            
+                            if LS[LP] == nil then--some how when you play with Both Input
+                                return;
+                            end
                             --printf("%.2f vs %.2f is %s",LS , TOD[#TOD][3],LS <= TOD[#TOD][3] and "No Highscore..." or "Whatever")
                             if LS[LP] <= TOD[#TOD][3] then
                                 return;
@@ -110,7 +113,9 @@ return Def.ActorFrame{
     
                         local f = RageFileUtil.CreateRageFile()
                         if f:Open(PathA..PathB..PathC, 2) then
-                            f:Write("return {"..BattleMemories[LP]:sub(1,BattleMemories[LP]:len()-2).."};")
+                            if BattleMemories[LP] ~= nil then--Some how
+                                f:Write("return {"..BattleMemories[LP]:sub(1,BattleMemories[LP]:len()-2).."};")
+                            end
                             --printf("Saving at %s%s%s!!",PathA,PathB,PathC)
                         end
                         f:destroy()

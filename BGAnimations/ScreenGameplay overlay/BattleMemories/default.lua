@@ -91,6 +91,10 @@ return Def.ActorFrame{
             if LIND ~= ind then
                 LIND = ind;
 
+                if BattleMemories[ind-1] == nil then
+                    return;
+                end
+
                 local delta = STATSMAN:GetCurStageStats():GetPlayerStageStats(LP):GetPercentDancePoints()*100 - BattleMemories[ind-1][3]
 
                 if BMT == 2 then
@@ -101,11 +105,6 @@ return Def.ActorFrame{
                     this["BigScorbi"]:GetChildren()["Scorbi"]:settextf("%s%05.2f%%",delta >= 0 and "+" or "-",math.abs(delta));
                     this["BigScorbi"]:GetChildren()["Scortoke"]:settextf("%s%05.2f%%",delta >= 0 and "+" or "-",math.abs(delta));
                 end
-
-                
-                
-
-                
 
                 
                 delta = math.min(math.max(delta,-0.5),0.5)

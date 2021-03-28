@@ -5,6 +5,7 @@ small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GAMESTATE:GetC
 
 return Def.ActorFrame {
 	OnCommand=function(self)
+		MESSAGEMAN:Broadcast("SystemRePoss",{state = "MainMenu"})
 		GAMESTATE:UpdateDiscordGameMode(GAMESTATE:GetCurrentGame():GetName())
 		GAMESTATE:UpdateDiscordScreenInfo(THEME:GetString('DiscordRich',"Title_Menus") or "Title Menus",Var "LoadingScreen",1)
 	end;	

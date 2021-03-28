@@ -84,17 +84,21 @@ t[#t+1] = Def.ActorFrame{
 		local upFunc = function(self)
 			local this = self:GetChildren()
 			local button = {"L","D","R"}
+			local ind = {1,2,4}
 			if Dan1TF[1] then
 				button[#button+1] = "U"
+				ind[#ind+1] = 3
 			end
 			if Dan1TF[2] then
 				button[#button+1] = "UL"
 				button[#button+1] = "UR"
+				ind[#ind+1] = 5
+				ind[#ind+1] = 6
 			end
 
 
 			for i = 1,#button do
-				if Dan1Press[i] == 1 then
+				if Dan1Press[ind[i]] == 1 then
 					this[button[i]]:stoptweening():decelerate(Rew[1]):diffuse(Dan1Cl):zoom(Kayay*0.75)
 				else
 					this[button[i]]:stoptweening():bounceend(Rew[2]):diffuse(Dan1ClF):zoom(Kayay)

@@ -70,9 +70,9 @@ t[#t+1] = Def.Quad{
 			end
 
 				Isla = strpl(Isla,Op1:NoteSkin());
-				Isla = strpl(Isla,TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic or "tor12315za");
+				Isla = strpl(Isla,JudgeFileShortName(TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic) or "Memory");
 				if Op1:Cover()*100 ~= 0 then
-				Isla = strpl(Isla,N2P(Op1:Cover()).."Hide Background");
+					Isla = strpl(Isla,N2P(Op1:Cover()).."Hide Background");
 				end
 
 				if Op1:Overhead() then
@@ -400,13 +400,14 @@ t[#t+1] = Def.Quad{
 				STRC[#STRC+1] = Color.Green or {0,1,0,1};
 			end
 
+
 		end;
 };
 
 local LoopI = 1;
 
 t[#t+1] = LoadFont("Common Normal")..{
-	InitCommand=cmd(x,10;y,7;zoom,0.8*0.6;horizalign,left);
+	InitCommand=cmd(x,10;y,7;zoom,0.8*0.6;horizalign,left;maxwidth,800);
 	OnCommand=function(self)
 
 		self:settext(STR[1]):diffuse(STRC[1])

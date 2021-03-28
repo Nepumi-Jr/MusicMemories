@@ -13,9 +13,9 @@ local InputOfArrow = function( event )
 		elseif event.button == "Start" or event.button == "Center" then
 			MESSAGEMAN:Broadcast('TorPai')--TorPai in Thai is mean Next
 			if Row == 1 then
-			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMiniGames"):StartTransitioningScreen("SM_GoToNextScreen")
+				SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMiniGames"):StartTransitioningScreen("SM_GoToNextScreen")
 			elseif Row == 2 then
-
+				SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectTools"):StartTransitioningScreen("SM_GoToNextScreen")
 			end
 		elseif event.button == "Back" or event.button == "UpLeft" or event.button == "UpRight" then
 			MESSAGEMAN:Broadcast('Nope')

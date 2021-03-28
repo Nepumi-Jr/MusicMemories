@@ -36,7 +36,7 @@ LoadActor("../Border/Under lay2.png")..{
 		end;
 };
 Def.Quad{
-InitCommand=cmd(hidden,true);
+InitCommand=cmd(visible,false);
 OnCommand=cmd(playcommand,"KO");
 KOCommand=function(self)
 if TP.Battle.IsBattle and TP.Battle.Mode == "Dr" then

@@ -2,7 +2,7 @@ local player = PLAYER_2;
 local Help = "PlayerP2";
 local pn = ToEnumShortString(player);
 local mods = TP[pn].ActiveModifiers;
---if not TP[pn].Streams.Measures then return end
+if not TP[pn].Streams.Measures then return end
 
 local PlayerState = GAMESTATE:GetPlayerState(player);
 local streams, current_measure, previous_measure, MeasureCounterBMT;

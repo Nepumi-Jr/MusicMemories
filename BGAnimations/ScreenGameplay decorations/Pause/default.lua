@@ -273,7 +273,7 @@ YutMessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,SCREEN_CENTER_Y*2);
 ResumeMessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,0);
 };
 Def.Quad{--control
-OnCommand=cmd(hidden,true);
+OnCommand=cmd(visible,false);
 YutMessageCommand=function() SCREENMAN:GetTopScreen():PauseGame(true) end;
 ResumeMessageCommand=cmd(playcommand,"Nepu");
 NepuCommand=function(self)
@@ -349,7 +349,7 @@ BackKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.75/1.4;diffuse,color(
 BackMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
 };
 Def.Quad{--control Retry
-OnCommand=cmd(hidden,true);
+OnCommand=cmd(visible,false);
 RePengMessageCommand=cmd(playcommand,'WonRetry');
 WonRetryCommand=function(self)
 Wait3[2] = Wait3[2] + 1/30;
@@ -393,7 +393,7 @@ InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("bat");diffuse,colo
 OopsBatMessageCommand=cmd(stoptweening;diffusealpha,1;decelerate,0.5;y,-150;sleep,1.5;decelerate,0.5;y,-200;diffusealpha,0);
 };
 Def.Quad{
-OnCommand=cmd(hidden,true);
+OnCommand=cmd(visible,false);
 ResumeMessageCommand=function(self)
 SCREENMAN:GetTopScreen():GetChild('Overlay'):decelerate(1)
 SCREENMAN:GetTopScreen():GetChild('Overlay'):visible(infoG[1]);

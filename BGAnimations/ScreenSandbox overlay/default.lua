@@ -3,7 +3,7 @@ local InputOfArrow = function( event )
 	if not event then return end
 
 	if event.type == "InputEventType_Repeat" then
-		if event.button == "Start" or event.button == "Center" then
+		if event.button == "Start" or event.button == "Center" or event.button == "Back" then
 			MESSAGEMAN:Broadcast('Confirm')
 			SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 		end
@@ -31,11 +31,6 @@ t[#t+1] = Def.ActorFrame{
 t[#t+1]=Def.Quad{
 	OnCommand=cmd(visible,false;sleep,9999999);
 };
-t[#t+1] = LoadFont("Isla/_sov_monomon 24px")..{
-	OnCommand=cmd(Center;zoom,1;settext,"SampleText"
-	;strokecolor, GameColor.Judgment["JudgmentLine_W1"];textglowmode,"TextGlowMode_Stroke";
-	thump;effectclock,"bgm");
-};
 
-t[#t+1] = LoadActor("/BGAnimations/pop1");
+t[#t+1] = LoadActor("Noting");
 return t;
