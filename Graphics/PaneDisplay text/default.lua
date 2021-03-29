@@ -39,16 +39,8 @@ local function Str_Step(pnPlayer)
 	end
 	
 	local TEXT;
-	if StepsOrTrail:GetDifficulty() == "Difficulty_Beginner" then
-		TEXT = "Novice";
-	elseif  StepsOrTrail:GetDifficulty() == "Difficulty_Easy" then
-		TEXT = "Easy";
-	elseif StepsOrTrail:GetDifficulty() == "Difficulty_Medium" then
-		TEXT = "Normal";
-	elseif  StepsOrTrail:GetDifficulty() == "Difficulty_Hard" then
-		TEXT = "Hard";
-	elseif  StepsOrTrail:GetDifficulty() == "Difficulty_Challenge" then
-		TEXT = "Expert";
+	if StepsOrTrail:GetDifficulty() ~= "Difficulty_Edit" then
+		TEXT = THEME:GetString("CustomDifficulty",ToEnumShortString(StepsOrTrail:GetDifficulty()));
 	elseif  StepsOrTrail:GetDifficulty() == "Difficulty_Edit" then
 		if StepsOrTrail:GetDescription() ~= "" then
 			if string.len(StepsOrTrail:GetDescription()) > 6 then
@@ -57,7 +49,7 @@ local function Str_Step(pnPlayer)
 				TEXT = StepsOrTrail:GetDescription();
 			end
 		else
-			TEXT = "Edit";
+			TEXT = THEME:GetString("CustomDifficulty","Edit");
 		end
 	end
 	
@@ -74,7 +66,7 @@ end;
 local function CreatePaneDisplayItemA( _pnPlayer, _sLabel, _rcRadarCategory )
 	return Def.ActorFrame {
 		LoadFont("Common Normal") .. {
-			Text=_sLabel;
+			Text=THEME:GetString("RadarCategory",_sLabel);
 			InitCommand=cmd(horizalign,left;x,-30);
 			OnCommand=cmd(zoom,0.5875;shadowlength,1);
 		};
@@ -104,7 +96,7 @@ end;
 local function CreatePaneDisplayItemB( _pnPlayer, _sLabel, _rcRadarCategory )
 	return Def.ActorFrame {
 		LoadFont("Common Normal") .. {
-			Text=_sLabel;
+			Text=THEME:GetString("RadarCategory",_sLabel);
 			InitCommand=cmd(horizalign,left;x,-30);
 			OnCommand=cmd(zoom,0.5875;shadowlength,1);
 		};
@@ -262,26 +254,26 @@ t[#t+1] = Def.ActorFrame {
 		CreatePaneDisplayItemA( iPN, "Taps", 'RadarCategory_TapsAndHolds' ) .. {
 			InitCommand=cmd(x,-60;y,-30+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Hold", 'RadarCategory_Holds' ) .. {
+		CreatePaneDisplayItemA( iPN, "Holds", 'RadarCategory_Holds' ) .. {
 			InitCommand=cmd(x,-60;y,-13+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Jump", 'RadarCategory_Jumps' ) .. {
+		CreatePaneDisplayItemA( iPN, "Jumps", 'RadarCategory_Jumps' ) .. {
 			InitCommand=cmd(x,-60;y,4+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Hand", 'RadarCategory_Hands' ) .. {
+		CreatePaneDisplayItemA( iPN, "Hands", 'RadarCategory_Hands' ) .. {
 			InitCommand=cmd(x,-60;y,21+5;zoom,1.15);
 		};
 		
-		CreatePaneDisplayItemA( iPN, "Roll", 'RadarCategory_Rolls' ) .. {
+		CreatePaneDisplayItemA( iPN, "Rolls", 'RadarCategory_Rolls' ) .. {
 			InitCommand=cmd(x,50;y,-30+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Mine", 'RadarCategory_Mines' ) .. {
+		CreatePaneDisplayItemA( iPN, "Mines", 'RadarCategory_Mines' ) .. {
 			InitCommand=cmd(x,50;y,-13+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Lift", 'RadarCategory_Lifts' ) .. {
+		CreatePaneDisplayItemA( iPN, "Lifts", 'RadarCategory_Lifts' ) .. {
 			InitCommand=cmd(x,50;y,4+5;zoom,1.15);
 		};
-		CreatePaneDisplayItemA( iPN, "Fake", 'RadarCategory_Fakes' ) .. {
+		CreatePaneDisplayItemA( iPN, "Fakes", 'RadarCategory_Fakes' ) .. {
 			InitCommand=cmd(x,50;y,21+5;zoom,1.15);
 		};
 	};
@@ -306,7 +298,7 @@ t[#t+1] = Def.ActorFrame {
 		CreatePaneDisplayItemB( iPN, "Freeze", 'RadarCategory_Freeze' ) .. {
 			InitCommand=cmd(x,-60;y,-25+(51/4)*3;zoom,0.9);
 		};
-		CreatePaneDisplayItemB( iPN, "Chanos", 'RadarCategory_Chaos' ) .. {
+		CreatePaneDisplayItemB( iPN, "Chaos", 'RadarCategory_Chaos' ) .. {
 			InitCommand=cmd(x,-60;y,-25+(51/4)*4;zoom,0.9);
 		};
 	};

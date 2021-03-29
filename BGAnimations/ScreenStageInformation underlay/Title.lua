@@ -103,29 +103,29 @@ if IsNetConnected() then
 	Fasst = 0.5;
 elseif TP.Battle.IsBattle then--BattleTor
 	Picdir = THEME:GetPathG("ScreenStageInformation stage","battle")
-	Text1 = THEME:GetString("sStageInfo","Battle");
+	Text1 = THEME:GetString("PlayMode","Battle");
 	See1 = ModeIconColors["Rave"]
 	See2 = NumStageColor(NS)
 	Text2 = string.format(THEME:GetString("sStageInfo","ssRound"),NumtoST(NS));
 	Fasst = 0.5;
 elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then--if EventMode
 	Picdir = THEME:GetPathG("ScreenStageInformation stage","event")
-	Text1 = THEME:GetString("sStageInfo","Event");
+	Text1 = THEME:GetString("Stage","Event");
 	See1 = GameColor.Stage["Stage_Event"]
 		if GAMESTATE:IsCourseMode() then -- Course
 			if GAMESTATE:GetCurrentCourse():IsNonstop()  then
 				See2 = ModeIconColors["Nonstop"]
-				Text2 = THEME:GetString("sStageInfo","NonStop");
+				Text2 = THEME:GetString("Stage","Nonstop");
 			elseif GAMESTATE:GetCurrentCourse():IsOni()  then
 				See2 = ModeIconColors["Oni"]
-				Text2 = THEME:GetString("sStageInfo","SurVIVE");
+				Text2 = THEME:GetString("Stage","Oni");
 			elseif GAMESTATE:GetCurrentCourse():IsEndless() then
 				See2 = ModeIconColors["Endless"]
-				Text2 = THEME:GetString("sStageInfo","Endless");
+				Text2 = THEME:GetString("Stage","Endless");
 			end
 		elseif playMode == 'PlayMode_Rave' or playMode == 'PlayMode_Battle' then--Rave
 			See2 = ModeIconColors["Rave"]
-			Text2 = THEME:GetString("sStageInfo","Magic");
+			Text2 = THEME:GetString("PlayMode","Rave");
 		else
 			See2 = NumStageColor(NS)
 			Text2 = string.format(THEME:GetString("sStageInfo","ssStage"),NumtoST(NS));
@@ -135,17 +135,17 @@ else
 	if GAMESTATE:IsCourseMode() then -- Course
 		if GAMESTATE:GetCurrentCourse():IsNonstop() then
 			See1 = ModeIconColors["Nonstop"]
-			Text1 = THEME:GetString("sStageInfo","NonStop");
+			Text1 = THEME:GetString("Stage","Nonstop");
 		elseif GAMESTATE:GetCurrentCourse():IsOni() then
 			See1 = ModeIconColors["Oni"]
-			Text1 = THEME:GetString("sStageInfo","SurVIVE");
+			Text1 = THEME:GetString("Stage","Oni");
 		elseif GAMESTATE:GetCurrentCourse():IsEndless() then
 			See1 = ModeIconColors["Endless"]
-			Text1 = THEME:GetString("sStageInfo","Endless");
+			Text1 = THEME:GetString("Stage","Endless");
 		end
 	elseif playMode == 'PlayMode_Rave' or playMode == 'PlayMode_Battle' then--Rave
 		See1 = ModeIconColors["Rave"]
-		Text1 = THEME:GetString("sStageInfo","Magic");
+		Text1 = THEME:GetString("PlayMode","Rave");
 	else
 
 local sStage = ""
@@ -155,7 +155,7 @@ sStage = GAMESTATE:GetCurrentStage()
 		  sStage = playMode;
 		end
 		See1 = NumStageColor(NS)
-		Text1 = THEME:GetString("sStageInfo",sStage)
+		Text1 = THEME:GetString("Stage",ToEnumShortString(sStage))
 	end
 end
 
