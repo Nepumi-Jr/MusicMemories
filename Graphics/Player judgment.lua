@@ -197,30 +197,32 @@ t[#t+1] = Def.ActorFrame {
 	JudgmentMessageCommand=function(self, param)
         -- Fix Player Combo animating when player successfully avoids a mine.
         
-		if param.TapNoteScore== "TapNoteScore_CheckpointHit" then
+		local tempTNS = param.TapNoteScore;
+
+		if tempTNS== "TapNoteScore_CheckpointHit" then
 			if GAMESTATE:ShowW1() then
-				param.TapNoteScore = "TapNoteScore_W1";
+				tempTNS = "TapNoteScore_W1";
 			else
-				param.TapNoteScore = "TapNoteScore_W2";
+				tempTNS = "TapNoteScore_W2";
 			end
-		elseif param.TapNoteScore== "TapNoteScore_CheckpointMiss" then
-			param.TapNoteScore = "TapNoteScore_Miss";
+		elseif tempTNS== "TapNoteScore_CheckpointMiss" then
+			tempTNS = "TapNoteScore_Miss";
 		end
 		
 		if EASTER()=="FOOL" then
         --if false then
-        	if param.TapNoteScore=="TapNoteScore_Miss" then
-        		param.TapNoteScore="TapNoteScore_W1";
-        	elseif param.TapNoteScore=="TapNoteScore_W5" then
-        		param.TapNoteScore="TapNoteScore_W2";
-        	elseif param.TapNoteScore=="TapNoteScore_W4" then
-        		param.TapNoteScore="TapNoteScore_W3";
-        	elseif param.TapNoteScore=="TapNoteScore_W3" then
-        		param.TapNoteScore="TapNoteScore_W4";
-        	elseif param.TapNoteScore=="TapNoteScore_W2" then
-        		param.TapNoteScore="TapNoteScore_W5";
-        	elseif param.TapNoteScore=="TapNoteScore_W1" then
-        		param.TapNoteScore="TapNoteScore_Miss";
+        	if tempTNS=="TapNoteScore_Miss" then
+        		tempTNS="TapNoteScore_W1";
+        	elseif tempTNS=="TapNoteScore_W5" then
+        		tempTNS="TapNoteScore_W2";
+        	elseif tempTNS=="TapNoteScore_W4" then
+        		tempTNS="TapNoteScore_W3";
+        	elseif tempTNS=="TapNoteScore_W3" then
+        		tempTNS="TapNoteScore_W4";
+        	elseif tempTNS=="TapNoteScore_W2" then
+        		tempTNS="TapNoteScore_W5";
+        	elseif tempTNS=="TapNoteScore_W1" then
+        		tempTNS="TapNoteScore_Miss";
         	end
 
         	if param.Early then
@@ -251,7 +253,7 @@ t[#t+1] = Def.ActorFrame {
 
 
 		local iNumStates = c.Judgment:GetNumStates();
-		local iFrame = TNSFrames[param.TapNoteScore];
+		local iFrame = TNSFrames[tempTNS];
 
 		if not iFrame then return end
 		if iNumStates == 12 then
@@ -269,7 +271,7 @@ t[#t+1] = Def.ActorFrame {
 			fTapNoteOffset = param.TapNoteOffset;
 		end
 
-		if param.TapNoteScore == 'TapNoteScore_Miss' then
+		if tempTNS == 'TapNoteScore_Miss' then
 			fTapNoteOffset = 1;
 			bUseNegative = true;
 		else
@@ -295,7 +297,7 @@ t[#t+1] = Def.ActorFrame {
 			end
 		end
 
-		if ((param.TapNoteScore == 'TapNoteScore_Miss'  or param.TapNoteScore == 'TapNoteScore_W5' or param.TapNoteScore == 'TapNoteScore_W4')
+		if ((tempTNS == 'TapNoteScore_Miss'  or tempTNS == 'TapNoteScore_W5' or tempTNS == 'TapNoteScore_W4')
 		or param.HoldNoteScore == "HoldNoteScore_LetGo")
 		and SS == 0 then
 		SS = 9999;
@@ -307,19 +309,19 @@ t[#t+1] = Def.ActorFrame {
 		end
 		
 		if Op ~= "SM5ProTiming" then
-			if param.TapNoteScore ~= 'TapNoteScore_Miss' then
+			if tempTNS ~= 'TapNoteScore_Miss' then
 				if param.Early then
-					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."EarlyCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](c.Judgment);
 				else
-					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."LateCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](c.Judgment);
 				end
 				muan = false;
 			else
 				if muan then
-					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."EarlyCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](c.Judgment);
 					muan = false
 				else
-					UseJudgeCmd[ToEnumShortString(param.TapNoteScore).."LateCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](c.Judgment);
 					muan = true
 				end
 			end

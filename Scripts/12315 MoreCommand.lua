@@ -76,7 +76,9 @@ function AdvRandom(x)
 end
 
 function EASTER()
-	--return "FOOL";
+	if todayis(1,4) then
+		return "FOOL";
+	end
 	return "None";
 end
 

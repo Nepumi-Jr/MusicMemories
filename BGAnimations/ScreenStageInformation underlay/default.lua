@@ -1,3 +1,9 @@
+
+local sound = "Introduc2.wav";
+if EASTER() == "FOOL" then
+	sound = "BadTime.ogg";
+end
+
 local t = Def.ActorFrame{};
 
 	t[#t+1]=Def.Quad{
@@ -65,7 +71,7 @@ local t = Def.ActorFrame{};
 	};
 
 
-	t[#t+1]=LoadActor("Introduc2.wav")..{
+	t[#t+1]=LoadActor(sound)..{
 		OnCommand=cmd(sleep,0.2;queuecommand,"YEP");
 		YEPCommand=cmd(play);
 	};
