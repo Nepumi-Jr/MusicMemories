@@ -53,24 +53,7 @@ t[#t+1] = LoadActor("Wario's Time")..{
 };
 end
 
-if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
-	if not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle') then
-		t[#t+1] = LoadActor("P1Health");
-	end
-t[#t+1] = LoadActor("P1State");
-t[#t+1] = LoadActor("P1TapIndicator")..{
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;diffusealpha,0;);
-};
-end
-if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-	if not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle') then
-		t[#t+1] = LoadActor("P2Health");
-	end
-t[#t+1] = LoadActor("P2State");
-t[#t+1] = LoadActor("P2TapIndicator")..{
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;diffusealpha,0;);
-};
-end
+t[#t+1] = LoadActor("MulPStuff");
 
 
 if ThemePrefs.Get("BattleMemories") ~= 0 then

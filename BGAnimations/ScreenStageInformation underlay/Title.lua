@@ -136,27 +136,32 @@ else
 		if GAMESTATE:GetCurrentCourse():IsNonstop() then
 			See1 = ModeIconColors["Nonstop"]
 			Text1 = THEME:GetString("Stage","Nonstop");
+            Picdir = THEME:GetPathG("ScreenStageInformation stage","nonstop")
 		elseif GAMESTATE:GetCurrentCourse():IsOni() then
 			See1 = ModeIconColors["Oni"]
 			Text1 = THEME:GetString("Stage","Oni");
+            Picdir = THEME:GetPathG("ScreenStageInformation stage","oni")
 		elseif GAMESTATE:GetCurrentCourse():IsEndless() then
 			See1 = ModeIconColors["Endless"]
 			Text1 = THEME:GetString("Stage","Endless");
+            Picdir = THEME:GetPathG("ScreenStageInformation stage","endless")
 		end
 	elseif playMode == 'PlayMode_Rave' or playMode == 'PlayMode_Battle' then--Rave
 		See1 = ModeIconColors["Rave"]
 		Text1 = THEME:GetString("PlayMode","Rave");
+        Picdir = THEME:GetPathG("ScreenStageInformation stage","magic")
 	else
 
-local sStage = ""
-sStage = GAMESTATE:GetCurrentStage()
+        local sStage = ""
+        sStage = GAMESTATE:GetCurrentStage()
 
 		if playMode ~= 'PlayMode_Regular' and playMode ~= 'PlayMode_Rave' and playMode ~= 'PlayMode_Battle' then
 		  sStage = playMode;
 		end
 		See1 = NumStageColor(NS)
 		Text1 = THEME:GetString("Stage",ToEnumShortString(sStage))
-	end
+        Picdir = THEME:GetPathG("ScreenStageInformation stage",ToEnumShortString(sStage))
+    end
 end
 
 
