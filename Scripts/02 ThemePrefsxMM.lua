@@ -111,6 +111,12 @@ local Prefs =
 		Choices = { OptionNameString('Off'), OptionNameString('Off').." but save" ,OptionNameString('On').."(%)",OptionNameString('On').."(delta)"},
 		Values = { 0 , 1 , 2 ,3 }
 	},
+    BackgroundTheme =
+	{
+		Default = 2,
+		Choices = { "Day" , "Night" , "Depend on time"},
+		Values = { 0 , 1 , 2 }
+	},
 }
 
 ThemePrefs.InitAll(Prefs)

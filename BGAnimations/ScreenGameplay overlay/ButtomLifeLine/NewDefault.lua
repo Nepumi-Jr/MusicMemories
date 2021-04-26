@@ -53,6 +53,9 @@ local function OPFil()
             elseif file:find(".+%.[dD][wW][iI]$") then
                 fileN = file
                 fileT = "dwi"
+            else
+                fileN = "Unknwon"
+                fileT = "?"
             end
         end
         if (not (fileN and fileT)) then return nil 

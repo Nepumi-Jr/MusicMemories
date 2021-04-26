@@ -58,7 +58,7 @@ local InputHandler = function( event )
 
 end
 
-local FailType = math.random(1,15)
+local FailType = math.random(1,20)
 local Ror = 2.5
 local Hoold = 5
 
@@ -92,12 +92,12 @@ elseif FailType == 9 then
 elseif FailType == 10 then
 	t[#t+1]=LoadActor("Directed");
 	Ror = 7.794
-elseif FailType == 11 then
-	t[#t+1]=LoadActor("DeadBody");
-	Ror = 1.5
-elseif FailType >= 12 and FailType <= 15 then
+elseif FailType >= 11 and FailType <= 15 then
 	t[#t+1]=LoadActor("Pump");
 	Ror = 4
+elseif FailType >= 16 and FailType <= 20 then
+	t[#t+1]=LoadActor("DefaultLoooong");--So OG
+	Ror = 12
 end
 
 
@@ -243,7 +243,10 @@ if ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" and not IsNetConnec
 		InitCommand=cmd(diffusealpha,0;rotationx,35;);
 		BeginCommand=cmd(diffuse,color("#00000000");Center;zoom,9999);
 		RetMessageCommand=cmd(decelerate,0.75;diffusealpha,1;rotationx,0;queuecommand,"Goo");
-		GooCommand=function() GAMESTATE:ApplyGameCommand('screen,ScreenGameplay'); end;
+		GooCommand=function() 
+            TP.Eva.readyState = 2;
+            SCREENMAN:GetTopScreen():SetNextScreenName("ScreenProfileSave"):StartTransitioningScreen("SM_DoNextScreen");
+        end;
 	};
 		Def.Quad{
 			InitCommand=cmd(zoom,9999;diffuse,Color.Black;diffusealpha,0);

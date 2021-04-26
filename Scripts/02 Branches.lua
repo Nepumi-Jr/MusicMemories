@@ -132,6 +132,11 @@ Branch = {
 		return "ScreenSelectPlayMode"
 	end,
 	AfterProfileSave = function()
+
+        if TP.Eva.readyState == 2 then
+            TP.Eva.readyState = 0
+            return Branch.GameplayScreen()
+        end
 		-- Might be a little too broken? -- Midiman
 		if GAMESTATE:IsEventMode() then
 			return SelectMusicOrCourse()

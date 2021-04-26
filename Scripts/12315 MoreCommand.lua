@@ -18,6 +18,10 @@ end
 
 function Nighty(Timu)
 
+    if ThemePrefs.Get("BackgroundTheme") < 2 then
+        return ThemePrefs.Get("BackgroundTheme")
+    end
+
 	Timu = Timu or (Hour()*60+Minute()+Second()/60)
 	Timu = math.mod(Timu,60*24)
 
@@ -494,7 +498,7 @@ function Pn_Option_1_Lines()
 	if TP.Battle.IsBattle then
 		return "1,8,HA,SC,16,SF,18,MI,3A,19,NextScreenBat"
 	else
-		return "1,8,HA,SC,12,16,May,Nep,SF,18,MI,3A,19,NextScreen"
+		return "1,8,HA,SC,12,16,SF,18,MI,3A,19,NextScreen"
 	end
 	
 end

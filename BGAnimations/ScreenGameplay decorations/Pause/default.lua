@@ -18,7 +18,7 @@ local function SelectMusicOrCourse()
 end
 
 local function NameString(str)
-	return THEME:GetString('ScreenGameplay',"Pause_"..str)
+	return '-'..THEME:GetString('PauseMenu',str)..'-'
 end
 
 local Inputne = function( event )
@@ -327,26 +327,26 @@ LoadFont( "Common Large") ..{
 InitCommand=cmd(rainbow;effectoffset,4/5;settext,'e');
 };
 };
-LoadFont( "Common Large") ..{
-InitCommand=cmd(y,-10;zoom,0;settext,NameString("Resume");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0.75/1.4;diffuse,color("#55FF55FF"));
+LoadFont( "Common Normal") ..{
+InitCommand=cmd(y,-10;zoom,0;settext,NameString("continue_playing");diffuse,color("#FF995500"));
+YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,2;diffuse,color("#55FF55FF"));
 ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-ResKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.75/1.4;diffuse,color("#55FF55FF"));
-ResMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
+ResKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
+ResMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
 };
-LoadFont( "Common Large") ..{
-InitCommand=cmd(y,50;zoom,0;settext,NameString("Retry");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
+LoadFont( "Common Normal") ..{
+InitCommand=cmd(y,50;zoom,0;settext,NameString("restart_song");diffuse,color("#FF995500"));
+YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,1.7;diffuse,color("#FF9955FF"));
 ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-RetKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.75/1.4;diffuse,color("#55FF55FF"));
-RetMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
+RetKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
+RetMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
 };
-LoadFont( "Common Large") ..{
-InitCommand=cmd(y,110;zoom,0;settext,NameString("Back");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
+LoadFont( "Common Normal") ..{
+InitCommand=cmd(y,110;zoom,0;settext,NameString("forfeit_song");diffuse,color("#FF995500"));
+YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,1.7;diffuse,color("#FF9955FF"));
 ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-BackKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.75/1.4;diffuse,color("#55FF55FF"));
-BackMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,0.6/1.4;diffuse,color("#FF9955FF"));
+BackKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
+BackMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
 };
 Def.Quad{--control Retry
 OnCommand=cmd(visible,false);
@@ -385,11 +385,11 @@ Def.Quad {
 			ArrowMessageCommand=cmd(play);
 		};
 LoadFont( "Common Large") ..{
-InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("net");diffuse,color("#FF995500"));
+InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("netOnline");diffuse,color("#FF995500"));
 OopsNetMessageCommand=cmd(stoptweening;diffusealpha,1;decelerate,0.5;y,-150;sleep,1.5;decelerate,0.5;y,-200;diffusealpha,0);
 };
 LoadFont( "Common Large") ..{
-InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("bat");diffuse,color("#FF995500"));
+InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("Battle");diffuse,color("#FF995500"));
 OopsBatMessageCommand=cmd(stoptweening;diffusealpha,1;decelerate,0.5;y,-150;sleep,1.5;decelerate,0.5;y,-200;diffusealpha,0);
 };
 Def.Quad{

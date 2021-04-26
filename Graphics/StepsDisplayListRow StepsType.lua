@@ -10,14 +10,14 @@ local t = Def.ActorFrame{
 			self:pause()
 			self:finishtweening()
 			self:effectclock("beat")
-			local r =Enum.Reverse(StepsType);
+			local r = Enum.Reverse(StepsType);
 			local animate = {};
 
 
 			sStep = param.StepsType;
 			
 
-			animate[#animate+1] = {Frame= r[sStep], Delay= 2}
+			animate[#animate+1] = {Frame= (r[sStep] >= 33 and 40 or r[sStep]), Delay= 2}
 
 			tType = 34
 

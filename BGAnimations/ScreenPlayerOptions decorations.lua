@@ -16,12 +16,6 @@ end
 
 local t = LoadFallbackB();
 local game_name = GAMESTATE:GetCurrentGame():GetName()
-local column = {
-	dance = "Up",
-	pump = "UpRight",
-	techno = "Up",
-	kb7 = "Key1"
-}
 
 
 local P2I={
@@ -41,83 +35,84 @@ local TNSFrames = {
 	TapNoteScore_Miss = 5;
 };
 
+local columnName = GAMESTATE:GetCurrentStyle():GetColumnInfo( GAMESTATE:GetMasterPlayerNumber(), 2 )["Name"]
+--FROM OF
+
 local GetNoteSkinActor = function(ns)--FROM SL <3
 
-	local status, noteskin_actor_Re = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, column[game_name] or "Down", "Receptor", ns)
-	local status, noteskin_actor_No = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, column[game_name] or "Down", "Tap Note", ns)
+	local status, noteskin_actor_Re = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, columnName, "Receptor", ns)
+	local status, noteskin_actor_No = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, columnName, "Tap Note", ns)
 
-	if noteskin_actor_Re and noteskin_actor_No then
-		return Def.ActorFrame{
-			Name="NoteSkin_"..ns,
-				noteskin_actor_No..{
-					Name="TN",
-					InitCommand=function(self) self:visible(false) end;
-					NoteChangedMessageCommand=function(self,param)
-						local f = false
-						for i=1,#num_players do
-							if not f and NOTE[i]==ns then
-								f = true;
-							end
-						end
-						self:visible(f);
-					end;
-				},
-				noteskin_actor_Re..{
-					Name="Re",
-					InitCommand=function(self) self:visible(false) end;
-					NoteChangedMessageCommand=function(self,param)
-						local f = false
-						for i=1,#num_players do
-							if not f and NOTE[i]==ns then
-								f = true;
-							end
-						end
-						self:visible(f);
-					end;
-				}
-		}
+    noto = Def.ActorFrame{
+        Name = "NS_"..ns;
+
+    };
+
+    if noteskin_actor_Re then
+        noto[#noto + 1]= noteskin_actor_Re..{
+            Name="Rec",
+            InitCommand=function(self) self:visible(false) end;
+            NoteChangedMessageCommand=function(self,param)
+                local f = false
+                for i=1,#num_players do
+                    if not f and NOTE[i]==ns then
+                        f = true;
+                    end
+                end
+                self:visible(f);
+            end;
+        }
+    else
+        SM("There are Lua errors in your " .. ns .. " NoteSkin.\nYou should fix them, or delete the NoteSkin.")
+        noto[#noto + 1] = Def.Quad{
+            Name="Rec",
+            InitCommand=cmd(visible,false;zoomx,100;zoomy,2;fadeleft,0.5;faderight,0.5;);
+            NoteChangedMessageCommand=function(self,param)
+                local f = false
+                for i=1,#num_players do
+                    if not f and NOTE[i]==ns then
+                        f = true;
+                    end
+                end
+                self:visible(f);
+            end;
+        }
+    end
+
+	if noteskin_actor_No then
+		noto[#noto + 1] = noteskin_actor_No..{
+            Name="Tap",
+            InitCommand=function(self) self:visible(false) end;
+            NoteChangedMessageCommand=function(self,param)
+                local f = false
+                for i=1,#num_players do
+                    if not f and NOTE[i]==ns then
+                        f = true;
+                    end
+                end
+                self:visible(f);
+            end;
+        }
 	else
 		SM("There are Lua errors in your " .. ns .. " NoteSkin.\nYou should fix them, or delete the NoteSkin.")
-
-		return Def.ActorFrame{
-			Name="NoteSkin_"..ns,
-				LoadActor(THEME:GetPathG("","_Robot_Note")) .. {
-					Name="TN",
-					InitCommand=function(self) self:visible(false) end;
-					NoteChangedMessageCommand=function(self,param)
-						local f = false
-						for i=1,#num_players do
-							if not f and NOTE[i]==ns then
-								f = true;
-							end
-						end
-						self:visible(f);
-					end;
-				},
-				Def.Sprite {
-				Texture=THEME:GetPathG("_Down","Receptor");
-				Frame0000=0;
-				Delay0000=1;
-				Frame0001=1;
-				Delay0001=1;
-				Frame0002=2;
-				Delay0002=1;
-				Frame0003=3;
-				Delay0003=1;
-					Name="Re",
-					InitCommand=function(self) self:effectclock("beat") self:visible(false) end;
-					NoteChangedMessageCommand=function(self,param)
-						local f = false
-						for i=1,#num_players do
-							if not f and NOTE[i]==ns then
-								f = true;
-							end
-						end
-						self:visible(f);
-					end;
-				}
-		}
+		noto[#noto + 1] = LoadActor(THEME:GetPathG("","_Robot_Note")) .. {
+            Name="Tap",
+            InitCommand=function(self) self:visible(false) end;
+            NoteChangedMessageCommand=function(self,param)
+                local f = false
+                for i=1,#num_players do
+                    if not f and NOTE[i]==ns then
+                        f = true;
+                    end
+                end
+                self:visible(f);
+            end;
+        }
 	end
+
+
+    return noto
+
 end
 
 	t[#t+1] = Def.Quad{
@@ -152,7 +147,7 @@ for i=1,#num_players do
 				end,
 				NoteChangedMessageCommand=function(self,param)
 				if param.Player==num_players[i] then
-					local noteskin_actor = self:GetParent():GetParent():GetChild("NoteSkin_"..param.Noto):GetChild("Re")
+					local noteskin_actor = self:GetParent():GetParent():GetChild("NS_"..param.Noto):GetChild("Rec")
 					if noteskin_actor then
 						--SM("Founded "..param.Noto);
 						self:SetTarget( noteskin_actor )
@@ -207,7 +202,7 @@ for i=1,#num_players do
 				end,
 				NoteChangedMessageCommand=function(self,param)
 				if param.Player==num_players[i] then
-					local noteskin_actor = self:GetParent():GetParent():GetParent():GetChild("NoteSkin_"..param.Noto):GetChild("TN")
+					local noteskin_actor = self:GetParent():GetParent():GetParent():GetChild("NS_"..param.Noto):GetChild("Tap")
 					if noteskin_actor then
 						--SM("Founded "..param.Noto);
 						self:SetTarget( noteskin_actor )
