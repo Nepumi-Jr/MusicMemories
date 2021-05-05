@@ -29,8 +29,8 @@ local t = Def.ActorFrame{
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(0)
-						if SCREENMAN:GetTopScreen() and SCREENMAN:GetTopScreen():GetChild('LifeP'..(pn == PLAYER_1 and '1' or '2')) then
-							SCREENMAN:GetTopScreen():GetChild('LifeP'..(pn == PLAYER_1 and '1' or '2')):stoptweening():decelerate(0.5):diffusealpha(1)
+						if SCREENMAN:GetTopScreen() and SCREENMAN:GetTopScreen():GetChild('LifeP'..(PN == PLAYER_1 and '1' or '2')) then
+							SCREENMAN:GetTopScreen():GetChild('LifeP'..(PN == PLAYER_1 and '1' or '2')):stoptweening():decelerate(0.5):diffusealpha(1)
 						end
 						isHot = false;
 					end
@@ -39,8 +39,8 @@ local t = Def.ActorFrame{
 						self:GetChildren()["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						self:GetChildren()["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						self:GetChildren()["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(1)
-						if SCREENMAN:GetTopScreen() and SCREENMAN:GetTopScreen():GetChild('LifeP'..(pn == PLAYER_1 and '1' or '2')) then
-							SCREENMAN:GetTopScreen():GetChild('LifeP'..(pn == PLAYER_1 and '1' or '2')):stoptweening():decelerate(0.5):diffusealpha(0)
+						if SCREENMAN:GetTopScreen() and SCREENMAN:GetTopScreen():GetChild('LifeP'..(PN == PLAYER_1 and '1' or '2')) then
+							SCREENMAN:GetTopScreen():GetChild('LifeP'..(PN == PLAYER_1 and '1' or '2')):stoptweening():decelerate(0.5):diffusealpha(0)
 						end
 						isHot = true;
 					end

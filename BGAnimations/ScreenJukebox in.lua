@@ -36,30 +36,46 @@ local function Dim(pla)
 	end
 end;
 
-	local path = THEMEDIR().."/Resource/JudF"-- ThemeNamae That mean Theme's folder
-	local files = FILEMAN:GetDirListing(path.."/")
-	local JG = {}
+local function getAllJudge()
+    local paths = {THEMEDIR().."/Resource/JudF","/Appearance/Judgments"}
+	local judgmentGraphics = {}
+
+	if ThemePrefs.Get("JudgeStyle") == 3 or ThemePrefs.Get("JudgeStyle") == 4 then
+		table.insert(paths,1,"/Resource/JudF/SingleVer")
+	end
+
+	for _,v in pairs(paths) do
+
+		local files = FILEMAN:GetDirListing(v.."/")
 	
-	for k,filename in ipairs(files) do
-		if string.match(filename, " %dx%d.png") then
-			-- use regexp to get only the name of the graphic, stripping out the extension 
-			local name = filename:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", "")
-		
-			-- The 3_9 graphic is a special case;
-			if name == "3_9" then name = "3.9" end
-			-- Love is a special case; it should always be first.
-			-- Ps.These scripts from Simply Love XD
-			if name == "Love" then
-				table.insert(JG, 1, name)
-				--*Respect*
-			else
-				JG[#JG+1] = name
+		for k,filename in ipairs(files) do
+			
+			if string.match(filename, " %dx%d") and 
+			string.match(filename, ".png") and 
+			not string.match(filename, "%[ECFA%]") and 
+			not string.match(filename, "%[Pro%]") and
+			not string.match(filename, "%[Advanced%]") and
+			not string.match(filename, "%[FAPlus%]") then
+				-- The 3_9 graphic is a special case;
+				filename = filename:gsub("3_9","3.9")
+				-- Love is a special case; it should always be first.
+				-- Ps.These scripts from Simply Love XD
+				if string.match(filename, "Love") then
+					table.insert(judgmentGraphics, 1, filename)
+					--*Respect*
+				else
+					judgmentGraphics[#judgmentGraphics+1] = filename
+				end
 			end
 		end
+
 	end
-	
-	local CLC = {"White","Red","Orange","Yellow","Green","Greener","SkyBlue","Blue","Purple","Magenta","Pink"};
-	local NS = NOTESKIN:GetNoteSkinNames();
+
+    return judgmentGraphics
+end
+
+local JG = 	getAllJudge();
+local NS = NOTESKIN:GetNoteSkinNames();
 	
 LoadActor("../Resource/mods-taro.lua");
 return Def.ActorFrame{
@@ -69,7 +85,6 @@ return Def.ActorFrame{
 			taronuke_mods("*999 "..SpeedDet(player).."x",tonumber(string.sub(ToEnumShortString(player),2,string.len(ToEnumShortString(player)))))
 			taronuke_mods("*999 "..Dim(player).."% Cover",tonumber(string.sub(ToEnumShortString(player),2,string.len(ToEnumShortString(player)))))
 			TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic = JG[math.random(1,#JG)]
-			TP[ToEnumShortString(player)].ActiveModifiers.ComboColorstring = CLC[math.random(1,#CLC)]
 			GAMESTATE:ApplyGameCommand('mod,'..NS[math.random(1,#NS)],tonumber(string.sub(ToEnumShortString(player),2,string.len(ToEnumShortString(player)))))
 		end
 	end;
