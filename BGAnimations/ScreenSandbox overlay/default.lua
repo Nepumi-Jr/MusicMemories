@@ -32,5 +32,8 @@ t[#t+1]=Def.Quad{
 	OnCommand=cmd(visible,false;sleep,9999999);
 };
 
-t[#t+1] = LoadActor("Noting");
+t[#t+1] = LoadActor("StarVector");
+
+
+
 return t;

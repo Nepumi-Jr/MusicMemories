@@ -676,7 +676,6 @@ end
 
 
 function printf(SF,...)
-
 	SCREENMAN:SystemMessage("\n\n\n\n\n"..string.format(tostring(SF),...))
 end
 

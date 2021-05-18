@@ -1,3 +1,4 @@
+local verts
 local t = Def.ActorFrame{
     Def.ActorMultiVertex{
         InitCommand=function(self)

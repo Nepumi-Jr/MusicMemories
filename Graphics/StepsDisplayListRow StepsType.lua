@@ -46,7 +46,7 @@ local t = Def.ActorFrame{
             SetMessageCommand=function(self)
                 self:visible(#picList >= 1)
                 self:Load(picList[1])
-                if string.find( picList[1],"(res 64x64)") then self:zoom(0.64) end --bruh
+                if picList[1] and string.find( picList[1],"(res 64x64)") then self:zoom(0.64) end --bruh
             end;
         };
         Def.Sprite{
@@ -55,7 +55,7 @@ local t = Def.ActorFrame{
             SetMessageCommand=function(self)
                 self:visible(#picList >= 2)
                 self:Load(picList[2])
-                if string.find( picList[2],"(res 64x64)") then self:zoom(0.64) end --bruh
+                if picList[2] and string.find( picList[2],"(res 64x64)") then self:zoom(0.64) end --bruh
             end;
         };
         Def.Sprite{
@@ -64,7 +64,7 @@ local t = Def.ActorFrame{
             SetMessageCommand=function(self)
                 self:visible(#picList >= 3)
                 self:Load(picList[3])
-                if string.find( picList[3],"(res 64x64)") then self:zoom(0.64) end --bruh
+                if picList[3] and string.find( picList[3],"(res 64x64)") then self:zoom(0.64) end --bruh
             end;
         };
     };

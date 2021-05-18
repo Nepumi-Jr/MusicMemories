@@ -1,6 +1,7 @@
 
 local Timu = 0
 local Dayy = 0
+local thisPath = THEMEDIR().."/Graphics/Global Background/"
 
 local function DayNight(self)
 	local this = self:GetChildren()
@@ -37,14 +38,15 @@ local t = Def.ActorFrame{
 		InitCommand=cmd(Center;zoom,1;diffuse,{1,1,1,1};texcoordvelocity,0.0003,0;);
 	};
 
-
-
-	
 };
+
+local function loadVectorStar(bigPath)
+    return LoadActor("StarVector.lua",bigPath);
+end
 
 local function PicDlcRand()
 
-	local path = THEMEDIR().."/BGAnimations/ScreenWithMenuElements background/DLC/"
+	local path = thisPath.."DLC/"
 	local files = FILEMAN:GetDirListing(path)
 
 	local LL = {}
@@ -66,13 +68,14 @@ local Stars = Def.ActorFrame{
 for i = 1,100 do
 
 	if math.random(1,10) == 1 then
-		Stars[#Stars+1] = LoadActor(PicDlcRand())..{
-			InitCommand=cmd(zoom,math.random(1,10)/10*0.5;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30;rotationz,math.random(-60,60));
+		Stars[#Stars+1] = Def.ActorFrame{
+            InitCommand=cmd(zoom,math.random(1,10)/10*0.5;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30;rotationz,math.random(-60,60));
 			OnCommand=cmd(effectclock,"beat";diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.2};effectperiod,16;effectoffset,math.random(1,8));
-		};
+            loadVectorStar(PicDlcRand());
+        };
 	else
-		Stars[#Stars+1] = LoadActor("Aura.png")..{
-			InitCommand=cmd(zoom,math.random(1,10)/10*0.01;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30);
+		Stars[#Stars+1] = LoadActor("LittleCircle.png")..{
+			InitCommand=cmd(zoom,math.random(30,70)/50/8;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30);
 			OnCommand=cmd(effectclock,"beat";diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.2};effectperiod,16;effectoffset,math.random(1,8));
 		};
 	end
@@ -82,12 +85,12 @@ end
 t[#t+1] = Stars;
 
 local function GameTypePic()
-	local path = THEMEDIR().."/BGAnimations/ScreenWithMenuElements background/Star_"
+	local path = thisPath.."GameMode/"
 
-	if FILEMAN:DoesFileExist(path..GAMESTATE:GetCurrentGame():GetName()..".png") then
-		return "Star_"..GAMESTATE:GetCurrentGame():GetName()..".png"
+	if FILEMAN:DoesFileExist(path..GAMESTATE:GetCurrentGame():GetName()..".lua") then
+		return "GameMode/"..GAMESTATE:GetCurrentGame():GetName()..".lua"
 	else
-		return "DLC/OutFox.png"
+		return "GameMode/OutFox.lua"
 	end
 
 
@@ -96,9 +99,10 @@ end
 
 --GAMESTATE:GetCurrentSong()
 
-t[#t+1]=LoadActor(GameTypePic())..{
-	InitCommand=cmd(x,math.random(100,200);y,math.random(250,300);zoom,0.75;diffusealpha,0.75;rotationz,math.random(0,35));
+t[#t+1]=Def.ActorFrame{
+    InitCommand=cmd(x,math.random(100,200);y,math.random(250,300);zoom,0.75;diffusealpha,0.75;rotationz,math.random(0,35));
 	OnCommand=cmd(wag;effectmagnitude,0,0,5;effectclock,"beat";effectperiod,32);
+    loadVectorStar(GameTypePic());
 };
 
 

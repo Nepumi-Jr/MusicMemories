@@ -62,11 +62,6 @@ local URITG = false
 local URTOR = false
 local CMDofCB = {}
 
-if string.match( string.lower(TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic), "thai") then
-	FN = "Isla/_chakra petch thai semibold 72px";
-	FM = "Isla/_chakra petch thai semibold 72px";
-end
-
 --Use to find Y Position for Bouncing :D
 CMDofCB[1] = THEME:GetMetric("Combo", "Numbertor12315OnCommand");
 CMDofCB[2] = THEME:GetMetric("Combo", "Numbermisstor12315OnCommand");
@@ -128,11 +123,11 @@ local t = Def.ActorFrame {};
 		LoadFont(FN) .. {
 			Name="Number";
 			OnCommand = CMDofCB[1];
-		WaitCommand=function(self)
-		self:sleep(GSB())
-		self:y(240-216-1.5);
-		self:queuecommand("GoO")
-		end;
+            WaitCommand=function(self)
+            self:sleep(GSB())
+            self:y(240-216-1.5);
+            self:queuecommand("GoO")
+            end;
 		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
 		};
 		LoadFont(FM) .. {
@@ -143,6 +138,16 @@ local t = Def.ActorFrame {};
 		self:y(240-216-1.5);
 		self:queuecommand("GoO")
 		end;
+		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
+		};
+        LoadFont("Isla/_chakra petch semibold overlay 72px") .. {
+			Name="NumberOverlay";
+			OnCommand = CMDofCB[1];
+            WaitCommand=function(self)
+            self:sleep(GSB())
+            self:y(240-216-1.5);
+            self:queuecommand("GoO")
+            end;
 		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
 		};
 		LoadActor(CL)..{
@@ -165,6 +170,7 @@ local t = Def.ActorFrame {};
 		c = self:GetChildren();
 		cf = c.ComboFrame:GetChildren();
 		cf.Number:visible(false);
+        cf.NumberOverlay:visible(false);
 		cf.MaxCombo:visible(SubType == "Mc")
 		cf.Misses:visible(false);
 		cf.ComboLabel:visible(false)
@@ -182,6 +188,7 @@ local t = Def.ActorFrame {};
 		if not iCombo or iCombo < ShowComboAt then
 			cf.Number:visible(false);
 			cf.Misses:visible(false);
+            cf.NumberOverlay:visible(false);
 			cf.ComboLabel:visible( false)
 			cf.MissLabel:visible( false)
 			return;
@@ -213,33 +220,27 @@ local t = Def.ActorFrame {};
 		end
 		cf.MaxCombo:settext( string.format("MC : %i", MaxCom) );
 		cf.Number:settext( string.format("%i", iCombo) );
+        cf.NumberOverlay:settext( string.format("%i", iCombo) );
 		cf.Misses:settext( string.format("%i", iCombo) );
-        cf.Number:textglowmode("TextGlowMode_Stroke");
-		cf.MaxCombo:textglowmode("TextGlowMode_Stroke");
 
 
 		local SA = CurStageAward(player);
 
 		if string.find( SA,"W1") then
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor(GameColor.Judgment["JudgmentLine_W1"]);
+            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W1"]);
 		elseif string.find( SA,"W2") then
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor(GameColor.Judgment["JudgmentLine_W2"]);
+            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W2"]);
 		elseif string.find( SA,"W3") then
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor(GameColor.Judgment["JudgmentLine_W3"]);
+			cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W3"]);
 		elseif string.find( SA,"Choke") then
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor(GameColor.Judgment["JudgmentLine_W4"]);
+            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W4"]);
 		elseif string.find( SA,"NoMiss") then
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor(GameColor.Judgment["JudgmentLine_W5"]);
+			cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W5"]);
 		else
-			cf.Number:textglowmode("TextGlowMode_Stroke");
-            cf.Number:strokecolor({0,0,0,1});
+			cf.NumberOverlay:diffuse({0,0,0,1});
 		end
 
+        
 
 		if param.Combo then
 			cf.Number:diffuse({1,1,1,1});
@@ -250,6 +251,8 @@ local t = Def.ActorFrame {};
 			cf.Misses:visible(true);
 			cf.Number:visible(false);
 		end
+
+        cf.NumberOverlay:visible(true);
 		
 		if iCombo > Grace and param.Combo then
 			Grace = iCombo
@@ -264,6 +267,7 @@ local t = Def.ActorFrame {};
 			end
 		end
 		-- Pulse
+        Pulse( cf.NumberOverlay, param );
 		Pulse( cf.Number, param );
 		Pulse( cf.Misses, param );
 		
@@ -299,10 +303,13 @@ local t = Def.ActorFrame {};
 		
 		
 		cf.Number:y(240-216-1.5-5);
+        cf.NumberOverlay:y(240-216-1.5-5);
 		cf.Misses:y(240-216-1.5-5);
 
 		cf.Number:stopeffect()
 		cf.Number:queuecommand("Wait")
+        cf.NumberOverlay:stopeffect()
+		cf.NumberOverlay:queuecommand("Wait")
 		cf.Misses:stopeffect()
 		cf.Misses:queuecommand("Wait")
 		
