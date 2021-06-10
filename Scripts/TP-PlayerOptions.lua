@@ -28,7 +28,8 @@ function PlayerJudgment()
 			not string.match(filename, "%[ECFA%]") and 
 			not string.match(filename, "%[Pro%]") and
 			not string.match(filename, "%[Advanced%]") and
-			not string.match(filename, "%[FAPlus%]") then
+			not string.match(filename, "%[FAPlus%]") and
+			not string.match(filename, "%[Hold%]") then
 				-- The 3_9 graphic is a special case;
 				filename = filename:gsub("3_9","3.9")
 				-- Love is a special case; it should always be first.

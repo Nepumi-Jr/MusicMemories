@@ -161,51 +161,19 @@ STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapN
 local Op1 = TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.JudgmentGraphic;
 local jud1 = GetPicJudPath(Op1);
 local frame1 = true;
-local GradeforP1 = "MemoriesHD 4x2.png"--in 589
 local nameP1 = PROFILEMAN:GetProfile(PLAYER_1):GetDisplayName();
-if MonthOfYear() == 10-1 and DayOfMonth() == 31 then
-	GradeforP1 = "Horror 4x2.png"
-end
-
 local StepText1 = "";
 local Step1;
 local StepSt1;
 
+
 if GAMESTATE:IsCourseMode() then
-			if GAMESTATE:GetCurrentTrail(PLAYER_1):GetDifficulty() == "Difficulty_Beginner" then
-			Step1 = "Beginer";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_1):GetDifficulty() == "Difficulty_Easy" then
-			Step1 = "Easy";
-			elseif GAMESTATE:GetCurrentTrail(PLAYER_1):GetDifficulty() == "Difficulty_Medium" then
-			Step1 = "Normal";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_1):GetDifficulty() == "Difficulty_Hard" then
-			Step1 = "Hard";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_1):GetDifficulty() == "Difficulty_Challenge" then
-			Step1 = "Expert";
-			end
-	StepText1 = GAMESTATE:GetCurrentTrail(PLAYER_1):GetMeter().." : "..Step1
-	StepSt1 = GAMESTATE:GetCurrentTrail(PLAYER_1);
+    StepSt1 = GAMESTATE:GetCurrentTrail(PLAYER_1);
 else
-			if GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Beginner" then
-			Step1 = "Beginer";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Easy" then
-			Step1 = "Easy";
-			elseif GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Medium" then
-			Step1 = "Normal";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Hard" then
-			Step1 = "Hard";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Challenge" then
-			Step1 = "Expert";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Edit" then
-				if GAMESTATE:GetCurrentSteps(PLAYER_1):GetDescription() == "" then
-			Step1 = "edit";
-				else
-			Step1 = GAMESTATE:GetCurrentSteps(PLAYER_1):GetDescription();
-				end
-			end
-	StepText1 = GAMESTATE:GetCurrentSteps(PLAYER_1):GetMeter().." : "..Step1
 	StepSt1 = GAMESTATE:GetCurrentSteps(PLAYER_1);
 end
+
+StepText1 = THEME:GetString("CustomDifficulty",ToEnumShortString(StepSt1:GetDifficulty())).." : "..StepSt1:GetMeter()
 
 
 SS1[7] = SS1[1]+SS1[2]+SS1[3]+SS1[4]+SS1[5]+SS1[6];
@@ -214,6 +182,7 @@ Condition = GAMESTATE:IsPlayerEnabled(PLAYER_1);
 	Def.ActorFrame{
 		OnCommand=cmd(x,-297;y,210;zoomx,680/794;zoomy,263/256);
 			StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(PLAYER_1), GraphDisplay(PLAYER_1) );
+            --StandardDecorationFromTable( "ComboGraph" .. ToEnumShortString(PLAYER_1));
 			--BG
 			Def.ActorFrame{
 			Def.ActorFrame{
@@ -302,42 +271,42 @@ Condition = GAMESTATE:IsPlayerEnabled(PLAYER_1);
 
 Def.ActorFrame{
 	InitCommand=cmd(x,-440;y,-5);
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(0*1) else
 			self:setstate(0) end end; 
 	};
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110+22*1;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(1*2) else
 			self:setstate(1) end end; 
 	};
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110+22*2;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(2*2) else
 			self:setstate(2) end end; 
 	};
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110+22*3;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(3*2) else
 			self:setstate(3) end end; 
 	};
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110+22*4;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(4*2) else
 			self:setstate(4) end end; 
 	};
-Def.Sprite{
+    Def.Sprite{
 		InitCommand=cmd(x,500;y,110+22*5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
@@ -346,14 +315,17 @@ Def.Sprite{
 	};
 };
 
-	
+Def.Quad{
+    InitCommand=cmd(y,SCREEN_CENTER_Y*0.3;horizalign,left;zoomx,170;zoomy,25;faderight,1;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+};
+
 LoadFont("Common Normal")..{
-InitCommand=cmd(x,20;y,SCREEN_CENTER_Y*0.3;horizalign,left;zoom,1;shadowlength,2);
-OnCommand=cmd(settext,StepText1;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+InitCommand=cmd(x,10;y,SCREEN_CENTER_Y*0.3;horizalign,left;zoom,1;shadowlength,2);
+OnCommand=cmd(settext,StepText1;);
 };
 	
 
-LoadFont("Common normal")..{
+--[[LoadFont("Common normal")..{
 	InitCommand=cmd(x,200;y,110+22*0;zoom,0.8;shadowlength,2;settext,"Hold:");
 };
 LoadFont("Common normal")..{
@@ -377,18 +349,17 @@ LoadFont("Common normal")..{
 };
 LoadFont("Common normal")..{
 	InitCommand=cmd(x,200;y,110+22*3;zoom,0.8;shadowlength,2;settext,"MC:");
-};
+};]]
 
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() or "lose")..".png")..{
-Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() ~= nil);
-InitCommand=cmd(x,170;y,70;zoom,0.5;shadowlength,2);
+    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() ~= nil);
+    InitCommand=cmd(x,205;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
+    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
 };
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() or "lose")..".png")..{
-Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() ~= nil);
-InitCommand=cmd(x,170+50;y,70;zoom,0.5;shadowlength,2);
-};
-LoadActor("ICON/"..(ISMISSION1 and "MISSION_"..PnMissionState(PLAYER_1,STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1)) or "lose")..".png")..{
-InitCommand=cmd(x,170+50*2;y,70;zoom,0.5;shadowlength,2);
+    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() ~= nil);
+    InitCommand=cmd(x,250;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
+    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
 };
 
 
@@ -422,7 +393,7 @@ STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapN
 0
 };
 
-local Op2 = TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.JudgmentGraphic;
+local Op2 = TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.JudgmentGraphic;
 local jud2 = GetPicJudPath(Op2);
 local frame2 = true;
 local GradeforP2 = "MemoriesHD 4x2.png"--in 589
@@ -436,40 +407,12 @@ local Step2;
 local StepSt2;
 
 if GAMESTATE:IsCourseMode() then
-			if GAMESTATE:GetCurrentTrail(PLAYER_2):GetDifficulty() == "Difficulty_Beginner" then
-			Step2 = "Beginer";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_2):GetDifficulty() == "Difficulty_Easy" then
-			Step2 = "Easy";
-			elseif GAMESTATE:GetCurrentTrail(PLAYER_2):GetDifficulty() == "Difficulty_Medium" then
-			Step2 = "Normal";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_2):GetDifficulty() == "Difficulty_Hard" then
-			Step2 = "Hard";
-			elseif  GAMESTATE:GetCurrentTrail(PLAYER_2):GetDifficulty() == "Difficulty_Challenge" then
-			Step2 = "Expert";
-			end
-	StepText2 = GAMESTATE:GetCurrentTrail(PLAYER_2):GetMeter().." : "..Step2
-	StepSt2 = GAMESTATE:GetCurrentTrail(PLAYER_2);
+    StepSt2 = GAMESTATE:GetCurrentTrail(PLAYER_2);
 else
-			if GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Beginner" then
-			Step2 = "Beginer";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Easy" then
-			Step2 = "Easy";
-			elseif GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Medium" then
-			Step2 = "Normal";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Hard" then
-			Step2 = "Hard";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Challenge" then
-			Step2 = "Expert";
-			elseif  GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Edit" then
-				if GAMESTATE:GetCurrentSteps(PLAYER_2):GetDescription() == "" then
-			Step2 = "edit";
-				else
-			Step2 = GAMESTATE:GetCurrentSteps(PLAYER_2):GetDescription();
-				end
-			end
-	StepText2 = GAMESTATE:GetCurrentSteps(PLAYER_2):GetMeter().." : "..Step1
 	StepSt2 = GAMESTATE:GetCurrentSteps(PLAYER_2);
 end
+
+StepText2 = THEME:GetString("CustomDifficulty",ToEnumShortString(StepSt2:GetDifficulty())).." : "..StepSt2:GetMeter()
 
 
 SS2[7] = SS2[1]+SS2[2]+SS2[3]+SS2[4]+SS2[5]+SS2[6];
@@ -611,14 +554,18 @@ Def.Sprite{
 };	
 
 	
+Def.Quad{
+    InitCommand=cmd(x,SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoomx,170;zoomy,25;fadeleft,1;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+};
 
 LoadFont("Common Normal")..{
-InitCommand=cmd(x,CX*2-20;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoom,1;shadowlength,2);
-OnCommand=cmd(settext,StepText2;diffuse,GameColor.Difficulty[StepSt2:GetDifficulty()]);
+InitCommand=cmd(x,SCREEN_RIGHT-10;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoom,1;shadowlength,2);
+OnCommand=cmd(settext,StepText2;);
 };
+
 	
 
-LoadFont("Common normal")..{
+--[[LoadFont("Common normal")..{
 	InitCommand=cmd(x,CX*2-200;y,110+22*0;zoom,0.8;shadowlength,2;settext,"Hold:");
 };
 LoadFont("Common normal")..{
@@ -642,18 +589,17 @@ LoadFont("Common normal")..{
 };
 LoadFont("Common normal")..{
 	InitCommand=cmd(x,CX*2-200;y,110+22*3;zoom,0.8;shadowlength,2;settext,"MC:");
-};
+};]]
 
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() or "lose")..".png")..{
-Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() ~= nil);
-InitCommand=cmd(x,CX*2-170;y,70;zoom,0.5;shadowlength,2);
+    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() ~= nil);
+    InitCommand=cmd(x,SCREEN_CENTER_X + 175;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
+    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
 };
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() or "lose")..".png")..{
-Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() ~= nil);
-InitCommand=cmd(x,CX*2-170-50;y,70;zoom,0.5;shadowlength,2);
-};
-LoadActor("ICON/"..(ISMISSION1 and "MISSION_"..PnMissionState(PLAYER_2,STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2)) or "lose")..".png")..{
-InitCommand=cmd(x,CX*2-170-50*2;y,70;zoom,0.5;shadowlength,2);
+    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() ~= nil);
+    InitCommand=cmd(x,SCREEN_CENTER_X + 175 + 45;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
+    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
 };
 
 	

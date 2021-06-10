@@ -1,4 +1,4 @@
-local fac = 8;
+local fac = 20;
 local CX = SCREEN_CENTER_X;
 local CY = SCREEN_CENTER_Y;
 local x = Def.ActorFrame{

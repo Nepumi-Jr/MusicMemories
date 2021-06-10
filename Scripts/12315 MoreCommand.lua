@@ -400,21 +400,21 @@ return O
 end
 
 function CTD(P)
-local O = ""
-if DTT(P) == "Beginer" then
-O = color("#ffAAAA")
-elseif DTT(P) == "Easy" then
-O = color("#55ff55")
-elseif DTT(P) == "Normal" then
-O = color("#fFff22")
-elseif DTT(P) == "Hard" then
-O = color("#ff4444")
-elseif DTT(P) == "Metal" then
-O = color("#CCCCff")
-else
-O = color("#AAAAAA")
-end
-return O
+    local O = ""
+    if DTT(P) == "Beginer" then
+        O = color("#ffAAAA")
+    elseif DTT(P) == "Easy" then
+        O = color("#55ff55")
+    elseif DTT(P) == "Normal" then
+        O = color("#fFff22")
+    elseif DTT(P) == "Hard" then
+        O = color("#ff4444")
+    elseif DTT(P) == "Metal" then
+        O = color("#CCCCff")
+    else
+        O = color("#AAAAAA")
+    end
+    return O
 end	
 
 function GM(P)
@@ -505,11 +505,11 @@ end
 
 
 function ModeSelect()
-if TP.Battle.IsBattle then
-return "Normal,Nonstop"
-else
-return "Normal,Rave,Nonstop,Oni,Endless";
-end
+    if TP.Battle.IsBattle then
+        return "Normal,Nonstop"
+    else
+        return "Normal,Rave,Nonstop,Oni,Endless";
+    end
 end;
 
 
@@ -637,17 +637,20 @@ end
 
 
 function CurStageAward(pn)
-	local W1 = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_W1")
-	local W2 = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_W2")
-	local W3 = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_W3")
-	local W4 = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_W4")
-	local W5 = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_W5")
-	local Mi = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_Miss")
-	local Cp = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_CheckpointHit")
-	local Cm = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetTapNoteScores("TapNoteScore_CheckpointMiss")
 
-	local Hd = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetHoldNoteScores("HoldNoteScore_Held")
-	local Lg = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetHoldNoteScores("HoldNoteScore_LetGo")
+    local stageStat = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+
+	local W1 = stageStat:GetTapNoteScores("TapNoteScore_W1")
+	local W2 = stageStat:GetTapNoteScores("TapNoteScore_W2")
+	local W3 = stageStat:GetTapNoteScores("TapNoteScore_W3")
+	local W4 = stageStat:GetTapNoteScores("TapNoteScore_W4")
+	local W5 = stageStat:GetTapNoteScores("TapNoteScore_W5")
+	local Mi = stageStat:GetTapNoteScores("TapNoteScore_Miss")
+	local Cp = stageStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
+	local Cm = stageStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+
+	local Hd = stageStat:GetHoldNoteScores("HoldNoteScore_Held")
+	local Lg = stageStat:GetHoldNoteScores("HoldNoteScore_LetGo")
 
 
 	if W2+W3+W4+W5+Mi+Cm+Lg == 0 then
@@ -683,19 +686,19 @@ end
 function getJudgeAnimation(judgeName)--eg OutFox [double] 2x6 (res 640x516).png
 	--Default
 	local result = {
-		W1LateCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
-		W2LateCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W3LateCommand = cmd(finishtweening;rotationz,5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W4LateCommand = cmd(finishtweening;rotationz,7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W5LateCommand = cmd(finishtweening;rotationz,15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		MissLateCommand = cmd(finishtweening;rotationz,25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+        W1LateCommand = THEME:GetMetric( "Judgment", "W1LateCommand");
+		W2LateCommand = THEME:GetMetric( "Judgment", "W2LateCommand");
+		W3LateCommand = THEME:GetMetric( "Judgment", "W3LateCommand");
+		W4LateCommand = THEME:GetMetric( "Judgment", "W4LateCommand");
+		W5LateCommand = THEME:GetMetric( "Judgment", "W5LateCommand");
+		MissLateCommand = THEME:GetMetric( "Judgment", "MissLateCommand");
 	
-		W1EarlyCommand = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;diffusealpha,0;);
-		W2EarlyCommand = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W3EarlyCommand = cmd(finishtweening;rotationz,-5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W4EarlyCommand = cmd(finishtweening;rotationz,-7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		W5EarlyCommand = cmd(finishtweening;rotationz,-15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;diffusealpha,0;);
-		MissEarlyCommand = cmd(finishtweening;rotationz,-25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;diffusealpha,0);
+		W1EarlyCommand = THEME:GetMetric( "Judgment", "W1EarlyCommand");
+		W2EarlyCommand = THEME:GetMetric( "Judgment", "W2EarlyCommand");
+		W3EarlyCommand = THEME:GetMetric( "Judgment", "W3EarlyCommand");
+		W4EarlyCommand = THEME:GetMetric( "Judgment", "W4EarlyCommand");
+		W5EarlyCommand = THEME:GetMetric( "Judgment", "W5EarlyCommand");
+		MissEarlyCommand = THEME:GetMetric( "Judgment", "MissEarlyCommand");
 	};
 
 	if not ThemePrefs.Get("CustomJudgeAnimation") then

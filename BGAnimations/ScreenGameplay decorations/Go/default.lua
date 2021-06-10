@@ -1,7 +1,6 @@
-if ThemePrefs.Get("StartSongStyle") >= 2 then
+if ThemePrefs.Get("StartSongStyle") < 2 then
     return Def.ActorFrame{}
 end
-
 
 
 local PPeng;
@@ -43,52 +42,19 @@ local PX = 0;
 local PY = 0;
 
 local function doRIP(this, offset)
-    for i = 1,3 do
-        this["Count"..tostring(i)]:visible(false)
-    end
-    this["Go!"]:decelerate(offset/3):diffusealpha(0)
+    this["Go!"]:decelerate(offset):diffusealpha(0)
 
+    this["Go!"]:GetChild("G"):x(-37):zoom(1):decelerate(offset):y(20):zoom(0.95)
+    this["Go!"]:GetChild("o"):x(37):zoom(1):decelerate(offset):y(20):zoom(0.95)
+    this["Go!"]:GetChild("!"):x(85):zoom(1):decelerate(offset):y(20):zoom(0.95)
 end;
 
-local function doAnimationIn(this, offset, dir)
-    local thisSym = this:GetChild("Sym");
-    thisSym:linear((offset)*0.25):diffusealpha(0.7)
-    
-    if dir == "R" then
-        this:x(CX-100):decelerate(offset):x(CX)
-    else
-        this:x(CX+100):decelerate(offset):x(CX)
-    end
+local function doGo(this, offset)
+    this["Go!"]:linear(offset):diffusealpha(1)
 
-end;
-
-local function doAnimationOut(this, offset, dir)
-    local thisSym = this:GetChild("Sym");
-    thisSym:linear((offset)*0.25):diffusealpha(0)
-    
-    if dir == "R" then
-        this:x(CX):decelerate(offset):x(CX+10)
-    else
-        this:x(CX):decelerate(offset):x(CX-10)
-    end
-end;
-
-local function doCount(this, numCrt)
-    --printf("CRT %d...\n",numCrt);
-    thisOffset = TFB(FB-(numCrt))-TFB(FB-(numCrt+1))
-    if numCrt == 3 then
-        doAnimationIn(this["Count3"], thisOffset,"R")
-    elseif numCrt == 2 then
-        doAnimationOut(this["Count3"], thisOffset,"R")
-        doAnimationIn(this["Count2"], thisOffset,"L")
-    elseif numCrt == 1 then
-        doAnimationOut(this["Count2"], thisOffset,"L")
-        doAnimationIn(this["Count1"], thisOffset,"R")
-    else
-        doAnimationOut(this["Count1"], thisOffset,"R")
-
-        this["Go!"]:linear((thisOffset)*0.25):diffusealpha(1)
-    end
+    this["Go!"]:GetChild("G"):x(-37-15):zoom(0.95):decelerate(offset):x(-37):zoom(1)
+    this["Go!"]:GetChild("o"):x(37):zoom(0.95):decelerate(offset):x(37):zoom(1)
+    this["Go!"]:GetChild("!"):x(85+15):zoom(0.95):decelerate(offset):x(85):zoom(1)
 end;
 
 
@@ -120,34 +86,16 @@ local Tune = Def.ActorFrame{
     end;
     NepCommand=function(self)
         this = self:GetChildren()
-        
-        if GAMESTATE:GetSongBeat() >= FB then
-            if not Y[5] then
-                doRIP(this, TFB(FB+1)-TFB(FB))
-                Y[5] = true
-            end
-        elseif GAMESTATE:GetSongBeat() >= FB-1 then
+        if GAMESTATE:GetSongBeat() >= FB-1 then
         --self:settext("GOO")
             if not Y[1] then
-                doCount(this, 0)
+                doRIP(this, TFB(FB)-TFB(FB-1))
                 Y[1] = true
-            end
-        elseif GAMESTATE:GetSongBeat() >= FB-2 then
-        --self:settext("1")
-            if not Y[2] then
-                doCount(this, 1)
-                Y[2] = true
-            end
-        elseif GAMESTATE:GetSongBeat() >= FB-3 then
-        --self:settext("2")
-            if not Y[3] then
-                doCount(this, 2)
-                Y[3] = true
             end
         elseif GAMESTATE:GetSongBeat() >= FB-4 then
         --self:settext("3")
             if not Y[4] then
-                doCount(this, 3)
+                doGo(this, TFB(FB-3)-TFB(FB-4))
                 Y[4] = true
             end
         end
@@ -155,6 +103,8 @@ local Tune = Def.ActorFrame{
             self:sleep(1/30):queuecommand("Nep")
         end
     end;
+
+
 };
 
 for i = 1,3 do

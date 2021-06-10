@@ -1,4 +1,9 @@
 
+if ThemePrefs.Get("StartSongStyle") == 4 then
+    return Def.ActorFrame{}
+end
+
+
 local PPeng;
 if GAMESTATE:IsCourseMode() then
 PPeng = GAMESTATE:GetCurrentCourse():GetCourseEntry(0):GetSong();
@@ -18,8 +23,10 @@ local cha = PREFSMAN:GetPreference('GlobalOffsetSeconds')*2;
 local Stat = 0;
 local Pat = THEMEDIR().."/BGAnimations/ScreenGameplay overlay/SoundReady/";
 function LentSeng(num)
-		if num == 4 then
+        if num == 4 then
 			SOUND:PlayOnce(Pat.."readyOr.mp3");
+        elseif ThemePrefs.Get("StartSongStyle") == 1 or ThemePrefs.Get("StartSongStyle") == 2 then
+            return
 		elseif num == 3 then
 			SOUND:PlayOnce(Pat.."Tick.wav");
 		elseif num == 2 then

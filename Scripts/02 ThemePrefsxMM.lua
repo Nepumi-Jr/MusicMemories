@@ -92,6 +92,12 @@ local Prefs =
 		Choices = { OptionNameString('Off'), OptionNameString('On') },
 		Values = { false, true }
 	},
+    StartSongStyle =
+	{
+		Default = 0,
+		Choices = { "321/wSound", "321 no sound", "Just go (old school style)", "Just go (321 ticks)", "Just go no sound"},
+		Values = { 0 , 1 , 2, 3, 4 }
+	},
 	
 	CustomJudgeAnimation =
 	{

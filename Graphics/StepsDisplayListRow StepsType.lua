@@ -16,7 +16,7 @@ local t = Def.ActorFrame{
 
             sStep = param.StepsType;
             
-            printf("%s",ToEnumShortString(sStep))
+            --printf("%s",ToEnumShortString(sStep))
             
             picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Step",ToEnumShortString(sStep))
 

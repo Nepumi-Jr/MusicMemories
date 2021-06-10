@@ -517,8 +517,10 @@ function ScaleColor(num,l,r,cl,cr)
 end
 
 function ColorTone(c)
-	local sum = c[1] + c[2] + c[3];
-	if sum > 1.5 then
+    -- Y = 0.299 R + 0.587 G + 0.114 B
+	local sum = 0.299 * c[1] + 0.587 * c[2] + 0.114 * c[3];
+
+	if sum > 0.5 then
 		return {0,0,0,c[4]}
 	else
 		return {1,1,1,c[4]}
