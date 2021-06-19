@@ -78,7 +78,45 @@ for i = 1,2 do
 end
 
 
+local function createCircleGraph(innerSize, outerRadius, colorInactive, colorActive, percent)
+    return Def.ActorMultiVertex{
+        InitCommand=function(self)
+            self:SetDrawState{Mode="DrawMode_Quads"}:SetVertices(verts)
+        end;
+        OnCommand=function(self)
+            local angIter = -90
+            local angPlus = 1
+            percent = 12
 
+            verts = {}
+
+            while angIter <= 270 do
+                
+                local selectedColor = colorActive
+                if percent <= (angIter + 90)*100/360 then
+                    selectedColor = colorInactive
+                end
+                local px = innerSize * math.cos(angIter/180*math.pi);
+                local py = innerSize * math.sin(angIter/180*math.pi);
+                local nx = innerSize * math.cos((angIter + angPlus)/180*math.pi);
+                local ny = innerSize * math.sin((angIter + angPlus)/180*math.pi);
+
+                local dx = outerRadius * math.cos(angIter/180*math.pi);
+                local dy = outerRadius * math.sin(angIter/180*math.pi);
+                local dx2 = outerRadius * math.cos((angIter + angPlus)/180*math.pi);
+                local dy2 = outerRadius * math.sin((angIter + angPlus)/180*math.pi);
+
+                table.insert( verts,{{px, py,0}, selectedColor })
+                table.insert( verts,{{px + dx, py + dy, 0}, selectedColor })
+                table.insert( verts,{{nx + dx2, ny + dy2, 0}, selectedColor })
+                table.insert( verts,{{nx, ny, 0}, selectedColor })
+                angIter = angIter + angPlus;
+            end
+
+            self:SetNumVertices(#verts):SetVertices( verts )
+        end;
+    };
+end;
 
 
 
@@ -330,6 +368,8 @@ for i = 1,2 do
                 };
                 
             };
+
+            --createCircleGraph(100,10,{1,0,0,1},{0,1,0,1},37);
             
 		};
         

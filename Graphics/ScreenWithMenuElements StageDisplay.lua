@@ -3,8 +3,17 @@ local curStage = GAMESTATE:GetCurrentStage();
 local curStageIndex = GAMESTATE:GetCurrentStageIndex();
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
+    Def.Quad{
+        InitCommand=cmd(diffuse,NumStageColor(curStageIndex+1);horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,50;zoomy,2;zoomx,120;fadeleft,0.3);
+    };
+    Def.Quad{
+        InitCommand=cmd(diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,52;zoomy,30;zoomx,120;fadeleft,0.3);
+    };
+    Def.Quad{
+        InitCommand=cmd(diffuse,NumStageColor(curStageIndex+1);horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,82;zoomy,2;zoomx,120;fadeleft,0.3);
+    };
 	LoadFont("Common Normal") .. {
-		InitCommand=cmd(y,5;zoom,0.8;shadowlength,1;skewx,0.125;bob;effectclock,'beat';effectmagnitude,2,0,0;effectperiod,4;);
+		InitCommand=cmd(x,SCREEN_RIGHT-12;y,67;horizalign,right;skewx,-0.2;zoom,0.7;shadowlength,1;);
 		BeginCommand=function(self)
 			local top = SCREENMAN:GetTopScreen()
 			if top then
@@ -20,10 +29,6 @@ t[#t+1] = Def.ActorFrame {
 			elseif GAMESTATE:IsEventMode() then
 				self:settextf("Stage %s", curStageIndex);
 			else
-
-
-				-- hack: ScreenEvaluation shows the current stage, but it needs to
-				-- show the last stage instead. PlayedStageStats has the right one.
 				if string.find(curScreen,"Evaluation") then
 					local stageStats = STATSMAN:GetPlayedStageStats(1)
 					curStage = stageStats:GetStage()
@@ -31,13 +36,11 @@ t[#t+1] = Def.ActorFrame {
 
 				if THEME:GetMetric(curScreen,"StageDisplayUseShortString") then
 					self:settextf("%s", ToEnumShortString(curStage));
-					self:zoom(0.75);
 				else
 					self:settextf("%s Stage", ToEnumShortString(curStage));
-					self:zoom(1);
 				end;
 			end;
-			-- StepMania is being stupid so we have to do this here;
+			
 		self:diffuse(NumStageColor(curStageIndex+1))
 		end;
 	};

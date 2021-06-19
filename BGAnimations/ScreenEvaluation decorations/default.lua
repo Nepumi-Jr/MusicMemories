@@ -11,7 +11,6 @@ t[#t+1] = Def.Quad{
 };
 t[#t+1] = LoadActor("Neww");
 t[#t+1] = LoadActor("DLC");
---t[#t+1] = LoadActor("EPICIsla");
 t[#t+1] = LoadActor("Heart");
 t[#t+1] = LoadActor("Intro.lua");
 

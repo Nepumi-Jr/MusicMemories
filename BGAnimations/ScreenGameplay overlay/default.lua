@@ -56,9 +56,6 @@ end
 t[#t+1] = LoadActor("MulPStuff");
 
 
-if ThemePrefs.Get("BattleMemories") ~= 0 then
-	t[#t+1] = LoadActor("GatherInfo");
-end
 
 if GAMESTATE:IsCourseMode() then
 	t[#t+1]=LoadActor("TitleCRS");
@@ -67,10 +64,6 @@ end
 
 if ThemePrefs.Get("More1PInfo") and #(GAMESTATE:GetHumanPlayers())==1 then
 	t[#t+1]=LoadActor("MoreINFO");
-end
-
-if #(GAMESTATE:GetHumanPlayers())==1 and not GAMESTATE:IsCourseMode() and (ThemePrefs.Get("BattleMemories") == 2 or ThemePrefs.Get("BattleMemories") == 3) then
-	t[#t+1]=LoadActor("BattleMemories");
 end
 
 t[#t+1]=LoadActor("TitleAll");

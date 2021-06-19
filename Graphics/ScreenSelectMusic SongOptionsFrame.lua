@@ -1,3 +1,3 @@
 return Def.Quad {
-	InitCommand=cmd(zoomto,SCREEN_WIDTH,64);
+	InitCommand=cmd(zoomto,SCREEN_WIDTH,75);
 };

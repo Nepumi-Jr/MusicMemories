@@ -18,211 +18,7 @@ if TS == "P1" then msP = 1 elseif TS == "P2" then nsP = 2 end
 
 local MaxAutoGenPi = 1;
 
-local AutoGenSource = {}
 
-AutoGenSource["dance-single"] = {"dance-double","pump-single"};
-
-AutoGenSource["dance-solo"] = {"dance-single","pump-single"};
-
-AutoGenSource["pump-single"] = {"pump-double","dance-single"};
-
-
-local function regexEncode(var)
-	return (var:gsub('%%', '%%%'):gsub('%^', '%%^'):gsub('%$', '%%$'):gsub('%(', '%%('):gsub('%)', '%%)'):gsub('%.', '%%.'):gsub('%[', '%%['):gsub('%]', '%%]'):gsub('%*', '%%*'):gsub('%+', '%%+'):gsub('%-', '%%-'):gsub('%?', '%%?'))
-end
-
-
-local function OPFil()
-    --GET INFORMATION
-    local files = FILEMAN:GetDirListing(GAMESTATE:GetCurrentSong():GetSongDir())
-    local STUFF;
-        
-        for file in ivalues(files) do
-            
-            if file:find(".+%.[sS][sS][cC]$") then
-                -- Finding a .ssc file is preferable.
-                -- If we find one, stop looking.
-                fileN = file
-                fileT = "ssc"
-                break
-            elseif file:find(".+%.[sS][mM]$") then
-                -- Don't break if we find a .sm file first;
-                -- there might still be a .ssc file waiting.
-                fileN = file
-                fileT = "sm"
-            elseif file:find(".+%.[dD][wW][iI]$") then
-                fileN = file
-                fileT = "dwi"
-            else
-                fileN = "Unknwon"
-                fileT = "?"
-            end
-        end
-        if (not (fileN and fileT)) then return nil 
-        else return {fileN,fileT} end
-    end
-
-local function GetCh(x)
-
-    if x == nil then return nil; end
-    
-    
-
-    local fileN=x[1];
-    local fileT=x[2];
-    local MSP = {"",""};
-    
-    -- create a generic RageFile that we'll use to read the contents
-    -- of the desired .ssc or .sm file
-    local f = RageFileUtil.CreateRageFile()
-
-    -- the second argument here (the 1) signifies
-    -- that we are opening the file in read-only mode
-    if f:Open(GAMESTATE:GetCurrentSong():GetSongDir() .. fileN, 1) then
-        STUFF = f:Read()
-    end
-
-    -- destroy the generic RageFile now that we have the contents
-    f:destroy()
-
-    --
-    
-    for i = nsP,msP do--Get from EVERY PLAYER!
-        local step = GAMESTATE:GetCurrentSteps(_G['PLAYER_'..i]);
-        local stepkwa = ToEnumShortString( step:GetStepsType() ):gsub("_", "-"):lower()
-        local dif = ToEnumShortString( step:GetDifficulty() )
-        local des = step:GetDescription()
-        --GET STRING NOW
-            if fileT == "ssc" then
-                -- SSC File
-                -- Loop through each chart in the SSC file
-                for chart in STUFF:gmatch("#NOTEDATA.-#NOTES:[^;]*") do
-                    -- Find the chart that matches our difficulty and game type
-                    local DLC=true;
-                    if dif == "Edit" then
-                        DLC = (chart:match("#DESCRIPTION:"..regexEncode(des)))
-                    end
-                    
-                    if(chart:match("#STEPSTYPE:"..regexEncode(stepkwa)) and chart:match("#DIFFICULTY:"..regexEncode(dif)) and DLC) then
-                        --Find just the notes and remove comments
-                        MSP[i] = chart:match("#NOTES:[\r\n]+([^;]*)\n?$"):gsub("//[^\r\n]*","") .. ";"						
-                    end
-                end
-                
-                local AI = 1;
-                while MSP[i] == "" and AutoGenSource[stepkwa] and AI <= #AutoGenSource[stepkwa] do--Cycle until it find
-                
-                    for chart in STUFF:gmatch("#NOTEDATA.-#NOTES:[^;]*") do
-                        -- Find the chart that matches our difficulty and game type
-                        local DLC=true;
-                        if dif == "Edit" then
-                            DLC = (chart:match("#DESCRIPTION:"..regexEncode(des)))
-                        end
-                        
-                        if(chart:match("#STEPSTYPE:"..regexEncode(AutoGenSource[stepkwa][AI])) and chart:match("#DIFFICULTY:"..regexEncode(dif)) and DLC) then
-                            MSP[i] = chart:match("#NOTES:[\r\n]+([^;]*)\n?$"):gsub("//[^\r\n]*","") .. ";"
-                        end
-
-                    end
-                    AI = AI + 1
-            
-                end
-
-                
-                
-            elseif fileT == "sm" then
-                -- SM FILE
-                -- Loop through each chart in the SM file
-
-
-                for chart in STUFF:gmatch("#NOTES[^;]*") do
-                    -- split the entire chart string into pieces on ":"
-                    local pieces = {}
-                    for str in chart:gmatch("[^:]+") do
-                        pieces[#pieces+1] = str
-                    end
-
-                    -- the pieces table should contain 7 numerically indexed items
-                    -- 2, 4, and 7 are the indices we care about for finding the correct chart
-                    -- index 2 will contain the steps_type (like "dance-single")
-                    -- index 4 will contain the difficulty (like "challenge")
-
-                    -- use gsub to scrub out line breaks (and other irrelevant characters?)
-                    local st = pieces[2]:gsub("[^%w-]", "")
-                    local diff = pieces[4]:gsub("[^%w]", "")
-                    local DLC=true;
-                    
-                    if dif == "Edit" then
-                        
-                        DLC = ((pieces[3]:gsub("[^%w]", ""))==des:gsub("[^%w]", ""))
-                    end
-                    
-                    -- if this particular chart's steps_type matches the desired StepsType
-                    -- and its difficulty string matches the desired Difficulty
-
-                    if (st == stepkwa) and (diff == dif) and DLC then
-                        
-                        -- then index 7 contains the notedata that we're looking for
-                        -- use gsub to remove comments, store the resulting string,
-                        -- and break out of the chart loop now
-                        MSP[i] = pieces[7]:gsub("//[^\r\n]*","") .. ";"
-                        break
-                    end
-                end
-
-
-
-                local AI = 1;
-                
-                while MSP[i] == "" and AutoGenSource[stepkwa] and AI <= #AutoGenSource[stepkwa] do--Cycle until it find
-
-                    for chart in STUFF:gmatch("#NOTES[^;]*") do
-                        -- split the entire chart string into pieces on ":"
-                        local pieces = {}
-                        for str in chart:gmatch("[^:]+") do
-                            pieces[#pieces+1] = str
-                        end
-
-                        -- the pieces table should contain 7 numerically indexed items
-                        -- 2, 4, and 7 are the indices we care about for finding the correct chart
-                        -- index 2 will contain the steps_type (like "dance-single")
-                        -- index 4 will contain the difficulty (like "challenge")
-
-                        -- use gsub to scrub out line breaks (and other irrelevant characters?)
-                        local st = pieces[2]:gsub("[^%w-]", "")
-                        local diff = pieces[4]:gsub("[^%w]", "")
-                        local DLC=true;
-                        if dif == "Edit" then
-                            DLC = ((pieces[3]:gsub("[^%w]", ""))==des)
-                        end
-                        
-                        -- if this particular chart's steps_type matches the desired StepsType
-                        -- and its difficulty string matches the desired Difficulty
-                        if (st == AutoGenSource[stepkwa][AI]) and (diff == dif) and DLC then
-                            -- then index 7 contains the notedata that we're looking for
-                            -- use gsub to remove comments, store the resulting string,
-                            -- and break out of the chart loop now
-                            MSP[i] = pieces[7]:gsub("//[^\r\n]*","") .. ";"
-                            break
-                        end
-                    end
-                    
-                    AI = AI +1
-
-                end
-            elseif fileT == "dwi" then
-                
-                -- for chart in STUFF:gmatch("#NOTES[^;]*") do
-                -- end
-                --Meow
-                
-                
-
-
-            end
-    end
-    return MSP
-end
 
 
 
@@ -234,6 +30,31 @@ local SCS = false;
 local BTI = 1
 
 local ALL_Score = {};
+
+local function compareNoteData(lhs,rhs)--? Sort with time and note element
+    if lhs == rhs then--?if same time, Hold and roll will be first priority
+        local ll = 0;
+        if FindInTable(lhs[3], {"TapNoteSubType_Hold","TapNoteSubType_Roll"}) then
+            ll = 1;
+        elseif FindInTable(lhs[3], {"TapNoteType_Tap", "TapNoteType_Mine","TapNoteType_Fake","TapNoteType_Lift"}) then
+            ll = 2;
+        else
+            ll = 3;
+        end
+
+        local rr = 0;
+        if FindInTable(rhs[3], {"TapNoteSubType_Hold","TapNoteSubType_Roll"}) then
+            rr = 1;
+        elseif FindInTable(rhs[3], {"TapNoteType_Tap", "TapNoteType_Mine","TapNoteType_Fake","TapNoteType_Lift"}) then
+            rr = 2;
+        else
+            rr = 3;
+        end
+        return ll < rr
+    else
+        return lhs[1] < rhs[1]
+    end
+end
 
 
 local t = Def.ActorFrame{
@@ -247,15 +68,14 @@ local t = Def.ActorFrame{
         BreakTime = {};
         local CRT= 0;
 
-        All_Chart = GetCh(OPFil());
-
 
         local DEB = "DEBUG GOES BRR\n"
         local MaxSegment = 1;
         
         for p = nsP,msP do
             
-            local TD = GAMESTATE:GetCurrentSteps(_G['PLAYER_'..p]):GetTimingData();
+            local thisSteps = GAMESTATE:GetCurrentSteps(_G['PLAYER_'..p]);
+            local TD = thisSteps:GetTimingData();
             BreakTime[p] = {};
             local LN = -200;
 
@@ -271,111 +91,87 @@ local t = Def.ActorFrame{
             local nWarp = 1;
             local SegmentHoldAndRoll = {};
             local BeatMes= 0;
+            local noteData;
 
-            for e in string.gmatch( All_Chart[p],"[^,^;]+") do
-                local Tick = string.gmatch( e,"[^\n^;]+")
+            
 
-                local nTick = 0;
-                for f in Tick do if string.len(f) > 1 then nTick = nTick + 1 ; end end
-                --DEB = DEB..string.format( "Mes %d has %d\n",CRT,nTick)
-                local NowBeat = BeatMes;
-                for f in string.gmatch( e,"[^\n^;]+") do
-                    local Now_Score = 0;
-                    --1 is NOTE
-                    --2 is OpenHold
-                    --3 is EndedHold/Roll
-                    --4 is OpenRoll
-                    --L is Lift
-                    --F is Fake
-                    --M is Mine
-                    for i = 1,string.len(f) do
-                        if string.sub(f,i,i) == "1" or
-                        string.sub(f,i,i) == "2" or
-                        string.sub(f,i,i) == "4" then
-                            
-
-                            Now_Score = Now_Score + 1 + (0.7*nHold) + (1.5*nRoll)
-
-                            if string.sub(f,i,i) == "2" then
-                                SegmentHoldAndRoll[i] = "H";
-                                nHold = nHold + 1;
-                            end
-                            if string.sub(f,i,i) == "4" then
-                                SegmentHoldAndRoll[i] = "R";
-                                nRoll = nRoll + 1;
-                            end
-                        end
-
-                        if string.sub(f,i,i) == "3" then
-                            if SegmentHoldAndRoll[i] == "H" then
-                                nHold = nHold - 1;
-                                SegmentHoldAndRoll[i] = "-"
-                            elseif SegmentHoldAndRoll[i] == "R" then
-                                nRoll = nRoll - 1;
-                                SegmentHoldAndRoll[i] = "-"
-                            end
-                        
-                            
-                            
-                        end
-
-                        if string.sub(f,i,i) == "M" then
-                            Now_Score = Now_Score + 0.5
-                        end
-                        if string.sub(f,i,i) == "F" then
-                            Now_Score = Now_Score + 0.1
-                        end
-                        if string.sub(f,i,i) == "L" then
-                            Now_Score = Now_Score + 1.5
-                        end
-                        
-                        if (string.sub(f,i,i) == "1" or 
-                        string.sub(f,i,i) == "2" or
-                        string.sub(f,i,i) == "3" or
-                        string.sub(f,i,i) == "4" or
-                        string.sub(f,i,i) == "M" or
-                        string.sub(f,i,i) == "F" or
-                        string.sub(f,i,i) == "L") then
-                            lastnote = math.max(lastnote,B2S(NowBeat))
-                            
-
-                                if math.abs(B2S(NowBeat) - LN) >= 4 and nHold == 0 and nRoll == 0 then
-                                    --printf("Added!")
-                                    BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-2};
-                                end
-                                LN = B2S(NowBeat)
-
-
-
-                        end
-
-
-                    end
-
-                    --Cal Score HERE
-                    
-                    local WarpContent = split("=", Warps[nWarp])
-
-                    while NowBeat > tonumber(WarpContent[1]+WarpContent[2]) do
-                        nWarp = nWarp +1;
-                        WarpContent = split("=", Warps[nWarp])
-                    end
-
-
-                    if NowBeat > tonumber(WarpContent[1]) then
-                        Now_Score = Now_Score *0.01;
-                    end
-
-                    PointPerQSec[math.floor(B2S(NowBeat)*4)] = 
-                    (PointPerQSec[math.floor(B2S(NowBeat)*4)] or 0) + Now_Score;
-                    
-                    NowBeat = NowBeat + 4/nTick
-                end
-                BeatMes = BeatMes + 4;
-                CRT = CRT +1;
+            for k,v in pairs( GAMESTATE:GetCurrentSong():GetAllSteps() ) do
+                if v == thisSteps then noteData = GAMESTATE:GetCurrentSong():GetNoteData(k) break end
             end
-            --SM("\n\n\n\n\n\n".."MAX is "..MaxSegment)
+
+            table.sort(noteData, compareNoteData);
+
+
+            for k,v in pairs(noteData) do
+                --? {time, col, NoteType}
+                local NowBeat = v[1];
+                local thisCol = v[2];
+                local thisNoteType = v[3];
+                local Now_Score = 0
+
+                if thisNoteType == "TapNoteType_Tap" or 
+                    thisNoteType == "TapNoteSubType_Hold" or 
+                    thisNoteType == "TapNoteSubType_Roll" then
+                        Now_Score = 1 + (0.7*nHold) + (1.5*nRoll)
+
+                        if thisNoteType == "TapNoteSubType_Hold" then
+                            nHold = nHold + 1;
+                            SegmentHoldAndRoll[thisCol] = 'H';
+                        end
+                        if thisNoteType == "TapNoteSubType_Roll" then
+                            nRoll = nRoll + 1;
+                            SegmentHoldAndRoll[thisCol] = 'R';
+                        end
+
+                end
+
+                if thisNoteType == "TapNoteType_HoldTail" then
+                    if SegmentHoldAndRoll[thisCol] == "H" then
+                        nHold = nHold - 1;
+                        SegmentHoldAndRoll[thisCol] = "-"
+                    elseif SegmentHoldAndRoll[thisCol] == "R" then
+                        nRoll = nRoll - 1;
+                        SegmentHoldAndRoll[thisCol] = "-"
+                    end
+                end
+
+                if thisNoteType == "TapNoteType_Mine" then
+                    Now_Score = Now_Score + 0.5
+                end
+                if thisNoteType == "TapNoteType_Fake" then
+                    Now_Score = Now_Score + 0.1
+                end
+                if thisNoteType == "TapNoteType_Lift" then
+                    Now_Score = Now_Score + 1.5
+                end
+                
+                if FindInTable(thisNoteType, {"TapNoteType_Tap", "TapNoteSubType_Hold","TapNoteSubType_Roll","TapNoteType_Mine","TapNoteType_Fake","TapNoteType_Lift", "TapNoteType_HoldTail"}) then
+                    lastnote = math.max(lastnote,B2S(NowBeat))
+                    if math.abs(B2S(NowBeat) - LN) >= 4 and nHold == 0 and nRoll == 0 then
+                        BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-2};
+                    end
+                    LN = B2S(NowBeat)
+                end
+
+                local WarpContent = split("=", Warps[nWarp])
+
+                while NowBeat > tonumber(WarpContent[1]+WarpContent[2]) do
+                    nWarp = nWarp +1;
+                    WarpContent = split("=", Warps[nWarp])
+                end
+
+
+                if NowBeat > tonumber(WarpContent[1]) then
+                    Now_Score = Now_Score *0.01;
+                end
+
+                PointPerQSec[math.floor(B2S(NowBeat)*4)] = 
+                (PointPerQSec[math.floor(B2S(NowBeat)*4)] or 0) + Now_Score;
+
+            end
         end
+
+        
 
         if msP - nsP >= 1 then
             local Real_BreakTime = {}

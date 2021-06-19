@@ -46,6 +46,7 @@ local GlobalDefaults = {
 				PlayerOptions = "ScreenGameplay",
 				PlayerOptions2 = "ScreenGameplay"
 			}
+            self.enableMeasure = true
 		end
 	}
 }

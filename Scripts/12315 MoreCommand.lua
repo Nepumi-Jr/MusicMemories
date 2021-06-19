@@ -494,21 +494,12 @@ end
 return re[a];
 end;
 
-function Pn_Option_1_Lines()
-	if TP.Battle.IsBattle then
-		return "1,8,HA,SC,16,SF,18,MI,3A,19,NextScreenBat"
-	else
-		return "1,8,HA,SC,12,16,SF,18,MI,3A,19,NextScreen"
-	end
-	
-end
-
 
 function ModeSelect()
     if TP.Battle.IsBattle then
         return "Normal,Nonstop"
     else
-        return "Normal,Rave,Nonstop,Oni,Endless";
+        return "Normal,Nonstop,Oni,Endless";
     end
 end;
 

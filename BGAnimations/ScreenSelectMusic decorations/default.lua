@@ -273,15 +273,27 @@ t[#t+1] = StandardDecorationFromFileOptional("SortOrder","SortOrderText") .. {
 		end
 	end;
 };
+
+
 t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
-	ShowPressStartForOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsFrameShowCommand");
-	ShowEnteringOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsFrameEnterCommand");
-	HidePressStartForOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsFrameHideCommand");
+    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,color("#555555");fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
+    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
+	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
+};
+t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
+    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,GameColor.PlayerColors.PLAYER_1 or {1,0,0,1};zoomy,3;y,SCREEN_CENTER_Y+36;fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
+    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
+	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
+};
+t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
+    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,GameColor.PlayerColors.PLAYER_2 or {0,1,0,1};zoomy,3;y,SCREEN_CENTER_Y-36;fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
+    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
+	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
 };
 t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptionsText") .. {
-	ShowPressStartForOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsShowCommand");
-	ShowEnteringOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsEnterCommand");
-	HidePressStartForOptionsCommand=THEME:GetMetric(Var "LoadingScreen","SongOptionsHideCommand");
+	ShowPressStartForOptionsCommand=cmd(visible,true;zoom,1.2;settext,THEME:GetString("ScreenSelectMusic","Press Start For Options");decelerate,1.5;zoom,1;);
+	ShowEnteringOptionsCommand=cmd(settext,THEME:GetString("ScreenSelectMusic","Entering Options");sleep,0.2;decelerate,0.2;diffusealpha,0;);
+	HidePressStartForOptionsCommand=cmd(decelerate,0.1;diffusealpha,0;);
 };
 -- Sounds
 t[#t+1] = Def.ActorFrame {

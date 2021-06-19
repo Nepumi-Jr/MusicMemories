@@ -105,17 +105,17 @@ local Prefs =
 		Choices = { OptionNameString('Off'), OptionNameString('On')},
 		Values = { false, true}
 	},
+    measureBar =
+	{
+		Default = true,
+		Choices = { OptionNameString('Off'), OptionNameString('On')},
+		Values = { false, true}
+	},
 	OptionStyle =
 	{
 		Default = 0,
-		Choices = { "Choose", "Many page" ,"No Song Option"},
+		Choices = { "Choose page", "Many page" ,"No Song Option"},
 		Values = { 0 , 1 , 2 }
-	},
-	BattleMemories =
-	{
-		Default = 2,
-		Choices = { OptionNameString('Off'), OptionNameString('Off').." but save" ,OptionNameString('On').."(%)",OptionNameString('On').."(delta)"},
-		Values = { 0 , 1 , 2 ,3 }
 	},
     BackgroundTheme =
 	{

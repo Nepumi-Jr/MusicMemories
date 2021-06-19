@@ -435,8 +435,6 @@ end
 
 
 
-
-
 function ForwardOrBackward()
 	local t = {
 		Name = "ForwardOrBackward",
@@ -539,3 +537,62 @@ function ForwardOrBackward4()
 	}
 	return t
 end
+
+function Pn_Option_1_Lines()
+    local strrLine  = "1,8,HA,SC"
+	if not TP.Battle.IsBattle then
+        strrLine = strrLine .. ",12"
+	end
+    strrLine = strrLine .. ",16,SF,18,MI,3A,19"
+
+    if ThemePrefs.Get("OptionStyle") == 0 then
+        if TP.Battle.IsBattle then
+            strrLine = strrLine .. ",NextScreenBat"
+        else
+            strrLine = strrLine .. ",NextScreen"
+        end
+    else
+        TP.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2"
+    end
+    return strrLine
+
+end
+
+function Pn_Option_2_Lines()
+    local strrLine  = "Turn,Scroll,7,8,9,10"
+
+    if GAMESTATE:GetCurrentGame():GetName() == "gh" then
+        strrLine = strrLine .. ",GH"
+    end
+    strrLine = strrLine .. ",11,12,125,13,14"
+    if ThemePrefs.Get("OptionStyle") == 0 then
+        strrLine = strrLine .. ",NextScreen"
+    elseif ThemePrefs.Get("OptionStyle") == 1 then
+        TP.Global.ScreenAfter.PlayerOptions2 = "ScreenSongOptions"
+    elseif ThemePrefs.Get("OptionStyle") == 2 then
+        TP.Global.ScreenAfter.PlayerOptions2 = "ScreenStageInformation"
+    end
+    return strrLine
+end
+
+function Pn_Option_3_Lines()
+    local strrLine  = "1,2,3,4,5,6,7,8,9,10"
+
+    if ThemePrefs.Get("OptionStyle") == 0 then
+        strrLine = strrLine .. ",NextScreen"
+    else
+        TP.Global.ScreenAfter.PlayerOptions3 = "ScreenStageInformation"
+    end
+    return strrLine
+end
+
+
+
+function measureBarStuff()
+    if ThemePrefs.Get("measureBar") then
+        return {1,1,0.2,0,0};
+    else
+        return {0,1,1,1,1};
+    end
+end
+

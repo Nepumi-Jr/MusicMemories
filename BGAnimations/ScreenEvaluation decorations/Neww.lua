@@ -58,7 +58,18 @@ t[#t+1] = Def.ActorFrame{
 	Def.Quad{InitCommand=cmd(CenterX;y,CY*1.87-180;zoomx,CX*2;zoomy,7;);};
 	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
 	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
-	--Def.Quad{InitCommand=cmd(horizalign,right;x,CX-250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
+	
+    Def.Quad{
+        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,1;zoomy,2;zoomx,SCREEN_RIGHT);
+    };
+    Def.Quad{
+        InitCommand=cmd(diffuse,color("#333333");horizalign,left;vertalign,top;zoomy,50;y,3;zoomx,SCREEN_RIGHT);
+    };
+    Def.Quad{
+        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,53;zoomy,2;zoomx,SCREEN_RIGHT);
+    };
+    
+    --Def.Quad{InitCommand=cmd(horizalign,right;x,CX-250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
 	--Def.Quad{InitCommand=cmd(horizalign,left;x,CX+250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
 	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2-100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
 	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2+100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
@@ -363,7 +374,30 @@ LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):Ge
 };
 
 
-	
+    LoadFont("Common Normal")..{
+        InitCommand=function(self)
+            self:settext("Sample Text"):zoom(0.6):shadowlength(1)
+            self:x(230):y(SCREEN_CENTER_Y-130)
+        end;
+        OnCommand=function(self)
+            local PRInd = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPersonalHighScoreIndex()
+            self:visible(PRInd ~= -1);
+            local text = string.format(THEME:GetString("ScreenEvaluation", "PersonalRecord"), PRInd+1)
+            self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
+        end;
+    };
+    LoadFont("Common Normal")..{
+        InitCommand=function(self)
+            self:settext("Sample Text"):zoom(0.6):shadowlength(1)
+            self:x(230):y(SCREEN_CENTER_Y-145)
+        end;
+        OnCommand=function(self)
+            local MRInd = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetMachineHighScoreIndex()
+            self:visible(MRInd ~= -1);
+            local text = string.format(THEME:GetString("ScreenEvaluation", "MachineRecord"), MRInd+1)
+            self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
+        end;
+    };
 
 
 };

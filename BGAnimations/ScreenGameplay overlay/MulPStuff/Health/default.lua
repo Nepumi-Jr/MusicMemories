@@ -1,5 +1,11 @@
 local PN=...;
 
+
+if GAMESTATE:GetPlayerState(PN):GetCurrentPlayerOptions():LifeSetting() == "LifeType_Battery" then
+    return Def.ActorFrame{};
+end
+
+
 local NumF="_computer pixel-7 30px";
 local NOWB = 0;
 local PX = 0;

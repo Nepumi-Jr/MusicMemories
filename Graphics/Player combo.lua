@@ -182,7 +182,7 @@ local t = Def.ActorFrame {};
 		end;
 	end;
 	ComboCommand=function(self, param)
-		if SubType ~= "No" and SubType ~= "FL" then cf.MissLabel:y(5) cf.ComboLabel:y(5) end
+		if SubType ~= "No" and SubType ~= "FL" then cf.MissLabel:y(0) cf.ComboLabel:y(0) end
 		cf.MaxCombo:zoom(0.25);
 		local iCombo = param.Misses or param.Combo;
 		if not iCombo or iCombo < ShowComboAt then
@@ -302,9 +302,9 @@ local t = Def.ActorFrame {};
 		end
 		
 		
-		cf.Number:y(240-216-1.5-5);
-        cf.NumberOverlay:y(240-216-1.5-5);
-		cf.Misses:y(240-216-1.5-5);
+		cf.Number:y(17.5);
+        cf.NumberOverlay:y(17.5);
+		cf.Misses:y(17.5);
 
 		cf.Number:stopeffect()
 		cf.Number:queuecommand("Wait")
@@ -321,7 +321,7 @@ local t = Def.ActorFrame {};
 if SubType ~= "No" then
 	if SubType == "NPS" or SubType == "KPS" then
 		t[#t+1] = Def.ActorFrame{
-			OnCommand=cmd(x,5;y,15;zoom,0.3;diffusealpha,0);
+			OnCommand=cmd(x,10;y,10;zoom,0.3;diffusealpha,0);
 			JudgmentMessageCommand=function(self,param)
 				if param.Player ==  player then
 					if SubType == "NPS" then
@@ -386,7 +386,7 @@ if SubType ~= "No" then
 				--Op
 			self:Load(RealFile);
 			end;
-			InitCommand=cmd(x,30;y,-15);
+			InitCommand=cmd(x,35;y,-20);
 			ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 			JudgmentMessageCommand=function(self,param)
 
@@ -412,7 +412,7 @@ if SubType ~= "No" then
 
 local Stat={0,0,0,0,0,0,0,0,0};
 	t[#t+1] =LoadFont( "Common Large") .. {
-		OnCommand=cmd(x,5;y,10;zoom,0.2;horizalign,left;diffuse,{1,1,1,1};diffusealpha,0;);
+		OnCommand=cmd(x,10;y,5;zoom,0.2;horizalign,left;diffuse,{1,1,1,1};diffusealpha,0;);
 		JudgmentMessageCommand=function(self, param)
 		if param.Player ==  player then
 		self:sleep(0.02)
@@ -435,11 +435,6 @@ local Stat={0,0,0,0,0,0,0,0,0};
 		elseif param.TapNoteScore == "TapNoteScore_HitMine" then
 		Stat[9] = Stat[9] +1
 		end
-		
-		
-		
-		
-		
 		
 		local PS1 = STATSMAN:GetCurStageStats():GetPlayerStageStats(player);
 		local Accc1 = math.min(PS1:GetActualDancePoints()/PS1:GetCurrentPossibleDancePoints(),1)+0.5;
