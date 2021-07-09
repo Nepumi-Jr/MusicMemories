@@ -174,14 +174,15 @@ for i = 1,#SE do
 	at[#at+1] = LoadFont("Common Normal") .. {
 		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.65;settext,SE[i];zoom,1;);
 		OnCommand=function(self)
+            local thisSong = GAMESTATE:GetCurrentSong();
 		if Time then
-			if Time < 3*60 then
-				self:diffuse({1,1,1,1})
-			elseif Time < 5*60 then
-				self:diffuse({1,1,1,1}):diffusebottomedge(Color("Red"))
-			else
-				self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
-			end
+			if thisSong:IsMarathon() then
+                self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
+            elseif thisSong:IsLong() then
+                self:diffuse({1,1,1,1}):diffusebottomedge(Color("Red"))
+            else
+                self:diffuse({1,1,1,1})
+            end
 		else 
 			self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
 		end

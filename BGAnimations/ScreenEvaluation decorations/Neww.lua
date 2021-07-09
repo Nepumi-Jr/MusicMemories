@@ -589,7 +589,7 @@ Def.Sprite{
 
 	
 Def.Quad{
-    InitCommand=cmd(x,SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoomx,170;zoomy,25;fadeleft,1;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+    InitCommand=cmd(x,SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoomx,170;zoomy,25;fadeleft,1;diffuse,GameColor.Difficulty[StepSt2:GetDifficulty()]);
 };
 
 LoadFont("Common Normal")..{

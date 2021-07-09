@@ -37,7 +37,7 @@ if TexttoDeBUG ~= "" then
 t[#t+1] = LoadActor("BeatMann");
 end
 
-
+t[#t+1] = LoadActor("GatherInfo.lua");
 t[#t+1] = LoadActor("SoundReady");
 t[#t+1] = LoadActor("Time.lua")..{
 	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);

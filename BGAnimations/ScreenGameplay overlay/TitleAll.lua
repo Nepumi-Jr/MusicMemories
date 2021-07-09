@@ -165,46 +165,15 @@ t[#t+1] = LoadFont("Common Normal") .. {
 		
 		
 		if GAMESTATE:IsCourseMode() then
-			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+220)
+			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+225)
 			self:zoomx(0)
 			self:sleep(Tog_LEN):decelerate(1):zoomx(0.35)
 		else
-			self:sleep(Tog_LEN):decelerate(1):zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+220)
+			self:sleep(Tog_LEN):decelerate(1):zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+225)
 		end
 	end;
 };
 
-t[#t+1] = Def.ActorFrame{
-	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+228;zoom,0.5;);
-	OnCommand=cmd(queuecommand,"BOI");
-	CurrentSongChangedMessageCommand=cmd(queuecommand,"BOI");
-	BOICommand=function(self)
-		self:finishtweening()
-		
-		if GAMESTATE:IsCourseMode() then
-			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+228)
-			self:zoomx(0)
-			self:sleep(Tog_LEN):decelerate(1):zoomx(0.35)
-		else
-			self:sleep(Tog_LEN):decelerate(1):zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+230)
-		end
-	end;
-	LoadFont("Common Normal") .. {
-		InitCommand=cmd(settext,"??:??";strokecolor,{0,0,0,1};);
-		OnCommand=cmd(playcommand,"ISLA");
-		BOICommand=cmd(finishtweening;playcommand,"ISLA");
-		ISLACommand=function(self)
-			self:diffuse(N_CL or {0,0,0,0})
-			REM = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
-			if REM > 60*60 then
-				self:settext(SecondsToHHMMSS(REM))
-			else
-				self:settext(SecondsToMMSS(REM))
-			end
-			self:sleep(0.1):queuecommand("ISLA")
-		end;
-	};
-};
 
 
 

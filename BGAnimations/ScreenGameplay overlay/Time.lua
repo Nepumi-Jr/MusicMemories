@@ -51,38 +51,19 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 			self:sleep(0.02):rotationx(0):queuecommand("On")
 		end;
 		Def.ActorFrame{
-			InitCommand=cmd(diffuse,Color.Orange;zoom,1.7;rotationx,180); 
-			LoadFont(NumF) .. {
-				OnCommand=cmd(x,-20;cullmode,'back';playcommand,"Row");
-				RowCommand=function(self)
-				--SM("\n\n\n\n\nISla "..string.format("HOUR is %d , %d",Hour(),math.mod(17,10)));
-				self:settextf("%d%d",math.floor(Hour()/10),Hour()%10):sleep(0.02):queuecommand("Row") 
+			InitCommand=cmd(diffuse,Color.SkyBlue;zoom,1.7;rotationx,180;); 
+			LoadFont("Combo Number") .. {
+                OnCommand=cmd(zoom,0.2;y,3;cullmode,'back';playcommand,"Row");
+                RowCommand=function(self)
+                    REM = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
+                    if REM > 60*60 then
+                        self:settext(SecondsToHHMMSS(REM))
+                    else
+                        self:settext(SecondsToMMSSMsMs(REM))
+                    end
+				    self:sleep(0.02):queuecommand("Row") 
 				end; 
-			};
-			LoadFont(NumF) .. {
-				OnCommand=cmd(x,-10;cullmode,'back';playcommand,"Row");
-				RowCommand=function(self)
-				self:settext(math.mod(Second(),2)==0 and " " or ":"):sleep(0.02):queuecommand("Row") 
-				end; 
-			};
-			LoadFont(NumF) .. {
-				OnCommand=cmd(x,0;cullmode,'back';playcommand,"Row");
-				RowCommand=function(self)
-				self:settextf("%d%d",math.floor(Minute()/10),math.mod(Minute(),10)):sleep(0.02):queuecommand("Row") 
-				end; 
-			};
-			LoadFont(NumF) .. {
-				OnCommand=cmd(x,10;cullmode,'back';playcommand,"Row");
-				RowCommand=function(self)
-				self:settext(math.mod(Second(),2)==0 and " " or ":"):sleep(0.02):queuecommand("Row") 
-				end; 
-			};
-			LoadFont(NumF) .. {
-				OnCommand=cmd(x,20;cullmode,'back';playcommand,"Row");
-				RowCommand=function(self)
-				self:settextf("%d%d",math.floor(Second()/10),math.mod(Second(),10)):sleep(0.02):queuecommand("Row") 
-				end; 
-			};
+            };
 		};
 		Def.ActorFrame{
 			InitCommand=cmd(); 

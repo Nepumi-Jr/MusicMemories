@@ -40,7 +40,7 @@ return Def.ActorFrame{
     };
 
 
-    Def.Quad{--Battle Memories
+    --[[Def.Quad{--Battle Memories
         Condition = (not GAMESTATE:IsCourseMode()) ;
         InitCommand=cmd(zoom,20;visible,false);
         JudgmentMessageCommand=function(self,params)
@@ -130,7 +130,7 @@ return Def.ActorFrame{
             end
             
         end;
-    };
+    };]]
 
 
 };
