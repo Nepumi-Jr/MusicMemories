@@ -47,9 +47,7 @@ and Pc ~= 1	then
 		Karkao[4] = 1
 		end
 		else
-		if (event.button == "Back" or
-			event.button == "UpLeft" or
-			event.button == "UpRight") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
+		if (event.button == "Back") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
 			Karkao[4] = 1
 		end
 		end
