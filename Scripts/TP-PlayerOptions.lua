@@ -12,57 +12,6 @@ LoadModule("Prefs.Insert.lua")()
 
 
 
-function CustomBG()
-
-	local Con = {"Default"}
-
-	local path = THEMEDIR().."/Resource/BGAV/";-- ThemeNamae That mean Theme's folder
-	local files = FILEMAN:GetDirListing(path)
-
-	for k,filename in ipairs(files) do
-		if string.match(filename,".mp4") or string.match(filename,".mpg") or string.match(filename,".mpeg") or string.match(filename,".avi") then
-			Con[#Con+1] = filename;
-		elseif string.match(filename,".lua") then
-			Con[#Con+1] = filename;
-		elseif not string.match(filename,"[.]") then
-			local IsR = false;
-			for p,T in ipairs(FILEMAN:GetDirListing(path..filename.."/")) do
-				if(string.match(T,"default.lua")) then
-					IsR = true;
-				end
-			end
-				if IsR then
-					Con[#Con+1] = filename;
-				end
-		end
-	end
-
-	local t = {
-		Name = "CusBG",
-		LayoutType = "ShowAllInRow",
-		SelectType = "SelectOne",
-		OneChoiceForAllPlayers = false,
-		ExportOnChange = false,
-		Choices = Con,
-		LoadSelections = function(self, list, pn)
-			local EML = TP[ToEnumShortString(pn)].ActiveModifiers.CusBG
-			local i = FindInTable(EML, Con) or 1
-			list[i] = true
-		end,
-		SaveSelections = function(self, list, pn)
-			local sSave
-
-			for i=1,#Con do
-				if list[i] then
-					sSave = Con[i]
-				end
-			end
-
-			TP[ToEnumShortString(pn)].ActiveModifiers.CusBG = sSave
-		end
-	}
-	return t
-end
 
 
 function TheStream()

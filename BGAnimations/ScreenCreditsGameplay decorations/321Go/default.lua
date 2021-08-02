@@ -22,7 +22,7 @@ end;
 local CL = {1,1,1,1};
 
 
-local path = THEME:GetCurrentThemeDirectory().."Resource/GraphFont/";
+local path = THEME:GetCurrentThemeDirectory().."Graphics/_GraphFont/";
 
 local function TFB(x)
 return GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(x) ;

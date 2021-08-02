@@ -36,48 +36,10 @@ local function Dim(pla)
 	end
 end;
 
-local function getAllJudge()
-    local paths = {THEMEDIR().."/Resource/JudF","/Appearance/Judgments"}
-	local judgmentGraphics = {}
-
-	if ThemePrefs.Get("JudgeStyle") == 3 or ThemePrefs.Get("JudgeStyle") == 4 then
-		table.insert(paths,1,"/Resource/JudF/SingleVer")
-	end
-
-	for _,v in pairs(paths) do
-
-		local files = FILEMAN:GetDirListing(v.."/")
-	
-		for k,filename in ipairs(files) do
-			
-			if string.match(filename, " %dx%d") and 
-			string.match(filename, ".png") and 
-			not string.match(filename, "%[ECFA%]") and 
-			not string.match(filename, "%[Pro%]") and
-			not string.match(filename, "%[Advanced%]") and
-			not string.match(filename, "%[FAPlus%]") then
-				-- The 3_9 graphic is a special case;
-				filename = filename:gsub("3_9","3.9")
-				-- Love is a special case; it should always be first.
-				-- Ps.These scripts from Simply Love XD
-				if string.match(filename, "Love") then
-					table.insert(judgmentGraphics, 1, filename)
-					--*Respect*
-				else
-					judgmentGraphics[#judgmentGraphics+1] = filename
-				end
-			end
-		end
-
-	end
-
-    return judgmentGraphics
-end
-
 local JG = 	getAllJudge();
 local NS = NOTESKIN:GetNoteSkinNames();
 	
-LoadActor("../Resource/mods-taro.lua");
+LoadActor("../Scripts/mods-taro.lua");
 return Def.ActorFrame{
 	OnCommand=function(self)
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do

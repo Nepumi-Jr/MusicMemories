@@ -2,7 +2,7 @@ local t = Def.ActorFrame{
 	LoadActor("P1State");
 	LoadActor("P2State");
 	LoadActor("ScreenFilter");
-	LoadActor("NewBg");
+	--LoadActor("NewBg");
 	--LoadActor("Border");
 Def.ActorFrame{
 		OnCommand=cmd(playcommand,'James');

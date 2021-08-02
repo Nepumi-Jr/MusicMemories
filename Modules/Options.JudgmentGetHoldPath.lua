@@ -1,7 +1,6 @@
 return function(JudF)
 	
 	JudF = JudgeFileShortName(JudF)
-	-- Get hold judge from Resource/JudF/Hold/ first
 	local path = "/"..THEMEDIR().."Graphics/_Judgement Font/Hold/";
 	local files = FILEMAN:GetDirListing(path)
 	for k,filename in ipairs(files) do

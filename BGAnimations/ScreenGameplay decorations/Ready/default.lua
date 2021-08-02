@@ -37,7 +37,7 @@ local function NumtoST(n)
     end
 end;
 
-local path = THEME:GetCurrentThemeDirectory().."Resource/GraphFont/Cha3D/";
+local path = THEME:GetCurrentThemeDirectory().."Graphics/GraphFont/Cha3D/";
 local NS = GAMESTATE:GetCurrentStageIndex()+1;
 
 local RDText = "?????";

@@ -197,7 +197,7 @@ Def.Quad{
 
 Def.Sprite{
 	InitCommand=cmd(blend,"BlendMode_Add";CenterX;y,SCREEN_CENTER_Y-100;animate,false;zoom,0.9;diffuse,{1,0,0,0});
-	OnCommand=cmd(Load,THEME:GetCurrentThemeDirectory().."Resource/GraphFont/BigCount/FAIL.png");
+	OnCommand=cmd(Load,THEME:GetCurrentThemeDirectory().."Graphics/GraphFont/BigCount/FAIL.png");
 	NeFailMessageCommand=cmd(sleep,Ror;decelerate,0.5;diffusealpha,1;y,SCREEN_CENTER_Y-50);
 };
 LoadActor("Failll") .. {
