@@ -278,7 +278,7 @@ for i = 0,2 do
 				self:zoom(0)
 			end
 		end;
-		MCBT(0,0,CL1[i+1],CL2[i+1],CL3[i+1],color("#000000"),color("#333333"),diffText[i+1],diffDes[i+1]);
+		LoadModule("Menu.Button.lua")(0,0,CL1[i+1],CL2[i+1],CL3[i+1],color("#000000"),color("#333333"),diffText[i+1],diffDes[i+1]);
 	};
 end
 
@@ -308,7 +308,7 @@ for i = 0,1 do
 				self:zoom(0)
 			end
 		end;
-		MCBT(0,0,CLBQ1[i+1],CLBQ2[i+1],CLBQ3[i+1],color("#000000"),color("#333333"),BQText[i+1],BQDes[i+1]);
+		LoadModule("Menu.Button.lua")(0,0,CLBQ1[i+1],CLBQ2[i+1],CLBQ3[i+1],color("#000000"),color("#333333"),BQText[i+1],BQDes[i+1]);
 	};
 end
 

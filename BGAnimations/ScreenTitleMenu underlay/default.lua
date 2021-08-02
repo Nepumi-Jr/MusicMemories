@@ -1,7 +1,4 @@
 
-RPC_Update({details = "Main Menu",
-large_image = "outfox",large_text = "Stepmania 5.3",
-small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GAMESTATE:GetCurrentGame():GetName()})
 
 return Def.ActorFrame {
 	OnCommand=function(self)

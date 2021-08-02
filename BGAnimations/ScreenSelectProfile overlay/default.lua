@@ -1,16 +1,9 @@
-RPC_Update({details = "Selecting Profile...",
-large_image = "outfox",large_text = "Stepmania 5.3",
-small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GAMESTATE:GetCurrentGame():GetName()})
 function GetLocalProfiles()
 	local ret = {};
 
 	for p = 0,PROFILEMAN:GetNumLocalProfiles()-1 do
 		local profile=PROFILEMAN:GetLocalProfileFromIndex(p);
 		local item = Def.ActorFrame {
---[[ 			Def.Quad {
-				InitCommand=cmd(zoomto,200,1;y,40/2);
-				OnCommand=cmd(diffuse,Color('Outline'););
-			}; --]]
 			LoadFont("Common Normal") .. {
 				Text=profile:GetDisplayName();
 				InitCommand=cmd(shadowlength,1;y,-10;zoom,1;ztest,true);
@@ -144,6 +137,19 @@ function LoadPlayerStuff(Player)
 		InitCommand=cmd(y,160;shadowlength,1;);
 	};
 	table.insert( ret, t );
+    table.insert( ret,
+        Def.ActorFrame{
+            Name="Arrows";
+            LoadActor(THEME:GetPathG("Arrow","Up")).. {
+                InitCommand=cmd(y,-130;zoom,0.4);
+            };
+            LoadActor(THEME:GetPathG("Arrow","Down")).. {
+                InitCommand=cmd(y,130;zoom,0.4);
+            }
+        }
+        
+    );
+    
 
 	return ret;
 end;
@@ -157,8 +163,11 @@ function UpdateInternal3(self, Player)
 	local smallframe = frame:GetChild('SmallFrame');
 	local bigframe = frame:GetChild('BigFrame');
 
+    local arrow = frame:GetChild('Arrows');
+
 	if GAMESTATE:IsHumanPlayer(Player) then
 		frame:visible(true);
+        arrow:visible(true)
 		if MEMCARDMAN:GetCardState(Player) == 'MemoryCardState_none' then
 			--using profile if any
 			joinframe:visible(false);
@@ -195,6 +204,7 @@ function UpdateInternal3(self, Player)
 		seltext:visible(false);
 		smallframe:visible(false);
 		bigframe:visible(false);
+        arrow:visible(false)
 	end;
 end;
 
@@ -352,6 +362,7 @@ NopeMessageCommand=cmd(accelerate,0.5;y,0);
 			end;
 			children = LoadPlayerStuff(PLAYER_2);
 		};
+        
 		-- sounds
 		LoadActor( THEME:GetPathS("Common","start") )..{
 			StartButtonMessageCommand=cmd(play);

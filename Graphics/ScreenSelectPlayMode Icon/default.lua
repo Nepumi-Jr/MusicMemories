@@ -1,15 +1,12 @@
 local gc = Var("GameCommand");
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(x,60);
-	GainFocusCommand=cmd(stoptweening;wag;effectmagnitude,0,0,5;decelerate,0.05;zoom,0.4);
-	LoseFocusCommand=cmd(stoptweening;stopeffect;decelerate,0.1;zoom,0.4*0.6);
-	MCBT(0,0,ColorLightTone(ModeIconColors[gc:GetName()]),ColorDarkTone(ModeIconColors[gc:GetName()]),ColorMidTone(ModeIconColors[gc:GetName()]),color("#000000"),color("#FFFFFF"),gc:GetText(),"")																		
-	--[[
-	LoadActor(THEME:GetPathG("_SelectIcon",gc:GetName() )) .. {
-		DisabledCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
-		EnabledCommand=cmd(diffuse,color("1,1,1,1"));
-	};
-	--]]
+    GainFocusCommand=cmd(stoptweening;bob;effectmagnitude,0,10,0;decelerate,0.3;zoom,0.5);
+	LoseFocusCommand=cmd(stoptweening;stopeffect;decelerate,0.3;zoom,0.5*0.4);
+    Def.ActorFrame{
+        GainFocusCommand=cmd(diffuseshift;effectcolor1,{0.5,0.5,0.5,1}; effectcolor2, {1.2,1.2,1.2,1};);
+	    LoseFocusCommand=cmd(stopeffect;);
+        LoadModule("Menu.Button.lua")(0,0,ColorLightTone(ModeIconColors[gc:GetName()]),ColorDarkTone(ModeIconColors[gc:GetName()]),ColorMidTone(ModeIconColors[gc:GetName()]),color("#000000"),color("#FFFFFF"),gc:GetText(),"")
+    };
 };
 return t

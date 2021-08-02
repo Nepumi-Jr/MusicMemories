@@ -1,228 +1,144 @@
 local gc = Var "GameCommand";
-local colors = {
-	Easy		= color("#00ff00"),
-	Normal		= color("#00ff00"),
-	Hard		= color("#ff0000"),
-	Rave		= color("#ff1111"),
-	Nonstop		= color("#00aaff"),
-	Oni			= color("#aa00bb"),
-	Endless		= color("#b4c3d2"),
-};
 local Lew = 1;
 local Wario = {0,0,0,0};
+local bigTextWidth;
+local bigText = gc:GetText()
+local bigTextColor = ModeIconColors[gc:GetName()]
+local expTextWidth;
+local expText;
+if bigText == "Oni" then
+    expText = THEME:GetString("ScreenSelectPlayMode",  "SurvivalExplanation")
+else
+    expText = THEME:GetString("ScreenSelectPlayMode", gc:GetName() .. "Explanation")
+end
+
+
 local t = Def.ActorFrame {};
--- Background!
+
+
 t[#t+1] = Def.ActorFrame {
 	InitCommand=cmd(x,SCREEN_CENTER_X/4;y,70;rotationz,90;zoomx,0.7;zoomy,3);
 -- 	GainFocusCommand=cmd(visible,true);
 -- 	LoseFocusCommand=cmd(visible,false);
-	LoadActor(THEME:GetPathG("ScreenSelectPlayMode","BackgroundFrame")) .. {
-		InitCommand=cmd(diffuse,Color("Black");diffusealpha,0.45);
-		GainFocusCommand=cmd(visible,true);
-		LoseFocusCommand=cmd(visible,false);
-	};
- 	LoadActor("_HighlightFrame") .. {
-		InitCommand=cmd(diffuse,ModeIconColors[gc:GetName()];diffusealpha,0);
-		GainFocusCommand=cmd(finishtweening;diffuse,ColorLightTone(ModeIconColors[gc:GetName()]);linear,1;diffuse,ModeIconColors[gc:GetName()]);
-		LoseFocusCommand=cmd(finishtweening;diffusealpha,0);
-		OffFocusedCommand=cmd(finishtweening;glow,Color("White");decelerate,2;glow,Color("Invisible");linear,1;diffusealpha,0;);
-	};
 };
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(y,70;rotationz,90;zoomx,5;zoomy,5);
--- 	GainFocusCommand=cmd(visible,true);
--- 	LoseFocusCommand=cmd(visible,false);
- 	LoadActor("_HighlightFrame") .. {
-		InitCommand=cmd(diffuse,ModeIconColors[gc:GetName()];diffusealpha,0);
-		GainFocusCommand=cmd(finishtweening;diffuse,ColorLightTone(ModeIconColors[gc:GetName()]);linear,1;diffuse,ModeIconColors[gc:GetName()]);
-		LoseFocusCommand=cmd(finishtweening;diffusealpha,0);
-		OffFocusedCommand=cmd(finishtweening;glow,Color("White");decelerate,2;glow,Color("Invisible"));
+	InitCommand=cmd(y,-120;);
+    LoadFont("Common Large")..{
+		InitCommand=function(self)
+            (cmd(settext,bigText;horizalign,left;zoom,0.4;y,15;x,30-SCREEN_CENTER_X;skewx,-0.2;))(self)
+            bigTextWidth = self:GetWidth()
+            self:visible(false);
+        end;
+        
 	};
+
+    Def.Quad{
+        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,bigTextColor;horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,-2;zoomy,2;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
+        GainFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,1);
+        LoseFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,0);
+    };
+    Def.Quad{
+        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_CENTER_X;zoomy,50;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
+        GainFocusCommand=cmd(visible,true);
+        LoseFocusCommand=cmd(visible,false);
+    };
+    Def.Quad{
+        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,bigTextColor;horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,50;zoomy,2;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
+        GainFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,1);
+        LoseFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,0);
+    };
+    
+
+	LoadFont("Common Large")..{
+		InitCommand=cmd(settext, bigText ;diffuse,bigTextColor;diffusebottomedge,ColorLightTone(bigTextColor);horizalign,right;zoom,0.4;y,15;x,-30+SCREEN_CENTER_X;skewx,-0.2);
+        GainFocusCommand=cmd(stoptweening;visible,true;x,-30+SCREEN_CENTER_X-20;decelerate,0.5;x,-30+SCREEN_CENTER_X);
+        LoseFocusCommand=cmd(stoptweening;visible,false;);
+    };
 };
--- Emblem Frame
+
+local function NoteAndBomb(name)
+    local veryList = {}
+    local thisDef = Def.ActorFrame{};
+
+    if name == "Normal" then
+        veryList = {
+            {"arrow", 70, 0, 225},
+            {"arrow", -20, 50, 8},
+        }
+    elseif name == "Endless" then
+        veryList = {
+            {"arrow", 90, -20, 145},
+            {"arrow", -90, 40, 30},
+            {"arrow", -110, -50, 242},
+            {"bomb", 0, -15, 75},
+            {"bomb", 40, 50, 123},
+        }
+    elseif name == "Nonstop" then
+        veryList = {
+            {"arrow", 80, -30, 98},
+            {"bomb", -90, 40, 121},
+            {"arrow", -110, -50, 43},
+        }
+    elseif name == "Oni" then
+        veryList = {
+            {"arrow", -20, -15, 12},
+            {"arrow", -70, -10, 143},
+            {"arrow", -110, -80, 324},
+            {"bomb", -25, 40, 75},
+            {"bomb", 45, 30, 123},
+        }
+    end
+
+    for i = 1,#veryList do
+        thisDef[#thisDef+1] = LoadActor(THEME:GetPathG("OutfoxNote/_"..veryList[i][1], "")) .. {
+            InitCommand=cmd(x,veryList[i][2];y,veryList[i][3];zoom,0.7;bob;effectmagnitude,0,10,0;effectperiod,math.random(10,40)/2;effectoffset,math.random(4,10)/10;rotationz,veryList[i][4]);
+        };
+    end
+
+    return thisDef;
+end
+
 t[#t+1] = Def.ActorFrame {
-	FOV=90;
-	InitCommand=cmd(zoom,0.9;y,SCREEN_TOP-35);
-	-- Main Emblem
-	LoadActor( gc:GetName() ) .. {
-		InitCommand=cmd(diffusealpha,0;zoom,0.75);
-		GainFocusCommand=cmd(finishtweening;stopeffect;diffusealpha,1;zoom,1;glow,Color("White");decelerate,0.5;glow,Color("Invisible");wag;effectmagnitude,0,5,0;effectperiod,2;);
-		LoseFocusCommand=cmd(finishtweening;stopeffect;smooth,0.4;diffusealpha,0;zoom,0.75;glow,Color("Invisible"));
-		OffFocusedCommand=cmd(finishtweening;stopeffect;glow,ModeIconColors[gc:GetName()];decelerate,0.5;rotationz,360;glow,Color("Invisible");decelerate,0.25;zoomx,0;y,-300);
-	};
+    FOV=90;
+    InitCommand=cmd(y,SCREEN_TOP-20;x,-150);
+    OffFocusedCommand=cmd(decelerate,0.8;rotationy,360*2;y,SCREEN_TOP;x,-150;zoom,1.3;accelerate,0.4;y,30;decelerate,0.7;y,-SCREEN_CENTER_Y*4;zoomx,0);
+    -- Main Emblem
+    Def.ActorFrame {
+        GainFocusCommand=cmd(finishtweening;visible,true;x,50;glow,Color("White");decelerate,0.5;glow,Color("Invisible");x,0;bob;effectmagnitude,0,5,0;effectperiod,7;);
+        LoseFocusCommand=cmd(finishtweening;stopeffect;visible,false);
+        LoadActor( gc:GetName() ) .. {
+            InitCommand=cmd(diffusealpha,1;zoom,0.4);
+        };
+        NoteAndBomb(gc:GetName());
+    };
+    
 };
--- Text Frame
+    -- Text Frame
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(x,90-SCREEN_CENTER_X+SCREEN_CENTER_X/4;y,50);
-	Def.Quad {
-		InitCommand=cmd(horizalign,left;y,-20;zoomto,320,2;diffuse,ModeIconColors[gc:GetName()];diffusealpha,0;fadeleft,0.35;faderight,0.35);
-		GainFocusCommand=cmd(stoptweening;linear,0.5;diffusealpha,0);
-		LoseFocusCommand=cmd(stoptweening;linear,0.1;diffusealpha,0);
+    LoadFont("Common Normal") .. {
+		Text= expText;
+		InitCommand=function(self)
+            (cmd(horizalign,right;x,SCREEN_CENTER_X-20;y,-30;skewx,-0.125;zoom,1.2;shadowlength,1;diffusebottomedge,BoostColor(bigTextColor,2)))(self)
+            expTextWidth = self:GetWidth()
+            self:visible(false)
+        end;
 	};
-	LoadFont("Common Large") .. {
-		Text=gc:GetText();
-		InitCommand=cmd(horizalign,center;diffuse,ModeIconColors[gc:GetName()];shadowcolor,ColorDarkTone(ModeIconColors[gc:GetName()]);shadowlength,2;diffusealpha,0;skewx,-0.125;zoom,0.5);
-		GainFocusCommand=cmd(finishtweening;x,0+335;y,30+10;cropright,1;diffuse,ColorLightTone(ModeIconColors[gc:GetName()]);decelerate,0.45;y,0+10;diffusealpha,1;cropright,0;diffuse,ModeIconColors[gc:GetName()]);
-		LoseFocusCommand=cmd(finishtweening;x,0+335;y,30+10;accelerate,0.4;diffusealpha,0;y,30+10;x,32+335;diffusealpha,0);
-		OffFocusedCommand=cmd(finishtweening;accelerate,0.75;cropleft,1);
-	};
+    Def.Quad{
+        InitCommand=cmd(diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,-55;
+        zoomy,30 * (LoadModule("Utils.CountText.lua")(expText, "\n") + 1) + 20;zoomx,expTextWidth*1.7 + 10;fadeleft,0.3);
+        GainFocusCommand=cmd(visible,true);
+        LoseFocusCommand=cmd(visible,false);
+        OffFocusedCommand=cmd(stoptweening;decelerate,0.75;cropleft,1)
+    };
 	LoadFont("Common Normal") .. {
-		Text=THEME:GetString(Var "LoadingScreen", gc:GetName() .. "Explanation");
-		InitCommand=cmd(horizalign,center;x,0+335;shadowlength,1;diffusealpha,0;skewx,-0.125;zoom,0.5);
-		GainFocusCommand=cmd(finishtweening;x,0+335;y,120;decelerate,0.45;diffusealpha,1;y,120-45);
-		LoseFocusCommand=cmd(finishtweening;x,0+335;accelerate,0.4;diffusealpha,0;x,0+335;diffusealpha,0);
-		OffFocusedCommand=cmd(finishtweening;accelerate,0.75;cropleft,1);
+		Text= expText;
+		InitCommand=cmd(horizalign,right;vertalign,top;x,SCREEN_CENTER_X-20;y,-30;skewx,-0.125;zoom,1.2;shadowlength,1;diffusebottomedge,BoostColor(bigTextColor,2));
+		GainFocusCommand=cmd(stoptweening;visible,true;x,SCREEN_CENTER_X-60;decelerate,0.45;x,SCREEN_CENTER_X-20);
+		LoseFocusCommand=cmd(stoptweening;visible,false;);
+		OffFocusedCommand=cmd(stoptweening;linear,0.75;cropleft,1);
 	};
+    
 };
-t.GainFocusCommand=cmd(finishtweening;visible,true;zoom,1;addy,-20;decelerate,0.5;addy,20);
-t.LoseFocusCommand=cmd(finishtweening;visible,false;zoom,1;rotationx,180);
-t.OffFocusedCommand=cmd(finishtweening;decelerate,3;rotationz,720);
-t[#t+1] = Def.ActorFrame {
-Def.ActorFrame {
-		OffFocusedCommand=cmd(decelerate,1;x,-322;y,125;zoom,2);
-	Def.ActorFrame {
-		OnCommand=cmd(queuecommand,"Check");
-		GainFocusCommand=cmd(queuecommand,"Check");
-		CheckCommand=function(self)
-		if gc:GetText() == "Extended" or gc:GetText() == "Oni" then
-		self:bob()
-		self:effectmagnitude(0,30,0)
-		end
-		end;
-	Def.ActorFrame {
-		OnCommand=cmd(queuecommand,"Check");
-		GainFocusCommand=cmd(queuecommand,"Check");
-		CheckCommand=function(self)
-		if gc:GetText() == "Extended" or gc:GetText() == "Oni" then
-		self:bob()
-		self:effectmagnitude(15,0,0)
-		self:effecttiming(0.2,0.3,0.2,0.3)
-		end
-		end;
-	LoadActor("_Down Tap Receptor") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*0.65;y,-80;diffusealpha,1;rotationz,90;zoom,0.8);
-	};
-	LoadActor("_Down Tap Receptor") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*0.90;y,-80;diffusealpha,1;zoom,0.8);
-	};
-	LoadActor("_Down Tap Receptor") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*1.15;y,-80;diffusealpha,1;rotationz,180;zoom,0.8);
-	};
-	LoadActor("_Down Tap Receptor") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*1.40;y,-80;diffusealpha,1;rotationz,-90;zoom,0.8);
-	};
-	};
-	Def.ActorFrame {
-	LoadActor("Down Tap Note") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*0.65;y,-80;diffusealpha,1;rotationz,90;zoom,0.8);
-		OnCommand=cmd(queuecommand,"Teston");
-		GainFocusCommand=cmd(queuecommand,"Teston");
-		OffFocusedCommand=cmd(queuecommand,"Teston");
-		TestonCommand=cmd(finishtweening;playcommand,"LoopA");
-		LoopACommand=function(self) self:y(20) self:linear(1/Lew) self:y(-80) self:sleep(0.00001) self:queuecommand("LoopA") end;
-	};
-	LoadActor("Down Tap Note") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*0.90;y,-80;diffusealpha,1;rotationz,0;zoom,0.8;setstate,4);
-		OnCommand=cmd(queuecommand,"Teston");
-		GainFocusCommand=cmd(queuecommand,"Teston");
-		OffFocusedCommand=cmd(queuecommand,"Teston");
-		TestonCommand=cmd(sleep,0.0001;addy,25;linear,0.25/Lew;addy,-25;playcommand,"LoopB");
-		LoopBCommand=function(self) self:y(20) self:linear(1/Lew) self:y(-80) self:sleep(0.00001) self:queuecommand("LoopB") end;
-	};
-	LoadActor("Down Tap Note") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*1.15;y,-80;diffusealpha,1;rotationz,180;zoom,0.8;setstate,8);
-		OnCommand=cmd(queuecommand,"Teston");
-		GainFocusCommand=cmd(queuecommand,"Teston");
-		OffFocusedCommand=cmd(queuecommand,"Teston");
-		TestonCommand=cmd(sleep,0.0001;addy,50;linear,0.5/Lew;addy,-50;playcommand,"LoopC");
-		LoopCCommand=function(self) self:y(20) self:linear(1/Lew) self:y(-80) self:sleep(0.00001) self:queuecommand("LoopC") end;
-	};
-	LoadActor("Down Tap Note") .. {
-		InitCommand=cmd(x,(SCREEN_CENTER_X/2)*1.40;y,-80;diffusealpha,1;rotationz,-90;zoom,0.8;setstate,12);
-		OnCommand=cmd(queuecommand,"Teston");
-		GainFocusCommand=cmd(queuecommand,"Teston");
-		OffFocusedCommand=cmd(queuecommand,"Teston");
-		TestonCommand=cmd(sleep,0.0001;addy,75;linear,0.75/Lew;addy,-75;playcommand,"LoopD");
-		LoopDCommand=function(self) self:y(20) self:linear(1/Lew) self:y(-80) self:sleep(0.00001) self:queuecommand("LoopD") end;
-	};
-	};
-	};
-LoadFont("Common Large") .. {
-	Text="VS";
-	InitCommand=cmd(x,SCREEN_CENTER_X/2;diffuse,color("#FF9900");zoom,0.8);
-		OnCommand=cmd(queuecommand,"Check");
-		GainFocusCommand=cmd(queuecommand,"Check");
-		CheckCommand=function(self)
-		if gc:GetText() == "Rave" then
-		self:vibrate()
-		self:diffusealpha(1)
-		else
-		self:stopeffect()
-		self:diffusealpha(0)
-		end
-		if gc:GetText() == "Endless" then
-		Lew = 5
-		else
-		Lew = 1
-		end
-		end;
-};
-Def.ActorFrame{
-	InitCommand=cmd(x,SCREEN_CENTER_X/2;y,SCREEN_CENTER_Y-175;zoom,1;diffusealpha,0;playcommand,"Neppp");
-	NepppCommand=function(self)
-	if gc:GetText() == "Oni" then
-	self:diffusealpha(1)
-	Wario[1] = 60*9+59+0.5;
-		Wario[2] = math.floor(Wario[1]/60)
-		Wario[3] = math.floor((Wario[1] - Wario[2]*60)/10)
-		Wario[4] = math.floor(Wario[1] - (Wario[2]*60 + Wario[3]*10))
-	else
-	self:diffusealpha(0)
-	end
-	self:sleep(0.1)
-	self:queuecommand("Neppp")
-	end;
-	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,50;zoom,0.25;playcommand,"Wa");
-		WaCommand=function(self)
-		self:animate(false)
-		self:setstate(Wario[4])
-		self:sleep(0.1)
-		self:queuecommand("Wa")
-		end;
-	};
-	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,25;zoom,0.25;playcommand,"ri");
-		riCommand=function(self)
-		self:animate(false)
-		self:setstate(Wario[3])
-		self:sleep(0.1)
-		self:queuecommand("ri")
-		end;
-	};
-	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,-25;zoom,0.25;playcommand,"OO");
-		OOCommand=function(self)
-		self:animate(false)
-		self:setstate(Wario[2])
-		self:sleep(0.1)
-		self:queuecommand("OO")
-		end;
-	};
-	LoadActor("Ticktock")..{
-		OnCommand=cmd(zoom,0.25;playcommand,"OO");
-		OOCommand=function(self)
-		self:animate(false)
-		if ( Wario[1] - math.floor(Wario[1]) >= 0.5) then
-			self:setstate(1)
-		else
-			self:setstate(0)
-		end
-		self:sleep(0.1)
-		self:queuecommand("OO")
-		end;
-	};
-};
-	};
-};
+
+
 return t

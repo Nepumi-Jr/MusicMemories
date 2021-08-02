@@ -60,7 +60,7 @@ ConMessageCommand=function(self)
 self:stoptweening():decelerate(0.5):zoom(0)
 if S == 1 then  end;
 end;
-MCBT(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Normal","Just Normal");
+LoadModule("Menu.Button.lua")(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Normal","Just Normal");
 };
 Def.ActorFrame{
 OnCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,0.75);
@@ -77,7 +77,7 @@ ConMessageCommand=function(self)
 self:stoptweening():decelerate(0.5):zoom(0)
 if S == 2 then  end;
 end;
-MCBT(0,0,color("#FF9900"),color("#AA6600"),color("#AA6600"),color("#AA6600"),color("#AA6600"),"Battle!","More Fun!");
+LoadModule("Menu.Button.lua")(0,0,color("#FF9900"),color("#AA6600"),color("#AA6600"),color("#AA6600"),color("#AA6600"),"Battle!","More Fun!");
 };
 };
 return t;

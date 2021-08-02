@@ -33,16 +33,11 @@ local t = LoadFont("Common Normal") .. {
 		local pnPlayer = params.PlayerNumber;
 		local sGrade = params.Grade
 
-		self:settext(GTT(sGrade));
+		self:settext(LoadModule("Eva.GradeTier.lua")(sGrade));
 		self:diffuse(PlayerColor(pnPlayer));
 		self:diffusetopedge(BoostColor(PlayerColor(pnPlayer),1.5));
 		self:strokecolor(BoostColor(PlayerColor(pnPlayer),0.25));
 		
---[[ 		if sGrade == "Grade_NoTier" then
-			self:playcommand("Hide");
-		else
-			self:playcommand("Show");
-		end; --]]
 	end;
 };
 

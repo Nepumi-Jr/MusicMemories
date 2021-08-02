@@ -284,9 +284,6 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
 	SC = math.max(SC,STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetPercentDancePoints())
 end
 
-RPC_Update({state = SAY_STATE, details = GAMESTATE:GetCurrentSong():GetDisplayFullTitle(),
-large_image = "outfox",large_text = FormatPercentScore(SC),
-small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GetDiff()})
 
 
 if ILZ >= 4 then
@@ -319,12 +316,11 @@ local RI = false;
 
 local CX = SCREEN_CENTER_X;
 local CY = SCREEN_CENTER_Y;
-SM("ISLA\n\n\n\n\n\n\n\n"..EVA_RANKBGM());
 if #ConA == 0 and #ConB == 0 then
 	return Def.ActorFrame{};
 else
 
-local BGtod = EVA_RANKBGM();
+local BGtod = LoadModule("Eva.StateTier.lua")();
 
 
 

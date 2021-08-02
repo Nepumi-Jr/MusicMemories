@@ -40,7 +40,7 @@ StartTransitioningCommand=function(self)
 
 	local SA = false;
 	for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-		if CurStageAward(pn) ~= "Nope" then
+		if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then
 			SA = true;
 			break
 		end
@@ -278,7 +278,7 @@ end]]
 
 local SA = false;
 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-	if CurStageAward(pn) ~= "Nope" then
+	if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then
 		SA = true;
 		break
 	end

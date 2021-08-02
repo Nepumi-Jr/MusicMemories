@@ -105,24 +105,11 @@ t[#t+1] = LoadFont("Common Normal") .. {
 		end
 		
 		if GAMESTATE:IsCourseMode() then
-			local X = {state = GAMESTATE:GetCurrentSong():GetDisplayFullTitle().. ((ratemod ~= 1 ) and string.format("(%.1fx)",ratemod) or ""), details = GAMESTATE:GetCurrentCourse():GetDisplayFullTitle(),
-			le = NOW_DAY() + (math.floor(GAMESTATE:GetCurrentSong():GetLastSecond()) - math.floor(GAMESTATE:GetCurMusicSeconds()))/ratemod,
-			large_image = "outfox",large_text = GAMESTATE:GetCurrentGame():GetName(),
-			small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GetDiff()}
-			
-			if GAMESTATE:GetCurrentCourse():GetEstimatedNumStages() then
-				X["party_size"] = {GAMESTATE:GetCourseSongIndex()+1,GAMESTATE:GetCurrentCourse():GetEstimatedNumStages()}
-			end
-			
-			RPC_Update(X)
+            --TODO : RPC_Update here
 			
 			self:settext(GAMESTATE:GetCurrentCourse():GetDisplayFullTitle())
 		else
-			RPC_Update({state = GAMESTATE:GetCurrentSong():GetDisplayArtist(), details = GAMESTATE:GetCurrentSong():GetDisplayFullTitle() .. ((ratemod ~= 1 ) and string.format("(%.1fx)",ratemod) or ""),
-			le = NOW_DAY() + (math.floor(GAMESTATE:GetCurrentSong():GetLastSecond()) - math.floor(GAMESTATE:GetCurMusicSeconds()))/ratemod,
-			large_image = "outfox",large_text = GAMESTATE:GetCurrentGame():GetName(),
-			small_image = GAMESTATE:GetCurrentGame():GetName() , small_text = GetDiff()
-			})
+            --TODO : RPC_Update here
 			self:settext(GAMESTATE:GetCurrentSong():GetDisplayFullTitle())
 		end
 		

@@ -1,6 +1,6 @@
 
 local sound = "Introduc2.wav";
-if EASTER() == "FOOL" then
+if LoadModule("Easter.today.lua")() == "FOOL" then
 	sound = "BadTime.ogg";
 end
 

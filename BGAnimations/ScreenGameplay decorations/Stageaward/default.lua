@@ -39,9 +39,9 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     t[#t+1] = Def.ActorFrame{
         InitCommand=cmd(Center);
         FcStageMessageCommand=function(self)
-            if CurStageAward(pn) ~= "Nope" then--Stage
+            if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then--Stage
 
-                local SA = CurStageAward(pn);
+                local SA = LoadModule("Eva.CustomStageAward.lua")(pn);
 
                 self:x(SCREENMAN:GetTopScreen():GetChild(pn == PLAYER_1 and 'PlayerP1' or 'PlayerP2'):GetX())
                 self:y(SCREENMAN:GetTopScreen():GetChild(pn == PLAYER_1 and 'PlayerP1' or 'PlayerP2'):GetY())

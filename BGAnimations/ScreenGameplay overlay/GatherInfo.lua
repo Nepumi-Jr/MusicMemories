@@ -1,41 +1,43 @@
 local BattleMemories = {};
-local LS = {};
-local LP;
-local PP = {};
+local Players = GAMESTATE:GetHumanPlayers();
+local thisTapTiming = {}
 
 return Def.ActorFrame{
 
 
     Def.Quad{--Timing
         InitCommand=cmd(zoom,20;visible,false);
+        OnCommand=function(self)
+            for pn in ivalues(Players) do
+                thisTapTiming[pn] = {};
+            end
+        end;
         JudgmentMessageCommand=function(self,params)
             
             if params.HoldNoteScore then return end;
 
-            if params.TapNoteScore == "TapNoteScore_W1" or 
-            params.TapNoteScore == "TapNoteScore_W2" or 
-            params.TapNoteScore == "TapNoteScore_W3" or 
-            params.TapNoteScore == "TapNoteScore_W4" or 
-            params.TapNoteScore == "TapNoteScore_W5" or 
-            params.TapNoteScore == "TapNoteScore_Miss" then
+            local smallTapNoteScore = ToEnumShortString(params.TapNoteScore)
+            local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+            local thisTime = GAMESTATE:GetCurMusicSeconds()
+            
+            if FindInTable(smallTapNoteScore, TName) then
 
-                local NN = TP.Eva.TapTiming[params.Player] or {};
+                if thisTapTiming[params.Player] == nil then
+                    thisTapTiming[params.Player] = {}
+                end
 
                 if params.TapNoteScore == "TapNoteScore_Miss" then
-                    NN[#NN+1] = {params.TapNoteScore,1};
+                    thisTapTiming[params.Player][#thisTapTiming[params.Player]+1] = {thisTime,params.TapNoteScore,1};
                 else
-                    NN[#NN+1] = {params.TapNoteScore,params.TapNoteOffset};
+                    thisTapTiming[params.Player][#thisTapTiming[params.Player]+1] = {thisTime,params.TapNoteScore,params.TapNoteOffset};
                 end
-
-                TP.Eva.TapTiming[params.Player] = NN;
-
-                if params.TapNoteOffset == nil then
-                    printf("#%d{%s}%s",#NN,NN[#NN][1],tostring(params.HoldNoteScore))
-                end
-
-                
             end
 
+        end;
+        OffCommand=function(self)
+            for pn in ivalues(Players) do
+                TP.Eva.TapTiming[pn] = thisTapTiming[pn];
+            end
         end;
     };
 

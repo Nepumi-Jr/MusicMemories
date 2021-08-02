@@ -11,7 +11,7 @@ local LIND = 0;
 local judType = "";
 
 local Op = TP[ToEnumShortString(LP)].ActiveModifiers.JudgmentGraphic;
-judType = GetPicJudPath(Op);
+judType = LoadModule("Options.JudgmentGetPath.lua")(Op);
 local TNSFrames = {
 	TapNoteScore_W1 = 0;
 	TapNoteScore_W2 = 1;
@@ -203,7 +203,7 @@ return Def.ActorFrame{
             self:pause();
             self:visible(false);
                 if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-                    self:Load(GetPicJudPath("Edit 2x6.png"));
+                    self:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
                 else
                     self:Load(judType);
                 end

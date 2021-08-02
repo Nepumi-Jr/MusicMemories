@@ -60,7 +60,7 @@ function LoadProfileCustom(profile, dir)
 						--SM("\n\n\nDoing "..string.format( "%s : %s(%.2f) man...",profile:GetDisplayName(),setting ,Dim));
 						GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel):Cover(0)
 					end
-				elseif k == "CusMini" then
+				elseif k == "CustomMini" then
 					if setting  ~= "Nope" and setting  ~= "Normal" then
 
 						local Dim = setting:gsub("%%","")/100

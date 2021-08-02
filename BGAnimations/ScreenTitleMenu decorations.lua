@@ -7,8 +7,7 @@ t[#t+1] = Def.ActorFrame {
 		if not FILEMAN:DoesFileExist("Save/ThemePrefs.ini") then
 			Trace("ThemePrefs doesn't exist; creating file")
 			ThemePrefs.ForceSave()
-		end
-
+		end 
 		ThemePrefs.Save()
 	end;
 };

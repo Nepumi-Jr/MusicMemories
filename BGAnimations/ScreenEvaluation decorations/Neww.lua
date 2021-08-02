@@ -114,535 +114,205 @@ else
 t[#t+1] = LoadActor("InfoSong.lua")
 end
 
---[[t[#t+1] = Def.ActorFrame{
-	Def.ActorFrame{
-		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,75;horizalign,right;zoom,1.1);
-				OnCommand=function(self)
-				self:settext("Life Diff.")
-				end;
-		};
-		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,100;horizalign,right;zoom,1);
-				OnCommand=function(self)
-				self:settextf("LV.%d",GetLifeDifficulty())
-				end;
-		};
-		};
-
-		Def.ActorFrame{
-		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,130;horizalign,right;zoom,1.1);
-				OnCommand=function(self)
-				self:settext("Time Diff.")
-				end;
-		};
-		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,155;horizalign,right);
-				OnCommand=function(self)
-				self:settextf("LV.%d",GetTimingDifficulty())
-				end;
-		};
-	};
-};]]
-
---[[
-████████████████████████████
-███████     █████  █████████
-███████  █  ████   █████████
-███████     █████  █████████
-███████  ████████  █████████
-███████  ████████  █████████
-███████  ██████      ███████
-████████████████████████████
-]]
-
-local SS1;
-SS1 = {
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_W1'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_W2'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_W3'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_W4'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_W5'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_Miss'),
-0
-};
-
-
-local Op1 = TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.JudgmentGraphic;
-local jud1 = GetPicJudPath(Op1);
-local frame1 = true;
-local nameP1 = PROFILEMAN:GetProfile(PLAYER_1):GetDisplayName();
-local StepText1 = "";
-local Step1;
-local StepSt1;
-
-
-if GAMESTATE:IsCourseMode() then
-    StepSt1 = GAMESTATE:GetCurrentTrail(PLAYER_1);
-else
-	StepSt1 = GAMESTATE:GetCurrentSteps(PLAYER_1);
-end
-
-StepText1 = THEME:GetString("CustomDifficulty",ToEnumShortString(StepSt1:GetDifficulty())).." : "..StepSt1:GetMeter()
-
-
-SS1[7] = SS1[1]+SS1[2]+SS1[3]+SS1[4]+SS1[5]+SS1[6];
 t[#t+1] = Def.ActorFrame{
-Condition = GAMESTATE:IsPlayerEnabled(PLAYER_1);
 	Def.ActorFrame{
-		OnCommand=cmd(x,-297;y,210;zoomx,680/794;zoomy,263/256);
-			StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(PLAYER_1), GraphDisplay(PLAYER_1) );
-            --StandardDecorationFromTable( "ComboGraph" .. ToEnumShortString(PLAYER_1));
-			--BG
-			Def.ActorFrame{
-			Def.ActorFrame{
-			InitCommand=cmd(diffusealpha,0.7);
-			Condition=SS1[7] ~= 0;
-			OnCommand=cmd(x,SCREEN_CENTER_X*0.806;y,SCREEN_CENTER_Y*0.616;zoomy,170);
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1+0.3*5):decelerate(0.2)
-			self:fadetop(1.2)
-			self:x((SS1[1]+SS1[2]+SS1[3]+SS1[4]+SS1[5])/SS1[7]*496):zoomx((SS1[6]/SS1[7])*496)
-			self:diffuse(color("#555555"))
-			end;
-			};
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1+0.3*4):decelerate(0.2)
-			self:fadetop(1.2)
-			self:x((SS1[1]+SS1[2]+SS1[3]+SS1[4])/SS1[7]*496):zoomx((SS1[5]/SS1[7])*496)
-			self:diffuse(GameColor.Judgment["JudgmentLine_W5"])
-			end;
-			};
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1+0.3*3):decelerate(0.2)
-			self:fadetop(1.2)
-			self:x((SS1[1]+SS1[2]+SS1[3])/SS1[7]*496):zoomx((SS1[4]/SS1[7])*496)
-			self:diffuse(GameColor.Judgment["JudgmentLine_W4"])
-			end;
-			};
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1+0.3*2):decelerate(0.2)
-			self:fadetop(1.2)
-			self:x((SS1[1]+SS1[2])/SS1[7]*496):zoomx((SS1[3]/SS1[7])*496)
-			self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
-			end;
-			};
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1+0.3*1):decelerate(0.2)
-			self:fadetop(1.2)
-			self:x((SS1[1])/SS1[7]*496):zoomx((SS1[2]/SS1[7])*496)
-			self:diffuse(GameColor.Judgment["JudgmentLine_W2"])
-			end;
-			};
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1):decelerate(0.2)
-			self:fadetop(1.2)
-			self:zoomx((SS1[1]/SS1[7])*496)
-			self:diffuse(GameColor.Judgment["JudgmentLine_W1"])
-			end;
-			};
+        LoadFont("Common Large")..{
+            InitCommand=cmd(x,SCREEN_RIGHT-10;y,12;horizalign,right;zoom,0.35);
+            OnCommand=function(self)
+                local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+                TName = LoadModule("Utils.SortTiming.lua")(TName)
+                self:settext(LoadModule("Options.ReturnCurrentTiming.lua")().Name):skewx(-0.2)
+                self:diffusebottomedge(
+                    LoadModule("Color.Judgment.lua")(TName[1])
+                )
+            end;
 		};
-	};
-			Def.ActorFrame{
-			Condition=SS1[7] == 0;
-			OnCommand=cmd(x,SCREEN_CENTER_X*0.806;y,SCREEN_CENTER_Y*0.616);
-			Def.Quad{
-			OnCommand=function(self)
-			self:fadetop(0)
-			self:horizalign(left)
-			self:sleep(1):decelerate(0.2)
-			self:fadetop(1.2)
-			self:zoomx(496)
-			self:zoomy(170)
-			self:diffuse(PlayerColor(PLAYER_1))
-			self:diffusealpha(0.9)
-			end;
-			};
+		LoadFont("Common Normal")..{
+            InitCommand=cmd(x,SCREEN_RIGHT-10;y,45;horizalign,right;zoom,0.6);
+            OnCommand=function(self)
+                self:settextf("Life LV : %d      Timing LV : %d",GetLifeDifficulty(), GetTimingDifficulty())
+            end;
 		};
-	};
-
-Def.ActorFrame{
-	InitCommand=cmd(x,-440;y,-5);
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(0*1) else
-			self:setstate(0) end end; 
-	};
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*1;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(1*2) else
-			self:setstate(1) end end; 
-	};
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*2;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(2*2) else
-			self:setstate(2) end end; 
-	};
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*3;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(3*2) else
-			self:setstate(3) end end; 
-	};
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*4;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(4*2) else
-			self:setstate(4) end end; 
-	};
-    Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
-		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
-		if frame1 then
-			self:setstate(5*2) else
-			self:setstate(5) end end; 
-	};
-};
-
-Def.Quad{
-    InitCommand=cmd(y,SCREEN_CENTER_Y*0.3;horizalign,left;zoomx,170;zoomy,25;faderight,1;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
-};
-
-LoadFont("Common Normal")..{
-InitCommand=cmd(x,10;y,SCREEN_CENTER_Y*0.3;horizalign,left;zoom,1;shadowlength,2);
-OnCommand=cmd(settext,StepText1;);
-};
-	
-
---[[LoadFont("Common normal")..{
-	InitCommand=cmd(x,200;y,110+22*0;zoom,0.8;shadowlength,2;settext,"Hold:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,200;y,110+22*1;zoom,0.8;shadowlength,2;settext,"Mine:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,245;y,110+22*1;zoom,0.8;shadowlength,2;
-	settextf,"%04d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_AvoidMine'));
-	OnCommand=cmd();
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,280;y,112+22*1;zoom,0.4;shadowlength,2;
-	settextf,"/%04d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_HitMine')+STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapNoteScore_AvoidMine'));
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,200;y,110+22*2;zoom,0.8;shadowlength,2;settext,"Burn:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,260;y,110+22*2;zoom,0.8;shadowlength,2;settextf,"%.1f cal.",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetCaloriesBurned());
-	OnCommand=cmd();
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,200;y,110+22*3;zoom,0.8;shadowlength,2;settext,"MC:");
-};]]
-
-LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() or "lose")..".png")..{
-    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() ~= nil);
-    InitCommand=cmd(x,205;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
-};
-LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() or "lose")..".png")..{
-    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() ~= nil);
-    InitCommand=cmd(x,250;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
-};
-
-
-    LoadFont("Common Normal")..{
-        InitCommand=function(self)
-            self:settext("Sample Text"):zoom(0.6):shadowlength(1)
-            self:x(230):y(SCREEN_CENTER_Y-130)
-        end;
-        OnCommand=function(self)
-            local PRInd = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPersonalHighScoreIndex()
-            self:visible(PRInd ~= -1);
-            local text = string.format(THEME:GetString("ScreenEvaluation", "PersonalRecord"), PRInd+1)
-            self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
-        end;
     };
-    LoadFont("Common Normal")..{
-        InitCommand=function(self)
-            self:settext("Sample Text"):zoom(0.6):shadowlength(1)
-            self:x(230):y(SCREEN_CENTER_Y-145)
-        end;
-        OnCommand=function(self)
-            local MRInd = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetMachineHighScoreIndex()
-            self:visible(MRInd ~= -1);
-            local text = string.format(THEME:GetString("ScreenEvaluation", "MachineRecord"), MRInd+1)
-            self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
-        end;
+};
+
+local tapScoreName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+tapScoreName = LoadModule("Utils.SortTiming.lua")(tapScoreName)
+tapScoreName[#tapScoreName + 1] = "Miss"
+
+
+
+local Players = GAMESTATE:GetHumanPlayers();
+
+for iterPn in ivalues(Players) do
+
+    local thisPn = iterPn;
+    local Op1 = TP[ToEnumShortString(thisPn)].ActiveModifiers.JudgmentGraphic;
+    local jud1 = LoadModule("Options.JudgmentGetPath.lua")(Op1);
+    local frame1 = true;
+    local StepText1 = "";
+    local StepSt1;
+    local curPNStateStat = STATSMAN:GetCurStageStats():GetPlayerStageStats(thisPn)
+
+    if GAMESTATE:IsCourseMode() then
+        StepSt1 = GAMESTATE:GetCurrentTrail(thisPn);
+    else
+        StepSt1 = GAMESTATE:GetCurrentSteps(thisPn);
+    end
+
+    StepText1 = LoadModule("TextDisplay.Difficulty.lua")(StepSt1)
+
+    t[#t+1] = Def.ActorFrame{
+        Condition = GAMESTATE:IsPlayerEnabled(thisPn);
+        Def.ActorFrame{
+            OnCommand=cmd(x,thisPn == PLAYER_1 and -297 or 138;y,210;zoomx,677/794;zoomy,255/256);
+                StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(thisPn), GraphDisplay(thisPn) );
+                --StandardDecorationFromTable( "ComboGraph" .. ToEnumShortString(thisPn));
+                Def.ActorMultiVertex{
+                    InitCommand=function(self)
+                        self:xy(SCREEN_CENTER_X*0.806,SCREEN_CENTER_Y*0.616)
+                        self:SetDrawState{Mode="DrawMode_Quads"}
+                    end;
+                    OnCommand=function(self)
+                        local Vers = {}
+                        local mxX = 496
+                        local lastX = 0
+                        local isDoom = true
+                        for i,v in pairs(tapScoreName) do
+                            local val = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
+                            if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                                val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
+                            elseif v == "Miss" then--For Pump
+                                val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+                            end
+
+                            if val > 0 then
+                                isDoom = false
+                                break
+                            end
+                        end
+                        
+                        if isDoom then
+                            if thisPn == PLAYER_1 then
+                                table.insert(Vers,{{mxX,85,0},PlayerColor(PLAYER_2)})
+                                table.insert(Vers,{{mxX,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{0,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{0,85,0},PlayerColor(PLAYER_1)})
+                            else
+                                table.insert(Vers,{{mxX,85,0},PlayerColor(PLAYER_1)})
+                                table.insert(Vers,{{mxX,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{0,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{0,85,0},PlayerColor(PLAYER_2)})
+                            end
+                        else
+                            for i,v in pairs(tapScoreName) do
+                                local val = curPNStateStat:GetPercentageOfTaps("TapNoteScore_"..v)
+                                if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                                    val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointHit")
+                                elseif v == "Miss" then--For Pump
+                                    val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointMiss")
+                                end
+                                local nextX = lastX + val * mxX
+                                local thisColor = LoadModule("Color.Judgment.lua")(v)
+                                table.insert(Vers,{{nextX,85,0},thisColor})
+                                table.insert(Vers,{{nextX,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{lastX,-85,0},{1,1,1,0}})
+                                table.insert(Vers,{{lastX,85,0},thisColor})
+                                lastX = nextX;
+                            end
+                        end
+                        self:SetNumVertices(#Vers):SetVertices( Vers )
+                    end;
+                };	
+        };
+        Def.Quad{
+            InitCommand=cmd(x,thisPn == PLAYER_1 and 0 or SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,thisPn == PLAYER_1 and left or right;zoomx,170;zoomy,25;faderight,thisPn == PLAYER_1 and 1 or 0;fadeleft,thisPn == PLAYER_2 and 1 or 0;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+        };
+        LoadFont("Common Normal")..{
+            InitCommand=cmd(x,thisPn == PLAYER_1 and 10 or SCREEN_RIGHT - 10;y,SCREEN_CENTER_Y*0.3;horizalign,thisPn == PLAYER_1 and left or right;zoom,1;shadowlength,2);
+            OnCommand=cmd(settext,StepText1;);
+        };
+        Def.Sprite{
+            Condition=LoadModule("Eva.CustomStageAward.lua")(thisPn) ~= "Nope";
+            InitCommand=cmd(x,thisPn == PLAYER_1 and 205 or 595;y,SCREEN_CENTER_Y-23;zoom,0.4;shadowlength,2);
+            OnCommand=cmd(Load,THEME:GetPathG("StageAward", ToEnumShortString(LoadModule("Eva.CustomStageAward.lua")(thisPn)));diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.2;rotationz,0;diffusealpha,1);
+        };
+        Def.Sprite{
+            Condition=(curPNStateStat:GetPeakComboAward() ~= nil);
+            InitCommand=cmd(x,thisPn == PLAYER_1 and 250 or 640;y,SCREEN_CENTER_Y-23;zoom,0.4;shadowlength,2);
+            OnCommand=cmd(Load,THEME:GetPathG("PeakCombo", ToEnumShortString(curPNStateStat:GetPeakComboAward()));diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.3;rotationz,0;diffusealpha,1);
+        };
+        LoadFont("Common Normal")..{
+            InitCommand=function(self)
+                self:settext("Sample Text"):zoom(0.6):shadowlength(1)
+                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-130)
+            end;
+            OnCommand=function(self)
+                local PRInd = curPNStateStat:GetPersonalHighScoreIndex()
+                self:visible(PRInd ~= -1);
+                local text = string.format(THEME:GetString("ScreenEvaluation", "PersonalRecord"), PRInd+1)
+                self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
+            end;
+        };
+        LoadFont("Common Normal")..{
+            InitCommand=function(self)
+                self:settext("Sample Text"):zoom(0.6):shadowlength(1)
+                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-145)
+            end;
+            OnCommand=function(self)
+                local MRInd = curPNStateStat:GetMachineHighScoreIndex()
+                self:visible(MRInd ~= -1);
+                local text = string.format(THEME:GetString("ScreenEvaluation", "MachineRecord"), MRInd+1)
+                self:settext(text):diffusealpha(0):sleep(2):decelerate(0.3):diffusealpha(1)
+            end;
+        };
     };
+    for i,v in pairs(tapScoreName) do
+        t[#t+1] = Def.ActorFrame{
+            InitCommand=cmd(x,thisPn == PLAYER_1 and 200 or 800;y,85 + 22*i*math.min(6/#tapScoreName,1););
+            Def.Sprite{
+                InitCommand=cmd(x,thisPn == PLAYER_1 and -140 or 0;zoom,0.35*math.min(6/#tapScoreName,1);shadowlength,3); 
+                OnCommand=function(self) self:pause();self:Load( jud1 );
+                    local miniFileName = string.match(jud1, ".*/(.*)")
+                    frame1 = string.find(miniFileName, "%[double%]")
 
-
-};
-
-
-
---[[
-████████████████████████████
-███████     ████     ███████
-███████  █  ████████ ███████
-███████     ████     ███████
-███████  ███████ ███████████
-███████  ███████ ███████████
-███████  ███████     ███████
-████████████████████████████
-]]
-
-if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-local SS2;
-SS2 = {
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_W1'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_W2'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_W3'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_W4'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_W5'),
-STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_Miss'),
-0
-};
-
-local Op2 = TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.JudgmentGraphic;
-local jud2 = GetPicJudPath(Op2);
-local frame2 = true;
-local GradeforP2 = "MemoriesHD 4x2.png"--in 589
-local nameP2 = PROFILEMAN:GetProfile(PLAYER_2):GetDisplayName();
-if MonthOfYear() == 10-1 and DayOfMonth() == 31 then
-	GradeforP2 = "Horror 4x2.png"
-end
-
-local StepText2 = "";
-local Step2;
-local StepSt2;
-
-if GAMESTATE:IsCourseMode() then
-    StepSt2 = GAMESTATE:GetCurrentTrail(PLAYER_2);
-else
-	StepSt2 = GAMESTATE:GetCurrentSteps(PLAYER_2);
-end
-
-StepText2 = THEME:GetString("CustomDifficulty",ToEnumShortString(StepSt2:GetDifficulty())).." : "..StepSt2:GetMeter()
-
-
-SS2[7] = SS2[1]+SS2[2]+SS2[3]+SS2[4]+SS2[5]+SS2[6];
-
-t[#t+1] = Def.ActorFrame{
-Def.ActorFrame{
-		OnCommand=cmd(x,138;y,21;zoomx,677/794;zoomy,255/256);
-StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(PLAYER_2), GraphDisplay(PLAYER_2) );
---BG
-Def.ActorFrame{
-
-Def.ActorFrame{
-InitCommand=cmd(diffusealpha,0.7);
-Condition=SS2[7] ~= 0;
-OnCommand=cmd(x,SCREEN_CENTER_X*0.806;y,SCREEN_CENTER_Y*0.616+197.5;zoomy,170);
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1+0.3*5):decelerate(0.2)
-self:fadetop(1.2)
-self:x(((SS2[1]+SS2[2]+SS2[3]+SS2[4]+SS2[5])/SS2[7])*496):zoomx((SS2[6]/SS2[7])*496)
-self:diffuse(color("#555555"))
-end;
-};
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1+0.3*4):decelerate(0.2)
-self:fadetop(1.2)
-self:x(((SS2[1]+SS2[2]+SS2[3]+SS2[4])/SS2[7])*496):zoomx((SS2[5]/SS2[7])*496)
-self:diffuse(GameColor.Judgment["JudgmentLine_W5"])
-end;
-};
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1+0.3*3):decelerate(0.2)
-self:fadetop(1.2)
-self:x(((SS2[1]+SS2[2]+SS2[3])/SS2[7])*496):zoomx((SS2[4]/SS2[7])*496)
-self:diffuse(GameColor.Judgment["JudgmentLine_W4"])
-end;
-};
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1+0.3*2):decelerate(0.2)
-self:fadetop(1.2)
-self:x(((SS2[1]+SS2[2])/SS2[7])*496):zoomx((SS2[3]/SS2[7])*496)
-self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
-end;
-};
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1+0.3*1):decelerate(0.2)
-self:fadetop(1.2)
-self:x(((SS2[1])/SS2[7])*496):zoomx((SS2[2]/SS2[7])*496)
-self:diffuse(GameColor.Judgment["JudgmentLine_W2"])
-end;
-};
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1):decelerate(0.2)
-self:fadetop(1.2)
-self:zoomx((SS2[1]/SS2[7])*496)
-self:diffuse(GameColor.Judgment["JudgmentLine_W1"])
-end;
-};
-};
-Def.ActorFrame{
-Condition=SS2[7] == 0;
-OnCommand=cmd(x,SCREEN_CENTER_X*0.806;y,SCREEN_CENTER_Y*0.616+197.5);
-Def.Quad{
-OnCommand=function(self)
-self:fadetop(0)
-self:horizalign(left)
-self:sleep(1):decelerate(0.2)
-self:fadetop(1.2)
-self:zoomx(496)
-self:zoomy(170)
-self:diffuse(PlayerColor(PLAYER_2))
-self:diffusealpha(0.9)
-end;
-};
-};
-};
-};
-Def.ActorFrame{
-	OnCommand=cmd(x,220+70;y,-5-197.5);
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(0*1) else
-			self:setstate(0) end end; 
-	};
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*1+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(1*2) else
-			self:setstate(1) end end; 
-	};
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*2+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(2*2) else
-			self:setstate(2) end end; 
-	};
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*3+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(3*2) else
-			self:setstate(3) end end; 
-	};
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*4+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(4*2) else
-			self:setstate(4) end end; 
-	};
-Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*5+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
-		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
-		if frame2 then
-			self:setstate(5*2) else
-			self:setstate(5) end end; 
-	};
-};	
-
-	
-Def.Quad{
-    InitCommand=cmd(x,SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoomx,170;zoomy,25;fadeleft,1;diffuse,GameColor.Difficulty[StepSt2:GetDifficulty()]);
-};
-
-LoadFont("Common Normal")..{
-InitCommand=cmd(x,SCREEN_RIGHT-10;y,SCREEN_CENTER_Y*0.3;horizalign,right;zoom,1;shadowlength,2);
-OnCommand=cmd(settext,StepText2;);
-};
-
-	
-
---[[LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-200;y,110+22*0;zoom,0.8;shadowlength,2;settext,"Hold:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-200;y,110+22*1;zoom,0.8;shadowlength,2;settext,"Mine:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-275;y,110+22*1;zoom,0.8;shadowlength,2;
-	settextf,"%04d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_AvoidMine'));
-	OnCommand=cmd();
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-240;y,112+22*1;zoom,0.4;shadowlength,2;
-	settextf,"/%04d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_HitMine')+STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapNoteScore_AvoidMine'));
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-200;y,110+22*2;zoom,0.8;shadowlength,2;settext,"Burn:");
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-260;y,110+22*2;zoom,0.8;shadowlength,2;settextf,"%.1f cal.",STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetCaloriesBurned());
-	OnCommand=cmd();
-};
-LoadFont("Common normal")..{
-	InitCommand=cmd(x,CX*2-200;y,110+22*3;zoom,0.8;shadowlength,2;settext,"MC:");
-};]]
-
-LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() or "lose")..".png")..{
-    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() ~= nil);
-    InitCommand=cmd(x,SCREEN_CENTER_X + 175;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
-};
-LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() or "lose")..".png")..{
-    Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() ~= nil);
-    InitCommand=cmd(x,SCREEN_CENTER_X + 175 + 45;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
-};
-
-	
-
-};
-
-
+                    if self:GetNumStates() == #tapScoreName * 2 or string.find(miniFileName, "2x%d") ~= nil then
+                        frame1 = true
+                    end
+                        if v == "Miss" then
+                            self:setstate(self:GetNumStates() - 1) 
+                        elseif frame1 then
+                            self:setstate((i-1)*2) 
+                        else
+                            self:setstate((i-1)) 
+                        end 
+                    end; 
+            };
+            Def.ActorFrame{
+                OnCommand=cmd(addx,-70 * (thisPn == PLAYER_1 and 1 or -1);diffusealpha,0;sleep,0.7+i*0.06*math.min(6/#tapScoreName,1);decelerate,0.25;addx,70 * (thisPn == PLAYER_1 and 1 or -1);diffusealpha,1);
+                LoadFont("Combo Number")..{
+                    Text  = "6969";
+                    InitCommand=cmd(x,-63;y,3;zoom,0.3*math.min(6/#tapScoreName,1);shadowlength,1);
+                    OnCommand=function(self)
+                        local nowNum = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
+                        if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                            nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
+                        elseif v == "Miss" then--For Pump
+                            nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+                        end
+                        local thisCl  = LoadModule("Color.Judgment.lua")(v)
+                        self:diffuse(thisCl)
+                        self:settextf("%04d",nowNum);
+                        self:AddAttribute(0,{Length = math.max(3-math.floor(math.log10(round(math.max(nowNum,1)))),0); Diffuse = ColorDarkTone(thisCl)})
+                    end; 
+                };
+            };
+        };
+    end
 
 end;
+
+
 
 function KodPercent(p)
 if p < 10 then

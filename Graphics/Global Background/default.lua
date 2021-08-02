@@ -6,7 +6,7 @@ local thisPath = THEMEDIR().."/Graphics/Global Background/"
 local function DayNight(self)
 	local this = self:GetChildren()
 	
-	Dayy = 1 - Nighty()
+	Dayy = 1 - LoadModule("ColorTone.Nighty.lua")()
 
 	this.DayBG:diffusealpha(Dayy)
 	this.Stars:diffusealpha(scale(Dayy,0,1,1,0.25))
@@ -65,7 +65,7 @@ local Stars = Def.ActorFrame{
 };
 
 
-for i = 1,100 do
+for i = 1,30 do
 
 	if math.random(1,10) == 1 then
 		Stars[#Stars+1] = Def.ActorFrame{

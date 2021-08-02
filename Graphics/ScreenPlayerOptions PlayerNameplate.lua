@@ -22,12 +22,9 @@ if GAMESTATE:GetCurrentSong() then
 end
 
 local t = Def.ActorFrame {
-	LoadActor(THEME:GetPathB("_frame","3x1"),"rounded fill", 192-8) .. {
-		OnCommand=cmd(diffuse,color("#333333");diffusealpha,0.875);
-	};
-	LoadActor(THEME:GetPathB("_frame","3x1"),"rounded gloss", 192-8) .. {
-		OnCommand=cmd(diffusealpha,0.125);
-	};
+    Def.Quad{
+        InitCommand=cmd(zoomx,300;zoomy,25;diffuse,color("#222222");fadeleft,0.12;faderight,0.12);
+    };
 	LoadFont("Common Normal") .. {
 		Text=ToEnumShortString(PlayerNumber);
 		Name="PlayerShortName",

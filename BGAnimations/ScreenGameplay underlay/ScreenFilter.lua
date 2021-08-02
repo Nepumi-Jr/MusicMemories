@@ -24,12 +24,12 @@ if numPlayers == 1 then
 	local player = GAMESTATE:GetMasterPlayerNumber()
 	local pNum = (player == PLAYER_1) and 1 or 2
 
-	if TP[ToEnumShortString(player)].ActiveModifiers.HidePN == 'Hide' then
+	if TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == 'Hide' then
 		filterAlphas[player] = 1;
-	elseif TP[ToEnumShortString(player)].ActiveModifiers.HidePN == "Nope" then
+	elseif TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == "Nope" then
 		filterAlphas[player] = 0;
 	else
-		filterAlphas[player] = TP[ToEnumShortString(player)].ActiveModifiers.HidePN:gsub("%%","")/100;
+		filterAlphas[player] = TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer:gsub("%%","")/100;
 	end
 
 	local pos;
@@ -62,12 +62,12 @@ else
 		for i, player in ipairs(PlayerNumber) do
 			local pNum = (player == PLAYER_1) and 1 or 2
 
-			if TP[ToEnumShortString(player)].ActiveModifiers.HidePN == 'Hide' then
+			if TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == 'Hide' then
 				filterAlphas[player] = 1;
-			elseif TP[ToEnumShortString(player)].ActiveModifiers.HidePN == "Nope" then
+			elseif TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == "Nope" then
 				filterAlphas[player] = 0;
 			else
-				filterAlphas[player] = TP[ToEnumShortString(player)].ActiveModifiers.HidePN:gsub("%%","")/100;
+				filterAlphas[player] = TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer:gsub("%%","")/100;
 			end
 			
 			local metricName = string.format("PlayerP%i%sX",pNum,styleType)

@@ -436,7 +436,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end;
 			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
-			MCBT(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Easy","8 Digit")
+			LoadModule("Menu.Button.lua")(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Easy","8 Digit")
 		};
 		Def.ActorFrame{
 			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y;zoom,0);
@@ -455,7 +455,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end;
 			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
-			MCBT(0,0,color("#AAAAFF"),color("#6666FF"),color("#66AAFF"),color("#000000"),color("#333333"),"Medium","10 Digit")
+			LoadModule("Menu.Button.lua")(0,0,color("#AAAAFF"),color("#6666FF"),color("#66AAFF"),color("#000000"),color("#333333"),"Medium","10 Digit")
 		};
 		Def.ActorFrame{
 			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;zoom,0);
@@ -474,7 +474,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end;
 			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
-			MCBT(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Hard","12 Digit")
+			LoadModule("Menu.Button.lua")(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Hard","12 Digit")
 		};
 		Def.ActorFrame{
 			RemMessageCommand=cmd(sleep,2+2.127;queuecommand,'Sam');
@@ -759,7 +759,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end;
 			ConMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
-			MCBT(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Retry","Again!")
+			LoadModule("Menu.Button.lua")(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Retry","Again!")
 	};
 	Def.ActorFrame{
 	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+80;zoom,0);
@@ -788,7 +788,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end;
 			ConMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
-			MCBT(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Back","")
+			LoadModule("Menu.Button.lua")(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Back","")
 	};
 };
 

@@ -10,7 +10,7 @@ t[#t+1] = Def.Quad{
 
 		local SA = false;
 		for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-			if CurStageAward(pn) ~= "Nope" then
+			if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then
 				SA = true;
 				break
 			end

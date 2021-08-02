@@ -17,7 +17,7 @@ local t = Def.ActorFrame{
 						self:visible(false);
 						self:Load(nil)
 					end;
-					self:diffusealpha(scale(Nighty(),0,1,1,0.75))
+					self:diffusealpha(scale(LoadModule("ColorTone.Nighty.lua")(),0,1,1,0.75))
 				else
 					self:visible(false);
 					self:Load(nil)
@@ -38,7 +38,7 @@ local t = Def.ActorFrame{
 					self:stretchto(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 					self:diffusealpha(0)
 					self:sleep(0.5)
-					self:accelerate(1):diffusealpha(scale(Nighty(),0,1,0.55,0.8))
+					self:accelerate(1):diffusealpha(scale(LoadModule("ColorTone.Nighty.lua")(),0,1,0.55,0.8))
 				else
 					self:Load(nil)
 					self:visible(false);

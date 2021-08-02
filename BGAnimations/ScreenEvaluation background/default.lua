@@ -6,7 +6,7 @@ local psss2 = STATSMAN:GetPlayedStageStats(1):GetPlayerStageStats(PLAYER_2)
 local percentP1;
 local percentP2;
 
-local OMW = EVA_RANKBGM();
+local OMW = LoadModule("Eva.StateTier.lua")();
 --OMW = "WOW";
 
 local URDOURBEST1 = true;

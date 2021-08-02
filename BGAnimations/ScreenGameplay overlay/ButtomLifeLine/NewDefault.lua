@@ -407,12 +407,12 @@ local t = Def.ActorFrame{
 
             end
             
-            --SM("\n\n\n\n"..tostring(CurStageAward(PLAYER_1)))
+            --SM("\n\n\n\n"..tostring(LoadModule("Eva.CustomStageAward.lua")(PLAYER_1)))
 
             if CurSec >= lastnote and not GAMESTATE:IsCourseMode() and not BOOMStage then
                 local SA = false;
                 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-                    if CurStageAward(pn) ~= "Nope" then
+                    if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then
                         SA = true;
                         break
                     end
@@ -424,15 +424,15 @@ local t = Def.ActorFrame{
 
                     local BE = 6;
                     for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-                        if  string.match( CurStageAward(pn),"W1") then
+                        if  string.match( LoadModule("Eva.CustomStageAward.lua")(pn),"W1") then
                             BE = math.min(BE,1);
-                        elseif  string.match( CurStageAward(pn),"W2") then
+                        elseif  string.match( LoadModule("Eva.CustomStageAward.lua")(pn),"W2") then
                             BE = math.min(BE,2);
-                        elseif  string.match( CurStageAward(pn),"W3") then
+                        elseif  string.match( LoadModule("Eva.CustomStageAward.lua")(pn),"W3") then
                             BE = math.min(BE,3);
-                        elseif  string.match( CurStageAward(pn),"Choke") then
+                        elseif  string.match( LoadModule("Eva.CustomStageAward.lua")(pn),"Choke") then
                             BE = math.min(BE,4);
-                        elseif  string.match( CurStageAward(pn),"NoMiss") then
+                        elseif  string.match( LoadModule("Eva.CustomStageAward.lua")(pn),"NoMiss") then
                             BE = math.min(BE,5);
                         end
                     end

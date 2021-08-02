@@ -128,6 +128,32 @@ GameColor = {
 		JudgmentLine_Miss	= color("#FF0000"),
 		JudgmentLine_MaxCombo	= color("#ffc600")
 	},
+    ECFAJudgment = {
+        JudgmentLine_ProW5  = color("#F785D8"),
+		JudgmentLine_W1		= color("#60d2ff"),
+		JudgmentLine_W2		= color("#ffcc20"),
+		JudgmentLine_W3		= color("#00df1d"),
+		JudgmentLine_W4		= color("#5f40ff"),
+		JudgmentLine_W5		= color("#ec40ff"),
+		JudgmentLine_Held	= Color.Orange,
+		JudgmentLine_Miss	= color("#FF0000"),
+		JudgmentLine_MaxCombo	= color("#ffc600")
+	},
+    AdvancedJudgment = {
+        JudgmentLine_ProW1	= color("#ACF0FF"),
+		JudgmentLine_ProW2	= color("#60D2FF"),
+		JudgmentLine_ProW3	= color("#FFDD83"),
+		JudgmentLine_ProW4	= color("#FFCC20"),
+		JudgmentLine_ProW5  = color("#61DD95"),
+		JudgmentLine_W1		= color("#00DF1D"),
+		JudgmentLine_W2		= color("#29AD72"),
+		JudgmentLine_W3		= color("#0C6DFF"),
+		JudgmentLine_W4		= color("#5f40ff"),
+		JudgmentLine_W5		= color("#ec40ff"),
+		JudgmentLine_Held	= Color.Orange,
+		JudgmentLine_Miss	= color("#FF0000"),
+		JudgmentLine_MaxCombo	= color("#ffc600")
+	},
 	Grade = {
 		Grade_Tier01 = color("#FFAA42");--SS
 		Grade_Tier02 = color("#FFC935");--S

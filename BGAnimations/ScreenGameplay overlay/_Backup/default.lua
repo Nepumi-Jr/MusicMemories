@@ -322,13 +322,13 @@ LoadActor("Under aorrar.png")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;diffuse,color("#FF000000");playcommand,"LL");
 		LLCommand=function(self)
 		if (GAMESTATE:GetPlayMode() == "PlayMode_Rave") or (GAMESTATE:GetPlayerState(PLAYER_1):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_1)) or (GAMESTATE:GetPlayerState(PLAYER_2):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_2)) then
-			if Foolday() then
+			if LoadModule("Easter.today.lua")() == "FOOL" then
 			self:diffusealpha((1-(math.mod(GAMESTATE:GetSongBeat()+0.5,1)))/2)
 			else
 			self:diffusealpha((1-(math.mod(GAMESTATE:GetSongBeat(),1)))/2)
 			end
 		elseif GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-			if Foolday() then
+			if LoadModule("Easter.today.lua")() == "FOOL" then
 			if lifeP1 > lifeP2 and lifeP1 > 50 then
 				self:diffusealpha(((lifeP1-50)*2)/100)
 			elseif lifeP1 < lifeP2 and lifeP2 > 50 then
@@ -348,7 +348,7 @@ LoadActor("Under aorrar.png")..{
 			self:diffusealpha(0)
 			end
 		elseif GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-		if Foolday() then
+		if LoadModule("Easter.today.lua")() == "FOOL" then
 			if lifeP2 > 50 then
 			self:diffusealpha(((lifeP2-50)*2)/100)
 			end
@@ -393,13 +393,13 @@ LoadActor("Awesome.png")..{
 					self:diffuseleftedge(color("#AAAAAA"))
 				end
 		if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
-			if Foolday() then
+			if LoadModule("Easter.today.lua")() == "FOOL" then
 			self:diffusealpha((1-(math.mod(GAMESTATE:GetSongBeat()+0.5,1)))/2)
 			else
 			self:diffusealpha((1-(math.mod(GAMESTATE:GetSongBeat(),1)))/2)
 			end
 		else
-			if Foolday() then
+			if LoadModule("Easter.today.lua")() == "FOOL" then
 			if lifeP1 < lifeP2 then
 				self:diffusealpha(1-(lifeP1/100))
 			elseif lifeP1 > lifeP2 then
@@ -427,7 +427,7 @@ LoadActor("Awesome.png")..{
 			elseif GAMESTATE:GetCurrentSteps(PLAYER_1):GetDifficulty() == "Difficulty_Edit" then
 				self:diffuse(color("#AAAAAA"))
 				end
-		if Foolday() then
+		if LoadModule("Easter.today.lua")() == "FOOL" then
 			self:diffusealpha(1-(lifeP1/100))
 		else
 			self:diffusealpha(lifeP1/100)
@@ -446,7 +446,7 @@ LoadActor("Awesome.png")..{
 			elseif GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Edit" then
 					self:diffuse(color("#AAAAAA"))
 			end
-		if Foolday() then
+		if LoadModule("Easter.today.lua")() == "FOOL" then
 			self:diffusealpha(1-(lifeP1/100))
 		else
 			self:diffusealpha(lifeP1/100)

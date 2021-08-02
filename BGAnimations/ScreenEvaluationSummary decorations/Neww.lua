@@ -328,7 +328,7 @@ STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetTapNoteScores('TapN
 
 
 local Op1 = TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.JudgmentGraphic;
-local jud1 = GetPicJudPath(Op1);
+local jud1 = LoadModule("Options.JudgmentGetPath.lua")(Op1);
 local frame1 = true;
 local nameP1 = PROFILEMAN:GetProfile(PLAYER_1):GetDisplayName();
 local StepText1 = "";
@@ -524,7 +524,7 @@ STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetTapNoteScores('TapN
 };
 
 local Op2 = TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.JudgmentGraphic;
-local jud2 = GetPicJudPath(Op2);
+local jud2 = LoadModule("Options.JudgmentGetPath.lua")(Op2);
 local frame2 = true;
 local GradeforP2 = "MemoriesHD 4x2.png"--in 589
 local nameP2 = PROFILEMAN:GetProfile(PLAYER_2):GetDisplayName();

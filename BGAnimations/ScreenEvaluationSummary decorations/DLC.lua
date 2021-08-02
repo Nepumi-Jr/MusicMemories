@@ -238,32 +238,9 @@ for i = 1,2 do
 
             Def.Sprite { 
                 InitCommand=function(self)
-                    -- Get hold judge from Resource/JudF/Hold/ first
-                    local completePath = THEME:GetPathG("Def","HoldJ");
                     local JudF = TP[i == 1 and "P1" or "P2"].ActiveModifiers.JudgmentGraphic
-                    JudF = JudgeFileShortName(JudF)
-                    -- secondly, Get hold judge from 
-                    local path = "/Appearance/Judgments/";
-                    local files = FILEMAN:GetDirListing(path)
-                    for k,filename in ipairs(files) do
-                        if string.match(filename, "%[Hold%]") and string.match(filename, " 1x2") and string.match(filename,JudF) then
-                            completePath = path..filename
-                            break
-                        end
-                    end
-                    path = "/"..THEMEDIR().."Resource/JudF/Hold/";
-                    files = FILEMAN:GetDirListing(path)
-                    for k,filename in ipairs(files) do
-                        if string.match(filename, " 1x2") and string.match(filename,JudF) then
-                            completePath = path..filename
-                            break
-                        end
-                    end
-
-                    self:Load(completePath):pause():zoom(1.2)
+                    self:Load(LoadModule("Options.JudgmentGetHoldPath.lua")(JudF)):pause():zoom(1.2)
                     self:x(-60):y(-55)
-
-                    
                 end;
             };
             Def.ActorFrame{
@@ -302,7 +279,7 @@ for i = 1,2 do
                 LoadFont("Combo Number")..{
                     InitCommand=cmd(x,30;y,20;zoom,0.5;horizalign,left;shadowlength,2;settext,stageStates[i]:MaxCombo());
                     OnCommand=function(self)
-                        curStage = CurStageAward(PNS[i]);
+                        curStage = LoadModule("Eva.CustomStageAward.lua")(PNS[i]);
                         if string.find(curStage,"W1") then
                             self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W1"])
                         elseif string.find(curStage,"W2") then

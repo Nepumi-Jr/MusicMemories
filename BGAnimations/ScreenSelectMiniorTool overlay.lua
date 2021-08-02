@@ -45,7 +45,8 @@ t[#t+1] = Def.ActorFrame{
 	self:finishtweening()
 		self:bounceend(0.5)
 		if Row == 1 then
-		self:wag()
+		self:bob()
+        self:effectmagnitude(0,10,0)
 		self:zoom(0.6)
 		else
 		self:stopeffect()
@@ -58,7 +59,7 @@ t[#t+1] = Def.ActorFrame{
 		self:stopeffect()
 		self:zoom(0)
 		end;
-	MCBT(0,0,color("#FFAA77"),color("#FF8833"),color("#FFAA55"),color("#FFFFFF"),color("#999999"),"More","Games!")
+	LoadModule("Menu.Button.lua")(0,0,color("#FFAA77"),color("#FF8833"),color("#FFAA55"),color("#FFFFFF"),color("#999999"),"More","Games!")
 };
 t[#t+1] = Def.ActorFrame{
 	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+100;zoom,.4);
@@ -66,7 +67,8 @@ t[#t+1] = Def.ActorFrame{
 	self:finishtweening()
 		self:bounceend(0.5)
 		if Row == 2 then
-		self:wag()
+		self:bob()
+        self:effectmagnitude(0,10,0)
 		self:zoom(0.6)
 		else
 		self:stopeffect()
@@ -79,6 +81,6 @@ t[#t+1] = Def.ActorFrame{
 		self:stopeffect()
 		self:zoom(0)
 		end;
-	MCBT(0,0,color("#AAAAFF"),color("#6666FF"),color("#66AAFF"),color("#000000"),color("#333333"),"Tool","So many!")
+	LoadModule("Menu.Button.lua")(0,0,color("#AAAAFF"),color("#6666FF"),color("#66AAFF"),color("#000000"),color("#333333"),"Tool","So many!")
 };
 return t;

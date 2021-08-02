@@ -131,7 +131,7 @@ else
 self:stoptweening():decelerate(0.3):zoom(0.75)
 end
 end;
-MCBT(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Accuracy","Play Perfectly");
+LoadModule("Menu.Button.lua")(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Accuracy","Play Perfectly");
 };
 Def.ActorFrame{
 OnCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,0.75);
@@ -142,7 +142,7 @@ else
 self:stoptweening():decelerate(0.3):zoom(0.75)
 end
 end;
-MCBT(0,0,color("#FF9900"),color("#AA6600"),color("#AA6600"),color("#AA6600"),color("#AA6600"),"Knock out!","Smash your friend!");
+LoadModule("Menu.Button.lua")(0,0,color("#FF9900"),color("#AA6600"),color("#AA6600"),color("#AA6600"),color("#AA6600"),"Knock out!","Smash your friend!");
 };
 };
 

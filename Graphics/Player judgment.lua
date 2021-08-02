@@ -8,8 +8,9 @@ local Woosh = THEME:GetPathS("LifeMeterBattery","lose");
 
 
 
-local JudgeName = TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic;
-JudPath = GetPicJudPath(JudgeName);
+local JudgeName = TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic or "!!default!!";
+--JudgeName = "MemoryP2 [Pro] [double] (doubleres) 2x11.png"
+JudPath = LoadModule("Options.JudgmentGetPath.lua")(JudgeName);
 
 local function ShowProtiming()
 	  if GAMESTATE:IsDemonstration() then
@@ -36,7 +37,7 @@ local guaek = 1;
 
 
 
-local UseJudgeCmd = getJudgeAnimation(JudgeName)
+local UseJudgeCmd = LoadModule("Options.JudgmentAnimation.lua")(JudgeName)
 
 
 
@@ -59,17 +60,28 @@ local TextCmds = {
 	Pulse = THEME:GetMetric( "Protiming", "TextPulseCommand" );
 };
 
-local TNSFrames = {
-	TapNoteScore_W1 = 0;
-	TapNoteScore_W2 = 1;
-	TapNoteScore_W3 = 2;
-	TapNoteScore_W4 = 3;
-	TapNoteScore_W5 = 4;
-	TapNoteScore_Miss = 5;
-};
+local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+TName = LoadModule("Utils.SortTiming.lua")(TName)
+TName[#TName + 1] = "Miss"
+local isDouble;
+local bestJudge = LoadModule("Options.BestJudge.lua")()--For Pump
+
 local t = Def.ActorFrame {
 	OnCommand=cmd(draworder,5000);
 };
+
+local function getSubJudge()
+    local thisSubJudge = TP[ToEnumShortString(player)].ActiveModifiers.SubJudge
+    if thisSubJudge ~= "None" then
+        --printf("%s",thisSubJudge)
+        return LoadModule("SubJudgment."..thisSubJudge..".lua")(player)..{
+            InitCommand=cmd(x,40;y,40);
+        };
+    else
+        return Def.ActorFrame{};
+    end
+end
+
 t[#t+1] = Def.ActorFrame {
 	Def.Sprite{                    
 		Name="Judgment";
@@ -77,7 +89,7 @@ t[#t+1] = Def.ActorFrame {
 		self:pause();
 		self:visible(false);
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-				self:Load(GetPicJudPath("Edit 2x6.png"));
+				self:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
 			else
 				self:Load(JudPath);
 			end
@@ -85,38 +97,13 @@ t[#t+1] = Def.ActorFrame {
 		InitCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
 		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 	};
-	Def.Sprite{                    
-		Name="LE";
-		OnCommand=function(self)
-		self:pause();
-		self:visible(false);
-
-		local JudF = JudgeName:gsub(" %dx%d", ""):gsub(" %(doubleres%)", ""):gsub(".png", ""):gsub(" %[double%]",""):gsub(" %(res %d+x%d+%)","")
-
-		local path = "/"..THEMEDIR().."Resource/JudF/EL/";
-		
-		local files = FILEMAN:GetDirListing(path)
-		local RealFile = THEME:GetPathG("Def","EL");
-		
-		for k,filename in ipairs(files) do
-			if string.match(filename, " 1x2.png") and string.match(filename,JudF) then
-				RealFile = path..filename;
-				break
-			end
-		end
-		
-
-			--Op
-		self:Load(RealFile);
-		end;
-		InitCommand=cmd(x,40;y,40);
-		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
-	};
+	
 
 	LoadActor(Woosh,true)..{
 		Name="FAIL";
 		OnCommand=cmd();
 	};
+    getSubJudge();
 
 
 	LoadFont("_roboto Bold 54px") .. {
@@ -192,24 +179,31 @@ t[#t+1] = Def.ActorFrame {
 	InitCommand = function(self)
 		c = self:GetChildren();
 		SS = 0 ;
+
+        local miniFileName = JudPath;
+
+        miniFileName = string.match(miniFileName, ".*/(.*)")
+        isDouble = string.find(miniFileName, "%[double%]")
+
+        if c.Judgment:GetNumStates() == #TName * 2 or string.find(miniFileName, "2x%d") ~= nil then
+            isDouble = true
+        end
+
 	end;
 
 	JudgmentMessageCommand=function(self, param)
         -- Fix Player Combo animating when player successfully avoids a mine.
         
 		local tempTNS = param.TapNoteScore;
+        local iFrame = -1;
 
 		if tempTNS== "TapNoteScore_CheckpointHit" then
-			if GAMESTATE:ShowW1() then
-				tempTNS = "TapNoteScore_W1";
-			else
-				tempTNS = "TapNoteScore_W2";
-			end
+			tempTNS = "TapNoteScore_"..bestJudge;
 		elseif tempTNS== "TapNoteScore_CheckpointMiss" then
 			tempTNS = "TapNoteScore_Miss";
 		end
 		
-		if EASTER()=="FOOL" then
+		if LoadModule("Easter.today.lua")()=="FOOL" then
         --if false then
         	if tempTNS=="TapNoteScore_Miss" then
         		tempTNS="TapNoteScore_W1";
@@ -244,25 +238,26 @@ t[#t+1] = Def.ActorFrame {
 		elseif PTAM then
 			PTAM=false;
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-				c.Judgment:Load(GetPicJudPath("Edit 2x6.png"));
+				c.Judgment:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
 			else
 				c.Judgment:Load(JudPath);
 			end
-
 		end
 
-
-		local iNumStates = c.Judgment:GetNumStates();
-		local iFrame = TNSFrames[tempTNS];
-
-		if not iFrame then return end
-		if iNumStates == 12 then
-			iFrame = iFrame * 2;
-			if not param.Early then
-				iFrame = iFrame + 1;
-			end
+        for i = 1,#TName do
+			if tempTNS == "TapNoteScore_"..TName[i] then 
+                iFrame = i-1 
+            end
 		end
 
+		if iFrame == -1 then return end
+		if isDouble then
+            iFrame = (iFrame)*2 + (param.Early and 0 or 1)
+        end
+
+        if tempTNS == "TapNoteScore_Miss" then
+            iFrame = c.Judgment:GetNumStates() - 1
+        end
 
 		local fTapNoteOffset = param.TapNoteOffset;
 		if param.HoldNoteScore then
@@ -278,8 +273,6 @@ t[#t+1] = Def.ActorFrame {
 -- 			fTapNoteOffset = fTapNoteOffset;
 			bUseNegative = false;
 		end;
-
-
 
 		if fTapNoteOffset ~= 1 then
 			-- we're safe, you can push the values
@@ -402,7 +395,7 @@ t[#t+1]=Def.ActorFrame {
 		self:pause();
 		self:visible(false);
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-				self:Load(GetPicJudPath("Edit 2x6.png"));
+				self:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
 			else
 				self:Load(JudPath);
 			end
