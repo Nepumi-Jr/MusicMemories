@@ -37,7 +37,7 @@ else
 end
 end;
 
-local path = THEME:GetCurrentThemeDirectory().."Graphics/GraphFont/Cha3D/";
+local path = THEME:GetCurrentThemeDirectory().."Graphics/_GraphFont/Cha3D/";
 
 local NS = GAMESTATE:GetCurrentStageIndex()+1;
 

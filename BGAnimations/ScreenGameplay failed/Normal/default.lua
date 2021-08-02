@@ -105,7 +105,7 @@ t[#t+1] = Def.ActorFrame{
     
     Def.Sprite{
         InitCommand=cmd(blend,"BlendMode_Add";CenterX;y,SCREEN_CENTER_Y-100;animate,false;zoom,0.9;diffuse,{1,0,0,0});
-        OnCommand=cmd(Load,THEME:GetCurrentThemeDirectory().."Graphics/GraphFont/BigCount/FAIL.png");
+        OnCommand=cmd(Load,THEME:GetCurrentThemeDirectory().."Graphics/_GraphFont/BigCount/FAIL.png");
         NeFailMessageCommand=cmd(sleep,2.5;decelerate,0.5;diffusealpha,1;y,SCREEN_CENTER_Y-50);
     };
     LoadActor("Failll") .. {
