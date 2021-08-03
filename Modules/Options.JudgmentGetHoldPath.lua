@@ -1,7 +1,7 @@
 return function(JudF)
 	
 	JudF = JudgeFileShortName(JudF)
-	local path = "/"..THEMEDIR().."Graphics/_Judgement Font/Hold/";
+	local path = "/"..THEMEDIR().."CustomStuff/Hold judge/";
 	local files = FILEMAN:GetDirListing(path)
 	for k,filename in ipairs(files) do
 		if string.match(filename, " 1x2") and string.match(filename,JudF) then

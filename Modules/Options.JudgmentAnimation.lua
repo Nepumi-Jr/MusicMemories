@@ -55,7 +55,7 @@ return function(judgeName)
 		end
 	end
     
-	local path = "/"..THEMEDIR().."/Graphics/_Judgement Font/Animate/";
+	local path = "/"..THEMEDIR().."/CustomStuff/Judgment Animation/";
 	local files = FILEMAN:GetDirListing(path)
     --printf("%s....\n%s",THEMEDIR().."Graphics/_Judgement Font/Animate",TableToString(files))
 

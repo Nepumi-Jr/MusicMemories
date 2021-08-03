@@ -8,7 +8,7 @@ return function(player)
                 local JudF = TP[ToEnumShortString(player)].ActiveModifiers.JudgmentGraphic
                 JudF = LoadModule("Options.JudgmentsFileShortName.lua")(JudF)
 
-                local path = "/"..THEMEDIR().."Resource/JudF/EL/";
+                local path = "/"..THEMEDIR().."CustomStuff/Subjudge Fast Slow/";
                 
                 local files = FILEMAN:GetDirListing(path)
                 local RealFile = THEME:GetPathG("Def","EL");
