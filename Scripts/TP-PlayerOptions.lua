@@ -173,8 +173,11 @@ end
 
 
 function measureBarStuff()
-    if ThemePrefs.Get("measureBar") then
+    --{show?, measure, 4th, 8th, 16th}
+    if ThemePrefs.Get("measureBar") == 1 then
         return {1,1,0.2,0,0};
+    elseif ThemePrefs.Get("measureBar") == 2 then
+        return {1,0.2,0,0,0};
     else
         return {0,1,1,1,1};
     end

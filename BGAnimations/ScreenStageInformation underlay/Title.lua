@@ -176,12 +176,20 @@ for i = 1,#SE do
 		OnCommand=function(self)
             local thisSong = GAMESTATE:GetCurrentSong();
 		if Time then
-			if thisSong:IsMarathon() then
-                self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
-            elseif thisSong:IsLong() then
-                self:diffuse({1,1,1,1}):diffusebottomedge(Color("Red"))
+            if thisSong == nil then
+                if GAMESTATE:IsCourseMode() then
+                    self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
+                else
+                    self:diffuse({1,1,1,1})
+                end
             else
-                self:diffuse({1,1,1,1})
+                if thisSong:IsMarathon() then
+                    self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))
+                elseif thisSong:IsLong() then
+                    self:diffuse({1,1,1,1}):diffusebottomedge(Color("Red"))
+                else
+                    self:diffuse({1,1,1,1})
+                end
             end
 		else 
 			self:diffuse({1,1,1,1}):diffusebottomedge(Color("Magenta"))

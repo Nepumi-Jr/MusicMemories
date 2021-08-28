@@ -14,7 +14,6 @@ local PlayerDefaults = {
 				SubJudge = "None",
 				Streamu = "None",
 				Streamay = "Measures",
-				HelpNote = "default",
 				IconDir = "",
 			}
 			--[[self.Mission = {  //// comming soon

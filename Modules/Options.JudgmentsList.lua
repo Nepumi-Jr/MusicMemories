@@ -1,4 +1,4 @@
-return function()
+return function(mode)
     local TimingName = ""
     
     TimingName = LoadModule("Options.ReturnCurrentTiming.lua")().Name
@@ -47,6 +47,14 @@ return function()
                 table.insert( JudgmentGraphics, fileName )
             end
         end
+    end
+
+    if mode == "short" then
+        local shortJudgmentGraphics = {}
+        for i,v in pairs(JudgmentGraphics) do
+            shortJudgmentGraphics[i] = LoadModule("Options.JudgmentsFileShortName.lua")(v);
+        end
+        return shortJudgmentGraphics
     end
     return JudgmentGraphics
 end

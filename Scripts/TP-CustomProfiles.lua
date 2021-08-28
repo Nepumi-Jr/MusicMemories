@@ -75,12 +75,6 @@ function LoadProfileCustom(profile, dir)
 						--SM("\n\n\nDoing "..string.format( "%s : %s(%.2f) man...",profile:GetDisplayName(),setting ,Dim));
 						GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel):Mini(0)
 					end
-				elseif k == "HelpNote" then
-					local topscreen = SCREENMAN:GetTopScreen():GetName()
-					local modslevel = topscreen  == "ScreenEditOptions" and "ModsLevel_Stage" or "ModsLevel_Preferred"
-					
-					local a,b = GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel):NoteSkin(setting)
-					--SM("\n\n\nDoing "..string.format( "%s : %s <%s>man...",profile:GetDisplayName(),setting,b and "Complete" or "Nooooo"));
 				end
 
 			else

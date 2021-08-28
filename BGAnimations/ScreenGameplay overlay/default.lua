@@ -10,7 +10,7 @@ local TexttoDeBUG = "";
 
 local Funny=true;
 
-
+--printf("AYAYA");
 
 
 

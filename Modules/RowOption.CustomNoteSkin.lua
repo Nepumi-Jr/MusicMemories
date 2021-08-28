@@ -8,9 +8,20 @@ return function()
 		Choices = NOTESKIN:GetNoteSkinNames(),
 		LoadSelections = function(self, list, pn)
 			local topscreen = SCREENMAN:GetTopScreen():GetName()
-			local EML = TP[ToEnumShortString(pn)].ActiveModifiers.HelpNote
-			local i = FindInTable(EML, self.Choices) or 1
-			list[i] = true
+			local modslevel = topscreen  == "ScreenEditOptions" and "ModsLevel_Stage" or "ModsLevel_Preferred"
+			local EML = GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel):NoteSkin()
+			local ind = -1
+            for i,v in pairs(self.Choices) do
+                if string.lower( v ) == string.lower( EML ) then
+                    ind = i;
+                    break
+                end
+            end
+            if ind == -1 then
+                --lua.ReportScriptError(EML.." note not found :(")
+                ind = 1;
+            end
+			list[ind] = true
 			MESSAGEMAN:Broadcast('NoteChanged', {Player=pn, Noto=EML})
 		end,
 		SaveSelections = function(self, list, pn)
@@ -24,7 +35,6 @@ return function()
 
 			local topscreen = SCREENMAN:GetTopScreen():GetName()
 			local modslevel = topscreen  == "ScreenEditOptions" and "ModsLevel_Stage" or "ModsLevel_Preferred"
-			TP[ToEnumShortString(pn)].ActiveModifiers.HelpNote = sSave;
 			GAMESTATE:GetPlayerState(pn):GetPlayerOptions(modslevel):NoteSkin(sSave)
 		end,
 		NotifyOfSelection = function(self, pn, choice)

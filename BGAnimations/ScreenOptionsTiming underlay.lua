@@ -17,7 +17,7 @@ TName = LoadModule("Utils.SortTiming.lua")(TName)
 local function getBoundSecondTap(timing, newScale)
     local scale = newScale or PREFSMAN:GetPreference("TimingWindowScale")
     local add = PREFSMAN:GetPreference("TimingWindowAdd")
-    printf("%g + %g\n",scale,add)
+    --printf("%g + %g\n",scale,add)
     local thisTiming = LoadModule("Options.ReturnCurrentTiming.lua")()
 
     if thisTiming["Timings"]['TapNoteScore_'..timing] then

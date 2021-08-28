@@ -88,7 +88,7 @@ local Prefs =
 	
 	More1PInfo =
 	{
-		Default = true,
+		Default = false,
 		Choices = { OptionNameString('Off'), OptionNameString('On') },
 		Values = { false, true }
 	},
@@ -107,9 +107,9 @@ local Prefs =
 	},
     measureBar =
 	{
-		Default = true,
-		Choices = { OptionNameString('Off'), OptionNameString('On')},
-		Values = { false, true}
+		Default = 0,
+		Choices = { OptionNameString('Off'), OptionNameString('On'), OptionNameString('On').." (Only measure)"},
+		Values = { 0, 1, 2}
 	},
 	OptionStyle =
 	{

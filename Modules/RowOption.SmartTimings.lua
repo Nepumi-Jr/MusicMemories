@@ -33,6 +33,7 @@ return function()
         end,
         NotifyOfSelection = function(self, pn, choice)
             setenv(self.Name, self.Choices[choice])
+            --printf(" Notify Judge :|")
             
             local oldData = UserPlayerJudgment().Choices;
             for i,v2 in ipairs(oldData) do 

@@ -4,7 +4,7 @@ local inputHandle = function( event )
     --printf("Watsup %s",event.DeviceInput.button)
 
     if event.DeviceInput.button == "DeviceButton_left (01)" then
-        printf("Watsup %f",event.DeviceInput.level)
+        --printf("Watsup %f",event.DeviceInput.level)
     end
 
 	
@@ -14,7 +14,7 @@ end;
 
 local t = Def.ActorFrame{
     OnCommand=function(self)
-        printf("Watsup aa")
+        --printf("Watsup aa")
 		SCREENMAN:GetTopScreen():AddInputCallback(inputHandle)
 	end;
 };

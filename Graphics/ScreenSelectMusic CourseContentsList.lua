@@ -8,6 +8,7 @@ return Def.CourseContentsList {
 	HideCommand=cmd(linear,0.3;zoomy,0);
 	SetCommand=function(self)
 		self:SetFromGameState();
+        --self:x(245)
 		self:SetCurrentAndDestinationItem(0);
 		self:SetPauseCountdownSeconds(1);
 		self:SetSecondsPauseBetweenItems( 0.25 );
@@ -16,9 +17,10 @@ return Def.CourseContentsList {
 		self:SetDestinationItem( math.max(0,self:GetNumItems() - 4) );
 		self:SetLoop(false);
 		self:SetMask(0,0);
+        self:playcommand("doLoop")
 	end;
-	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP1ChangedMessageCommand=cmd(stoptweening;playcommand,"Set");
+	CurrentTrailP2ChangedMessageCommand=cmd(stoptweening;playcommand,"Set");
 
 	Display = Def.ActorFrame { 
 		InitCommand=cmd(setsize,270,44);
