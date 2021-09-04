@@ -243,7 +243,7 @@ t[#t+1] = Def.ActorFrame {
                     useThisJudge = false
                 end
             else
-                printf("%s",self:GetParent():GetName())
+                --printf("%s",self:GetParent():GetName())
                 if param.FirstTrack ~= tonumber(ToEnumShortString(self:GetParent():GetName())) then 
                     useThisJudge = false 
                 end
