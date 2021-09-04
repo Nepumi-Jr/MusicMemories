@@ -82,6 +82,47 @@ local function getSubJudge()
     end
 end
 
+local PomuLocation = {
+	[9] = {
+		[0] = 1,
+		[1] = 1,
+		[2] = 1,
+		[3] = 4,
+		[4] = 4,
+		[5] = 4,
+		[6] = 7,
+		[7] = 7,
+		[8] = 7
+	},
+	[7] = {
+		[0] = 0,
+		[1] = 0,
+		[2] = 3,
+		[3] = 3,
+		[4] = 3,
+		[5] = 6,
+		[6] = 6
+	},
+	[5] = {
+		[0] = 2,
+		[1] = 2,
+		[2] = 2,
+		[3] = 2,
+		[4] = 2
+	},
+	[3] = {
+		[0] = 1,
+		[1] = 1,
+		[2] = 1
+	},
+	[4] = {
+		[0] = 0,
+		[1] = 1,
+		[2] = 2,
+		[3] = 3
+	}
+}
+
 t[#t+1] = Def.ActorFrame {
 	Def.Sprite{                    
 		Name="Judgment";
@@ -192,8 +233,25 @@ t[#t+1] = Def.ActorFrame {
 	end;
 
 	JudgmentMessageCommand=function(self, param)
-        -- Fix Player Combo animating when player successfully avoids a mine.
+        --! Fix Player  for popn mode
+        --*   -- Code modify from _fallback
+
+        local useThisJudge = true;
+        if self:GetParent():GetName() ~= "Judgment" then
+            if IsGame("popn") then
+                if PomuLocation[GAMESTATE:GetCurrentStyle():ColumnsPerPlayer()][param.FirstTrack] ~= tonumber(ToEnumShortString(self:GetParent():GetName())) then 
+                    useThisJudge = false
+                end
+            else
+                printf("%s",self:GetParent():GetName())
+                if param.FirstTrack ~= tonumber(ToEnumShortString(self:GetParent():GetName())) then 
+                    useThisJudge = false 
+                end
+            end
+        end
+
         
+
 		local tempTNS = param.TapNoteScore;
         local iFrame = -1;
 
@@ -225,6 +283,7 @@ t[#t+1] = Def.ActorFrame {
         		param.Early=true
         	end
         end
+
 
         local msgParam = param;
         MESSAGEMAN:Broadcast("TestJudgment",msgParam);
@@ -259,6 +318,19 @@ t[#t+1] = Def.ActorFrame {
             iFrame = c.Judgment:GetNumStates() - 1
         end
 
+        if ((tempTNS == 'TapNoteScore_Miss'  or tempTNS == 'TapNoteScore_W5' or tempTNS == 'TapNoteScore_W4')
+		or param.HoldNoteScore == "HoldNoteScore_LetGo")
+		and SS == 0 then
+            SS = 9999;
+            if not useThisJudge then return; end
+            c.FAIL:play()
+            MESSAGEMAN:Broadcast("SOFAIL", {pn=param.Player,fr=iFrame,cor=param.Cor})
+            c.Judgment:visible(false);
+        else
+            if not useThisJudge then return; end
+            c.Judgment:visible(true);
+		end
+
 		local fTapNoteOffset = param.TapNoteOffset;
 		if param.HoldNoteScore then
 			fTapNoteOffset = 1;
@@ -290,16 +362,7 @@ t[#t+1] = Def.ActorFrame {
 			end
 		end
 
-		if ((tempTNS == 'TapNoteScore_Miss'  or tempTNS == 'TapNoteScore_W5' or tempTNS == 'TapNoteScore_W4')
-		or param.HoldNoteScore == "HoldNoteScore_LetGo")
-		and SS == 0 then
-		SS = 9999;
-		c.FAIL:play()
-		MESSAGEMAN:Broadcast("SOFAIL", {pn=param.Player,fr=iFrame,cor=param.Cor})
-		c.Judgment:visible(false);
-		else
-		c.Judgment:visible(true);
-		end
+
 		
 		if Op ~= "SM5ProTiming" then
 			if tempTNS ~= 'TapNoteScore_Miss' then
@@ -387,6 +450,7 @@ t[#t+1]=Def.ActorFrame {
 		Name="PORSOSAD";
 		SOFAILMessageCommand=function(self,param)
 			if param.pn ~= player then return end;
+            if self:GetParent():GetName() ~= "Judgment" and tonumber(ToEnumShortString(self:GetParent():GetName())) ~= 1 then return; end;
 			self:decelerate(0.125):addy(-100):accelerate(0.5-0.125):addy(300)
 		end;
 	Def.Sprite{                    
@@ -403,6 +467,7 @@ t[#t+1]=Def.ActorFrame {
 		OnCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
 		SOFAILMessageCommand=function(self,param)
 			if param.pn ~= player then return end;
+            if self:GetParent():GetParent():GetName() ~= "Judgment" and tonumber(ToEnumShortString(self:GetParent():GetParent():GetName())) ~= 1 then return; end;
 			if param.cor ~= nil then
 				self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
 			else
