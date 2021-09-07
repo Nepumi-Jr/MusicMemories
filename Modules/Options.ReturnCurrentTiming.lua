@@ -4,10 +4,12 @@ return function()
     --adding for reloading a custom judge animation and timing stuff.
     for i,CurPrefTiming in pairs({GAMESTATE:Env()["SmartTimings"], LoadModule("Options.OverwriteTiming.lua")()}) do
         if CurPrefTiming then
-            --check the timings from our current timing window.
+            -- First, check the timings from our current timing window.
+            --? From fallback
             for _,v in ipairs(TimingWindow) do
                 local data = v()
                 if data.Name == CurPrefTiming then
+                    data.Timings = LoadModule("Gameplay.UseTimingTable.lua")(data)
                     return data
                 end
             end

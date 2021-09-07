@@ -85,11 +85,11 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             end;
         };
         Def.Quad{
-            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*1.2;fadeleft,0.1;faderight,0.1;croptop,1;diffuse,{1,1,1,0.4};);
+            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*2.5;fadeleft,0.1;faderight,0.1;croptop,1;diffuse,{1,1,1,0.4};);
             EXECommand=cmd(decelerate,0.4;croptop,0;sleep,0.1;decelerate,0.4;cropbottom,1);
         };
         Def.Quad{
-            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*1.2;fadeleft,0.1;faderight,0.1;croptop,1;diffusealpha,0.7);
+            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*2.5;fadeleft,0.1;faderight,0.1;croptop,1;diffusealpha,0.7);
             EXECommand=cmd(diffuse,Color_SA[pn];sleep,0.5;decelerate,0.1;croptop,0;decelerate,0.4;zoomx,64*5.5;diffusealpha,0.4;fadeleft,0.12;faderight,0.12;);
         };
         Def.Sprite{

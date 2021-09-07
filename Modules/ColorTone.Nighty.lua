@@ -1,7 +1,9 @@
 return function(Timu)
 
-    if ThemePrefs.Get("BackgroundTheme") < 2 then
-        return ThemePrefs.Get("BackgroundTheme")
+    local pref = ThemePrefs.Get("BackgroundTheme") or 2;
+
+    if pref < 2 then
+        return pref;                
     end
 
 	Timu = Timu or (Hour()*60+Minute()+Second()/60)

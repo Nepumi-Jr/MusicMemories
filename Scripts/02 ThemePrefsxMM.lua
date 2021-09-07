@@ -2,7 +2,7 @@
 local function OptionNameString(str)
 	return THEME:GetString('OptionNames',str)
 end
-
+ThemePrefs.Load()
 -- Example usage of new system (not fully implemented yet)
 local Prefs =
 {
