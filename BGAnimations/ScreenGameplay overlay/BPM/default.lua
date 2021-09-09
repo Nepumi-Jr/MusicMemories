@@ -12,9 +12,9 @@ local Bpm = 0;
 local fz = 0.7;
 
 local t = Def.ActorFrame{
-	OnCommand=cmd(y,24);
+	OnCommand=cmd(x,SCREEN_CENTER_X;y,53;zoom,0.9);
 LoadFont("Common Normal")..{
-OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
+OnCommand=cmd(diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
 		loopCommand=function(self)
 		--[[if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 		Bpm1 = GAMESTATE:GetPlayerState(PLAYER_1):GetSongPosition():GetCurBPS() * 60;
@@ -57,7 +57,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");z
 
 LoadFont("Common Normal")..{
 Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.6;playcommand,'loop');
+OnCommand=cmd(x,-27.5;diffuse,color("#FFFFFF");zoom,0.6;playcommand,'loop');
 		loopCommand=function(self)
 		self:settextf("%d x %.1f =",round(Bpm),ratemod)
 		self:diffuse(BPMColor(Bpm))
@@ -67,7 +67,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X-27.5;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFF
 };
 LoadFont("Common Normal")..{
 Condition=(ratemod ~= 1);
-OnCommand=cmd(x,SCREEN_CENTER_X+20;y,SCREEN_CENTER_Y-212;diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
+OnCommand=cmd(x,20;diffuse,color("#FFFFFF");zoom,0.7;playcommand,'loop');
 		loopCommand=function(self)
 
 		if Bpm*ratemod > 600 then

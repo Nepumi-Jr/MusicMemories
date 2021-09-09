@@ -20,72 +20,9 @@ local ISLA = Def.ActorFrame{
 			end
 		end;
 	};
-	--[[Def.Quad{
-		OnCommand=cmd(x,17.5;y,43.75;zoomx,7;zoomy,7*7.45);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
+    LoadActor("TimeBar.png")..{
+		InitCommand=cmd(FullScreen;y,SCREEN_CENTER_Y+10;SetTextureFiltering,false;diffuse,{0,0,0,1});
 	};
-	Def.Quad{
-		OnCommand=cmd(x,17.5+65;y,43.75;zoomx,7;zoomy,7*7.45);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	Def.Quad{
-		OnCommand=cmd(x,165.75+83;y,43.75*1.4-2.5;zoomx,7;zoomy,7*7.45*0.44);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	Def.Quad{
-		OnCommand=cmd(x,165.75+83*2+8;y,43.75*1.4-2.5;zoomx,9;zoomy,7*7.45*0.44);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	Def.Quad{
-		OnCommand=cmd(x,165.75+83*2+8;y,43.75*0.675+3;zoomx,9;zoomy,7*7.45*0.6);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	--|line man..(P2)
-	Def.Quad{
-		OnCommand=cmd(x,SCREEN_RIGHT-(17.5);y,43.75;zoomx,7;zoomy,7*7.45);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	Def.Quad{
-		OnCommand=cmd(x,SCREEN_RIGHT-(17.5+65);y,43.75;zoomx,7;zoomy,7*7.45);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	Def.Quad{
-		OnCommand=cmd(x,SCREEN_RIGHT-(165.75+83);y,43.75*1.4-2.5;zoomx,7;zoomy,7*7.45*0.44);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	Def.Quad{
-		OnCommand=cmd(x,SCREEN_RIGHT-(165.75+83*2+8);y,43.75*1.4-2.5;zoomx,9;zoomy,7*7.45*0.44);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	Def.Quad{
-		OnCommand=cmd(x,SCREEN_RIGHT-(165.75+83*2+8);y,43.75*0.675+3;zoomx,9;zoomy,7*7.45*0.6);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomy,0);
-	};
-	
-	
-	
-	
-	
-	
-	-- ____ Man..
-
-	Def.Quad{
-		OnCommand=cmd(CenterX;y,14.7;zoomx,SCREEN_CENTER_X*1.935;zoomy,5.9);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomx,0);
-	};
-	Def.Quad{
-		OnCommand=cmd(CenterX;y,44.30+6;zoomx,SCREEN_CENTER_X*1.597;zoomy,5.9);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomx,0);
-	};
-	Def.Quad{
-		OnCommand=cmd(CenterX;y,14.7+57;zoomx,SCREEN_CENTER_X*1.935;zoomy,5.9);
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomx,0);
-	};]]
 
 
 };
