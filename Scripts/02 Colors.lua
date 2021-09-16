@@ -3,7 +3,7 @@ Color = {
 -- Color Library
 -- These colors are pure swatch colors and are here purely to be used
 -- on demand without having to type color("stuff") or dig through
--- a palette to get the color you want.ดึึ
+-- a palette to get the color you want.
 	Black		=	color("0,0,0,1"),
 	White		=	color("1,1,1,1"),
 	Red			=	color("#FF2B44"),
@@ -78,25 +78,20 @@ GameColor = {
 		PLAYER_2 = color("#586ED8"),
 	},
 	Difficulty = {
-		--[[ These are for 'Custom' Difficulty Ranks. It can be very  useful
-		in some cases, especially to apply new colors for stuff you
-		couldn't before. (huh? -aj) ]]
 		Beginner	= Color.Pink,
 		Easy		= Color.Green,
 		Medium		= Color.Yellow,
 		Hard		= Color.Orange,
 		Challenge	= Color.Red,
-		Edit		= Color.White,
+		Edit		= Color.Purple,
 		Couple		= color("#ed0972"),			-- hot pink
 		Routine		= color("#ff9a00"),			-- orange
-		--[[ These are for courses, so let's slap them here in case someone
-		wanted to use Difficulty in Course and Step regions. ]]
-		Difficulty_Beginner	= Color.Pink,		-- purple
-		Difficulty_Easy		= Color.Green,		-- green
-		Difficulty_Medium	= Color.Yellow,		-- yellow
-		Difficulty_Hard		= Color.Orange,		-- orange
-		Difficulty_Challenge	= Color.Red,	-- Red
-		Difficulty_Edit 	= Color.White,		-- light blue
+		Difficulty_Beginner	= Color.Pink,		
+		Difficulty_Easy		= Color.Green,		
+		Difficulty_Medium	= Color.Yellow,		
+		Difficulty_Hard		= Color.Orange,		
+		Difficulty_Challenge	= Color.Red,	
+		Difficulty_Edit 	= Color.Purple,		
 		Difficulty_Couple	= color("#ed0972"),				-- hot pink
 		Difficulty_Routine	= color("#ff9a00")				-- orange
 	},
