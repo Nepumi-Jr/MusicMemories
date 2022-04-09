@@ -4,16 +4,16 @@ local curStageIndex = GAMESTATE:GetCurrentStageIndex();
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
     Def.Quad{
-        InitCommand=cmd(diffuse,NumStageColor(curStageIndex+1);horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,50;zoomy,2;zoomx,120;fadeleft,0.3);
+        InitCommand=function(self) self:diffuse(NumStageColor(curStageIndex+1)); self:horizalign(right); self:vertalign(top); self:x(SCREEN_RIGHT); self:y(50); self:zoomy(2); self:zoomx(120); self:fadeleft(0.3); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,52;zoomy,30;zoomx,120;fadeleft,0.3);
+        InitCommand=function(self) self:diffuse(color("#333333")); self:horizalign(right); self:vertalign(top); self:x(SCREEN_RIGHT); self:y(52); self:zoomy(30); self:zoomx(120); self:fadeleft(0.3); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,NumStageColor(curStageIndex+1);horizalign,right;vertalign,top;x,SCREEN_RIGHT;y,82;zoomy,2;zoomx,120;fadeleft,0.3);
+        InitCommand=function(self) self:diffuse(NumStageColor(curStageIndex+1)); self:horizalign(right); self:vertalign(top); self:x(SCREEN_RIGHT); self:y(82); self:zoomy(2); self:zoomx(120); self:fadeleft(0.3); end;
     };
 	LoadFont("Common Normal") .. {
-		InitCommand=cmd(x,SCREEN_RIGHT-12;y,67;horizalign,right;skewx,-0.2;zoom,0.7;shadowlength,1;);
+		InitCommand=function(self) self:x(SCREEN_RIGHT-12); self:y(67); self:horizalign(right); self:skewx(-0.2); self:zoom(0.7); self:shadowlength(1); end;
 		BeginCommand=function(self)
 			local top = SCREENMAN:GetTopScreen()
 			if top then

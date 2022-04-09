@@ -17,8 +17,8 @@ local t = Def.ActorScroller {
 	TransformFunction=function( self, offset, itemIndex, numItems )
 		self:x( offset*74 );
 	end;
-	InitCommand=cmd(SetLoop,true);
--- 	OnCommand=cmd(scrollwithpadding,10,0);
+	InitCommand=function(self) self:SetLoop(true); end;
+-- 	OnCommand=function(self) self:scrollwithpadding(10,0); end;
 };
 
 for i=1,#tItems do

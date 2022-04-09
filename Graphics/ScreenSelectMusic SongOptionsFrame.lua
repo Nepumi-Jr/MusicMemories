@@ -1,3 +1,3 @@
 return Def.Quad {
-	InitCommand=cmd(zoomto,SCREEN_WIDTH,75);
+	InitCommand=function(self) self:zoomto(SCREEN_WIDTH,75); end;
 };

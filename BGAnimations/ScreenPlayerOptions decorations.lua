@@ -60,7 +60,7 @@ local GetNoteSkinActor = function(ns)--FROM SL <3
         SM("There are Lua errors in your " .. ns .. " NoteSkin.\nYou should fix them, or delete the NoteSkin.")
         noto[#noto + 1] = Def.Quad{
             Name="Rec",
-            InitCommand=cmd(visible,false;zoomx,100;zoomy,2;fadeleft,0.5;faderight,0.5;);
+            InitCommand=function(self) self:visible(false); self:zoomx(100); self:zoomy(2); self:fadeleft(0.5); self:faderight(0.5); end;
             NoteChangedMessageCommand=function(self,param)
                 local f = false
                 for i=1,#num_players do
@@ -112,7 +112,7 @@ end
 
 
 t[#t+1] = Def.Quad{
-    InitCommand=cmd(visible,false);
+    InitCommand=function(self) self:visible(false); end;
     NoteChangedMessage=function(self,param)
         NOTE[param.Player+1]=param.Noto;
     end;
@@ -222,7 +222,7 @@ thisTapScores[#thisTapScores + 1] = "Miss"
 nthisTapScores = #thisTapScores
 
     t[#t+1] = Def.Quad{
-        InitCommand=cmd(visible,false);
+        InitCommand=function(self) self:visible(false); end;
         UserPlayerJudgmentMessageCommand=function(self)
             thisTapScores, nthisTapScores = LoadModule("Options.SmartTapNoteScore.lua")()
             thisTapScores = LoadModule("Utils.SortTiming.lua")(thisTapScores)

@@ -3,7 +3,7 @@ local Nope = 14.524-8.704;
 local t = Def.ActorFrame{
 --troll = string.len(you suck);
 	LoadActor("Bow") .. {
-		OnCommand=cmd(sleep,8.704;playcommand,'loop');
+		OnCommand=function(self) self:sleep(8.704); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		if Nope >= 1 then
 		if Histy >= 1 then
@@ -17,7 +17,7 @@ local t = Def.ActorFrame{
 		end;
 	};
 		LoadFont("_determination mono 24px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200+9999999999999999999999999;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1.25;cropright,1;);
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200+9999999999999999999999999); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1.25); self:cropright(1); end;
 			OnCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 			profile1 = PROFILEMAN:GetProfile(PLAYER_1);

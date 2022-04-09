@@ -5,82 +5,48 @@ local PN = (GAMESTATE:GetHumanPlayers())[1];
 local N = Def.ActorFrame{
 	
 	Def.Quad{
-		OnCommand=cmd(zoomy,H*8+20;zoomx,140;diffuse,{0.3,0.3,0.3,0.5});
+		OnCommand=function(self) self:zoomy(H*8+20); self:zoomx(140); self:diffuse({0.3,0.3,0.3,0.5}); end;
 		
 	};
 	
 	
 	LoadFont("Common Normal")..{
 		Text = "Pure";
-		OnCommand=cmd(x,-58;y,-3.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_W1"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{1,1,1,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(-3.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_W1"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({1,1,1,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "Per";
-		OnCommand=cmd(x,-58;y,-2.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_W2"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{1,1,1,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(-2.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_W2"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({1,1,1,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "Gre";
-		OnCommand=cmd(x,-58;y,-1.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_W3"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{1,1,1,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(-1.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_W3"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({1,1,1,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "Goo";
-		OnCommand=cmd(x,-58;y,-0.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_W4"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{0,0,0,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(-0.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_W4"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({0,0,0,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "Bad";
-		OnCommand=cmd(x,-58;y,0.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_W5"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{0,0,0,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(0.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_W5"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({0,0,0,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "Mis";
-		OnCommand=cmd(x,-58;y,1.5*H;horizalign,left;diffuse,
-		GameColor.Judgment["JudgmentLine_Miss"];
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,{0,0,0,1};
-		);
+		OnCommand=function(self) self:x(-58); self:y(1.5*H); self:horizalign(left); self:diffuse(GameColor.Judgment["JudgmentLine_Miss"]); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor({0,0,0,1}); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "OK";
-		OnCommand=cmd(x,-58;y,2.5*H;horizalign,left;diffuse,
-		{1,1,1,1};
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,GameColor.Judgment["JudgmentLine_Held"];
-		);
+		OnCommand=function(self) self:x(-58); self:y(2.5*H); self:horizalign(left); self:diffuse({1,1,1,1}); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor(GameColor.Judgment["JudgmentLine_Held"]); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "NG";
-		OnCommand=cmd(x,-58;y,3.5*H;horizalign,left;diffuse,
-		{0,0,0,1};
-		textglowmode,"TextGlowMode_Stroke";
-		strokecolor,GameColor.Judgment["JudgmentLine_W5"];
-		);
+		OnCommand=function(self) self:x(-58); self:y(3.5*H); self:horizalign(left); self:diffuse({0,0,0,1}); self:textglowmode("TextGlowMode_Stroke"); self:strokecolor(GameColor.Judgment["JudgmentLine_W5"]); end;
 	};
 	
 	
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,-3.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W1"];
-		);
+		OnCommand=function(self) self:x(58); self:y(-3.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W1"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_W1"))
@@ -88,9 +54,7 @@ local N = Def.ActorFrame{
 	};
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,-2.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W2"];
-		);
+		OnCommand=function(self) self:x(58); self:y(-2.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W2"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_W2"))
@@ -98,9 +62,7 @@ local N = Def.ActorFrame{
 	};
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,-1.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W3"];
-		);
+		OnCommand=function(self) self:x(58); self:y(-1.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W3"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_W3"))
@@ -108,9 +70,7 @@ local N = Def.ActorFrame{
 	};
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,-0.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W4"];
-		);
+		OnCommand=function(self) self:x(58); self:y(-0.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W4"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_W4"))
@@ -119,9 +79,7 @@ local N = Def.ActorFrame{
 	
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,0.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W5"];
-		);
+		OnCommand=function(self) self:x(58); self:y(0.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W5"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_W5"))
@@ -130,9 +88,7 @@ local N = Def.ActorFrame{
 	
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,1.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_Miss"];
-		);
+		OnCommand=function(self) self:x(58); self:y(1.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_Miss"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetTapNoteScores("TapNoteScore_Miss"))
@@ -141,9 +97,7 @@ local N = Def.ActorFrame{
 	
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,2.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_Held"];
-		);
+		OnCommand=function(self) self:x(58); self:y(2.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_Held"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetHoldNoteScores("HoldNoteScore_Held"))
@@ -152,9 +106,7 @@ local N = Def.ActorFrame{
 	
 	LoadFont("Common Normal")..{
 		Text = "0";
-		OnCommand=cmd(x,58;y,3.5*H;horizalign,right;diffuse,
-		GameColor.Judgment["JudgmentLine_W5"];
-		);
+		OnCommand=function(self) self:x(58); self:y(3.5*H); self:horizalign(right); self:diffuse(GameColor.Judgment["JudgmentLine_W5"]); end;
 		JudgmentMessageCommand=function(self)
 			self:settextf("%d",STATSMAN:GetCurStageStats():GetPlayerStageStats(PN):
 			GetHoldNoteScores("HoldNoteScore_LetGo"))

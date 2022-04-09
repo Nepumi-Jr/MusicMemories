@@ -5,7 +5,7 @@ local t = Def.ActorFrame{
 	--LoadActor("NewBg");
 	--LoadActor("Border");
 Def.ActorFrame{
-		OnCommand=cmd(playcommand,'James');
+		OnCommand=function(self) self:playcommand('James'); end;
 		JamesCommand=function(self)
 if GAMESTATE:GetCurMusicSeconds() >= 0 then
 	a = GAMESTATE:GetCurMusicSeconds() - 0
@@ -18,12 +18,12 @@ end
 		self:queuecommand('James')
 		end;
 Def.Sprite {
-	InitCommand=cmd(Center;draworder,1001;diffusealpha,1;blend,'BlendMode_Add');
-	BeginCommand=cmd(LoadFromCurrentSongBackground);
+	InitCommand=function(self) self:Center(); self:draworder(1001); self:diffusealpha(1); self:blend('BlendMode_Add'); end;
+	BeginCommand=function(self) self:LoadFromCurrentSongBackground(); end;
 		OnCommand=function(self)
 			self:SetSize(SCREEN_WIDTH,SCREEN_HEIGHT)
 		end;
-	CurrentSongChangedMessageCommand=cmd(LoadFromCurrentSongBackground);
+	CurrentSongChangedMessageCommand=function(self) self:LoadFromCurrentSongBackground(); end;
 };
 };
 	--LoadActor("ED");

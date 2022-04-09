@@ -7,7 +7,7 @@ local subMaxWidthHighScore = 280; -- zoom is 0.6 (multiply zoom,1 value by 1.4)
 local artistMaxWidthHighScore = 280/0.8;
 
 --[[
--- The old (cmd(blah))(Actor) syntax is hard to read.
+-- The old (function(self) self:blah(); end)(Actor) syntax is hard to read.
 -- This is longer, but much easier to read. - Colby
 --]]
 function TextBannerAfterSet(self,param)

@@ -4,19 +4,19 @@ local t = Def.ActorFrame{
 --LoadActor("X-mas");
 --LoadActor("ED");
 LoadActor("Ready")..{
-	InitCommand=cmd(draworder,500;diffusealpha,0);
-	OnCommand=cmd(sleep,1;linear,0.5;diffusealpha,1);	
+	InitCommand=function(self) self:draworder(500); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1); self:linear(0.5); self:diffusealpha(1); end;	
 	};
 LoadActor("321Go")..{
-	InitCommand=cmd(draworder,500;diffusealpha,0);
-	OnCommand=cmd(sleep,1;linear,0.5;diffusealpha,1);	
+	InitCommand=function(self) self:draworder(500); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1); self:linear(0.5); self:diffusealpha(1); end;	
 	};
 LoadActor("Go")..{
-	InitCommand=cmd(draworder,500;diffusealpha,0);
-	OnCommand=cmd(sleep,1;linear,0.5;diffusealpha,1);	
+	InitCommand=function(self) self:draworder(500); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1); self:linear(0.5); self:diffusealpha(1); end;	
 	};
-LoadActor("Pause")..{InitCommand=cmd(draworder,500);
-	StartTransitioningCommand=cmd(linear,0.5;diffusealpha,0);
+LoadActor("Pause")..{InitCommand=function(self) self:draworder(500); end;
+	StartTransitioningCommand=function(self) self:linear(0.5); self:diffusealpha(0); end;
 };
 
 

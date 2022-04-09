@@ -68,7 +68,7 @@ self:x(42)
 self:y(400)
 end;
 Def.Quad{--control panel
-OnCommand=cmd(zoom,0;playcommand,"Nep");
+OnCommand=function(self) self:zoom(0); self:playcommand("Nep"); end;
 NepCommand=function(self)
 	if Pum1Press[1] == 1 then MESSAGEMAN:Broadcast("DL1") else MESSAGEMAN:Broadcast("DL1re") end
 	if Pum1Press[2] == 1 then MESSAGEMAN:Broadcast("UL1") else MESSAGEMAN:Broadcast("UL1re") end
@@ -80,29 +80,29 @@ self:queuecommand("Nep")
 end;
 };
 LoadActor("Arrow")..{--DownLeft
-InitCommand=cmd(rotationz,(180+270)/2;SetTextureFiltering,false;x,-Sped;y,Sped;zoom,Kayay);
-DL1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;x,-Sped*1.3;y,Sped*1.3); 
-DL1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;x,-Sped;y,Sped); 
+InitCommand=function(self) self:rotationz((180+270)/2); self:SetTextureFiltering(false); self:x(-Sped); self:y(Sped); self:zoom(Kayay); end;
+DL1MessageCommand=function(self) self:stoptweening(); self:decelerate(Rew[1]); self:diffuse(Pum1Cl); self:x(-Sped*1.3); self:y(Sped*1.3); end; 
+DL1reMessageCommand=function(self) self:stoptweening(); self:bounceend(Rew[2]); self:diffuse(Pum1ClF); self:x(-Sped); self:y(Sped); end; 
 };
 LoadActor("Arrow")..{--UpLeft
-InitCommand=cmd(rotationz,(270+360)/2;SetTextureFiltering,false;x,-Sped;y,-Sped;zoom,Kayay);
-UL1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;x,-Sped*1.3;y,-Sped*1.3); 
-UL1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;x,-Sped;y,-Sped); 
+InitCommand=function(self) self:rotationz((270+360)/2); self:SetTextureFiltering(false); self:x(-Sped); self:y(-Sped); self:zoom(Kayay); end;
+UL1MessageCommand=function(self) self:stoptweening(); self:decelerate(Rew[1]); self:diffuse(Pum1Cl); self:x(-Sped*1.3); self:y(-Sped*1.3); end; 
+UL1reMessageCommand=function(self) self:stoptweening(); self:bounceend(Rew[2]); self:diffuse(Pum1ClF); self:x(-Sped); self:y(-Sped); end; 
 };
 LoadActor("inputoverlay-key")..{--Center
-InitCommand=cmd(SetTextureFiltering,false;zoom,Kayay*0.2);
-CT1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;zoom,Kayay*1.2*0.2); 
-CT1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;zoom,Kayay*0.2); 
+InitCommand=function(self) self:SetTextureFiltering(false); self:zoom(Kayay*0.2); end;
+CT1MessageCommand=function(self) self:stoptweening(); self:decelerate(Rew[1]); self:diffuse(Pum1Cl); self:zoom(Kayay*1.2*0.2); end; 
+CT1reMessageCommand=function(self) self:stoptweening(); self:bounceend(Rew[2]); self:diffuse(Pum1ClF); self:zoom(Kayay*0.2); end; 
 };
 LoadActor("Arrow")..{--UpRight
-InitCommand=cmd(rotationz,(90)/2;SetTextureFiltering,false;x,Sped;y,-Sped;zoom,Kayay);
-UR1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;x,Sped*1.3;y,-Sped*1.3); 
-UR1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;x,Sped;y,-Sped); 
+InitCommand=function(self) self:rotationz((90)/2); self:SetTextureFiltering(false); self:x(Sped); self:y(-Sped); self:zoom(Kayay); end;
+UR1MessageCommand=function(self) self:stoptweening(); self:decelerate(Rew[1]); self:diffuse(Pum1Cl); self:x(Sped*1.3); self:y(-Sped*1.3); end; 
+UR1reMessageCommand=function(self) self:stoptweening(); self:bounceend(Rew[2]); self:diffuse(Pum1ClF); self:x(Sped); self:y(-Sped); end; 
 };
 LoadActor("Arrow")..{--DownRight
-InitCommand=cmd(rotationz,(180+90)/2;SetTextureFiltering,false;x,Sped;y,Sped;zoom,Kayay);
-DR1MessageCommand=cmd(stoptweening;decelerate,Rew[1];diffuse,Pum1Cl;x,Sped*1.3;y,Sped*1.3); 
-DR1reMessageCommand=cmd(stoptweening;bounceend,Rew[2];diffuse,Pum1ClF;x,Sped;y,Sped); 
+InitCommand=function(self) self:rotationz((180+90)/2); self:SetTextureFiltering(false); self:x(Sped); self:y(Sped); self:zoom(Kayay); end;
+DR1MessageCommand=function(self) self:stoptweening(); self:decelerate(Rew[1]); self:diffuse(Pum1Cl); self:x(Sped*1.3); self:y(Sped*1.3); end; 
+DR1reMessageCommand=function(self) self:stoptweening(); self:bounceend(Rew[2]); self:diffuse(Pum1ClF); self:x(Sped); self:y(Sped); end; 
 };
 };
 

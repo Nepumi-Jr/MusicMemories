@@ -1,12 +1,12 @@
 local t = Def.ActorFrame{
 
 LoadActor("Ready")..{
-	InitCommand=cmd(draworder,500;diffusealpha,0);
-	OnCommand=cmd(sleep,1;linear,0.5;diffusealpha,1);	
+	InitCommand=function(self) self:draworder(500); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1); self:linear(0.5); self:diffusealpha(1); end;	
 	};
 LoadActor("321Go")..{
-	InitCommand=cmd(draworder,500;diffusealpha,0);
-	OnCommand=cmd(sleep,1;linear,0.5;diffusealpha,1);	
+	InitCommand=function(self) self:draworder(500); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1); self:linear(0.5); self:diffusealpha(1); end;	
 	};
 
 };

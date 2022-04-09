@@ -13,7 +13,7 @@ local grades = {
 };
 
 --[[ local t = LoadActor( "grades" ) .. {
-	InitCommand=cmd(pause);
+	InitCommand=function(self) self:pause(); end;
 	SetGradeCommand=function(self, params)
 		local state = grades[params.Grade] or grades.Grade_None;
 		state = state*2;
@@ -26,9 +26,9 @@ local grades = {
 	end;
 }; --]]
 local t = LoadFont("Common Normal") .. {
-	InitCommand=cmd(zoom,0.75;shadowlength,1;strokecolor,Color("Black"));
-	ShowCommand=cmd(stoptweening;bounceend,0.15;zoomy,0.75);
-	HideCommand=cmd(stoptweening;bouncebegin,0.15;zoomy,0);
+	InitCommand=function(self) self:zoom(0.75); self:shadowlength(1); self:strokecolor(Color("Black")); end;
+	ShowCommand=function(self) self:stoptweening(); self:bounceend(0.15); self:zoomy(0.75); end;
+	HideCommand=function(self) self:stoptweening(); self:bouncebegin(0.15); self:zoomy(0); end;
 	SetGradeCommand=function(self,params)
 		local pnPlayer = params.PlayerNumber;
 		local sGrade = params.Grade

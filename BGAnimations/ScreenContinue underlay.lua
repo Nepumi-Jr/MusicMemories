@@ -3,31 +3,28 @@ local t = Def.ActorFrame {};
 
 -- Fade
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(Center);	
+	InitCommand=function(self) self:Center(); end;	
 	Def.Quad {
-		InitCommand=cmd(scaletoclipped,SCREEN_WIDTH,SCREEN_HEIGHT);
-		OnCommand=cmd(diffuse,Color.Black;diffusealpha,0;linear,0.5;diffusealpha,0.25;
-					sleep,timer_seconds/2;  
-					linear,timer_seconds/2-0.5;diffusealpha,1);
+		InitCommand=function(self) self:scaletoclipped(SCREEN_WIDTH,SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:diffuse(Color.Black); self:diffusealpha(0); self:linear(0.5); self:diffusealpha(0.25); self:sleep(timer_seconds/2); self:linear(timer_seconds/2-0.5); self:diffusealpha(1); end;
 	};
 	-- Warning Fade
 	Def.Quad {
-		InitCommand=cmd(y,16;scaletoclipped,SCREEN_WIDTH,148);
-		OnCommand=cmd(diffuse,Color.Black;diffusealpha,0.5;
-					  linear,timer_seconds;zoomtoheight,148*0.75);
+		InitCommand=function(self) self:y(16); self:scaletoclipped(SCREEN_WIDTH,148); end;
+		OnCommand=function(self) self:diffuse(Color.Black); self:diffusealpha(0.5); self:linear(timer_seconds); self:zoomtoheight(148*0.75); end;
 	}
 };
 --
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(Center;y,SCREEN_CENTER_Y-24);
+	InitCommand=function(self) self:Center(); self:y(SCREEN_CENTER_Y-24); end;
 	-- Underline
 	Def.Quad {
-		InitCommand=cmd(y,16;zoomto,256,1);
-		OnCommand=cmd(diffuse,color("#ffd400");shadowlength,1;shadowcolor,BoostColor(color("#ffd40077"),0.25);linear,0.25;zoomtowidth,256;fadeleft,0.25;faderight,0.25);
+		InitCommand=function(self) self:y(16); self:zoomto(256,1); end;
+		OnCommand=function(self) self:diffuse(color("#ffd400")); self:shadowlength(1); self:shadowcolor(BoostColor(color("#ffd40077"),0.25)); self:linear(0.25); self:zoomtowidth(256); self:fadeleft(0.25); self:faderight(0.25); end;
 	};
 	LoadFont("Common Bold") .. {
 		Text="Continue?";
-		OnCommand=cmd(skewx,-0.125;diffuse,color("#ffd400");shadowlength,2;shadowcolor,BoostColor(color("#ffd40077"),0.25));
+		OnCommand=function(self) self:skewx(-0.125); self:diffuse(color("#ffd400")); self:shadowlength(2); self:shadowcolor(BoostColor(color("#ffd40077"),0.25)); end;
 	};
 };
 --

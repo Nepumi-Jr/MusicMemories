@@ -1,8 +1,8 @@
 local function GraphDisplay( pn )
 	local t = Def.ActorFrame {
 		Def.GraphDisplay {
-			InitCommand=cmd(Load,"GraphDisplay";);
-			OnCommand=cmd(x,-7.5;y,-25;zoomx,1.55);
+			InitCommand=function(self) self:Load("GraphDisplay"); end;
+			OnCommand=function(self) self:x(-7.5); self:y(-25); self:zoomx(1.55); end;
 			BeginCommand=function(self)
 				local ss = SCREENMAN:GetTopScreen():GetStageStats();
 				self:Set( ss, ss:GetPlayerStageStats(pn) );
@@ -17,8 +17,8 @@ end
 
 local function PercentScore( pn )
 	local t = LoadFont("Common normal")..{
-		InitCommand=cmd(zoom,0.625;shadowlength,1;player,pn);
-		BeginCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:zoom(0.625); self:shadowlength(1); self:player(pn); end;
+		BeginCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 			-- todo: color by difficulty
 			local SongOrCourse, StepsOrTrail;
@@ -101,7 +101,7 @@ LoadActor("../_save/Battle.lua")
 local t = LoadFallbackB();
 --t[#t+1] = StandardDecorationFromFileOptional("StageDisplay","StageDisplay");
 	t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(playcommand,'loop');
+		OnCommand=function(self) self:playcommand('loop'); end;
 		loopCommand=function(self)
 		psssss = STATSMAN:GetPlayedStageStats(1):GetPlayerStageStats(PLAYER_1)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
@@ -129,7 +129,7 @@ local t = LoadFallbackB();
 		self:queuecommand('loop')
 		end;
 	LoadActor("hrror.png") .. {
-		InitCommand=cmd(Center;zoom,0.5;cropright,0.5);
+		InitCommand=function(self) self:Center(); self:zoom(0.5); self:cropright(0.5); end;
 		OnCommand=function(self)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
 		self:player(0)
@@ -156,7 +156,7 @@ local t = LoadFallbackB();
 		end;
 	};
 LoadFont("_determination mono 24px") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-105;y,SCREEN_CENTER_Y+152;zoom,0.4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-105); self:y(SCREEN_CENTER_Y+152); self:zoom(0.4); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -170,7 +170,7 @@ LoadFont("_determination mono 24px") .. {
 		end;
 	};
 		 LoadFont("_8-bit madness 72px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-169;y,SCREEN_CENTER_Y+150;zoom,0.5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-169); self:y(SCREEN_CENTER_Y+150); self:zoom(0.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -199,7 +199,7 @@ LoadFont("_determination mono 24px") .. {
 		end;
 	};
 LoadFont("_determination mono 24px") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-230;y,SCREEN_CENTER_Y+153;zoom,0.5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-230); self:y(SCREEN_CENTER_Y+153); self:zoom(0.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -241,10 +241,10 @@ LoadFont("_determination mono 24px") .. {
 	
 	
 LoadFont("_determination mono 24px") .. {
-		InitCommand=cmd(Center;zoom,2;settext,"Hello");
+		InitCommand=function(self) self:Center(); self:zoom(2); self:settext("Hello"); end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y+102;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y+102); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -255,7 +255,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y-52;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y-52); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -271,7 +271,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y-66;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y-66); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -299,14 +299,14 @@ LoadFont("common edit") .. {
 		end;
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25); end;
 			BeginCommand=function(self)
 			self:visible(GAMESTATE:ShowW1())
 		end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -326,7 +326,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W1"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -346,11 +346,11 @@ LoadFont("common normal") .. {
 	};
 ----{W1,W2,W3,W4,W5,miss,W1+W2+W3+W4+W5,held,mine,maxcombo,letgo}
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*1);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*1); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -375,7 +375,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W2"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -403,11 +403,11 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*2); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -432,7 +432,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -451,11 +451,11 @@ LoadFont("common normal") .. {
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*3);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*3); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -480,7 +480,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W4"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -499,11 +499,11 @@ LoadFont("common normal") .. {
 };
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*2); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -528,7 +528,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -547,11 +547,11 @@ LoadFont("common normal") .. {
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*4); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -576,7 +576,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W5"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -595,11 +595,11 @@ LoadFont("common normal") .. {
 };
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*2); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -624,7 +624,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -643,11 +643,11 @@ LoadFont("common normal") .. {
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*5); end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -672,7 +672,7 @@ Def.Sprite{
 			self:diffuse(GameColor.Judgment["JudgmentLine_Miss"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -691,12 +691,12 @@ LoadFont("common normal") .. {
 };
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -705,7 +705,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -723,12 +723,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*1);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*1); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -737,7 +737,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -755,12 +755,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*2); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -769,7 +769,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -787,12 +787,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*3);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*3); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -801,7 +801,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -819,12 +819,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*4); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#ff5555"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -833,7 +833,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 			self:playcommand("neptune");
@@ -853,7 +853,7 @@ LoadFont("common normal") .. {
 	
 	
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-220;wag;effectmagnitude,0,-45,0;effectperiod,math.random(15,25);effectoffset,math.random(0,5));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-220); self:wag(); self:effectmagnitude(0,-45,0); self:effectperiod(math.random(15,25)); self:effectoffset(math.random(0,5)); end;
 		OnCommand=function(self)
 			if Isbattle then
 				self:sleep(3)
@@ -864,7 +864,7 @@ LoadFont("common normal") .. {
 			end
 		end;
 LoadActor(GradeforP1)..{
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;diffusealpha,0.45;zoom,1.25*1.5);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:diffusealpha(0.45); self:zoom(1.25*1.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -897,7 +897,7 @@ LoadActor(GradeforP1)..{
 		end;
 	};
 LoadActor(GradeforP1)..{
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;z,20;zoom,1.25);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:z(20); self:zoom(1.25); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -931,7 +931,7 @@ LoadActor(GradeforP1)..{
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-220;wag;effectmagnitude,0,-45,0;effectperiod,math.random(15,25);effectoffset,math.random(0,5));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-220); self:wag(); self:effectmagnitude(0,-45,0); self:effectperiod(math.random(15,25)); self:effectoffset(math.random(0,5)); end;
 		OnCommand=function(self)
 			self:visible(Isbattle)
 			if Isbattle then
@@ -942,9 +942,9 @@ LoadActor(GradeforP1)..{
 			end
 		end;
 	Def.ActorFrame{
-		OnCommand=cmd(diffuse,color("#FFFFFF68"));
+		OnCommand=function(self) self:diffuse(color("#FFFFFF68")); end;
 LoadFont("_special elite 108px") .. {
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;diffusealpha,0.45;zoom,1*1.5);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:diffusealpha(0.45); self:zoom(1*1.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -962,7 +962,7 @@ LoadFont("_special elite 108px") .. {
 	};
 	};
 LoadFont("_special elite 108px") .. {
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;z,20;zoom,1);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:z(20); self:zoom(1); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 		end;
@@ -992,8 +992,8 @@ LoadFont("_special elite 108px") .. {
 	
 	
 		t[#t+1] = Def.ActorFrame{
-				InitCommand=cmd(x,SCREEN_CENTER_X-100);
-				OnCommand=cmd(playcommand,'loop');
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-100); end;
+				OnCommand=function(self) self:playcommand('loop'); end;
 		loopCommand=function(self)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
 		psssss2 = STATSMAN:GetPlayedStageStats(1):GetPlayerStageStats(PLAYER_2)
@@ -1021,7 +1021,7 @@ LoadFont("_special elite 108px") .. {
 		end
 		end;
 	LoadActor("hrror.png") .. {
-		InitCommand=cmd(Center;zoom,0.5;cropright,0.5);
+		InitCommand=function(self) self:Center(); self:zoom(0.5); self:cropright(0.5); end;
 		OnCommand=function(self)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
 		self:player(1)
@@ -1048,7 +1048,7 @@ LoadFont("_special elite 108px") .. {
 		end;
 	};
 		 LoadFont("_8-bit madness 72px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-169;y,SCREEN_CENTER_Y+150;zoom,0.5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-169); self:y(SCREEN_CENTER_Y+150); self:zoom(0.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1077,7 +1077,7 @@ LoadFont("_special elite 108px") .. {
 		end;
 	};
 LoadFont("_determination mono 24px") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-230;y,SCREEN_CENTER_Y+153;zoom,0.5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-230); self:y(SCREEN_CENTER_Y+153); self:zoom(0.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1113,7 +1113,7 @@ LoadFont("_determination mono 24px") .. {
 		end;
 	};
 LoadFont("_determination mono 24px") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-105;y,SCREEN_CENTER_Y+152;zoom,0.4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-105); self:y(SCREEN_CENTER_Y+152); self:zoom(0.4); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1125,7 +1125,7 @@ LoadFont("_determination mono 24px") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y+102;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y+102); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1136,7 +1136,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y-52;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y-52); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1152,7 +1152,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-167;y,SCREEN_CENTER_Y-66;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-167); self:y(SCREEN_CENTER_Y-66); self:zoom(0.75); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1181,12 +1181,12 @@ LoadFont("common edit") .. {
 		end;
 	};
 		Def.ActorFrame{
-			OnCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25;horizalign,right);
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25); self:horizalign(right); end;
 			BeginCommand=function(self)
 			self:visible(GAMESTATE:ShowW1())
 		end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1202,13 +1202,13 @@ Def.Sprite{
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_W1"])
 			self:visible(GAMESTATE:ShowW1())
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1226,14 +1226,14 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*1);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*1); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_W2"])
 		end;
 		Def.ActorFrame{
-			OnCommand=cmd(horizalign,right);
+			OnCommand=function(self) self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1254,7 +1254,7 @@ Def.Sprite{
 	};
 };
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1273,9 +1273,9 @@ LoadFont("common normal") .. {
 	};
 	};
 		Def.ActorFrame{
-			OnCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*2;horizalign,right);
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*2); self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1291,12 +1291,12 @@ Def.Sprite{
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*2); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_W3"])
 		end;
 LoadFont("common normal") .. {
-	InitCommand=cmd(x,-55;zoom,0.65);
+	InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1314,9 +1314,9 @@ LoadFont("common normal") .. {
 	};
 	};
 		Def.ActorFrame{
-			OnCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*3;horizalign,right);
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*3); self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1332,12 +1332,12 @@ Def.Sprite{
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*3);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*3); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_W4"])
 		end;
 LoadFont("common normal") .. {
-	InitCommand=cmd(x,-55;zoom,0.65);
+	InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1355,9 +1355,9 @@ LoadFont("common normal") .. {
 	};
 	};
 		Def.ActorFrame{
-			OnCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*4;horizalign,right);
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*4); self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1373,12 +1373,12 @@ Def.Sprite{
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*4); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_W5"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1396,9 +1396,9 @@ LoadFont("common normal") .. {
 	};
 	};
 		Def.ActorFrame{
-			OnCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*5;horizalign,right);
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*5); self:horizalign(right); end;
 Def.Sprite{
-		InitCommand=cmd(zoom,0.30);
+		InitCommand=function(self) self:zoom(0.30); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1414,12 +1414,12 @@ Def.Sprite{
 	};
 };
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-190;y,SCREEN_CENTER_Y-25+20*5);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-190); self:y(SCREEN_CENTER_Y-25+20*5); end;
 			BeginCommand=function(self)
 			self:diffuse(GameColor.Judgment["JudgmentLine_Miss"])
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1437,12 +1437,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1451,7 +1451,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1469,12 +1469,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*1);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*1); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1483,7 +1483,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1501,12 +1501,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*2); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1515,7 +1515,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1533,12 +1533,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*3);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*3); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#cccccc"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1547,7 +1547,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1565,12 +1565,12 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-95;y,SCREEN_CENTER_Y-25+20*4);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-95); self:y(SCREEN_CENTER_Y-25+20*4); end;
 			BeginCommand=function(self)
 			self:diffuse(color("#ff5555"))
 		end;
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,-55;zoom,0.65;horizalign,left);
+		InitCommand=function(self) self:x(-55); self:zoom(0.65); self:horizalign(left); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1579,7 +1579,7 @@ LoadFont("common normal") .. {
 		end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,20;zoom,0.65);
+		InitCommand=function(self) self:x(20); self:zoom(0.65); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 			self:playcommand("neptune");
@@ -1597,7 +1597,7 @@ LoadFont("common normal") .. {
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-220+110;wag;effectmagnitude,0,45,0;effectperiod,math.random(15,25);effectoffset,math.random(0,5));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-220+110); self:wag(); self:effectmagnitude(0,45,0); self:effectperiod(math.random(15,25)); self:effectoffset(math.random(0,5)); end;
 		OnCommand=function(self)
 			if Isbattle then
 				self:sleep(3)
@@ -1608,7 +1608,7 @@ LoadFont("common normal") .. {
 			end
 		end;
 LoadActor(GradeforP2)..{
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;diffusealpha,0.45;zoom,1.25*1.5);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:diffusealpha(0.45); self:zoom(1.25*1.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1640,7 +1640,7 @@ LoadActor(GradeforP2)..{
 		end;
 	};
 LoadActor(GradeforP2)..{
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;z,20;zoom,1.25);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:z(20); self:zoom(1.25); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1674,7 +1674,7 @@ LoadActor(GradeforP2)..{
 	};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(x,SCREEN_CENTER_X-220+110;wag;effectmagnitude,0,-45,0;effectperiod,math.random(15,25);effectoffset,math.random(0,5));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-220+110); self:wag(); self:effectmagnitude(0,-45,0); self:effectperiod(math.random(15,25)); self:effectoffset(math.random(0,5)); end;
 		OnCommand=function(self)
 			self:visible(Isbattle)
 			if Isbattle then
@@ -1685,9 +1685,9 @@ LoadActor(GradeforP2)..{
 			end
 		end;
 	Def.ActorFrame{
-		OnCommand=cmd(diffuse,color("#FFFFFF68"));
+		OnCommand=function(self) self:diffuse(color("#FFFFFF68")); end;
 LoadFont("_special elite 108px") .. {
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;diffusealpha,0.45;zoom,1*1.5);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:diffusealpha(0.45); self:zoom(1*1.5); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1704,7 +1704,7 @@ LoadFont("_special elite 108px") .. {
 	};
 	};
 LoadFont("_special elite 108px") .. {
-		InitCommand=cmd(y,SCREEN_CENTER_Y-150;z,20;zoom,1);
+		InitCommand=function(self) self:y(SCREEN_CENTER_Y-150); self:z(20); self:zoom(1); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 		end;
@@ -1723,8 +1723,8 @@ LoadFont("_special elite 108px") .. {
 	};
 	--Alll rave STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF--
 		t[#t+1] = Def.ActorFrame{
-				InitCommand=cmd();
-				OnCommand=cmd(playcommand,'loop');
+				InitCommand=function(self) end;
+				OnCommand=function(self) self:playcommand('loop'); end;
 		loopCommand=function(self)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
 		else
@@ -1737,7 +1737,7 @@ LoadFont("_special elite 108px") .. {
 		end
 		end;	
 		LoadActor("Lose")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+50;zoom,2);
+			InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+50); self:zoom(2); end;
 			OnCommand=function(self)
 		if GAMESTATE:GetPlayMode() ~= "PlayMode_Rave" then
 		self:diffusealpha(0)
@@ -1832,38 +1832,38 @@ t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation"
 			self:playcommand("Hide")
 		end
 	end;
--- 	OnCommand=cmd(playcommand,"Set");
-	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-	DisplayLanguageChangedMessageCommand=cmd(playcommand,"Set");
+-- 	OnCommand=function(self) self:playcommand("Set"); end;
+	CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+	CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
+	DisplayLanguageChangedMessageCommand=function(self) self:playcommand("Set"); end;
 };
 --t[#t+1] = StandardDecorationFromFileOptional("LifeDifficulty","LifeDifficulty");
 --t[#t+1] = StandardDecorationFromFileOptional("TimingDifficulty","TimingDifficulty");
 t[#t+1] = StandardDecorationFromFileOptional("GameType","GameType");
 t[#t+1] = Def.ActorFrame {
 	Condition=GAMESTATE:HasEarnedExtraStage() and GAMESTATE:IsExtraStage() and not GAMESTATE:IsExtraStage2();
-	InitCommand=cmd(draworder,105);
+	InitCommand=function(self) self:draworder(105); end;
 	LoadActor( THEME:GetPathS("ScreenEvaluation","try Extra1" ) ) .. {
 		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 	LoadActor( THEME:GetPathG("ScreenStageInformation","Stage extra1" ) ) .. {
 		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
-		InitCommand=cmd(Center);
-		OnCommand=cmd(diffusealpha,0;zoom,0.85;bounceend,1;zoom,1;diffusealpha,1;sleep,0;glow,Color("White");decelerate,1;glow,Color("Invisible");smooth,0.35;zoom,0.25;y,SCREEN_BOTTOM-72);
+		InitCommand=function(self) self:Center(); end;
+		OnCommand=function(self) self:diffusealpha(0); self:zoom(0.85); self:bounceend(1); self:zoom(1); self:diffusealpha(1); self:sleep(0); self:glow(Color("White")); self:decelerate(1); self:glow(Color("Invisible")); self:smooth(0.35); self:zoom(0.25); self:y(SCREEN_BOTTOM-72); end;
 	};
 };
 t[#t+1] = Def.ActorFrame {
 	Condition=GAMESTATE:HasEarnedExtraStage() and not GAMESTATE:IsExtraStage() and GAMESTATE:IsExtraStage2();
-	InitCommand=cmd(draworder,105);
+	InitCommand=function(self) self:draworder(105); end;
 	LoadActor( THEME:GetPathS("ScreenEvaluation","try Extra2" ) ) .. {
 		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 	LoadActor( THEME:GetPathG("ScreenStageInformation","Stage extra2" ) ) .. {
 		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
-		InitCommand=cmd(Center);
-		OnCommand=cmd(diffusealpha,0;zoom,0.85;bounceend,1;zoom,1;diffusealpha,1;sleep,0;glow,Color("White");decelerate,1;glow,Color("Invisible");smooth,0.35;zoom,0.25;y,SCREEN_BOTTOM-72);
+		InitCommand=function(self) self:Center(); end;
+		OnCommand=function(self) self:diffusealpha(0); self:zoom(0.85); self:bounceend(1); self:zoom(1); self:diffusealpha(1); self:sleep(0); self:glow(Color("White")); self:decelerate(1); self:glow(Color("Invisible")); self:smooth(0.35); self:zoom(0.25); self:y(SCREEN_BOTTOM-72); end;
 	};
 };
 return t

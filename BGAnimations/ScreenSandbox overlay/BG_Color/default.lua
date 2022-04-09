@@ -1,9 +1,9 @@
 local t = Def.ActorFrame{
 
     Def.ActorFrame{
-        InitCommand=cmd(Center);
+        InitCommand=function(self) self:Center(); end;
         LoadActor("50352933_p0-512.png")..{
-            InitCommand=cmd(polygonmode,"PolygonMode_Line");
+            InitCommand=function(self) self:polygonmode("PolygonMode_Line"); end;
         };
     };
 

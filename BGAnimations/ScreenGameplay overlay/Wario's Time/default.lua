@@ -15,8 +15,8 @@ end;
 local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
 Def.ActorFrame{
-InitCommand=cmd(Center;zoom,0.3;y,120);
-OnCommand=cmd(playcommand,"NepuA");
+InitCommand=function(self) self:Center(); self:zoom(0.3); self:y(120); end;
+OnCommand=function(self) self:playcommand("NepuA"); end;
 NepuACommand=function(self)
 if (GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2)) or (GAMESTATE:IsPlayerEnabled(PLAYER_1) and not Center1Player()) or (GAMESTATE:IsPlayerEnabled(PLAYER_2) and not Center1Player()) then
 self:CenterX();
@@ -52,8 +52,8 @@ self:sleep(1/30)
 self:queuecommand("NepuA")
 end;
 LoadActor("WarioTime")..{
-InitCommand=cmd(animate,false;SetTextureFiltering,false;x,-50*4);
-OnCommand=cmd(playcommand,"NepuB");
+InitCommand=function(self) self:animate(false); self:SetTextureFiltering(false); self:x(-50*4); end;
+OnCommand=function(self) self:playcommand("NepuB"); end;
 NepuBCommand=function(self)
 self:visible(not (WT[1] == 0))
 self:setstate(WT[1])
@@ -63,8 +63,8 @@ self:queuecommand("NepuB")
 end;
 };
 LoadActor("WarioTime")..{
-InitCommand=cmd(animate,false;SetTextureFiltering,false;x,-25*4);
-OnCommand=cmd(playcommand,"NepuB");
+InitCommand=function(self) self:animate(false); self:SetTextureFiltering(false); self:x(-25*4); end;
+OnCommand=function(self) self:playcommand("NepuB"); end;
 NepuBCommand=function(self)
 self:setstate(WT[2])
 self:diffuse(CWT2Cl(WT[6]))
@@ -73,8 +73,8 @@ self:queuecommand("NepuB")
 end;
 };
 LoadActor("WarioTime")..{
-InitCommand=cmd(animate,false;SetTextureFiltering,false;x,25*4);
-OnCommand=cmd(playcommand,"NepuB");
+InitCommand=function(self) self:animate(false); self:SetTextureFiltering(false); self:x(25*4); end;
+OnCommand=function(self) self:playcommand("NepuB"); end;
 NepuBCommand=function(self)
 self:setstate(WT[3])
 self:diffuse(CWT2Cl(WT[6]))
@@ -83,8 +83,8 @@ self:queuecommand("NepuB")
 end;
 };
 LoadActor("WarioTime")..{
-InitCommand=cmd(animate,false;SetTextureFiltering,false;x,50*4);
-OnCommand=cmd(playcommand,"NepuB");
+InitCommand=function(self) self:animate(false); self:SetTextureFiltering(false); self:x(50*4); end;
+OnCommand=function(self) self:playcommand("NepuB"); end;
 NepuBCommand=function(self)
 self:setstate(WT[4])
 self:diffuse(CWT2Cl(WT[6]))
@@ -93,8 +93,8 @@ self:queuecommand("NepuB")
 end;
 };
 LoadActor("Ticktock")..{
-InitCommand=cmd(animate,false;SetTextureFiltering,false;setstate,1);
-OnCommand=cmd(playcommand,"NepuB");
+InitCommand=function(self) self:animate(false); self:SetTextureFiltering(false); self:setstate(1); end;
+OnCommand=function(self) self:playcommand("NepuB"); end;
 NepuBCommand=function(self)
 self:visible(WT[5])
 self:diffuse(CWT2Cl(WT[6]))

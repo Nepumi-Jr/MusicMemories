@@ -1,11 +1,11 @@
 local Neptune_textbox;
 local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
-LoadActor("Hi")..{ InitCommand=cmd(); 
+LoadActor("Hi")..{ InitCommand=function(self) end; 
 };
 		LoadFont("_determination sans 26px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1;cropright,1;);
-			OnCommand=cmd(sleep,1;playcommand,'Nep';);
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1); self:cropright(1); end;
+			OnCommand=function(self) self:sleep(1); self:playcommand('Nep'); end;
 			NepCommand=function(self)
 			self:settext("Madddddd");
 			self:linear(0.5);

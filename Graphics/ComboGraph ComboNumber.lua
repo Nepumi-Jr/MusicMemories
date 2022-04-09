@@ -1,3 +1,3 @@
 return LoadFont("Common Bold") .. {
-	InitCommand=cmd(zoom,12/54;y,-1;shadowlength,1;strokecolor,Color.Outline);
+	InitCommand=function(self) self:zoom(12/54); self:y(-1); self:shadowlength(1); self:strokecolor(Color.Outline); end;
 };

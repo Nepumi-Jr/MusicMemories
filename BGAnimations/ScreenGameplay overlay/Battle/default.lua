@@ -1,9 +1,9 @@
 local Knocked = false;
 local t = Def.ActorFrame{
-	OnCommand=cmd(y,-10);
+	OnCommand=function(self) self:y(-10); end;
 LoadActor("../Border/Under lay2.png")..{
-		InitCommand=cmd(FullScreen;y,SCREEN_CENTER_Y+10;SetTextureFiltering,false;);
-		OnCommand=cmd(playcommand,'Super');
+		InitCommand=function(self) self:FullScreen(); self:y(SCREEN_CENTER_Y+10); self:SetTextureFiltering(false); end;
+		OnCommand=function(self) self:playcommand('Super'); end;
 		SuperCommand=function(self)
 		if TP.Battle.Mode == "Ac" and not TP.Battle.IsfailorIsDraw then
 		GAMESTATE:GetPlayerState(PLAYER_1):GetPlayerOptions('ModsLevel_Song'):FailSetting('FailType_Off')
@@ -36,8 +36,8 @@ LoadActor("../Border/Under lay2.png")..{
 		end;
 };
 Def.Quad{
-InitCommand=cmd(visible,false);
-OnCommand=cmd(playcommand,"KO");
+InitCommand=function(self) self:visible(false); end;
+OnCommand=function(self) self:playcommand("KO"); end;
 KOCommand=function(self)
 if TP.Battle.IsBattle and TP.Battle.Mode == "Dr" then
 if (SCREENMAN:GetTopScreen():GetLifeMeter(PLAYER_1):IsFailing() or SCREENMAN:GetTopScreen():GetLifeMeter(PLAYER_2):IsFailing()) then

@@ -23,7 +23,7 @@ local profile= GAMESTATE:GetEditLocalProfile()
 -- enter a number, and the prompt is updated by running its SetCommand.
 local number_entry= new_numpad_entry{
 	Name= "number_entry",
-	InitCommand= cmd(diffusealpha, 0; xy, _screen.cx*1.5, _screen.cy),
+	InitCommand= function(self) self:diffusealpha(0); self:xy(_screen.cx*1.5, _screen.cy); end,
 	value_color= PlayerColor(PLAYER_1),
 	cursor_draw= "first",
 	cursor_color= PlayerDarkColor(PLAYER_1),
@@ -327,10 +327,9 @@ for i, item in ipairs(menu_items) do
 					self:visible(false)
 					self:playcommand("Set", {value_text})
 				end,
-				ShowLeftCommand= cmd(visible, true),
-				HideLeftCommand= cmd(visible, false),
-				PressLeftCommand= cmd(stoptweening; linear, .2; zoom, 2; linear, .2;
-															zoom, 1),
+				ShowLeftCommand= function(self) self:visible(true); end,
+				HideLeftCommand= function(self) self:visible(false); end,
+				PressLeftCommand= function(self) self:stoptweening(); self:linear(.2); self:zoom(2); self:linear(.2); self:zoom(1); end,
 			}
 			value_args[#value_args+1]= Def.ActorMultiVertex{
 				InitCommand= function(self)
@@ -344,10 +343,9 @@ for i, item in ipairs(menu_items) do
 					local valw= self:GetParent():GetChild("val"):GetWidth()
 					self:x(valw+8)
 				end,
-				ShowRightCommand= cmd(visible, true),
-				HideRightCommand= cmd(visible, false),
-				PressRightCommand= cmd(stoptweening; linear, .2; zoom, 2; linear, .2;
-															zoom, 1),
+				ShowRightCommand= function(self) self:visible(true); end,
+				HideRightCommand= function(self) self:visible(false); end,
+				PressRightCommand= function(self) self:stoptweening(); self:linear(.2); self:zoom(2); self:linear(.2); self:zoom(1); end,
 			}
 		end
 		args[#args+1]= Def.ActorFrame(value_args)

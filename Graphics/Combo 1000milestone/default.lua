@@ -1,11 +1,11 @@
 return Def.ActorFrame {
 	LoadActor("arrowsplode") .. {
-		InitCommand=cmd(diffusealpha,0;blend,'BlendMode_Add';hide_if,not ShowFlashyCombo);
-		MilestoneCommand=cmd(rotationz,-10;zoom,.25;diffusealpha,1;decelerate,0.4;rotationz,0;zoom,1.3;diffusealpha,0);
+		InitCommand=function(self) self:diffusealpha(0); self:blend('BlendMode_Add'); self:hide_if(not ShowFlashyCombo); end;
+		MilestoneCommand=function(self) self:rotationz(-10); self:zoom(.25); self:diffusealpha(1); self:decelerate(0.4); self:rotationz(0); self:zoom(1.3); self:diffusealpha(0); end;
 	};
 	LoadActor("minisplode") .. {
-		InitCommand=cmd(diffusealpha,0;blend,'BlendMode_Add';hide_if,not ShowFlashyCombo);
-		MilestoneCommand=cmd(rotationz,-10;zoom,.25;diffusealpha,1;linear,0.3;rotationz,0;zoom,1.8;diffusealpha,0);
+		InitCommand=function(self) self:diffusealpha(0); self:blend('BlendMode_Add'); self:hide_if(not ShowFlashyCombo); end;
+		MilestoneCommand=function(self) self:rotationz(-10); self:zoom(.25); self:diffusealpha(1); self:linear(0.3); self:rotationz(0); self:zoom(1.8); self:diffusealpha(0); end;
 	};
 	LoadActor(THEME:GetPathG("Combo","100Milestone"));
 };

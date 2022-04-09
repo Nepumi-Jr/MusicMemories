@@ -27,12 +27,12 @@ end
 
 local t = Def.ActorFrame{
     LoadActor(VDOPath)..{
-        InitCommand=cmd(FullScreen;loop,false);
-        StartTransitioningCommand=cmd(play);
+        InitCommand=function(self) self:FullScreen(); self:loop(false); end;
+        StartTransitioningCommand=function(self) self:play(); end;
     };
     LoadActor(SoundPath)..{
-        InitCommand=cmd(FullScreen);
-        StartTransitioningCommand=cmd(play);
+        InitCommand=function(self) self:FullScreen(); end;
+        StartTransitioningCommand=function(self) self:play(); end;
     };
 };
 return t;

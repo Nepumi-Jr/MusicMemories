@@ -30,17 +30,17 @@ t[#t+1] = Def.ActorFrame{
 	SCREENMAN:GetTopScreen():AddInputCallback(InputOfArrow)
 	end;
 		LoadActor( THEME:GetPathS("Common","start") )..{
-			TorPaiMessageCommand=cmd(play);
+			TorPaiMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
-			NopeMessageCommand=cmd(play);
+			NopeMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","value") )..{
-			ChanMessageCommand=cmd(play);
+			ChanMessageCommand=function(self) self:play(); end;
 		};
 };
 t[#t+1] = Def.ActorFrame{
-	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-100;zoom,.4;queuecommand,"Chan");
+	OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-100); self:zoom(.4); self:queuecommand("Chan"); end;
 	ChanMessageCommand=function(self)
 	self:finishtweening()
 		self:bounceend(0.5)
@@ -62,7 +62,7 @@ t[#t+1] = Def.ActorFrame{
 	LoadModule("Menu.Button.lua")(0,0,color("#FFAA77"),color("#FF8833"),color("#FFAA55"),color("#FFFFFF"),color("#999999"),"More","Games!")
 };
 t[#t+1] = Def.ActorFrame{
-	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+100;zoom,.4);
+	OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+100); self:zoom(.4); end;
 	ChanMessageCommand=function(self)
 	self:finishtweening()
 		self:bounceend(0.5)

@@ -6,13 +6,13 @@ local t = Def.ActorFrame{
     end;
 
     Def.Quad{
-        OnCommand=cmd(CenterX;zoomx,SCREEN_RIGHT;y,SCREEN_BOTTOM-100;zoomy,200;diffuse,{0,0,0,1};fadetop,1);
+        OnCommand=function(self) self:CenterX(); self:zoomx(SCREEN_RIGHT); self:y(SCREEN_BOTTOM-100); self:zoomy(200); self:diffuse({0,0,0,1}); self:fadetop(1); end;
     };
     LoadActor("WHAT.png")..{
-        OnCommand=cmd(Center;y,SCREEN_CENTER_Y+185;zoom,1);
+        OnCommand=function(self) self:Center(); self:y(SCREEN_CENTER_Y+185); self:zoom(1); end;
     };
     LoadActor("Whatttt.mp3")..{
-        StartTransitioningCommand=cmd(play);
+        StartTransitioningCommand=function(self) self:play(); end;
     };
 
     

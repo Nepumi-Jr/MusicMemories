@@ -276,7 +276,7 @@ if mods.Streamu and mods.Streamu ~= "None" then
 	};
 
 	af[#af+1] = Def.ActorFrame{
-		InitCommand=cmd(diffuse,Color[TP[pn].ActiveModifiers.ComboColorstring] or color("#00FF00");diffusealpha,0);
+		InitCommand=function(self) self:diffuse(Color[TP[pn].ActiveModifiers.ComboColorstring] or color("#00FF00")); self:diffusealpha(0); end;
 		OnCommand=function(self)
 		self:x(SCREENMAN:GetTopScreen():GetChild(Help):GetX())
 		self:y(SCREEN_CENTER_Y*0.75):zoom(.25)
@@ -284,7 +284,7 @@ if mods.Streamu and mods.Streamu ~= "None" then
 		end;
 	LoadActor("InActive");
 	LoadActor("Active")..{
-		ONWMessageCommand=cmd(diffusealpha,0.75;playcommand,"May");
+		ONWMessageCommand=function(self) self:diffusealpha(0.75); self:playcommand("May"); end;
 		MayCommand=function(self)
 		if streams.Measures then
 		if streams.Measures[stream_index] then

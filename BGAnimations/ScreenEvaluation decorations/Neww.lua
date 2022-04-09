@@ -26,8 +26,8 @@ end
 local function GraphDisplay( pn )
 	local t = Def.ActorFrame {
 		Def.GraphDisplay {
-			InitCommand=cmd(Load,"GraphDisplay";);
-			OnCommand=cmd(x,-7.5;y,-25;zoomx,1.55);
+			InitCommand=function(self) self:Load("GraphDisplay"); end;
+			OnCommand=function(self) self:x(-7.5); self:y(-25); self:zoomx(1.55); end;
 			BeginCommand=function(self)
 				local ss = SCREENMAN:GetTopScreen():GetStageStats();
 				self:Set( ss, ss:GetPlayerStageStats(pn) );
@@ -54,42 +54,42 @@ local CY = SCREEN_CENTER_Y
 
 t[#t+1] = Def.ActorFrame{
 	--BORDER Stuff
-	Def.Quad{InitCommand=cmd(vertalign,bottom;CenterX;y,CY*1.87;zoomy,180;zoomx,7;);};
-	Def.Quad{InitCommand=cmd(CenterX;y,CY*1.87-180;zoomx,CX*2;zoomy,7;);};
-	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
-	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:CenterX(); self:y(CY*1.87); self:zoomy(180); self:zoomx(7); end;};
+	Def.Quad{InitCommand=function(self) self:CenterX(); self:y(CY*1.87-180); self:zoomx(CX*2); self:zoomy(7); end;};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX-250/2); self:y(CY*1.87-180); self:zoomy(217.5); self:zoomx(7); end;};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX+250/2); self:y(CY*1.87-180); self:zoomy(217.5); self:zoomx(7); end;};
 	
     Def.Quad{
-        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,1;zoomy,2;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_2 or {0,0,1,1}); self:horizalign(left); self:vertalign(top); self:y(1); self:zoomy(2); self:zoomx(SCREEN_RIGHT); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,color("#333333");horizalign,left;vertalign,top;zoomy,50;y,3;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(color("#333333")); self:horizalign(left); self:vertalign(top); self:zoomy(50); self:y(3); self:zoomx(SCREEN_RIGHT); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,53;zoomy,2;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_2 or {0,0,1,1}); self:horizalign(left); self:vertalign(top); self:y(53); self:zoomy(2); self:zoomx(SCREEN_RIGHT); end;
     };
     
-    --Def.Quad{InitCommand=cmd(horizalign,right;x,CX-250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
-	--Def.Quad{InitCommand=cmd(horizalign,left;x,CX+250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
-	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2-100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
-	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2+100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
+    --Def.Quad{InitCommand=function(self) self:horizalign(right); self:x(CX-250/2); self:y(CY*1.87-180-100); self:zoomx(100+3.5); self:zoomy(7); end;};
+	--Def.Quad{InitCommand=function(self) self:horizalign(left); self:x(CX+250/2); self:y(CY*1.87-180-100); self:zoomx(100+3.5); self:zoomy(7); end;};
+	--Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX-250/2-100); self:y(CY*1.87-180-100); self:zoomy(120-2); self:zoomx(7); end;};
+	--Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX+250/2+100); self:y(CY*1.87-180-100); self:zoomy(120-2); self:zoomx(7); end;};
 };
 
 
 t[#t+1] = Def.ActorFrame{
-	InitCommand=cmd(zoom,0.9;x,SCREEN_CENTER_X;y,110);
+	InitCommand=function(self) self:zoom(0.9); self:x(SCREEN_CENTER_X); self:y(110); end;
 --Song Banner
 Def.Quad{
-InitCommand=cmd(x,-250/2-3.5;zoom,7;zoomy,103;);
+InitCommand=function(self) self:x(-250/2-3.5); self:zoom(7); self:zoomy(103); end;
 };
 Def.Quad{
-InitCommand=cmd(x,250/2+3.5;zoom,7;zoomy,103;shadowlength,3;);
+InitCommand=function(self) self:x(250/2+3.5); self:zoom(7); self:zoomy(103); self:shadowlength(3); end;
 };
 Def.Quad{
-InitCommand=cmd(y,90/2+3.5;zoom,7;zoomx,263;shadowlength,3;);
+InitCommand=function(self) self:y(90/2+3.5); self:zoom(7); self:zoomx(263); self:shadowlength(3); end;
 };
 Def.Quad{
-InitCommand=cmd(y,-90/2-3.5;zoom,7;zoomx,263;);
+InitCommand=function(self) self:y(-90/2-3.5); self:zoom(7); self:zoomx(263); end;
 };
 Def.Sprite{
 OnCommand=function(self)
@@ -117,7 +117,7 @@ end
 t[#t+1] = Def.ActorFrame{
 	Def.ActorFrame{
         LoadFont("Common Large")..{
-            InitCommand=cmd(x,SCREEN_RIGHT-10;y,12;horizalign,right;zoom,0.35);
+            InitCommand=function(self) self:x(SCREEN_RIGHT-10); self:y(12); self:horizalign(right); self:zoom(0.35); end;
             OnCommand=function(self)
                 local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
                 TName = LoadModule("Utils.SortTiming.lua")(TName)
@@ -128,7 +128,7 @@ t[#t+1] = Def.ActorFrame{
             end;
 		};
 		LoadFont("Common Normal")..{
-            InitCommand=cmd(x,SCREEN_RIGHT-10;y,45;horizalign,right;zoom,0.6);
+            InitCommand=function(self) self:x(SCREEN_RIGHT-10); self:y(45); self:horizalign(right); self:zoom(0.6); end;
             OnCommand=function(self)
                 self:settextf("Life LV : %d      Timing LV : %d",GetLifeDifficulty(), GetTimingDifficulty())
             end;
@@ -165,7 +165,7 @@ for iterPn in ivalues(Players) do
     t[#t+1] = Def.ActorFrame{
         Condition = GAMESTATE:IsPlayerEnabled(thisPn);
         Def.ActorFrame{
-            OnCommand=cmd(x,thisPn == PLAYER_1 and -297 or 138;y,210;zoomx,677/794;zoomy,255/256);
+            OnCommand=function(self) self:x(thisPn == PLAYER_1 and -297 or 138); self:y(210); self:zoomx(677/794); self:zoomy(255/256); end;
                 StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(thisPn), GraphDisplay(thisPn) );
                 --StandardDecorationFromTable( "ComboGraph" .. ToEnumShortString(thisPn));
                 Def.ActorMultiVertex{
@@ -226,21 +226,21 @@ for iterPn in ivalues(Players) do
                 };	
         };
         Def.Quad{
-            InitCommand=cmd(x,thisPn == PLAYER_1 and 0 or SCREEN_RIGHT;y,SCREEN_CENTER_Y*0.3;horizalign,thisPn == PLAYER_1 and left or right;zoomx,170;zoomy,25;faderight,thisPn == PLAYER_1 and 1 or 0;fadeleft,thisPn == PLAYER_2 and 1 or 0;diffuse,GameColor.Difficulty[StepSt1:GetDifficulty()]);
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 0 or SCREEN_RIGHT); self:y(SCREEN_CENTER_Y*0.3); self:horizalign(thisPn == PLAYER_1 and left or right); self:zoomx(170); self:zoomy(25); self:faderight(thisPn == PLAYER_1 and 1 or 0); self:fadeleft(thisPn == PLAYER_2 and 1 or 0); self:diffuse(GameColor.Difficulty[StepSt1:GetDifficulty()]); end;
         };
         LoadFont("Common Normal")..{
-            InitCommand=cmd(x,thisPn == PLAYER_1 and 10 or SCREEN_RIGHT - 10;y,SCREEN_CENTER_Y*0.3;horizalign,thisPn == PLAYER_1 and left or right;zoom,1;shadowlength,2);
-            OnCommand=cmd(settext,StepText1;);
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 10 or SCREEN_RIGHT - 10); self:y(SCREEN_CENTER_Y*0.3); self:horizalign(thisPn == PLAYER_1 and left or right); self:zoom(1); self:shadowlength(2); end;
+            OnCommand=function(self) self:settext(StepText1); end;
         };
         Def.Sprite{
             Condition=LoadModule("Eva.CustomStageAward.lua")(thisPn) ~= "Nope";
-            InitCommand=cmd(x,thisPn == PLAYER_1 and 205 or 595;y,SCREEN_CENTER_Y-23;zoom,0.4;shadowlength,2);
-            OnCommand=cmd(Load,THEME:GetPathG("StageAward", ToEnumShortString(LoadModule("Eva.CustomStageAward.lua")(thisPn)));diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.2;rotationz,0;diffusealpha,1);
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 205 or 595); self:y(SCREEN_CENTER_Y-23); self:zoom(0.4); self:shadowlength(2); end;
+            OnCommand=function(self) self:Load(THEME:GetPathG("StageAward", ToEnumShortString(LoadModule("Eva.CustomStageAward.lua")(thisPn)))); self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.2); self:rotationz(0); self:diffusealpha(1); end;
         };
         Def.Sprite{
             Condition=(curPNStateStat:GetPeakComboAward() ~= nil);
-            InitCommand=cmd(x,thisPn == PLAYER_1 and 250 or 640;y,SCREEN_CENTER_Y-23;zoom,0.4;shadowlength,2);
-            OnCommand=cmd(Load,THEME:GetPathG("PeakCombo", ToEnumShortString(curPNStateStat:GetPeakComboAward()));diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.3;rotationz,0;diffusealpha,1);
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 250 or 640); self:y(SCREEN_CENTER_Y-23); self:zoom(0.4); self:shadowlength(2); end;
+            OnCommand=function(self) self:Load(THEME:GetPathG("PeakCombo", ToEnumShortString(curPNStateStat:GetPeakComboAward()))); self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.3); self:rotationz(0); self:diffusealpha(1); end;
         };
         LoadFont("Common Normal")..{
             InitCommand=function(self)
@@ -269,9 +269,9 @@ for iterPn in ivalues(Players) do
     };
     for i,v in pairs(tapScoreName) do
         t[#t+1] = Def.ActorFrame{
-            InitCommand=cmd(x,thisPn == PLAYER_1 and 200 or 800;y,85 + 22*i*math.min(6/#tapScoreName,1););
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 200 or 800); self:y(85 + 22*i*math.min(6/#tapScoreName,1)); end;
             Def.Sprite{
-                InitCommand=cmd(x,thisPn == PLAYER_1 and -140 or 0;zoom,0.35*math.min(6/#tapScoreName,1);shadowlength,3); 
+                InitCommand=function(self) self:x(thisPn == PLAYER_1 and -140 or 0); self:zoom(0.35*math.min(6/#tapScoreName,1)); self:shadowlength(3); end; 
                 OnCommand=function(self) self:pause();self:Load( jud1 );
                     local miniFileName = string.match(jud1, ".*/(.*)")
                     frame1 = string.find(miniFileName, "%[double%]")
@@ -289,10 +289,10 @@ for iterPn in ivalues(Players) do
                     end; 
             };
             Def.ActorFrame{
-                OnCommand=cmd(addx,-70 * (thisPn == PLAYER_1 and 1 or -1);diffusealpha,0;sleep,0.7+i*0.06*math.min(6/#tapScoreName,1);decelerate,0.25;addx,70 * (thisPn == PLAYER_1 and 1 or -1);diffusealpha,1);
+                OnCommand=function(self) self:addx(-70 * (thisPn == PLAYER_1 and 1 or -1)); self:diffusealpha(0); self:sleep(0.7+i*0.06*math.min(6/#tapScoreName,1)); self:decelerate(0.25); self:addx(70 * (thisPn == PLAYER_1 and 1 or -1)); self:diffusealpha(1); end;
                 LoadFont("Combo Number")..{
                     Text  = "6969";
-                    InitCommand=cmd(x,-63;y,3;zoom,0.3*math.min(6/#tapScoreName,1);shadowlength,1);
+                    InitCommand=function(self) self:x(-63); self:y(3); self:zoom(0.3*math.min(6/#tapScoreName,1)); self:shadowlength(1); end;
                     OnCommand=function(self)
                         local nowNum = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
                         if v == LoadModule("Options.BestJudge.lua")() then--For Pump
@@ -331,24 +331,24 @@ if TP.Battle.IsBattle then
 if TP.Battle.Mode == "Ac" then
 t[#t+1] = Def.ActorFrame{
 LoadFont("_differentiator 60px")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y*1.45;settext,KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints()*100);zoom,0;rainbowscroll,STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() > STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints());
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.75)
+	InitCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y*1.45); self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints()*100)); self:zoom(0); self:rainbowscroll(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() > STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()); end;
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.75); end
 };
 LoadFont("_differentiator 60px")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y*1.45;settext,KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100);zoom,0;rainbowscroll,STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() < STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints());
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.75)
+	InitCommand=function(self) self:x(SCREEN_CENTER_X*1.5); self:y(SCREEN_CENTER_Y*1.45); self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100)); self:zoom(0); self:rainbowscroll(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() < STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()); end;
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.75); end
 };
 };
 elseif TP.Battle.IsBattle and TP.Battle.Mode == "Dr" then
 t[#t+1] = Def.ActorFrame{
 LoadFont("_differentiator 60px")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y*1.45;settext,TFO(TP.Battle.Info[#TP.Battle.Info][4]==1 and TP.Battle.Info[#TP.Battle.Info][5][2] > 1,"Survive!",TFO(TP.Battle.Info[#TP.Battle.Info][5][1] > 1,SecondsToMMSSMsMs(TP.Battle.Info[#TP.Battle.Info][5][2]),TFO(TP.Battle.IsfailorIsDraw,"Draw!",KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints()*100))));zoom,0;rainbowscroll,(TP.Battle.Info[#TP.Battle.Info][4]==1));
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.95);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y*1.45); self:settext(TFO(TP.Battle.Info[#TP.Battle.Info][4]==1 and TP.Battle.Info[#TP.Battle.Info][5][2] > 1,"Survive!",TFO(TP.Battle.Info[#TP.Battle.Info][5][1] > 1,SecondsToMMSSMsMs(TP.Battle.Info[#TP.Battle.Info][5][2]),TFO(TP.Battle.IsfailorIsDraw,"Draw!",KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints()*100))))); self:zoom(0); self:rainbowscroll((TP.Battle.Info[#TP.Battle.Info][4]==1)); end;
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.95); end;
 };
 --SM("\n\n\n\n\nISLA : "..tostring( TP.Battle.Info[#TP.Battle.Info][5][2]));
 LoadFont("_differentiator 60px")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y*1.45;settext,TFO(TP.Battle.Info[#TP.Battle.Info][4]==2 and TP.Battle.Info[#TP.Battle.Info][5][1] > 1,"Survive!",TFO(TP.Battle.Info[#TP.Battle.Info][5][2] > 1,SecondsToMMSSMsMs(TP.Battle.Info[#TP.Battle.Info][5][2]),TFO(TP.Battle.IsfailorIsDraw,"Draw!",KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))));zoom,0;rainbowscroll,(TP.Battle.Info[#TP.Battle.Info][4]==2));
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.95);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X*1.5); self:y(SCREEN_CENTER_Y*1.45); self:settext(TFO(TP.Battle.Info[#TP.Battle.Info][4]==2 and TP.Battle.Info[#TP.Battle.Info][5][1] > 1,"Survive!",TFO(TP.Battle.Info[#TP.Battle.Info][5][2] > 1,SecondsToMMSSMsMs(TP.Battle.Info[#TP.Battle.Info][5][2]),TFO(TP.Battle.IsfailorIsDraw,"Draw!",KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints()*100))))); self:zoom(0); self:rainbowscroll((TP.Battle.Info[#TP.Battle.Info][4]==2)); end;
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.95); end;
 };
 };
 end
@@ -366,7 +366,7 @@ LoadFont("_differentiator 60px")..{
 	:y(CY-50):zoom(0)
 	:rainbowscroll(TP.Battle.Info[#TP.Battle.Info][4]==1)
 	end;
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.8);
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.8); end;
 };
 LoadFont("_differentiator 60px")..{
 	InitCommand=function(self)
@@ -374,7 +374,7 @@ LoadFont("_differentiator 60px")..{
 	:y(CY-50):zoom(0)
 	:rainbowscroll(TP.Battle.Info[#TP.Battle.Info][4]==2)
 	end;
-	OnCommand=cmd(sleep,TFO(TP.Battle.Hidden,3,1.5);decelerate,0.5;zoom,0.8);
+	OnCommand=function(self) self:sleep(TFO(TP.Battle.Hidden,3,1.5)); self:decelerate(0.5); self:zoom(0.8); end;
 };
 };
 end

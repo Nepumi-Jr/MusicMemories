@@ -33,7 +33,7 @@ local t = Def.ActorFrame {
 		Delay0002=1;
 		Frame0003=3;
 		Delay0003=1;
-		InitCommand=cmd(y,100;rotationz,0;effectclock,"beat";diffuseramp;effectcolor1,0.1,0.1,0.1,1;effectcolor2,1,1,1,1;effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+		InitCommand=function(self) self:y(100); self:rotationz(0); self:effectclock("beat"); self:diffuseramp(); self:effectcolor1(0.1,0.1,0.1,1); self:effectcolor2(1,1,1,1); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
 	};
 	LoadActor("black") .. {
 	Name="Nep-Nep-Arrow",
@@ -74,7 +74,7 @@ local t = Def.ActorFrame {
 	},
 LoadFont("_8-bit madness 24px")..{
 Name="allofWTFcommand",
-InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffuse,color("#FF1100")),
+InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffuse(color("#FF1100")); end,
 		OnCommand=function(self)
 		F = math.random(5,50)
 		local speed, mode= GetSpeedModeAndValueFromPoptions(PlayerNumber)

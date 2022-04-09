@@ -62,12 +62,12 @@ end;
 
 local t = Def.ActorFrame {};
 	t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(vertalign,bottom);
+	InitCommand=function(self) self:vertalign(bottom); end;
 	-- flashy combo elements:
  	--[[LoadActor(THEME:GetPathG("Combo","100Milestone")) .. {
 		Name="OneHundredMilestone";
-		InitCommand=cmd(visible,ShowFlashyCombo);
-		FiftyMilestoneCommand=cmd(playcommand,"Milestone");
+		InitCommand=function(self) self:visible(ShowFlashyCombo); end;
+		FiftyMilestoneCommand=function(self) self:playcommand("Milestone"); end;
 	};]]
 	-- normal combo elements:
 	Def.ActorFrame {
@@ -80,7 +80,7 @@ local t = Def.ActorFrame {};
             self:y(240-216-1.5);
             self:queuecommand("GoO")
             end;
-		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
+		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
 		};
 		LoadFont(FM) .. {
 			Name="Misses";
@@ -90,7 +90,7 @@ local t = Def.ActorFrame {};
 		self:y(240-216-1.5);
 		self:queuecommand("GoO")
 		end;
-		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
+		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
 		};
         LoadFont("Isla/_chakra petch semibold overlay 72px") .. {
 			Name="NumberOverlay";
@@ -100,16 +100,16 @@ local t = Def.ActorFrame {};
             self:y(240-216-1.5);
             self:queuecommand("GoO")
             end;
-		GoOCommand=cmd(effectclock,"beat";bounce;effectmagnitude,0,-5,0;effecttiming,0.25,0.65,0.05,0.05);
+		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
 		};
 		LoadActor(CL)..{
 			Name="ComboLabel";
-			InitCommand=cmd(draworder,105);
+			InitCommand=function(self) self:draworder(105); end;
 			OnCommand = CMDofCB[3];
 		};
 		LoadActor(ML)..{
 			Name="MissLabel";
-			InitCommand=cmd(draworder,105);
+			InitCommand=function(self) self:draworder(105); end;
 			OnCommand = CMDofCB[4];
 		};
 	};
@@ -124,7 +124,7 @@ local t = Def.ActorFrame {};
 	end;
  	TwentyFiveMilestoneCommand=function(self,parent)
 		if ShowFlashyCombo then
-			(cmd(finishtweening;diffuse,BoostColor(Color("White"),1.75);linear,0.25;diffuse,color("#FFFFFF")))(self);
+			(function(self) self:finishtweening(); self:diffuse(BoostColor(Color("White"),1.75)); self:linear(0.25); self:diffuse(color("#FFFFFF")); end)(self);
 		end;
 	end;
 	ComboCommand=function(self, param)
@@ -236,12 +236,12 @@ local t = Def.ActorFrame {};
 
 	
 	t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(visible,false);
+		OnCommand=function(self) self:visible(false); end;
 		--JUst DeBUg
 		LoadFont(FN)..{
 			Text = "000";
 			InitCommand=CMDofCB[1];
-			OnCommand =cmd();
+			OnCommand =function(self) end;
 		};
 		LoadFont(FN)..{
 			Text = "000";
@@ -257,10 +257,10 @@ local t = Def.ActorFrame {};
 	}
 
 	t[#t+1] = Def.ActorFrame{	
-		OnCommand=cmd(diffusealpha,1);
+		OnCommand=function(self) self:diffusealpha(1); end;
 
 	LoadFont(FN)..{
-	InitCommand=cmd(diffusealpha,0);
+	InitCommand=function(self) self:diffusealpha(0); end;
 	OnCommand =CMDofCB[1];
 		FiftyMilestoneCommand=function(self)
 			if ShowFlashyCombo and LoadModule("Easter.today.lua")()~="FOOL" then

@@ -121,7 +121,7 @@ percentP2 = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercent
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
 	Def.Sprite {
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;finishtweening;queuecommand,"ModifySongBackground");
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:finishtweening(); self:queuecommand("ModifySongBackground"); end;
 		ModifySongBackgroundCommand=function(self)
 			if GAMESTATE:GetCurrentSong() then
 				if GAMESTATE:GetCurrentSong():GetBackgroundPath() then
@@ -142,57 +142,57 @@ t[#t+1] = Def.ActorFrame {
 	t[#t+1] = LoadActor("BlurBG.lua");
 if GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == "Ring of Fortune" then
 	t[#t+1] = LoadActor("IslaChan") .. {
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 
 elseif string.match( string.lower(GAMESTATE:GetCurrentSong():GetDisplayFullTitle()), "megalovania") and STATSMAN:GetCurStageStats():AllFailed() then
 	t[#t+1] = LoadActor("dog") .. {
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 	t[#t+1] = LoadActor("fail-background")..{
 		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
-		InitCommand=cmd(FullScreen);
+		InitCommand=function(self) self:FullScreen(); end;
 	};
 elseif TP.Battle.IsBattle then
 	t[#t+1] = LoadActor("Battle") .. {
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 elseif STATSMAN:GetCurStageStats():AllFailed() then
 	t[#t+1] = LoadActor("Plastic Memories - OST - What do you say") .. {
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 	t[#t+1] = Def.Quad {
-		InitCommand=cmd(Center;scaletoclipped,SCREEN_WIDTH+1,SCREEN_HEIGHT);
-		OnCommand=cmd(rainbow;diffusealpha,0.1);
+		InitCommand=function(self) self:Center(); self:scaletoclipped(SCREEN_WIDTH+1,SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:rainbow(); self:diffusealpha(0.1); end;
 	};
 
 	t[#t+1] = LoadActor("fail-background")..{
 		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
-		InitCommand=cmd(FullScreen);
+		InitCommand=function(self) self:FullScreen(); end;
 	};
 elseif OMW == "ISLA" or OMW == "BEAT" or OMW == "WOW" then
 	--[[if URDOURBEST1 and URDOURBEST2 and IM then
 		t[#t+1] = LoadActor("Plastic Memories - OST - Bye") .. {
-			OnCommand=cmd(play);
+			OnCommand=function(self) self:play(); end;
 		};
 	else]]
 		t[#t+1] = LoadActor("IslaChan") .. {
-			OnCommand=cmd(play);
+			OnCommand=function(self) self:play(); end;
 		};
 	--end
 else
 	t[#t+1] = LoadActor("Plastic Memories OST 2 - 012 Changing mind") .. {
-		OnCommand=cmd(play);
+		OnCommand=function(self) self:play(); end;
 	};
 	t[#t+1] = Def.Quad {
-		InitCommand=cmd(Center;scaletoclipped,SCREEN_WIDTH+1,SCREEN_HEIGHT);
-		OnCommand=cmd(diffuse,color("#FFFFFF");diffusebottomedge,color("#DDDDDD");diffusealpha,0.1);
+		InitCommand=function(self) self:Center(); self:scaletoclipped(SCREEN_WIDTH+1,SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:diffuse(color("#FFFFFF")); self:diffusebottomedge(color("#DDDDDD")); self:diffusealpha(0.1); end;
 	};
 
 end
 	t[#t+1]=LoadActor("Parti")..{
 		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
-		InitCommand=cmd(FullScreen;blend,'BlendMode_Add');
+		InitCommand=function(self) self:FullScreen(); self:blend('BlendMode_Add'); end;
 	};
 
 

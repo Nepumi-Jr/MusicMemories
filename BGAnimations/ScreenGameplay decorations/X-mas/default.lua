@@ -27,13 +27,13 @@ end;
 	
 
 	LoadActor("blurredsnowFar.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1.40,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1.40,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	LoadActor("blurredsnow.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1.20,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1.20,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	LoadActor("blurredsnowNear.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	};
 };

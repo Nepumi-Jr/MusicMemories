@@ -41,7 +41,7 @@ return function(player)
 					self:finishtweening():visible(false)
 				end
 			end;
-            InitCommand=cmd(zoom,0.5);
+            InitCommand=function(self) self:zoom(0.5); end;
         };
     };
 end

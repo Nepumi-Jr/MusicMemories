@@ -1,11 +1,11 @@
 return Def.ActorFrame{
     LoadActor(THEME:GetPathG("DualScrollBar thumb","all")).. {
-        InitCommand=cmd(diffuse,PlayerColor(PLAYER_1);x,-5);
+        InitCommand=function(self) self:diffuse(PlayerColor(PLAYER_1)); self:x(-5); end;
     };
     LoadActor(THEME:GetPathG("Arrow","Up")).. {
-        InitCommand=cmd(y,-30;zoom,0.3);
+        InitCommand=function(self) self:y(-30); self:zoom(0.3); end;
     };
     LoadActor(THEME:GetPathG("Arrow","Down")).. {
-        InitCommand=cmd(y,30;zoom,0.3);
+        InitCommand=function(self) self:y(30); self:zoom(0.3); end;
     };
 };

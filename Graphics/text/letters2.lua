@@ -348,276 +348,366 @@ Def.Quad{
 		
 		if sanat2[letterNumber2] == 'A' then
 			_G['det'..letterNumber2]:setstate(33)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'B' then
 			_G['det'..letterNumber2]:setstate(34)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'C' then
 			_G['det'..letterNumber2]:setstate(35)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'D' then
 			_G['det'..letterNumber2]:setstate(36)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'E' then
 			_G['det'..letterNumber2]:setstate(37)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'F' then
 			_G['det'..letterNumber2]:setstate(38)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'G' then
 			_G['det'..letterNumber2]:setstate(39)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'H' then
 			_G['det'..letterNumber2]:setstate(40)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'I' then
 			_G['det'..letterNumber2]:setstate(41)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'J' then
 			_G['det'..letterNumber2]:setstate(42)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'K' then
 			_G['det'..letterNumber2]:setstate(43)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'L' then
 			_G['det'..letterNumber2]:setstate(44)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'M' then
 			_G['det'..letterNumber2]:setstate(45)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'N' then
 			_G['det'..letterNumber2]:setstate(46)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'O' then
 			_G['det'..letterNumber2]:setstate(47)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'P' then
 			_G['det'..letterNumber2]:setstate(48)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'Q' then
 			_G['det'..letterNumber2]:setstate(49)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'R' then
 			_G['det'..letterNumber2]:setstate(50)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'S' then
 			_G['det'..letterNumber2]:setstate(51)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'T' then
 			_G['det'..letterNumber2]:setstate(52)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'U' then
 			_G['det'..letterNumber2]:setstate(53)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'V' then
 			_G['det'..letterNumber2]:setstate(54)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'W' then
 			_G['det'..letterNumber2]:setstate(55)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'X' then
 			_G['det'..letterNumber2]:setstate(56)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'Y' then
 			_G['det'..letterNumber2]:setstate(57)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'Z' then
 			_G['det'..letterNumber2]:setstate(58)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'a' then
 			_G['det'..letterNumber2]:setstate(65)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'b' then
 			_G['det'..letterNumber2]:setstate(66)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'c' then
 			_G['det'..letterNumber2]:setstate(67)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'd' then
 			_G['det'..letterNumber2]:setstate(68)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'e' then
 			_G['det'..letterNumber2]:setstate(69)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'f' then
 			_G['det'..letterNumber2]:setstate(70)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'g' then
 			_G['det'..letterNumber2]:setstate(71)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'h' then
 			_G['det'..letterNumber2]:setstate(72)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'i' then
 			_G['det'..letterNumber2]:setstate(73)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'j' then
 			_G['det'..letterNumber2]:setstate(74)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'k' then
 			_G['det'..letterNumber2]:setstate(75)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'l' then
 			_G['det'..letterNumber2]:setstate(76)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'm' then
 			_G['det'..letterNumber2]:setstate(77)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'n' then
 			_G['det'..letterNumber2]:setstate(78)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'o' then
 			_G['det'..letterNumber2]:setstate(79)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'p' then
 			_G['det'..letterNumber2]:setstate(80)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'q' then
 			_G['det'..letterNumber2]:setstate(81)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'r' then
 			_G['det'..letterNumber2]:setstate(82)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 's' then
 			_G['det'..letterNumber2]:setstate(83)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 't' then
 			_G['det'..letterNumber2]:setstate(84)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'u' then
 			_G['det'..letterNumber2]:setstate(85)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'v' then
 			_G['det'..letterNumber2]:setstate(86)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'w' then
 			_G['det'..letterNumber2]:setstate(87)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'x' then
 			_G['det'..letterNumber2]:setstate(88)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'y' then
 			_G['det'..letterNumber2]:setstate(89)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == 'z' then
 			_G['det'..letterNumber2]:setstate(90)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '0' then
 			_G['det'..letterNumber2]:setstate(16)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '1' then
 			_G['det'..letterNumber2]:setstate(17)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '2' then
 			_G['det'..letterNumber2]:setstate(18)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '3' then
 			_G['det'..letterNumber2]:setstate(19)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '4' then
 			_G['det'..letterNumber2]:setstate(20)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '5' then
 			_G['det'..letterNumber2]:setstate(21)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '6' then
 			_G['det'..letterNumber2]:setstate(22)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '7' then
 			_G['det'..letterNumber2]:setstate(23)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '8' then
 			_G['det'..letterNumber2]:setstate(24)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '9' then
 			_G['det'..letterNumber2]:setstate(25)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '?' then
 			_G['det'..letterNumber2]:setstate(31)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '!' then
 			_G['det'..letterNumber2]:setstate(1)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '.' then
 			_G['det'..letterNumber2]:setstate(14)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == ',' then
 			_G['det'..letterNumber2]:setstate(12)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == ':' then
 			_G['det'..letterNumber2]:setstate(26)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == ';' then
 			_G['det'..letterNumber2]:setstate(27)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 			
 		
 		elseif sanat2[letterNumber2] == '&quot;' then
 			_G['det'..letterNumber2]:setstate(2)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '\'' then
 			_G['det'..letterNumber2]:setstate(7)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '(' then
 			_G['det'..letterNumber2]:setstate(8)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == ')' then
 			_G['det'..letterNumber2]:setstate(9)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '\[' then
 			_G['det'..letterNumber2]:setstate(59)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '\]' then
 			_G['det'..letterNumber2]:setstate(61)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '{' then
 			_G['det'..letterNumber2]:setstate(91)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '}' then
 			_G['det'..letterNumber2]:setstate(93)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '<' then
 			_G['det'..letterNumber2]:setstate(28)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '>' then
 			_G['det'..letterNumber2]:setstate(30)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '+' then
 			_G['det'..letterNumber2]:setstate(11)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '~' then
 			_G['det'..letterNumber2]:setstate(94)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '=' then
 			_G['det'..letterNumber2]:setstate(29)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '-' then
 			_G['det'..letterNumber2]:setstate(13)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '@' then
 			_G['det'..letterNumber2]:setstate(32) 
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '%' then
 			_G['det'..letterNumber2]:setstate(5)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '#' then
 			_G['det'..letterNumber2]:setstate(3)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '&' then
 			_G['det'..letterNumber2]:setstate(6)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '$' then
 			_G['det'..letterNumber2]:setstate(4)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '*' then
 			_G['det'..letterNumber2]:setstate(10)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '/' then
 			_G['det'..letterNumber2]:setstate(15)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '\\' then
 			_G['det'..letterNumber2]:setstate(60)
-			_G['det'..letterNumber2]:basezoomx(1) 			 
+			_G['det'..letterNumber2]:basezoomx(1) 
+			 
 		elseif sanat2[letterNumber2] == '^' then
 			_G['det'..letterNumber2]:setstate(62)
 			_G['det'..letterNumber2]:basezoomx(1) 

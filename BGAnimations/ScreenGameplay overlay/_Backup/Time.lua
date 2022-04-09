@@ -73,136 +73,136 @@ end
 local t = Def.ActorFrame{};
 	t[#t+1] = Def.ActorFrame{
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*3.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*0;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*0;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X-hang*3.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*0); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*0); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		STD = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		STT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*2.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*1;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*1;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X-hang*2.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*1); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*1); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		NDD = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		NDT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*1.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*2;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*2;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X-hang*1.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*2); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*2); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		RDD = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		RDT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X-hang*0.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*3;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*3;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X-hang*0.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*3); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*3); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		THD = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		THT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*0.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*4;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*4;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X+hang*0.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*4); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*4); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		FID = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		FIT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*1.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*5;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*5;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X+hang*1.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*5); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*5); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		SID = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		SIT = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*2.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*6;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*6;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X+hang*2.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*6); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*6); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		SED = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		SET = self
 		end;
 		};
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,60;x,SCREEN_CENTER_X+hang*3.5;zoom,0.8);
-			DMessageCommand=cmd(sleep,0.1*7;decelerate,0.5;rotationx,180);
-			TMessageCommand=cmd(sleep,0.1*7;decelerate,0.5;rotationx,360;sleep,0.00001;rotationx,0);
+			OnCommand=function(self) self:y(60); self:x(SCREEN_CENTER_X+hang*3.5); self:zoom(0.8); end;
+			DMessageCommand=function(self) self:sleep(0.1*7); self:decelerate(0.5); self:rotationx(180); end;
+			TMessageCommand=function(self) self:sleep(0.1*7); self:decelerate(0.5); self:rotationx(360); self:sleep(0.00001); self:rotationx(0); end;
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back');
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); end;
 		OnCommand=function(self)
 		EAD = self
 		end;
 		};
 		LoadFont(NumF) .. {
-		InitCommand=cmd(diffuse,color("#0011FF");cullmode,'back';rotationx,180);
+		InitCommand=function(self) self:diffuse(color("#0011FF")); self:cullmode('back'); self:rotationx(180); end;
 		OnCommand=function(self)
 		EAT = self
 		end;
@@ -210,8 +210,8 @@ local t = Def.ActorFrame{};
 		};
 	};
 	t[#t+1] = LoadFont(NumF) .. {
-		InitCommand=cmd(Center);
-		OnCommand=cmd(playcommand,"Neptune");
+		InitCommand=function(self) self:Center(); end;
+		OnCommand=function(self) self:playcommand("Neptune"); end;
 		NeptuneCommand=function(self)
 		Remind = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
 		Clockmin = math.floor((Remind)/60)

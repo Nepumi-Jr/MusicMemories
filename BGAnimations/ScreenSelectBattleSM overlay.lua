@@ -43,10 +43,10 @@ local SeB = function( event )
 	
 end
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(playcommand,"Lo");
+OnCommand=function(self) self:playcommand("Lo"); end;
 LoCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback(SeB) self:sleep(0.02):queuecommand("Lo") end;
 Def.ActorFrame{
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,1);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y); self:zoom(0); self:decelerate(0.5); self:zoom(1); end;
 ReMessageCommand=function(self)
 if not Con then
 if S == 1 then
@@ -63,7 +63,7 @@ end;
 LoadModule("Menu.Button.lua")(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Normal","Just Normal");
 };
 Def.ActorFrame{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,0.75);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.5); self:y(SCREEN_CENTER_Y); self:zoom(0); self:decelerate(0.5); self:zoom(0.75); end;
 ReMessageCommand=function(self)
 if not Con then
 if S == 2 then

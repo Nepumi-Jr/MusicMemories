@@ -307,15 +307,15 @@ local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
 		name = "I Hope Neptune Have a Good Dream";
 LoadActor("VOL1-50-NTSC")..{
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,1;zoomtoheight,SCREEN_HEIGHT;zoomtowidth,SCREEN_WIDTH;);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(1); self:zoomtoheight(SCREEN_HEIGHT); self:zoomtowidth(SCREEN_WIDTH); end;
 };
 Def.Quad {--NOTESKIN
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffuse,color("#000000");diffusealpha,0.5;zoomtoheight,SCREEN_HEIGHT;zoomtowidth,SCREEN_WIDTH;);
-		RemMessageCommand=cmd(linear,1;diffusealpha,0.8);
-		RetMessageCommand=cmd(linear,1;diffusealpha,0.5);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffuse(color("#000000")); self:diffusealpha(0.5); self:zoomtoheight(SCREEN_HEIGHT); self:zoomtowidth(SCREEN_WIDTH); end;
+		RemMessageCommand=function(self) self:linear(1); self:diffusealpha(0.8); end;
+		RetMessageCommand=function(self) self:linear(1); self:diffusealpha(0.5); end;
 };
 LoadFont("Common Large")..{
-	OnCommand=cmd(Center;zoom,0.17;diffuse,PlayerColor(PLAYER_1);playcommand,'SSSS');
+	OnCommand=function(self) self:Center(); self:zoom(0.17); self:diffuse(PlayerColor(PLAYER_1)); self:playcommand('SSSS'); end;
 	SSSSCommand=function(self)
 				SCREENMAN:GetTopScreen():AddInputCallback(InputOfArrow)
 		--[[if Proce == 1 then
@@ -334,7 +334,7 @@ LoadFont("Common Large")..{
 };	
 };
 t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(playcommand,'HHE');
+		OnCommand=function(self) self:playcommand('HHE'); end;
 		HHECommand=function(self)
 		HGHGHGHGHGH = math.random(1,189);
 		if Proce == 0 then
@@ -420,8 +420,8 @@ t[#t+1] = Def.ActorFrame{
 		self:queuecommand('HHE')
 		end;
 		Def.ActorFrame{
-			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120;zoom,0);
-			RediffMessageCommand=cmd(queuecommand,'Chan');
+			OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-120); self:zoom(0); end;
+			RediffMessageCommand=function(self) self:queuecommand('Chan'); end;
 			ChanMessageCommand=function(self)
 			self:finishtweening()
 				self:bounceend(0.5)
@@ -435,12 +435,12 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end
 				end;
-			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
+			RemMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0); end;
 			LoadModule("Menu.Button.lua")(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Easy","8 Digit")
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y;zoom,0);
-			RediffMessageCommand=cmd(queuecommand,'Chan');
+			OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y); self:zoom(0); end;
+			RediffMessageCommand=function(self) self:queuecommand('Chan'); end;
 			ChanMessageCommand=function(self)
 			self:finishtweening()
 				self:bounceend(0.5)
@@ -454,12 +454,12 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end
 				end;
-			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
+			RemMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0); end;
 			LoadModule("Menu.Button.lua")(0,0,color("#AAAAFF"),color("#6666FF"),color("#66AAFF"),color("#000000"),color("#333333"),"Medium","10 Digit")
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;zoom,0);
-			RediffMessageCommand=cmd(queuecommand,'Chan');
+			OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+120); self:zoom(0); end;
+			RediffMessageCommand=function(self) self:queuecommand('Chan'); end;
 			ChanMessageCommand=function(self)
 			self:finishtweening()
 				self:bounceend(0.5)
@@ -473,117 +473,117 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end
 				end;
-			RemMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
+			RemMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0); end;
 			LoadModule("Menu.Button.lua")(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Hard","12 Digit")
 		};
 		Def.ActorFrame{
-			RemMessageCommand=cmd(sleep,2+2.127;queuecommand,'Sam');
-			SamCommand=cmd(sleep,0.662;queuecommand,'Song');
-			SongCommand=cmd(sleep,0.5;queuecommand,'Nueng');
-			NuengCommand=cmd(sleep,0.5;queuecommand,'ShowN');
-			ShowNCommand=cmd(sleep,5;queuecommand,'HideN');
+			RemMessageCommand=function(self) self:sleep(2+2.127); self:queuecommand('Sam'); end;
+			SamCommand=function(self) self:sleep(0.662); self:queuecommand('Song'); end;
+			SongCommand=function(self) self:sleep(0.5); self:queuecommand('Nueng'); end;
+			NuengCommand=function(self) self:sleep(0.5); self:queuecommand('ShowN'); end;
+			ShowNCommand=function(self) self:sleep(5); self:queuecommand('HideN'); end;
 			HideNCommand = function() Proce = 3 MESSAGEMAN:Broadcast('Lagorn') end;
-			LoadActor("Intro.wav")..{RemMessageCommand=cmd(play)};
-			LoadActor("CD.wav")..{SamMessageCommand=cmd(play)};
-			LoadActor("ShowN.wav")..{ReaMessageCommand=cmd(play)};
-			LoadActor("End.wav")..{RetMessageCommand=cmd(play)};
-			LoadActor( THEME:GetPathS("Common","start") )..{YeahMessageCommand=cmd(play);};
-			LoadActor( THEME:GetPathS("Common","cancel") )..{NopeMessageCommand=cmd(play);};
-			LoadActor( THEME:GetPathS("Common","value") )..{ChanMessageCommand=cmd(play);};
+			LoadActor("Intro.wav")..{RemMessageCommand=function(self) self:play(); end};
+			LoadActor("CD.wav")..{SamMessageCommand=function(self) self:play(); end};
+			LoadActor("ShowN.wav")..{ReaMessageCommand=function(self) self:play(); end};
+			LoadActor("End.wav")..{RetMessageCommand=function(self) self:play(); end};
+			LoadActor( THEME:GetPathS("Common","start") )..{YeahMessageCommand=function(self) self:play(); end;};
+			LoadActor( THEME:GetPathS("Common","cancel") )..{NopeMessageCommand=function(self) self:play(); end;};
+			LoadActor( THEME:GetPathS("Common","value") )..{ChanMessageCommand=function(self) self:play(); end;};
 			LoadFont("Common Large")..{
-			OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.15;zoom,0.4;diffuse,Diff4Cl(DiffRow);diffusealpha,0);
-			RemMessageCommand=cmd(diffusealpha,0;settext,"Memorize the numbers in   ";linear,1;diffusealpha,1);
-			SamMessageCommand=cmd(settext,"Memorize the numbers in 3");
-			SongMessageCommand=cmd(settext,"Memorize the numbers in 2");
-			NuengMessageCommand=cmd(settext,"Memorize the numbers in 1");
-			ShowNMessageCommand=cmd(settext,"");
-			HideNMessageCommand=cmd(settext,"Answer number!");
-			ReaMessageCommand=cmd(settext,"Check answer!");
-			RetMessageCommand=cmd(settext,"");
+			OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.15); self:zoom(0.4); self:diffuse(Diff4Cl(DiffRow)); self:diffusealpha(0); end;
+			RemMessageCommand=function(self) self:diffusealpha(0); self:settext("Memorize the numbers in   "); self:linear(1); self:diffusealpha(1); end;
+			SamMessageCommand=function(self) self:settext("Memorize the numbers in 3"); end;
+			SongMessageCommand=function(self) self:settext("Memorize the numbers in 2"); end;
+			NuengMessageCommand=function(self) self:settext("Memorize the numbers in 1"); end;
+			ShowNMessageCommand=function(self) self:settext(""); end;
+			HideNMessageCommand=function(self) self:settext("Answer number!"); end;
+			ReaMessageCommand=function(self) self:settext("Check answer!"); end;
+			RetMessageCommand=function(self) self:settext(""); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(5.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(5.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.1):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[1] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[1] or ""); HideNMessageCommand=function(self) if Displ[1] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[1] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[1] or ""); end; HideNMessageCommand=function(self) if Displ[1] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[1] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(4.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(4.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.2):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[2] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[2] or ""); HideNMessageCommand=function(self) if Displ[2] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[2] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[2] or ""); end; HideNMessageCommand=function(self) if Displ[2] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[2] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(3.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(3.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.3):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[3] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[3] or ""); HideNMessageCommand=function(self) if Displ[3] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[3] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[3] or ""); end; HideNMessageCommand=function(self) if Displ[3] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[3] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(2.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(2.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.4):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[4] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[4] or ""); HideNMessageCommand=function(self) if Displ[4] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[4] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[4] or ""); end; HideNMessageCommand=function(self) if Displ[4] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[4] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(1.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(1.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.5):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[5] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[5] or ""); HideNMessageCommand=function(self) if Displ[5] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[5] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[5] or ""); end; HideNMessageCommand=function(self) if Displ[5] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[5] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(0.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(0.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.6):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[6] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[6] or ""); HideNMessageCommand=function(self) if Displ[6] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[6] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[6] or ""); end; HideNMessageCommand=function(self) if Displ[6] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[6] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-0.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-0.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.7):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[7] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[7] or ""); HideNMessageCommand=function(self) if Displ[7] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[7] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[7] or ""); end; HideNMessageCommand=function(self) if Displ[7] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[7] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-1.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-1.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.8):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[8] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[8] or ""); HideNMessageCommand=function(self) if Displ[8] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[8] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[8] or ""); end; HideNMessageCommand=function(self) if Displ[8] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[8] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-2.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-2.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(0.9):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[9] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[9] or ""); HideNMessageCommand=function(self) if Displ[9] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[9] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[9] or ""); end; HideNMessageCommand=function(self) if Displ[9] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[9] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-3.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-3.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(1):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[10] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[10] or ""); HideNMessageCommand=function(self) if Displ[10] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[10] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[10] or ""); end; HideNMessageCommand=function(self) if Displ[10] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[10] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-4.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-4.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(1.1):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[11] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[11] or ""); HideNMessageCommand=function(self) if Displ[11] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[11] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[11] or ""); end; HideNMessageCommand=function(self) if Displ[11] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[11] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 			LoadFont("Combo Numbers")..{
-				OnCommand=cmd(x,SCREEN_CENTER_X-40*(-5.5);y,SCREEN_CENTER_Y*0.5;zoom,0.7;diffuse,Diff4Cl(DiffRow));
+				OnCommand=function(self) self:x(SCREEN_CENTER_X-40*(-5.5)); self:y(SCREEN_CENTER_Y*0.5); self:zoom(0.7); self:diffuse(Diff4Cl(DiffRow)); end;
 				RemMessageCommand=function(self) self:sleep(1.2):decelerate(0.25):addy(-50):diffusealpha(1)
 					if Displ[12] == nil then self:settext("") else self:settext("?") end self:accelerate(0.25):addy(50) end;
-				ShowNMessageCommand=cmd(settext,Displ[12] or ""); HideNMessageCommand=function(self) if Displ[12] == nil then self:settext("") else self:settext("?") end end;
-				ReaMessageCommand=cmd(settext,Displ[12] or ""); RetMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+				ShowNMessageCommand=function(self) self:settext(Displ[12] or ""); end; HideNMessageCommand=function(self) if Displ[12] == nil then self:settext("") else self:settext("?") end end;
+				ReaMessageCommand=function(self) self:settext(Displ[12] or ""); end; RetMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 			};
 		};
 };
@@ -613,7 +613,7 @@ t[#t+1] = Def.ActorFrame{
 };
 for i = 1,12 do
 			t[#t+1] = LoadFont("Combo Numbers")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X+45*(i-6.5);y,SCREEN_CENTER_Y*1.5-(108*0.35);zoom,0;diffuse,PlayerColor(PLAYER_1));
+				InitCommand=function(self) self:x(SCREEN_CENTER_X+45*(i-6.5)); self:y(SCREEN_CENTER_Y*1.5-(108*0.35)); self:zoom(0); self:diffuse(PlayerColor(PLAYER_1)); end;
 				LagornMessageCommand=function(self)
 				self:sleep(0.1)
 				self:settext(Disp1[i] or ""):sleep(0.1*i):bounceend(0.5):zoom(0.7)
@@ -659,14 +659,14 @@ for i = 1,12 do
 				end;
 				YeyCommand=function() if not PS1[i-(3-DiffRow)] and Proce == 4 then SOUND:PlayOnce(PathS..'Yep.wav') PS1[i-(3-DiffRow)] = true end end;
 				MaiiCommand=function() if not PS1[i-(3-DiffRow)] and Proce == 4 then SOUND:PlayOnce(PathS..'Nope.wav') PS1[i-(3-DiffRow)] = true end end;
-				ReaMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0.7;diffuse,PlayerColor(PLAYER_1));
-				RetMessageCommand=cmd(finishtweening;bounceend,0.5;zoom,0;diffuse,PlayerColor(PLAYER_1);y,SCREEN_CENTER_Y*1.5-(108*0.35););
+				ReaMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0.7); self:diffuse(PlayerColor(PLAYER_1)); end;
+				RetMessageCommand=function(self) self:finishtweening(); self:bounceend(0.5); self:zoom(0); self:diffuse(PlayerColor(PLAYER_1)); self:y(SCREEN_CENTER_Y*1.5-(108*0.35)); end;
 			};
 end;
 
 for i = 1,12 do
 			t[#t+1] = LoadFont("Combo Numbers")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X+45*(i-6.5);y,SCREEN_CENTER_Y*1.5+(108*0.35);zoom,0;diffuse,PlayerColor(PLAYER_2));
+				InitCommand=function(self) self:x(SCREEN_CENTER_X+45*(i-6.5)); self:y(SCREEN_CENTER_Y*1.5+(108*0.35)); self:zoom(0); self:diffuse(PlayerColor(PLAYER_2)); end;
 				LagornMessageCommand=function(self)
 				self:sleep(0.1)
 				self:settext(Disp2[i] or ""):sleep(0.1*i):bounceend(0.5):zoom(0.7)
@@ -714,26 +714,26 @@ for i = 1,12 do
 				end;
 				YeyCommand=function() if not Ps2[i-(3-DiffRow)] and Proce == 4 then SOUND:PlayOnce(PathS..'Yep.wav') Ps2[i-(3-DiffRow)] = true end end;
 				MaiiCommand=function() if not Ps2[i-(3-DiffRow)] and Proce == 4 then SOUND:PlayOnce(PathS..'Nope.wav') Ps2[i-(3-DiffRow)] = true end end;
-				ReaMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0.7;diffuse,PlayerColor(PLAYER_2));
-				RetMessageCommand=cmd(finishtweening;bounceend,0.5;zoom,0;diffuse,PlayerColor(PLAYER_2);y,SCREEN_CENTER_Y*1.5+(108*0.35););
+				ReaMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0.7); self:diffuse(PlayerColor(PLAYER_2)); end;
+				RetMessageCommand=function(self) self:finishtweening(); self:bounceend(0.5); self:zoom(0); self:diffuse(PlayerColor(PLAYER_2)); self:y(SCREEN_CENTER_Y*1.5+(108*0.35)); end;
 			};
 end;
 t[#t+1] = Def.ActorFrame{
-	ReaMessageCommand=cmd(finishtweening;sleep,2;queuecommand,'AAAns');
+	ReaMessageCommand=function(self) self:finishtweening(); self:sleep(2); self:queuecommand('AAAns'); end;
 	AAAnsCommand=function(self) MESSAGEMAN:Broadcast('Ping') end;
-	PingMessageCommand=cmd(sleep,2+0.5*(6+DiffRow*2));
+	PingMessageCommand=function(self) self:sleep(2+0.5*(6+DiffRow*2)); end;
 	LoadActor("Ready.png")..{
-		OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.5-(108*0.35)+20;zoom,5*0.4;diffusealpha,0);
-		P1ReaMessageCommand=cmd(decelerate,0.5;diffusealpha,1;zoom,1;rotationz,360*math.random(2,9);zoom,0.4);
-		ReaMessageCommand=cmd(finishtweening;sleep,0.1;decelerate,0.5;zoom,2;diffusealpha,0;rotationz,0);
+		OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.5-(108*0.35)+20); self:zoom(5*0.4); self:diffusealpha(0); end;
+		P1ReaMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(1); self:zoom(1); self:rotationz(360*math.random(2,9)); self:zoom(0.4); end;
+		ReaMessageCommand=function(self) self:finishtweening(); self:sleep(0.1); self:decelerate(0.5); self:zoom(2); self:diffusealpha(0); self:rotationz(0); end;
 	};
 	LoadActor("Ready.png")..{
-		OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.5+(108*0.35)+20;zoom,5*0.4;diffusealpha,0);
-		P2ReaMessageCommand=cmd(decelerate,0.5;diffusealpha,1;zoom,1;rotationz,360*math.random(2,9);zoom,0.4);
-		ReaMessageCommand=cmd(finishtweening;sleep,0.1;decelerate,0.5;zoom,2;diffusealpha,0;rotationz,0);
+		OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.5+(108*0.35)+20); self:zoom(5*0.4); self:diffusealpha(0); end;
+		P2ReaMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(1); self:zoom(1); self:rotationz(360*math.random(2,9)); self:zoom(0.4); end;
+		ReaMessageCommand=function(self) self:finishtweening(); self:sleep(0.1); self:decelerate(0.5); self:zoom(2); self:diffusealpha(0); self:rotationz(0); end;
 	};
 	Def.ActorFrame{
-	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-80;zoom,0);
+	OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-80); self:zoom(0); end;
 	RetMessageCommand=function(self)
 			self:finishtweening()
 				self:bounceend(0.5)
@@ -758,11 +758,11 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end
 				end;
-			ConMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
+			ConMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0); end;
 			LoadModule("Menu.Button.lua")(0,0,color("#AAFFAA"),color("#66FF66"),color("#66FFAA"),color("#000000"),color("#333333"),"Retry","Again!")
 	};
 	Def.ActorFrame{
-	OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+80;zoom,0);
+	OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+80); self:zoom(0); end;
 	RetMessageCommand=function(self)
 			self:finishtweening()
 				self:bounceend(0.5)
@@ -787,7 +787,7 @@ t[#t+1] = Def.ActorFrame{
 				end
 				end
 				end;
-			ConMessageCommand=cmd(finishtweening;decelerate,0.5;zoom,0);
+			ConMessageCommand=function(self) self:finishtweening(); self:decelerate(0.5); self:zoom(0); end;
 			LoadModule("Menu.Button.lua")(0,0,color("#FFAAAA"),color("#FF6666"),color("#FFAA66"),color("#000000"),color("#333333"),"Back","")
 	};
 };

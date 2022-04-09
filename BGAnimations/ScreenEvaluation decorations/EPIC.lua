@@ -47,7 +47,7 @@ if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 end
 
 
-local t=Def.ActorFrame{InitCommand=cmd(draworder,1000);};
+local t=Def.ActorFrame{InitCommand=function(self) self:draworder(1000); end;};
 
 
 
@@ -56,28 +56,24 @@ if #Content1 == 0 and #Content2 == 0 then
 else
 
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(visible,false;diffuse,color("#00000077");zoom,5000;);
-		OnCommand=cmd(sleep,2.5;decelerate,0.5;diffusealpha,0;queuecommand,"TIG");
+		InitCommand=function(self) self:visible(false); self:diffuse(color("#00000077")); self:zoom(5000); end;
+		OnCommand=function(self) self:sleep(2.5); self:decelerate(0.5); self:diffusealpha(0); self:queuecommand("TIG"); end;
 		TIGCommand=function()
 			BBEAT = false;
 		end
 	};
 
 	t[#t+1]=Def.ActorFrame{
-		InitCommand=cmd(Center;spin;zoom,0);
-		OnCommand=cmd(bounceend,0.5;zoom,1;sleep,2;bouncebegin,0.5;zoom,0;);
+		InitCommand=function(self) self:Center(); self:spin(); self:zoom(0); end;
+		OnCommand=function(self) self:bounceend(0.5); self:zoom(1); self:sleep(2); self:bouncebegin(0.5); self:zoom(0); end;
 		Def.ActorFrame{
-				OnCommand=cmd(sleep,0.01;queuecommand,"JOO");
-				JOOCommand=cmd(linear,0.4671*0.05;x,math.random(-20,20);y,math.random( -20, 20 );rotationz,math.random(-5,5);sleep,0.001;
-								linear,0.4671*0.05;x,math.random(-10,10);y,math.random( -10, 10 );rotationz,math.random(-3,3);sleep,0.001;
-								linear,0.4671*0.05;x,math.random(-5,5);y,math.random( -5, 5 );rotationz,math.random(-2,2);sleep,0.001;
-								linear,0.4671*0.05;x,math.random(-2,2);y,math.random( -2, 2 );rotationz,math.random(-1,1);sleep,0.001;
-								x,0;y,0;rotationz,0;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-				RIPCommand=cmd(visible,false);
+				OnCommand=function(self) self:sleep(0.01); self:queuecommand("JOO"); end;
+				JOOCommand=function(self) self:linear(0.4671*0.05); self:x(math.random(-20,20)); self:y(math.random( -20, 20 )); self:rotationz(math.random(-5,5)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-10,10)); self:y(math.random( -10, 10 )); self:rotationz(math.random(-3,3)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-5,5)); self:y(math.random( -5, 5 )); self:rotationz(math.random(-2,2)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-2,2)); self:y(math.random( -2, 2 )); self:rotationz(math.random(-1,1)); self:sleep(0.001); self:x(0); self:y(0); self:rotationz(0); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+				RIPCommand=function(self) self:visible(false); end;
 			LoadActor("effects0003")..{
-				OnCommand=cmd(queuecommand,"JOO");
-				JOOCommand=cmd(zoom,1.5;linear,0.4671*0.2;zoom,1;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-				RIPCommand=cmd(visible,false);
+				OnCommand=function(self) self:queuecommand("JOO"); end;
+				JOOCommand=function(self) self:zoom(1.5); self:linear(0.4671*0.2); self:zoom(1); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+				RIPCommand=function(self) self:visible(false); end;
 			};
 		};
 	};
@@ -95,26 +91,22 @@ else
 				self:x(SCREEN_CENTER_X + ((i)-(#Content1+1)/2)*150);
 				self:zoom(0.75);
 			end;
-			OnCommand=cmd(sleep,2.5;bouncebegin,0.5;zoom,0;);
+			OnCommand=function(self) self:sleep(2.5); self:bouncebegin(0.5); self:zoom(0); end;
 			Def.ActorFrame{
-				OnCommand=cmd(sleep,0.01;queuecommand,"JOO");
-					JOOCommand=cmd(linear,0.4671*0.05;x,math.random(-20,20);y,math.random( -20, 20 );rotationz,math.random(-5,5);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-10,10);y,math.random( -10, 10 );rotationz,math.random(-3,3);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-5,5);y,math.random( -5, 5 );rotationz,math.random(-2,2);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-2,2);y,math.random( -2, 2 );rotationz,math.random(-1,1);sleep,0.001;
-									x,0;y,0;rotationz,0;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-					RIPCommand=cmd(visible,false);
+				OnCommand=function(self) self:sleep(0.01); self:queuecommand("JOO"); end;
+					JOOCommand=function(self) self:linear(0.4671*0.05); self:x(math.random(-20,20)); self:y(math.random( -20, 20 )); self:rotationz(math.random(-5,5)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-10,10)); self:y(math.random( -10, 10 )); self:rotationz(math.random(-3,3)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-5,5)); self:y(math.random( -5, 5 )); self:rotationz(math.random(-2,2)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-2,2)); self:y(math.random( -2, 2 )); self:rotationz(math.random(-1,1)); self:sleep(0.001); self:x(0); self:y(0); self:rotationz(0); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+					RIPCommand=function(self) self:visible(false); end;
 				LoadActor("B_ICON/"..Content1[i])..{
-					OnCommand=cmd(sleep,0.01;queuecommand,"JOO");
-					JOOCommand=cmd(zoom,1.5;linear,0.4671*0.2;zoom,1;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-					RIPCommand=cmd(visible,false);
+					OnCommand=function(self) self:sleep(0.01); self:queuecommand("JOO"); end;
+					JOOCommand=function(self) self:zoom(1.5); self:linear(0.4671*0.2); self:zoom(1); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+					RIPCommand=function(self) self:visible(false); end;
 				};
 			};
 		};
 		
 		t[#t+1]=LoadFont("Common Normal")..{
-			InitCommand=cmd(settext,"-P1-";y,(#Content1>0 and #Content2>0 and SCREEN_CENTER_Y*0.7 or SCREEN_CENTER_Y)-90;x,SCREEN_CENTER_X + ((i)-(#Content1+1)/2)*150;diffuse,PlayerColor(PLAYER_1));
-			OnCommand=cmd(sleep,2.5;decelerate,0.5;diffusealpha,0);
+			InitCommand=function(self) self:settext("-P1-"); self:y((#Content1>0 and #Content2>0 and SCREEN_CENTER_Y*0.7 or SCREEN_CENTER_Y)-90); self:x(SCREEN_CENTER_X + ((i)-(#Content1+1)/2)*150); self:diffuse(PlayerColor(PLAYER_1)); end;
+			OnCommand=function(self) self:sleep(2.5); self:decelerate(0.5); self:diffusealpha(0); end;
 		};
 
 
@@ -134,25 +126,21 @@ else
 				self:x(SCREEN_CENTER_X + ((i)-(#Content2+1)/2)*150);
 				self:zoom(0.75);
 			end;
-			OnCommand=cmd(sleep,2.5;bouncebegin,0.5;zoom,0;);
+			OnCommand=function(self) self:sleep(2.5); self:bouncebegin(0.5); self:zoom(0); end;
 			Def.ActorFrame{
-				OnCommand=cmd(sleep,0.01;queuecommand,"JOO");
-					JOOCommand=cmd(linear,0.4671*0.05;x,math.random(-20,20);y,math.random( -20, 20 );rotationz,math.random(-5,5);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-10,10);y,math.random( -10, 10 );rotationz,math.random(-3,3);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-5,5);y,math.random( -5, 5 );rotationz,math.random(-2,2);sleep,0.001;
-									linear,0.4671*0.05;x,math.random(-2,2);y,math.random( -2, 2 );rotationz,math.random(-1,1);sleep,0.001;
-									x,0;y,0;rotationz,0;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-					RIPCommand=cmd(visible,false);
+				OnCommand=function(self) self:sleep(0.01); self:queuecommand("JOO"); end;
+					JOOCommand=function(self) self:linear(0.4671*0.05); self:x(math.random(-20,20)); self:y(math.random( -20, 20 )); self:rotationz(math.random(-5,5)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-10,10)); self:y(math.random( -10, 10 )); self:rotationz(math.random(-3,3)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-5,5)); self:y(math.random( -5, 5 )); self:rotationz(math.random(-2,2)); self:sleep(0.001); self:linear(0.4671*0.05); self:x(math.random(-2,2)); self:y(math.random( -2, 2 )); self:rotationz(math.random(-1,1)); self:sleep(0.001); self:x(0); self:y(0); self:rotationz(0); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+					RIPCommand=function(self) self:visible(false); end;
 				LoadActor("B_ICON/"..Content2[i])..{
-					OnCommand=cmd(sleep,0.01;queuecommand,"JOO");
-					JOOCommand=cmd(zoom,1.5;linear,0.4671*0.2;zoom,1;sleep,0.4671*0.8;queuecommand,BBEAT and "JOO" or "RIP");
-					RIPCommand=cmd(visible,false);
+					OnCommand=function(self) self:sleep(0.01); self:queuecommand("JOO"); end;
+					JOOCommand=function(self) self:zoom(1.5); self:linear(0.4671*0.2); self:zoom(1); self:sleep(0.4671*0.8); self:queuecommand(BBEAT and "JOO" or "RIP"); end;
+					RIPCommand=function(self) self:visible(false); end;
 				};
 			};
 		};
 		t[#t+1]=LoadFont("Common Normal")..{
-			InitCommand=cmd(settext,"-P2-";y,(#Content1>0 and #Content2>0 and SCREEN_CENTER_Y*1.3 or SCREEN_CENTER_Y)+90;x,SCREEN_CENTER_X + ((i)-(#Content2+1)/2)*150;diffuse,PlayerColor(PLAYER_2));
-			OnCommand=cmd(sleep,2.5;decelerate,0.5;diffusealpha,0);
+			InitCommand=function(self) self:settext("-P2-"); self:y((#Content1>0 and #Content2>0 and SCREEN_CENTER_Y*1.3 or SCREEN_CENTER_Y)+90); self:x(SCREEN_CENTER_X + ((i)-(#Content2+1)/2)*150); self:diffuse(PlayerColor(PLAYER_2)); end;
+			OnCommand=function(self) self:sleep(2.5); self:decelerate(0.5); self:diffusealpha(0); end;
 		};
 
 

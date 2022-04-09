@@ -29,7 +29,7 @@ t[#t+1] = Def.ActorFrame {
     LoadFont("Common Normal") ..  {
       Text="Test";
       Name="Time";
-      InitCommand=cmd(zoom,0.675);
+      InitCommand=function(self) self:zoom(0.675); end;
     };
     --
     BeginCommand=function(self)
@@ -41,8 +41,8 @@ t[#t+1] = Def.ActorFrame {
     bOpen = not bOpen;
     if bOpen then self:playcommand("Show") else self:playcommand("Hide") end
   end;
-  InitCommand=cmd(x,SCREEN_RIGHT-50;y,10;visible,false);
-  ShowCommand=cmd(finishtweening;visible,true);
-  HideCommand=cmd(finishtweening;visible,false);
+  InitCommand=function(self) self:x(SCREEN_RIGHT-50); self:y(10); self:visible(false); end;
+  ShowCommand=function(self) self:finishtweening(); self:visible(true); end;
+  HideCommand=function(self) self:finishtweening(); self:visible(false); end;
 };
 return t;

@@ -3,8 +3,8 @@ local iconPath = "_timingicons"
 local leftColX = -144
 local rightColX = -leftColX
 
-local showCmd = cmd(stoptweening;accelerate,0.1;diffusealpha,1)
-local hideCmd = cmd(stoptweening;accelerate,0.1;diffusealpha,0)
+local showCmd = function(self) self:stoptweening(); self:accelerate(0.1); self:diffusealpha(1); end
+local hideCmd = function(self) self:stoptweening(); self:accelerate(0.1); self:diffusealpha(0); end
 
 local SegmentTypes = {
 	Stops	=	{ Frame = 0, xPos = leftColX, yPos = 0 },
@@ -17,8 +17,8 @@ local SegmentTypes = {
 };
 
 local t = Def.ActorFrame{
-	BeginCommand=cmd(playcommand,"SetIcons";playcommand,"SetAttacksIconMessage");
-	--OffCommand=cmd( RunCommandsOnChildren,cmd(playcommand,"Hide") );
+	BeginCommand=function(self) self:playcommand("SetIcons"); self:playcommand("SetAttacksIconMessage"); end;
+	--OffCommand=function(self) self:RunCommandsOnChildren(function(self) self:playcommand("Hide"); end); end;
 
 	SetIconsCommand=function(self)
 		local stops = self:GetChild("StopsIcon")
@@ -85,47 +85,47 @@ local t = Def.ActorFrame{
 
 	LoadActor(iconPath)..{
 		Name="WarpsIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Warps.xPos;y,SegmentTypes.Warps.yPos;setstate,SegmentTypes.Warps.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Warps.xPos); self:y(SegmentTypes.Warps.yPos); self:setstate(SegmentTypes.Warps.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="StopsIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Stops.xPos;y,SegmentTypes.Stops.yPos;setstate,SegmentTypes.Stops.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Stops.xPos); self:y(SegmentTypes.Stops.yPos); self:setstate(SegmentTypes.Stops.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="DelaysIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Delays.xPos;y,SegmentTypes.Delays.yPos;setstate,SegmentTypes.Delays.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Delays.xPos); self:y(SegmentTypes.Delays.yPos); self:setstate(SegmentTypes.Delays.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="AttacksIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Attacks.xPos;y,SegmentTypes.Attacks.yPos;setstate,SegmentTypes.Attacks.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Attacks.xPos); self:y(SegmentTypes.Attacks.yPos); self:setstate(SegmentTypes.Attacks.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="ScrollsIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Scrolls.xPos;y,SegmentTypes.Scrolls.yPos;setstate,SegmentTypes.Scrolls.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Scrolls.xPos); self:y(SegmentTypes.Scrolls.yPos); self:setstate(SegmentTypes.Scrolls.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="SpeedsIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Speeds.xPos;y,SegmentTypes.Speeds.yPos;setstate,SegmentTypes.Speeds.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Speeds.xPos); self:y(SegmentTypes.Speeds.yPos); self:setstate(SegmentTypes.Speeds.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
 	LoadActor(iconPath)..{
 		Name="FakesIcon";
-		InitCommand=cmd(animate,false;x,SegmentTypes.Fakes.xPos;y,SegmentTypes.Fakes.yPos;setstate,SegmentTypes.Fakes.Frame;diffusealpha,0);
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Fakes.xPos); self:y(SegmentTypes.Fakes.yPos); self:setstate(SegmentTypes.Fakes.Frame); self:diffusealpha(0); end;
 		ShowCommand=showCmd;
 		HideCommand=hideCmd;
 	};
-	CurrentSongChangedMessageCommand=cmd(playcommand,"SetIcons";);
+	CurrentSongChangedMessageCommand=function(self) self:playcommand("SetIcons"); end;
 	CurrentStepsP1ChangedMessageCommand=function(self) MESSAGEMAN:Broadcast("SetAttacksIcon",{Player = PLAYER_1}) end;
 	CurrentStepsP2ChangedMessageCommand=function(self) MESSAGEMAN:Broadcast("SetAttacksIcon",{Player = PLAYER_2}) end;
 };

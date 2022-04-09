@@ -8,7 +8,7 @@ for pn in ivalues(Players) do
 	end
     t[#t+1] = LoadActor("Stat", pn);
     t[#t+1] = LoadActor("TapIndicator", pn).. {
-        GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;diffusealpha,0;);
+        GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:diffusealpha(0); end;
     };
 end
 

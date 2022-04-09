@@ -59,8 +59,8 @@ end
 
 local t = Def.ActorFrame{
 
-    OnCommand=cmd(queuecommand,"Reloading");
-    CurrentSongChangedMessageCommand=cmd(queuecommand,"Reloading");
+    OnCommand=function(self) self:queuecommand("Reloading"); end;
+    CurrentSongChangedMessageCommand=function(self) self:queuecommand("Reloading"); end;
     ReloadingCommand=function(self)
 
         self:stoptweening();
@@ -476,13 +476,13 @@ local t = Def.ActorFrame{
 
 t[#t+1] = Def.Quad{
     Name = "CS_Top";
-    InitCommand=cmd(vertalign,top;CenterX;zoomx,SCREEN_RIGHT;zoomy,75;diffuse,{0,0,0,1};fadebottom,1);
-    OnCommand=cmd(y,-75)
+    InitCommand=function(self) self:vertalign(top); self:CenterX(); self:zoomx(SCREEN_RIGHT); self:zoomy(75); self:diffuse({0,0,0,1}); self:fadebottom(1); end;
+    OnCommand=function(self) self:y(-75); end
 };
 t[#t+1] = Def.Quad{
     Name = "CS_Bot";
-    InitCommand=cmd(vertalign,bottom;y,SCREEN_BOTTOM;zoomx,SCREEN_RIGHT;CenterX;zoomy,75;diffuse,{0,0,0,1};fadetop,1);
-    OnCommand=cmd(y,SCREEN_BOTTOM+75)
+    InitCommand=function(self) self:vertalign(bottom); self:y(SCREEN_BOTTOM); self:zoomx(SCREEN_RIGHT); self:CenterX(); self:zoomy(75); self:diffuse({0,0,0,1}); self:fadetop(1); end;
+    OnCommand=function(self) self:y(SCREEN_BOTTOM+75); end
 };
 
 t[#t+1] = Def.ActorMultiVertex{

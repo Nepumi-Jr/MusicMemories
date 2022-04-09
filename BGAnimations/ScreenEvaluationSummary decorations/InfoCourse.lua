@@ -59,7 +59,7 @@ local t = Def.ActorFrame{};
 
 t[#t+1]=Def.ActorFrame{
 --Control Panel
-OnCommand=cmd(playcommand,"nep");
+OnCommand=function(self) self:playcommand("nep"); end;
 nepCommand=function(self)
 --Control here
 
@@ -92,13 +92,13 @@ end
 
 --[[t[#t+1]=Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,75;horizalign,left;zoom,1.1);
+		InitCommand=function(self) self:x(550); self:y(75); self:horizalign(left); self:zoom(1.1); end;
 		OnCommand=function(self)
 		self:settext("Total")
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,100;horizalign,left;zoom,1);
+		InitCommand=function(self) self:x(550); self:y(100); self:horizalign(left); self:zoom(1); end;
 		OnCommand=function(self)
 		if mee == 1 then 
 		self:settext(TW("1 song..."))
@@ -109,13 +109,13 @@ LoadFont("Common Normal")..{
 };
 
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,130;horizalign,left;zoom,1.1);
+		InitCommand=function(self) self:x(550); self:y(130); self:horizalign(left); self:zoom(1.1); end;
 		OnCommand=function(self)
 		self:settext("Time")
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,155;horizalign,left);
+		InitCommand=function(self) self:x(550); self:y(155); self:horizalign(left); end;
 		OnCommand=function(self)
 			local dislen = "";
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -148,7 +148,7 @@ LoadFont("Common Normal")..{
 ]]
 
 t[#t+1] = LoadFont("Common Normal")..{
-	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y*0.85-30);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y*0.85-30); end;
 	OnCommand=function(self)
 	TWA(GAMESTATE:GetCurrentCourse():GetDisplayFullTitle(),self,240);
 	w = w + 1;
@@ -157,25 +157,25 @@ t[#t+1] = LoadFont("Common Normal")..{
 
 if mee == 1 then
 t[#t+1] = LoadFont("Common Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_Y;y,SCREEN_CENTER_Y*0.85-10;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_Y); self:y(SCREEN_CENTER_Y*0.85-10); self:zoom(0.75); end;
 		OnCommand=function(self)
 		self:settext("Song list (1/1)")
 		end;
 };
 t[#t+1] = LoadFont("Common Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_Y;y,SCREEN_CENTER_Y*0.85-10+20*1;zoom,0.7);
+		InitCommand=function(self) self:x(SCREEN_CENTER_Y); self:y(SCREEN_CENTER_Y*0.85-10+20*1); self:zoom(0.7); end;
 		OnCommand=function(self)
 		self:settext("***Just one song...")
 		end;
 };
 t[#t+1] = LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85-10+20*2;horizalign,left;zoom,0.7);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85-10+20*2); self:horizalign(left); self:zoom(0.7); end;
 		OnCommand=function(self)
 		TWA(SL[1][1]:GetSong():GetDisplayMainTitle(),self,200)
 		end;
 };
 t[#t+1] = LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85-10+20*2;horizalign,right;zoom,0.7);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85-10+20*2); self:horizalign(right); self:zoom(0.7); end;
 		OnCommand=function(self)
 		self:settext(SecondsToMMSS(SL[1][1]:GetSong():GetLastSecond()))
 		end;
@@ -183,7 +183,7 @@ t[#t+1] = LoadFont("Common Normal")..{
 else
 for i,v in pairs(SL) do
 t[#t+1] = LoadFont("Common Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y*0.85-10;zoom,0.75;rotationx,(i==1) and 0 or 90);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y*0.85-10); self:zoom(0.75); self:rotationx((i==1) and 0 or 90); end;
 		OnCommand=function(self)
 		self:settext("Song list ("..i.."/"..math.ceil(mee/3)..")")
 		end;
@@ -198,7 +198,7 @@ t[#t+1] = LoadFont("Common Normal")..{
 for a,k in pairs(v) do
 t[#t+1] = Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85-10+20*a;horizalign,left;zoom,0.7;rotationx,(i==1) and 0 or 90);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85-10+20*a); self:horizalign(left); self:zoom(0.7); self:rotationx((i==1) and 0 or 90); end;
 		OnCommand=function(self)
 		TWA(k:GetSong():GetDisplayMainTitle(),self,200)
 		end;
@@ -211,7 +211,7 @@ LoadFont("Common Normal")..{
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85-10+20*a;horizalign,right;zoom,0.7;rotationx,(i==1) and 0 or 90);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85-10+20*a); self:horizalign(right); self:zoom(0.7); self:rotationx((i==1) and 0 or 90); end;
 		OnCommand=function(self)
 		self:settext(SecondsToMMSS(k:GetSong():GetLastSecond()))
 		end;

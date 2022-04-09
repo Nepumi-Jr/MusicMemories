@@ -12,17 +12,17 @@ local t = Def.ActorFrame{
 	HealthStateChangedMessageCommand=function(self, param)
 		if param.PlayerNumber == Player then
 			if param.HealthState == "HealthState_Danger" then				
-				self:RunCommandsOnChildren(cmd(playcommand,"Danger"));
+				self:RunCommandsOnChildren(function(self) self:playcommand("Danger"); end);
 				prevHealth = "HealthState_Danger"
 				
 			elseif param.HealthState == "HealthState_Dead" then
-				self:RunCommandsOnChildren(cmd(playcommand,"Dead"));
+				self:RunCommandsOnChildren(function(self) self:playcommand("Dead"); end);
 				
 			else
 				if prevHealth == "HealthState_Danger" then
-					self:RunCommandsOnChildren(cmd(playcommand,"OutOfDanger"));
+					self:RunCommandsOnChildren(function(self) self:playcommand("OutOfDanger"); end);
 				else
-					self:RunCommandsOnChildren(cmd(playcommand,"Hide"));
+					self:RunCommandsOnChildren(function(self) self:playcommand("Hide"); end);
 				end
 				prevHealth = "HealthState_Alive";
 			end
@@ -45,14 +45,14 @@ t[#t+1] = Def.Quad{
 			self:fadeleft(0.1); self:stretchto(_screen.cx,0,_screen.w,_screen.h);
 		end
 	end;
-	DangerCommand=cmd(linear,0.3;diffusealpha,0.7;diffuseshift; effectcolor1,color("1,0,0.24,0.3"); effectcolor2,color("1,0,0,0.8"));
-	DeadCommand=cmd(diffusealpha,0; stopeffect; stoptweening; diffuse,color("1,0,0"); linear,0.3; diffusealpha,0.8; linear,0.3; diffusealpha,0);
-	OutOfDangerCommand=cmd(diffusealpha,0; stopeffect; stoptweening; diffuse,color("0,1,0"); linear,0.3; diffusealpha,0.8; linear,0.3; diffusealpha,0);
-	HideCommand=cmd(stopeffect; stoptweening; linear,0.3; diffusealpha,0);
+	DangerCommand=function(self) self:linear(0.3); self:diffusealpha(0.7); self:diffuseshift(); self:effectcolor1(color("1,0,0.24,0.3")); self:effectcolor2(color("1,0,0,0.8")); end;
+	DeadCommand=function(self) self:diffusealpha(0); self:stopeffect(); self:stoptweening(); self:diffuse(color("1,0,0")); self:linear(0.3); self:diffusealpha(0.8); self:linear(0.3); self:diffusealpha(0); end;
+	OutOfDangerCommand=function(self) self:diffusealpha(0); self:stopeffect(); self:stoptweening(); self:diffuse(color("0,1,0")); self:linear(0.3); self:diffusealpha(0.8); self:linear(0.3); self:diffusealpha(0); end;
+	HideCommand=function(self) self:stopeffect(); self:stoptweening(); self:linear(0.3); self:diffusealpha(0); end;
 };
 
 t[#t+1] =Def.ActorFrame{
-	OnCommand=cmd(vibrate);
+	OnCommand=function(self) self:vibrate(); end;
  	LoadFont("_8-bit madness 40px")..{
 		Text="Better!";
 	InitCommand=function(self)
@@ -68,11 +68,11 @@ t[#t+1] =Def.ActorFrame{
 			self:x(360+180); self:y(240);
 		end
 	end;
-			OnCommand=cmd(vibrate);
-	DangerCommand=cmd(linear,0.3;diffusealpha,0.7;diffuseshift; effectcolor1,color("1,0,0.24,0.3"); effectcolor2,color("1,0,0,0.8"));
-	DeadCommand=cmd(diffusealpha,0; stopeffect; stoptweening; diffuse,color("1,0,0"); linear,0.3; diffusealpha,0.8; linear,0.3; diffusealpha,0);
-	OutOfDangerCommand=cmd(diffusealpha,0; stopeffect; stoptweening; diffuse,color("0,1,0"); linear,0.3; diffusealpha,0.8; linear,0.3; diffusealpha,0);
-	HideCommand=cmd(stopeffect; stoptweening; linear,0.3; diffusealpha,0);
+			OnCommand=function(self) self:vibrate(); end;
+	DangerCommand=function(self) self:linear(0.3); self:diffusealpha(0.7); self:diffuseshift(); self:effectcolor1(color("1,0,0.24,0.3")); self:effectcolor2(color("1,0,0,0.8")); end;
+	DeadCommand=function(self) self:diffusealpha(0); self:stopeffect(); self:stoptweening(); self:diffuse(color("1,0,0")); self:linear(0.3); self:diffusealpha(0.8); self:linear(0.3); self:diffusealpha(0); end;
+	OutOfDangerCommand=function(self) self:diffusealpha(0); self:stopeffect(); self:stoptweening(); self:diffuse(color("0,1,0")); self:linear(0.3); self:diffusealpha(0.8); self:linear(0.3); self:diffusealpha(0); end;
+	HideCommand=function(self) self:stopeffect(); self:stoptweening(); self:linear(0.3); self:diffusealpha(0); end;
 };
 };
 

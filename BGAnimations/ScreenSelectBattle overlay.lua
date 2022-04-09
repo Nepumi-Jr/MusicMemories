@@ -115,15 +115,15 @@ local OpB = function( event )
 end
 end
 t[#t+1] = Def.ActorFrame{
-	Con1MessageCommand=cmd(decelerate,0.5;y,-SCREEN_BOTTOM);
-	Can2MessageCommand=cmd(decelerate,0.5;y,0);	
+	Con1MessageCommand=function(self) self:decelerate(0.5); self:y(-SCREEN_BOTTOM); end;
+	Can2MessageCommand=function(self) self:decelerate(0.5); self:y(0); end;	
 
 	
 Def.ActorFrame{
-OnCommand=cmd(playcommand,"Lo");
+OnCommand=function(self) self:playcommand("Lo"); end;
 LoCommand=function(self) SCREENMAN:GetTopScreen():AddInputCallback(OpB) self:sleep(0.02):queuecommand("Lo") end;
 Def.ActorFrame{
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,1);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y); self:zoom(0); self:decelerate(0.5); self:zoom(1); end;
 Re1MessageCommand=function(self)
 if S == 1 then
 self:stoptweening():decelerate(0.3):zoom(1)
@@ -134,7 +134,7 @@ end;
 LoadModule("Menu.Button.lua")(0,0,color("#77FF77"),color("#33AA33"),color("#33AA33"),color("#33AA33"),color("#33AA33"),"Accuracy","Play Perfectly");
 };
 Def.ActorFrame{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y;zoom,0;decelerate,0.5;zoom,0.75);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.5); self:y(SCREEN_CENTER_Y); self:zoom(0); self:decelerate(0.5); self:zoom(0.75); end;
 Re1MessageCommand=function(self)
 if S == 2 then
 self:stoptweening():decelerate(0.3):zoom(1)
@@ -147,9 +147,9 @@ LoadModule("Menu.Button.lua")(0,0,color("#FF9900"),color("#AA6600"),color("#AA66
 };
 
 Def.ActorFrame{
-OnCommand=cmd(y,SCREEN_BOTTOM);
+OnCommand=function(self) self:y(SCREEN_BOTTOM); end;
 Def.Quad{
-OnCommand=cmd(Center;zoomx,650;zoomy,400);
+OnCommand=function(self) self:Center(); self:zoomx(650); self:zoomy(400); end;
 Con1MessageCommand=function(self)
 if S == 1 then
 self:diffuse(color("#77FF77"))
@@ -160,7 +160,7 @@ end;
 };
 
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*0.25;y,375;horizalign,left;diffuse,color("#2222FF");zoom,0.7);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.25); self:y(375); self:horizalign(left); self:diffuse(color("#2222FF")); self:zoom(0.7); end;
 Con1MessageCommand=function(self)
 if til == 1 then self:settext("Round:Game will end if it reach to ___ round\nPointGame will end if someone reach to ___ point")
 elseif til == 2 then self:settext("How much?")
@@ -193,18 +193,18 @@ end
 end;
 };
 Def.Quad{
-	OnCommand=cmd(Center;zoomx,99999;zoomy,0;diffuse,color("#000000AA"));
-	Con2MessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,SCREEN_CENTER_Y*2);
-	Can3MessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,0);
+	OnCommand=function(self) self:Center(); self:zoomx(99999); self:zoomy(0); self:diffuse(color("#000000AA")); end;
+	Con2MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomy(SCREEN_CENTER_Y*2); end;
+	Can3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomy(0); end;
 };
 LoadFont( "_rockwell 72px") ..{
-OnCommand=cmd(x,130;y,100;settext,"Song or Round";diffuse,color("#2222FF");zoom,0.45;horizalign,left);
+OnCommand=function(self) self:x(130); self:y(100); self:settext("Song or Round"); self:diffuse(color("#2222FF")); self:zoom(0.45); self:horizalign(left); end;
 };
 LoadFont( "_rockwell 72px") ..{
-OnCommand=cmd(x,130;y,100+50;settext,"How much?";diffuse,color("#2222FF");zoom,0.45;horizalign,left);
+OnCommand=function(self) self:x(130); self:y(100+50); self:settext("How much?"); self:diffuse(color("#2222FF")); self:zoom(0.45); self:horizalign(left); end;
 };
 LoadFont( "_rockwell 72px") ..{
-OnCommand=cmd(x,130;y,100+100;diffuse,color("#2222FF");zoom,0.45;horizalign,left);
+OnCommand=function(self) self:x(130); self:y(100+100); self:diffuse(color("#2222FF")); self:zoom(0.45); self:horizalign(left); end;
 Con1MessageCommand=function(self)
 if S == 1 then
 self:settext("It's Fail?")
@@ -214,14 +214,14 @@ end
 end;
 };
 LoadFont( "_rockwell 72px") ..{
-OnCommand=cmd(x,130;y,100+150;settext,"Level";diffuse,color("#2222FF");zoom,0.45;horizalign,left);
+OnCommand=function(self) self:x(130); self:y(100+150); self:settext("Level"); self:diffuse(color("#2222FF")); self:zoom(0.45); self:horizalign(left); end;
 };
 LoadFont( "_rockwell 72px") ..{
-OnCommand=cmd(x,130;y,100+200;settext,"Hidden";diffuse,color("#2222FF");zoom,0.45;horizalign,left);
+OnCommand=function(self) self:x(130); self:y(100+200); self:settext("Hidden"); self:diffuse(color("#2222FF")); self:zoom(0.45); self:horizalign(left); end;
 };
 
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.35;y,100;settext,"Round";diffuse,color("#2222FF");zoom,1.5);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.35); self:y(100); self:settext("Round"); self:diffuse(color("#2222FF")); self:zoom(1.5); end;
 Con1MessageCommand=function(self)
 self:settext(dechoi[1])
 if til == 1 then self:stoptweening():diffuse(color("#008800")):zoom(2):decelerate(0.3):zoom(1.7)
@@ -235,7 +235,7 @@ end;
 };
 
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.35;y,100+50;settext,"5 Round(s)";diffuse,color("#2222FF");zoom,1.5);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.35); self:y(100+50); self:settext("5 Round(s)"); self:diffuse(color("#2222FF")); self:zoom(1.5); end;
 Re2MessageCommand=function(self)
 self:settext(dechoi[2].." "..dechoi[1].."(s)")
 if til == 2 then self:stoptweening():diffuse(color("#008800")):zoom(2):decelerate(0.3):zoom(1.7)
@@ -243,7 +243,7 @@ else self:stoptweening():diffuse(color("#2222FF")):decelerate(0.3):zoom(1.5) end
 end;
 };
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.35;y,100+100;settext,"No";diffuse,color("#2222FF");zoom,1.5);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.35); self:y(100+100); self:settext("No"); self:diffuse(color("#2222FF")); self:zoom(1.5); end;
 Re2MessageCommand=function(self)
 if dechoi[3] then self:settext("Yes") else self:settext("No") end
 if til == 3 then self:stoptweening():diffuse(color("#008800")):zoom(2):decelerate(0.3):zoom(1.7)
@@ -251,7 +251,7 @@ else self:stoptweening():diffuse(color("#2222FF")):decelerate(0.3):zoom(1.5) end
 end;
 };
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.35;y,100+150;settext,"None";diffuse,color("#2222FF");zoom,1.5);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.35); self:y(100+150); self:settext("None"); self:diffuse(color("#2222FF")); self:zoom(1.5); end;
 Re2MessageCommand=function(self)
 self:settext(dechoi[4])
 if til == 4 then self:stoptweening():diffuse(color("#008800")):zoom(2):decelerate(0.3):zoom(1.7)
@@ -259,7 +259,7 @@ else self:stoptweening():diffuse(color("#2222FF")):decelerate(0.3):zoom(1.5) end
 end;
 };
 LoadFont( "Common Normal") ..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.35;y,100+200;settext,"No";diffuse,color("#2222FF");zoom,1.5);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.35); self:y(100+200); self:settext("No"); self:diffuse(color("#2222FF")); self:zoom(1.5); end;
 Re2MessageCommand=function(self)
 if dechoi[5] then self:settext("Yes") else self:settext("No") end
 if til == 5 then self:stoptweening():diffuse(color("#008800")):zoom(2):decelerate(0.3):zoom(1.7)
@@ -268,13 +268,13 @@ end;
 };
 
 LoadFont( "Common Normal") ..{
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y*0.2;settext,"This is correct?";zoom,2;zoomx,0);
-	Con2MessageCommand=cmd(stoptweening;decelerate,0.5;zoomx,2);
-	Can3MessageCommand=cmd(stoptweening;decelerate,0.5;zoomx,0);
-	Con3MessageCommand=cmd(stoptweening;decelerate,0.5;zoom,0);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y*0.2); self:settext("This is correct?"); self:zoom(2); self:zoomx(0); end;
+	Con2MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomx(2); end;
+	Can3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomx(0); end;
+	Con3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoom(0); end;
 };
 LoadFont( "Common Normal") ..{
-	OnCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y*1.65;settext,"Yes";zoom,2;zoomx,0);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y*1.65); self:settext("Yes"); self:zoom(2); self:zoomx(0); end;
 	Con2MessageCommand=function(self)
 	self:stoptweening():decelerate(0.5)
 	if RUS then
@@ -301,11 +301,11 @@ end
 		self:decelerate(0.3):zoom(2):diffuse({1,1,1,1})
 	end
 	end;
-	Con3MessageCommand=cmd(stoptweening;decelerate,0.5;zoom,0);
-	Can3MessageCommand=cmd(stoptweening;decelerate,0.5;zoomx,0;diffuse,{1,1,1,1});
+	Con3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoom(0); end;
+	Can3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomx(0); self:diffuse({1,1,1,1}); end;
 };
 LoadFont( "Common Normal") ..{
-	OnCommand=cmd(x,SCREEN_CENTER_X*1.5;y,SCREEN_CENTER_Y*1.65;settext,"No";zoom,2;zoomx,0);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X*1.5); self:y(SCREEN_CENTER_Y*1.65); self:settext("No"); self:zoom(2); self:zoomx(0); end;
 	Con2MessageCommand=function(self)
 	self:stoptweening():decelerate(0.5)
 	if not RUS then
@@ -332,16 +332,16 @@ end
 		self:decelerate(0.3):zoom(2):diffuse({1,1,1,1})
 	end
 	end;
-	Con3MessageCommand=cmd(stoptweening;decelerate,0.5;zoom,0);
-	Can3MessageCommand=cmd(stoptweening;decelerate,0.5;zoomx,0);
+	Con3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoom(0); end;
+	Can3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomx(0); end;
 };
 Def.Quad{
-	OnCommand=cmd(Center;zoomy,99999;zoomx,0;diffuse,color("#000000FF"));
-	Con3MessageCommand=cmd(stoptweening;decelerate,0.5;zoomx,SCREEN_CENTER_X*2);
+	OnCommand=function(self) self:Center(); self:zoomy(99999); self:zoomx(0); self:diffuse(color("#000000FF")); end;
+	Con3MessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomx(SCREEN_CENTER_X*2); end;
 };
 };
-LoadActor( THEME:GetPathS("Common","start") )..{OkayMessageCommand=cmd(play);};
-LoadActor( THEME:GetPathS("Common","value") )..{ArrowMessageCommand=cmd(play);};
-LoadActor( THEME:GetPathS("Common","cancel") )..{NopeMessageCommand=cmd(play);};
+LoadActor( THEME:GetPathS("Common","start") )..{OkayMessageCommand=function(self) self:play(); end;};
+LoadActor( THEME:GetPathS("Common","value") )..{ArrowMessageCommand=function(self) self:play(); end;};
+LoadActor( THEME:GetPathS("Common","cancel") )..{NopeMessageCommand=function(self) self:play(); end;};
 };
 return t;

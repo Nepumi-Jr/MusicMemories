@@ -103,7 +103,7 @@ SCREENMAN:GetTopScreen():AddInputCallback(Inputne)
 self:Center()
 end;
 Def.Quad{--control panel
-OnCommand=cmd(zoom,0;playcommand,"Nep");
+OnCommand=function(self) self:zoom(0); self:playcommand("Nep"); end;
 NepCommand=function(self)
 if TP.Battle.IsBattle and Karkao[4] == 1 and not NetNo then
 BatNo = true;
@@ -261,19 +261,19 @@ end;
 };
 
 Def.Quad{
-	InitCommand=cmd(visible,false);
+	InitCommand=function(self) self:visible(false); end;
 	AFTERFAILMessageCommand=function() FailTig = true; end;
 };
 
 Def.Quad{
-OnCommand=cmd(zoomx,9999;zoomy,0;diffuse,color("#00000088"));
-YutMessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,SCREEN_CENTER_Y*2);
-ResumeMessageCommand=cmd(stoptweening;decelerate,0.5;zoomy,0);
+OnCommand=function(self) self:zoomx(9999); self:zoomy(0); self:diffuse(color("#00000088")); end;
+YutMessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomy(SCREEN_CENTER_Y*2); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:zoomy(0); end;
 };
 Def.Quad{--control
-OnCommand=cmd(visible,false);
+OnCommand=function(self) self:visible(false); end;
 YutMessageCommand=function() SCREENMAN:GetTopScreen():PauseGame(true) end;
-ResumeMessageCommand=cmd(playcommand,"Nepu");
+ResumeMessageCommand=function(self) self:playcommand("Nepu"); end;
 NepuCommand=function(self)
 SCREENMAN:GetTopScreen():PauseGame(false) 
 if Karkao[4] == 0 then
@@ -286,69 +286,69 @@ end
 end;
 };
 Def.ActorFrame{
-InitCommand=cmd(x,50*(-2);y,-110;diffusealpha,0);
-YutMessageCommand=cmd(stoptweening;x,100*(-2);y,-125;diffusealpha,0;decelerate,0.5;x,50*(-2);y,-110;diffusealpha,1);
-ResumeMessageCommand=cmd(stoptweening;x,50*(-2);y,-110;diffusealpha,1;decelerate,0.5;x,100*(-2);y,-125;diffusealpha,0);
+InitCommand=function(self) self:x(50*(-2)); self:y(-110); self:diffusealpha(0); end;
+YutMessageCommand=function(self) self:stoptweening(); self:x(100*(-2)); self:y(-125); self:diffusealpha(0); self:decelerate(0.5); self:x(50*(-2)); self:y(-110); self:diffusealpha(1); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:x(50*(-2)); self:y(-110); self:diffusealpha(1); self:decelerate(0.5); self:x(100*(-2)); self:y(-125); self:diffusealpha(0); end;
 LoadFont( "Common Large") ..{
-InitCommand=cmd(rainbow;settext,'P');
+InitCommand=function(self) self:rainbow(); self:settext('P'); end;
 };
 };
 Def.ActorFrame{
-InitCommand=cmd(x,50*(-1);y,-110;diffusealpha,0);
-YutMessageCommand=cmd(stoptweening;x,100*(-1);y,-125;diffusealpha,0;decelerate,0.5;x,50*(-1);y,-110;diffusealpha,1);
-ResumeMessageCommand=cmd(stoptweening;x,50*(-1);y,-110;diffusealpha,1;decelerate,0.5;x,100*(-1);y,-125;diffusealpha,0);
+InitCommand=function(self) self:x(50*(-1)); self:y(-110); self:diffusealpha(0); end;
+YutMessageCommand=function(self) self:stoptweening(); self:x(100*(-1)); self:y(-125); self:diffusealpha(0); self:decelerate(0.5); self:x(50*(-1)); self:y(-110); self:diffusealpha(1); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:x(50*(-1)); self:y(-110); self:diffusealpha(1); self:decelerate(0.5); self:x(100*(-1)); self:y(-125); self:diffusealpha(0); end;
 LoadFont( "Common Large") ..{
-InitCommand=cmd(rainbow;effectoffset,1/5;settext,'a');
+InitCommand=function(self) self:rainbow(); self:effectoffset(1/5); self:settext('a'); end;
 };
 };
 Def.ActorFrame{
-InitCommand=cmd(x,50*(0);y,-110;diffusealpha,0);
-YutMessageCommand=cmd(stoptweening;x,100*(0);y,-125;diffusealpha,0;decelerate,0.5;x,50*(0);y,-110;diffusealpha,1);
-ResumeMessageCommand=cmd(stoptweening;x,50*(0);y,-110;diffusealpha,1;decelerate,0.5;x,100*(0);y,-125;diffusealpha,0);
+InitCommand=function(self) self:x(50*(0)); self:y(-110); self:diffusealpha(0); end;
+YutMessageCommand=function(self) self:stoptweening(); self:x(100*(0)); self:y(-125); self:diffusealpha(0); self:decelerate(0.5); self:x(50*(0)); self:y(-110); self:diffusealpha(1); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:x(50*(0)); self:y(-110); self:diffusealpha(1); self:decelerate(0.5); self:x(100*(0)); self:y(-125); self:diffusealpha(0); end;
 LoadFont( "Common Large") ..{
-InitCommand=cmd(rainbow;effectoffset,2/5;settext,'u');
+InitCommand=function(self) self:rainbow(); self:effectoffset(2/5); self:settext('u'); end;
 };
 };
 Def.ActorFrame{
-InitCommand=cmd(x,50*(1);y,-110;diffusealpha,0);
-YutMessageCommand=cmd(stoptweening;x,100*(1);y,-125;diffusealpha,0;decelerate,0.5;x,50*(1);y,-110;diffusealpha,1);
-ResumeMessageCommand=cmd(stoptweening;x,50*(1);y,-110;diffusealpha,1;decelerate,0.5;x,100*(1);y,-125;diffusealpha,0);
+InitCommand=function(self) self:x(50*(1)); self:y(-110); self:diffusealpha(0); end;
+YutMessageCommand=function(self) self:stoptweening(); self:x(100*(1)); self:y(-125); self:diffusealpha(0); self:decelerate(0.5); self:x(50*(1)); self:y(-110); self:diffusealpha(1); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:x(50*(1)); self:y(-110); self:diffusealpha(1); self:decelerate(0.5); self:x(100*(1)); self:y(-125); self:diffusealpha(0); end;
 LoadFont( "Common Large") ..{
-InitCommand=cmd(rainbow;effectoffset,3/5;settext,'s');
+InitCommand=function(self) self:rainbow(); self:effectoffset(3/5); self:settext('s'); end;
 };
 };
 Def.ActorFrame{
-InitCommand=cmd(x,50*(2);y,-110;diffusealpha,0);
-YutMessageCommand=cmd(stoptweening;x,100*(2);y,-125;diffusealpha,0;decelerate,0.5;x,50*(2);y,-110;diffusealpha,1);
-ResumeMessageCommand=cmd(stoptweening;x,50*(2);y,-110;diffusealpha,1;decelerate,0.5;x,100*(2);y,-125;diffusealpha,0);
+InitCommand=function(self) self:x(50*(2)); self:y(-110); self:diffusealpha(0); end;
+YutMessageCommand=function(self) self:stoptweening(); self:x(100*(2)); self:y(-125); self:diffusealpha(0); self:decelerate(0.5); self:x(50*(2)); self:y(-110); self:diffusealpha(1); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:x(50*(2)); self:y(-110); self:diffusealpha(1); self:decelerate(0.5); self:x(100*(2)); self:y(-125); self:diffusealpha(0); end;
 LoadFont( "Common Large") ..{
-InitCommand=cmd(rainbow;effectoffset,4/5;settext,'e');
+InitCommand=function(self) self:rainbow(); self:effectoffset(4/5); self:settext('e'); end;
 };
 };
 LoadFont( "Common Normal") ..{
-InitCommand=cmd(y,-10;zoom,0;settext,NameString("continue_playing");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,2;diffuse,color("#55FF55FF"));
-ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-ResKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
-ResMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
+InitCommand=function(self) self:y(-10); self:zoom(0); self:settext(NameString("continue_playing")); self:diffuse(color("#FF995500")); end;
+YutMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(2); self:diffuse(color("#55FF55FF")); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(0); self:diffuse(color("#FF995500")); end;
+ResKMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(2); self:diffuse(color("#55FF55FF")); end;
+ResMMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(1.7); self:diffuse(color("#FF9955FF")); end;
 };
 LoadFont( "Common Normal") ..{
-InitCommand=cmd(y,50;zoom,0;settext,NameString("restart_song");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,1.7;diffuse,color("#FF9955FF"));
-ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-RetKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
-RetMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
+InitCommand=function(self) self:y(50); self:zoom(0); self:settext(NameString("restart_song")); self:diffuse(color("#FF995500")); end;
+YutMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(1.7); self:diffuse(color("#FF9955FF")); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(0); self:diffuse(color("#FF995500")); end;
+RetKMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(2); self:diffuse(color("#55FF55FF")); end;
+RetMMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(1.7); self:diffuse(color("#FF9955FF")); end;
 };
 LoadFont( "Common Normal") ..{
-InitCommand=cmd(y,110;zoom,0;settext,NameString("forfeit_song");diffuse,color("#FF995500"));
-YutMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,1.7;diffuse,color("#FF9955FF"));
-ResumeMessageCommand=cmd(stoptweening;bounceend,0.5;zoom,0;diffuse,color("#FF995500"));
-BackKMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,2;diffuse,color("#55FF55FF"));
-BackMMessageCommand=cmd(stoptweening;decelerate,0.3;zoom,1.7;diffuse,color("#FF9955FF"));
+InitCommand=function(self) self:y(110); self:zoom(0); self:settext(NameString("forfeit_song")); self:diffuse(color("#FF995500")); end;
+YutMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(1.7); self:diffuse(color("#FF9955FF")); end;
+ResumeMessageCommand=function(self) self:stoptweening(); self:bounceend(0.5); self:zoom(0); self:diffuse(color("#FF995500")); end;
+BackKMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(2); self:diffuse(color("#55FF55FF")); end;
+BackMMessageCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:zoom(1.7); self:diffuse(color("#FF9955FF")); end;
 };
 Def.Quad{--control Retry
-OnCommand=cmd(visible,false);
-RePengMessageCommand=cmd(playcommand,'WonRetry');
+OnCommand=function(self) self:visible(false); end;
+RePengMessageCommand=function(self) self:playcommand('WonRetry'); end;
 WonRetryCommand=function(self)
 Wait3[2] = Wait3[2] + 1/30;
 if Wait3[2] < 0.7 then
@@ -365,33 +365,33 @@ end;
 };
 
 Def.ActorFrame{
-OnCommand=cmd(xy,-SCREEN_CENTER_X,-SCREEN_CENTER_Y);
+OnCommand=function(self) self:xy(-SCREEN_CENTER_X,-SCREEN_CENTER_Y); end;
 Def.Quad {
-	InitCommand=cmd(diffusealpha,0);
+	InitCommand=function(self) self:diffusealpha(0); end;
 	OnCommand=function(self)
 			self:diffuse(color("#00000000"))
 			self:Center()
 			self:SetSize(SCREEN_WIDTH,SCREEN_HEIGHT)
 	end;
-	RePengMessageCommand=cmd(stoptweening;decelerate,0.5;diffusealpha,1);
+	RePengMessageCommand=function(self) self:stoptweening(); self:decelerate(0.5); self:diffusealpha(1); end;
 };
 };
 		LoadActor( THEME:GetPathS("Common","start") )..{
-			OkayMessageCommand=cmd(play);
+			OkayMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","value") )..{
-			ArrowMessageCommand=cmd(play);
+			ArrowMessageCommand=function(self) self:play(); end;
 		};
 LoadFont( "Common Large") ..{
-InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("netOnline");diffuse,color("#FF995500"));
-OopsNetMessageCommand=cmd(stoptweening;diffusealpha,1;decelerate,0.5;y,-150;sleep,1.5;decelerate,0.5;y,-200;diffusealpha,0);
+InitCommand=function(self) self:x(-20); self:y(-200); self:zoom(0.5/1.4); self:settext(NameString("netOnline")); self:diffuse(color("#FF995500")); end;
+OopsNetMessageCommand=function(self) self:stoptweening(); self:diffusealpha(1); self:decelerate(0.5); self:y(-150); self:sleep(1.5); self:decelerate(0.5); self:y(-200); self:diffusealpha(0); end;
 };
 LoadFont( "Common Large") ..{
-InitCommand=cmd(x,-20;y,-200;zoom,0.5/1.4;settext,NameString("Battle");diffuse,color("#FF995500"));
-OopsBatMessageCommand=cmd(stoptweening;diffusealpha,1;decelerate,0.5;y,-150;sleep,1.5;decelerate,0.5;y,-200;diffusealpha,0);
+InitCommand=function(self) self:x(-20); self:y(-200); self:zoom(0.5/1.4); self:settext(NameString("Battle")); self:diffuse(color("#FF995500")); end;
+OopsBatMessageCommand=function(self) self:stoptweening(); self:diffusealpha(1); self:decelerate(0.5); self:y(-150); self:sleep(1.5); self:decelerate(0.5); self:y(-200); self:diffusealpha(0); end;
 };
 Def.Quad{
-OnCommand=cmd(visible,false);
+OnCommand=function(self) self:visible(false); end;
 ResumeMessageCommand=function(self)
 SCREENMAN:GetTopScreen():GetChild('Overlay'):decelerate(1)
 SCREENMAN:GetTopScreen():GetChild('Overlay'):visible(infoG[1]);

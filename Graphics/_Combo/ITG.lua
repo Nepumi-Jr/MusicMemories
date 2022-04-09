@@ -17,17 +17,17 @@ local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 local ShowFlashyCombo = ThemePrefs.Get("FlashyCombo")
 
 local t = Def.ActorFrame {
-	InitCommand=cmd(vertalign,bottom);
+	InitCommand=function(self) self:vertalign(bottom); end;
 	-- flashy combo elements:
  	LoadActor(THEME:GetPathG("Combo","100Milestone")) .. {
 		Name="OneHundredMilestone";
-		InitCommand=cmd(visible,ShowFlashyCombo);
-		FiftyMilestoneCommand=cmd(playcommand,"Milestone");
+		InitCommand=function(self) self:visible(ShowFlashyCombo); end;
+		FiftyMilestoneCommand=function(self) self:playcommand("Milestone"); end;
 	};
 	LoadActor(THEME:GetPathG("Combo","1000Milestone")) .. {
 		Name="OneThousandMilestone";
-		InitCommand=cmd(visible,ShowFlashyCombo);
-		ToastyAchievedMessageCommand=cmd(playcommand,"Milestone");
+		InitCommand=function(self) self:visible(ShowFlashyCombo); end;
+		ToastyAchievedMessageCommand=function(self) self:playcommand("Milestone"); end;
 	};
 	-- normal combo elements:
 	Def.ActorFrame {
@@ -71,19 +71,19 @@ local t = Def.ActorFrame {
 		end; --]]
  	TwentyFiveMilestoneCommand=function(self,parent)
 		if ShowFlashyCombo then
-			(cmd(finishtweening;addy,-4;bounceend,0.125;addy,4))(self);
+			(function(self) self:finishtweening(); self:addy(-4); self:bounceend(0.125); self:addy(4); end)(self);
 		end;
 	end;
 	--]]
 	--[[
 	ToastyAchievedMessageCommand=function(self,params)
 		if params.PlayerNumber == player then
-			(cmd(thump,2;effectclock,'beat'))(c.ComboFrame);
+			(function(self) self:thump(2); self:effectclock('beat'); end)(c.ComboFrame);
 		end;
 	end;
 	ToastyDroppedMessageCommand=function(self,params)
 		if params.PlayerNumber == player then
-			(cmd(stopeffect))(c.ComboFrame);
+			(function(self) self:stopeffect(); end)(c.ComboFrame);
 		end;
 	end; --]]
 	ComboCommand=function(self, param)
@@ -200,8 +200,8 @@ local t = Def.ActorFrame {
 --[[ 	ScoreChangedMessageCommand=function(self,param)
 		local iToastyCombo = param.ToastyCombo;
 		if iToastyCombo and (iToastyCombo > 0) then
--- 			(cmd(thump;effectmagnitude,1,1.2,1;effectclock,'beat'))(c.Number)
--- 			(cmd(thump;effectmagnitude,1,1.2,1;effectclock,'beat'))(c.Number)
+-- 			(function(self) self:thump(); self:effectmagnitude(1,1.2,1); self:effectclock('beat'); end)(c.Number)
+-- 			(function(self) self:thump(); self:effectmagnitude(1,1.2,1); self:effectclock('beat'); end)(c.Number)
 		else
 -- 			c.Number:stopeffect();
 		end;

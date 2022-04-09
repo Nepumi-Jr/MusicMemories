@@ -18,13 +18,13 @@ end
 local t = Def.ActorFrame {
 	LoadActor(THEME:GetPathB("_frame","3x3"),"rounded black",64,16);
 	LoadFont("Common Normal") .. {
-		InitCommand=cmd(y,-1;shadowlength,1;playcommand,"Set");
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTraiP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTraiP2ChangedMessageCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:y(-1); self:shadowlength(1); self:playcommand("Set"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTraiP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTraiP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 			if GAMESTATE:IsCourseMode() then
 				local stats = STATSMAN:GetCurStageStats()

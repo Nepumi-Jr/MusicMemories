@@ -11,7 +11,7 @@ local t = Def.ActorFrame{
 
 for i = 1,#verts do
 t[#t+1] = LoadActor("LittleCircle.png")..{
-    InitCommand=cmd(xy,verts[i][1][1],verts[i][1][2];zoom,0.25);
+    InitCommand=function(self) self:xy(verts[i][1][1],verts[i][1][2]); self:zoom(0.25); end;
 }
 end
 

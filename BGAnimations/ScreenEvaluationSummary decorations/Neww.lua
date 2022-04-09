@@ -9,8 +9,8 @@ local ISMISSION2 = false;
 local function GraphDisplay( pn )
 	local t = Def.ActorFrame {
 		Def.GraphDisplay {
-			InitCommand=cmd(Load,"GraphDisplay";);
-			OnCommand=cmd(x,-7.5;y,-25;zoomx,1.55);
+			InitCommand=function(self) self:Load("GraphDisplay"); end;
+			OnCommand=function(self) self:x(-7.5); self:y(-25); self:zoomx(1.55); end;
 			BeginCommand=function(self)
 				local ss = SCREENMAN:GetTopScreen():GetStageStats();
 				self:Set( ss, ss:GetPlayerStageStats(pn) );
@@ -84,42 +84,42 @@ local CY = SCREEN_CENTER_Y;
 
 t[#t+1] = Def.ActorFrame{
 	--BORDER Stuff
-	Def.Quad{InitCommand=cmd(vertalign,bottom;CenterX;y,CY*1.87;zoomy,180;zoomx,7;);};
-	Def.Quad{InitCommand=cmd(CenterX;y,CY*1.87-180;zoomx,CX*2;zoomy,7;);};
-	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
-	Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2;y,CY*1.87-180;zoomy,217.5;zoomx,7;);};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:CenterX(); self:y(CY*1.87); self:zoomy(180); self:zoomx(7); end;};
+	Def.Quad{InitCommand=function(self) self:CenterX(); self:y(CY*1.87-180); self:zoomx(CX*2); self:zoomy(7); end;};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX-250/2); self:y(CY*1.87-180); self:zoomy(217.5); self:zoomx(7); end;};
+	Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX+250/2); self:y(CY*1.87-180); self:zoomy(217.5); self:zoomx(7); end;};
 	
     Def.Quad{
-        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,1;zoomy,2;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_2 or {0,0,1,1}); self:horizalign(left); self:vertalign(top); self:y(1); self:zoomy(2); self:zoomx(SCREEN_RIGHT); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,color("#333333");horizalign,left;vertalign,top;zoomy,50;y,3;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(color("#333333")); self:horizalign(left); self:vertalign(top); self:zoomy(50); self:y(3); self:zoomx(SCREEN_RIGHT); end;
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_2 or {0,0,1,1};horizalign,left;vertalign,top;y,53;zoomy,2;zoomx,SCREEN_RIGHT);
+        InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_2 or {0,0,1,1}); self:horizalign(left); self:vertalign(top); self:y(53); self:zoomy(2); self:zoomx(SCREEN_RIGHT); end;
     };
     
-    --Def.Quad{InitCommand=cmd(horizalign,right;x,CX-250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
-	--Def.Quad{InitCommand=cmd(horizalign,left;x,CX+250/2;y,CY*1.87-180-100;zoomx,100+3.5;zoomy,7;);};
-	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX-250/2-100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
-	--Def.Quad{InitCommand=cmd(vertalign,bottom;x,CX+250/2+100;y,CY*1.87-180-100;zoomy,120-2;zoomx,7;);};
+    --Def.Quad{InitCommand=function(self) self:horizalign(right); self:x(CX-250/2); self:y(CY*1.87-180-100); self:zoomx(100+3.5); self:zoomy(7); end;};
+	--Def.Quad{InitCommand=function(self) self:horizalign(left); self:x(CX+250/2); self:y(CY*1.87-180-100); self:zoomx(100+3.5); self:zoomy(7); end;};
+	--Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX-250/2-100); self:y(CY*1.87-180-100); self:zoomy(120-2); self:zoomx(7); end;};
+	--Def.Quad{InitCommand=function(self) self:vertalign(bottom); self:x(CX+250/2+100); self:y(CY*1.87-180-100); self:zoomy(120-2); self:zoomx(7); end;};
 };
 
 
 t[#t+1] = Def.ActorFrame{
-	InitCommand=cmd(y,140);
+	InitCommand=function(self) self:y(140); end;
     LoadFont("Common Normal").. {
-        OnCommand=cmd(x,SCREEN_CENTER_X-110;horizalign,left;settext,"Total ");
+        OnCommand=function(self) self:x(SCREEN_CENTER_X-110); self:horizalign(left); self:settext("Total "); end;
     };
     LoadFont("Combo Number").. {
-        OnCommand=cmd(x,SCREEN_CENTER_X;y,20;settext,STATSMAN:GetStagesPlayed();zoom,0.8;);
+        OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(20); self:settext(STATSMAN:GetStagesPlayed()); self:zoom(0.8); end;
     };
     LoadFont("Common Normal").. {
-        OnCommand=cmd(x,SCREEN_CENTER_X+110;y,30;horizalign,right;settext,"Stage(s)");
+        OnCommand=function(self) self:x(SCREEN_CENTER_X+110); self:y(30); self:horizalign(right); self:settext("Stage(s)"); end;
     };
 
     LoadFont("Common Normal").. {
-        OnCommand=cmd(x,SCREEN_CENTER_X;y,115;settextf,"date : %d-%d-%d",Year(),MonthOfYear()+1,DayOfMonth());
+        OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(115); self:settextf("date : %d-%d-%d",Year(),MonthOfYear()+1,DayOfMonth()); end;
     };
 
 
@@ -129,13 +129,13 @@ t[#t+1] = Def.ActorFrame{
 --[[t[#t+1] = Def.ActorFrame{
 	Def.ActorFrame{
 		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,75;horizalign,right;zoom,1.1);
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-123); self:y(75); self:horizalign(right); self:zoom(1.1); end;
 				OnCommand=function(self)
 				self:settext("Life Diff.")
 				end;
 		};
 		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,100;horizalign,right;zoom,1);
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-123); self:y(100); self:horizalign(right); self:zoom(1); end;
 				OnCommand=function(self)
 				self:settextf("LV.%d",GetLifeDifficulty())
 				end;
@@ -144,13 +144,13 @@ t[#t+1] = Def.ActorFrame{
 
 		Def.ActorFrame{
 		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,130;horizalign,right;zoom,1.1);
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-123); self:y(130); self:horizalign(right); self:zoom(1.1); end;
 				OnCommand=function(self)
 				self:settext("Time Diff.")
 				end;
 		};
 		LoadFont("Common Normal")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-123;y,155;horizalign,right);
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-123); self:y(155); self:horizalign(right); end;
 				OnCommand=function(self)
 				self:settextf("LV.%d",GetTimingDifficulty())
 				end;
@@ -206,7 +206,7 @@ local stageAnimate = {
 
 
 t[#t+1] = Def.Quad{
-    InitCommand=cmd(visible,false);
+    InitCommand=function(self) self:visible(false); end;
     OnCommand=function(self)
         local pageCrt = STATSMAN:GetStagesPlayed() + 1
         for ii,allPn in pairs({"P1","P2"}) do
@@ -277,9 +277,9 @@ local function createStageStatus(pplayer)
     local x = Def.ActorFrame{};
     for i,v in pairs({"W1","W2","W3","W4","W5","Miss"}) do
         x[#x+1] = Def.ActorFrame{
-            OnCommand = cmd(diffusealpha,0;x,pplayer == "P1" and -70 or 70;sleep,1-(6-i)*0.05;decelerate,0.25;x,0;diffusealpha,1);
+            OnCommand = function(self) self:diffusealpha(0); self:x(pplayer == "P1" and -70 or 70); self:sleep(1-(6-i)*0.05); self:decelerate(0.25); self:x(0); self:diffusealpha(1); end;
             LoadFont("Common Normal")..{
-                InitCommand=cmd(y,i*22);
+                InitCommand=function(self) self:y(i*22); end;
                 OnCommand=function(self)
                     self:settext("0000")
                     self:shadowlength(1)
@@ -354,44 +354,44 @@ Condition = GAMESTATE:IsPlayerEnabled(PLAYER_1);
 
 
 Def.ActorFrame{
-	InitCommand=cmd(x,-440;y,-5);
+	InitCommand=function(self) self:x(-440); self:y(-5); end;
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(0*1) else
 			self:setstate(0) end end; 
 	};
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*1;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110+22*1); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(1*2) else
 			self:setstate(1) end end; 
 	};
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*2;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110+22*2); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(2*2) else
 			self:setstate(2) end end; 
 	};
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*3;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110+22*3); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(3*2) else
 			self:setstate(3) end end; 
 	};
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*4;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110+22*4); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(4*2) else
 			self:setstate(4) end end; 
 	};
     Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load( jud1 );
+		InitCommand=function(self) self:x(500); self:y(110+22*5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load( jud1 );
 		if self:GetNumStates() == 12 then frame1 = true else frame1 = false end
 		if frame1 then
 			self:setstate(5*2) else
@@ -400,7 +400,7 @@ Def.ActorFrame{
 };
 
     Def.ActorFrame {
-        OnCommand=cmd(x,131;y,88);
+        OnCommand=function(self) self:x(131); self:y(88); end;
         createStageStatus("P1")
     };
 	
@@ -429,17 +429,17 @@ Def.ActorFrame{
 
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() or "lose")..".png")..{
     Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetStageAward() ~= nil);
-    InitCommand=cmd(x,205;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
+    InitCommand=function(self) self:x(205); self:y(SCREEN_CENTER_Y-23); self:zoom(0.5); self:shadowlength(2); end;
+    OnCommand=function(self) self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.5); self:rotationz(0); self:diffusealpha(1); end;
 };
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() or "lose")..".png")..{
     Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPeakComboAward() ~= nil);
-    InitCommand=cmd(x,250;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
+    InitCommand=function(self) self:x(250); self:y(SCREEN_CENTER_Y-23); self:zoom(0.5); self:shadowlength(2); end;
+    OnCommand=function(self) self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.5); self:rotationz(0); self:diffusealpha(1); end;
 };
 
     LoadFont("Common Normal")..{
-		InitCommand=cmd(xy,230, 110+22*6+5);
+		InitCommand=function(self) self:xy(230, 110+22*6+5); end;
 		-- x = SCREEN_CENTER_X + 200
         OnCommand=function(self)
 			self:playcommand("reloadScore");
@@ -470,11 +470,11 @@ LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):Ge
             stageAnimate[thisPn]["score"] = nowScoring
             self:sleep(1/30):queuecommand("reloadScore")
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 
     LoadFont("Common Normal")..{
-        InitCommand=cmd(xy,100, 110+22*6+5);
+        InitCommand=function(self) self:xy(100, 110+22*6+5); end;
         --x = 110+22*6+5
         OnCommand=function(self)
             self:settext("00.00%")
@@ -549,44 +549,44 @@ SS2[7] = SS2[1]+SS2[2]+SS2[3]+SS2[4]+SS2[5]+SS2[6];
 
 t[#t+1] = Def.ActorFrame{
 Def.ActorFrame{
-	OnCommand=cmd(x,220+70;y,-5-197.5);
+	OnCommand=function(self) self:x(220+70); self:y(-5-197.5); end;
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(0*1) else
 			self:setstate(0) end end; 
 	};
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*1+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+22*1+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(1*2) else
 			self:setstate(1) end end; 
 	};
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*2+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+22*2+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(2*2) else
 			self:setstate(2) end end; 
 	};
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*3+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+22*3+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(3*2) else
 			self:setstate(3) end end; 
 	};
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*4+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+22*4+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(4*2) else
 			self:setstate(4) end end; 
 	};
 Def.Sprite{
-		InitCommand=cmd(x,500;y,110+22*5+197.5;zoom,0.35;shadowlength,3); OnCommand=function(self) self:pause();self:Load(jud2);
+		InitCommand=function(self) self:x(500); self:y(110+22*5+197.5); self:zoom(0.35); self:shadowlength(3); end; OnCommand=function(self) self:pause();self:Load(jud2);
 		if self:GetNumStates() == 12 then frame2 = true else frame2 = false end
 		if frame2 then
 			self:setstate(5*2) else
@@ -595,7 +595,7 @@ Def.Sprite{
 };	
 
     Def.ActorFrame {
-        OnCommand=cmd(x,SCREEN_RIGHT-135;y,88);
+        OnCommand=function(self) self:x(SCREEN_RIGHT-135); self:y(88); end;
         createStageStatus("P2")
     };
 
@@ -625,17 +625,17 @@ Def.Sprite{
 
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() or "lose")..".png")..{
     Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetStageAward() ~= nil);
-    InitCommand=cmd(x,SCREEN_CENTER_X + 175;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
+    InitCommand=function(self) self:x(SCREEN_CENTER_X + 175); self:y(SCREEN_CENTER_Y-23); self:zoom(0.5); self:shadowlength(2); end;
+    OnCommand=function(self) self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.5); self:rotationz(0); self:diffusealpha(1); end;
 };
 LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() or "lose")..".png")..{
     Condition=(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPeakComboAward() ~= nil);
-    InitCommand=cmd(x,SCREEN_CENTER_X + 175 + 45;y,SCREEN_CENTER_Y-23;zoom,0.5;shadowlength,2);
-    OnCommand=cmd(diffusealpha,0;zoom,3;rotationz,-60;sleep,2;decelerate,0.5;zoom,0.5;rotationz,0;diffusealpha,1);
+    InitCommand=function(self) self:x(SCREEN_CENTER_X + 175 + 45); self:y(SCREEN_CENTER_Y-23); self:zoom(0.5); self:shadowlength(2); end;
+    OnCommand=function(self) self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.5); self:rotationz(0); self:diffusealpha(1); end;
 };
 
     LoadFont("Common Normal")..{
-		InitCommand=cmd(xy,SCREEN_CENTER_X + 200, 110+22*6+5);
+		InitCommand=function(self) self:xy(SCREEN_CENTER_X + 200, 110+22*6+5); end;
         OnCommand=function(self)
 			self:playcommand("reloadScore");
 		end;
@@ -665,11 +665,11 @@ LoadActor("ICON/"..(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):Ge
             stageAnimate[thisPn]["score"] = nowScoring
             self:sleep(1/30):queuecommand("reloadScore")
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 
     LoadFont("Common Normal")..{
-        InitCommand=cmd(xy,SCREEN_CENTER_X + 350, 110+22*6+5);
+        InitCommand=function(self) self:xy(SCREEN_CENTER_X + 350, 110+22*6+5); end;
         OnCommand=function(self)
             self:settext("00.00%")
             self:shadowlength(1)
@@ -706,47 +706,47 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
     for xi = pageCrt-1,1,-1 do
         x[#x+1]=Def.ActorFrame{
             Condition = GAMESTATE:IsPlayerEnabled(v);
-            OnCommand=cmd(y,-35+(pageCrt - xi - 1)*30);
+            OnCommand=function(self) self:y(-35+(pageCrt - xi - 1)*30); end;
             Def.ActorFrame{
                 LoadFont("Common Normal")..{
-                    OnCommand=cmd(zoom,0.95;x,-200+15;settextf,"S%d ",pageCrt - xi;);
+                    OnCommand=function(self) self:zoom(0.95); self:x(-200+15); self:settextf("S%d ",pageCrt - xi); end;
                 };
                 LoadFont("Combo Number")..{
-                    InitCommand=cmd(zoom,0.27;x,-60;horizalign,right;settextf,"%d",STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetScore());
-                    OnCommand=cmd(playcommand,"onLoop");
-                    onLoopCommand=cmd(sleep,5;decelerate,0.5;cropleft,1;sleep,5;decelerate,0.5;cropleft,0;sleep,0.02;queuecommand,"onLoop");
+                    InitCommand=function(self) self:zoom(0.27); self:x(-60); self:horizalign(right); self:settextf("%d",STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetScore()); end;
+                    OnCommand=function(self) self:playcommand("onLoop"); end;
+                    onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropleft(1); self:sleep(5); self:decelerate(0.5); self:cropleft(0); self:sleep(0.02); self:queuecommand("onLoop"); end;
                 };
                 LoadFont("Combo Number")..{
-                    InitCommand=cmd(zoom,0.27;x,-150;horizalign,left;settextf,"%.02f%%",STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPercentDancePoints()*100;cropright,1);
-                    OnCommand=cmd(playcommand,"onLoop");
-                    onLoopCommand=cmd(sleep,5;decelerate,0.5;cropright,0;sleep,5;decelerate,0.5;cropright,1;sleep,0.02;queuecommand,"onLoop");
+                    InitCommand=function(self) self:zoom(0.27); self:x(-150); self:horizalign(left); self:settextf("%.02f%%",STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPercentDancePoints()*100); self:cropright(1); end;
+                    OnCommand=function(self) self:playcommand("onLoop"); end;
+                    onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropright(0); self:sleep(5); self:decelerate(0.5); self:cropright(1); self:sleep(0.02); self:queuecommand("onLoop"); end;
                 };
                 
                 LoadFont("Common Normal")..{
-                    OnCommand=cmd(zoom,0.75;x,13;settextf,"MC:%d",math.min(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):MaxCombo(),99999));
+                    OnCommand=function(self) self:zoom(0.75); self:x(13); self:settextf("MC:%d",math.min(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):MaxCombo(),99999)); end;
                 };
             };
             Def.Sprite{
-                OnCommand=cmd(x,-36;y,-2;Load,THEME:GetPathG("GradeDisplayEval",ToEnumShortString(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetGrade()));zoom,0.3);
+                OnCommand=function(self) self:x(-36); self:y(-2); self:Load(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetGrade()))); self:zoom(0.3); end;
             };
             LoadActor("ICON/"..(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetStageAward() or "Lose")..".png")..{
-                OnCommand=cmd(zoom,0.3;x,70);
+                OnCommand=function(self) self:zoom(0.3); self:x(70); end;
             };
             LoadActor("ICON/"..(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPeakComboAward() or "Lose")..".png")..{
-                OnCommand=cmd(zoom,0.3;x,95);
+                OnCommand=function(self) self:zoom(0.3); self:x(95); end;
             };
             Def.Quad{
-                InitCommand=cmd(x,110;horizalign,left;zoomx,100;zoomy,25;faderight,0.3;fadeleft,0.3;diffuse,GameColor.Difficulty[STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPlayedSteps()[1]:GetDifficulty()]);
+                InitCommand=function(self) self:x(110); self:horizalign(left); self:zoomx(100); self:zoomy(25); self:faderight(0.3); self:fadeleft(0.3); self:diffuse(GameColor.Difficulty[STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPlayedSteps()[1]:GetDifficulty()]); end;
             };
             LoadFont("Common Normal")..{
-                InitCommand=cmd(x,160;zoom,0.6;shadowlength,1);
-                OnCommand=cmd(settext,stepText(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPlayedSteps()[1]););
+                InitCommand=function(self) self:x(160); self:zoom(0.6); self:shadowlength(1); end;
+                OnCommand=function(self) self:settext(stepText(STATSMAN:GetPlayedStageStats(xi):GetPlayerStageStats(v):GetPlayedSteps()[1])); end;
             };
         };
     end
     t[#t+1]=Def.ActorFrame{
-        InitCommand=cmd(diffusealpha,0);
-        OnCommand = cmd(x, SCREEN_CENTER_X*0.806-133 + (i==2 and SCREEN_CENTER_X+5 or 0);y,SCREEN_CENTER_Y*0.616+212);
+        InitCommand=function(self) self:diffusealpha(0); end;
+        OnCommand = function(self) self:x(SCREEN_CENTER_X*0.806-133 + (i==2 and SCREEN_CENTER_X+5 or 0)); self:y(SCREEN_CENTER_Y*0.616+212); end;
         reSelectMessageCommand=function(self,param)	
             if param.PN == i then
                 if pageNow["P"..tostring(i)] == 0 then
@@ -757,14 +757,14 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
             end 
         end;
         Def.Quad{
-            OnCommand=cmd(diffuse,{0.2,0.2,0.2,0.1};diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+            OnCommand=function(self) self:diffuse({0.2,0.2,0.2,0.1}); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
         };
         -- Def.Quad{
-        --     OnCommand=cmd(diffuse,ColorMidTone(PlayerColor(v));diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+        --     OnCommand=function(self) self:diffuse(ColorMidTone(PlayerColor(v))); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
         -- };
         LoadFont("Common Large") .. {
             Text = Screen.String("HeaderText");
-            OnCommand=cmd(horizalign,left;x,-200;y,-70;zoom,0.25;shadowlength,1);
+            OnCommand=function(self) self:horizalign(left); self:x(-200); self:y(-70); self:zoom(0.25); self:shadowlength(1); end;
         };
         x;
     };
@@ -772,8 +772,8 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
     for iPage = 1,pageCrt -1 do
         t[#t+1]=Def.ActorFrame{
             Condition = GAMESTATE:IsPlayerEnabled(v);
-            InitCommand=cmd(diffusealpha,0);
-            OnCommand = cmd(x, SCREEN_CENTER_X*0.806-133 + (i==2 and SCREEN_CENTER_X+5 or 0);y,SCREEN_CENTER_Y*0.616+212);
+            InitCommand=function(self) self:diffusealpha(0); end;
+            OnCommand = function(self) self:x(SCREEN_CENTER_X*0.806-133 + (i==2 and SCREEN_CENTER_X+5 or 0)); self:y(SCREEN_CENTER_Y*0.616+212); end;
             reSelectMessageCommand=function(self,param)	
                 if param.PN==i then
                     if pageNow["P"..tostring(i)] == iPage then
@@ -784,18 +784,18 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
                 end 
             end;
             Def.Quad{
-                OnCommand=cmd(diffuse,ColorDarkTone(PlayerColor(v));diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+                OnCommand=function(self) self:diffuse(ColorDarkTone(PlayerColor(v))); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
             };
             LoadFont("Common Large") .. {
                 Text = "Stage "..tostring(iPage);
-                OnCommand=cmd(horizalign,left;x,-200;y,-70;zoom,0.25;shadowlength,1);
+                OnCommand=function(self) self:horizalign(left); self:x(-200); self:y(-70); self:zoom(0.25); self:shadowlength(1); end;
             };
             Def.Quad{
-                InitCommand=cmd(x,212;y,-60;horizalign,right;zoomx,100;zoomy,25;fadeleft,0.7;diffuse,GameColor.Difficulty[STATSMAN:GetPlayedStageStats(iPage):GetPlayerStageStats(v):GetPlayedSteps()[1]:GetDifficulty()]);
+                InitCommand=function(self) self:x(212); self:y(-60); self:horizalign(right); self:zoomx(100); self:zoomy(25); self:fadeleft(0.7); self:diffuse(GameColor.Difficulty[STATSMAN:GetPlayedStageStats(iPage):GetPlayerStageStats(v):GetPlayedSteps()[1]:GetDifficulty()]); end;
             };
             LoadFont("Common Normal")..{
-                InitCommand=cmd(x,200;y,-60;horizalign,right;zoom,0.6;shadowlength,1);
-                OnCommand=cmd(settext,stepText(STATSMAN:GetPlayedStageStats(iPage):GetPlayerStageStats(v):GetPlayedSteps()[1]););
+                InitCommand=function(self) self:x(200); self:y(-60); self:horizalign(right); self:zoom(0.6); self:shadowlength(1); end;
+                OnCommand=function(self) self:settext(stepText(STATSMAN:GetPlayedStageStats(iPage):GetPlayerStageStats(v):GetPlayedSteps()[1])); end;
             };
             Def.Sprite{
             OnCommand=function(self)
@@ -810,19 +810,19 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
                 end;
             };
             Def.Quad{
-                OnCommand=cmd(xy,-100,-40;zoomy,4;zoomx,154);
+                OnCommand=function(self) self:xy(-100,-40); self:zoomy(4); self:zoomx(154); end;
             };
             Def.Quad{
-                OnCommand=cmd(xy,-100,20;zoomy,4;zoomx,154);
+                OnCommand=function(self) self:xy(-100,20); self:zoomy(4); self:zoomx(154); end;
             };
             Def.Quad{
-                OnCommand=cmd(xy,-175,-10;zoomy,60;zoomx,4);
+                OnCommand=function(self) self:xy(-175,-10); self:zoomy(60); self:zoomx(4); end;
             };
             Def.Quad{
-                OnCommand=cmd(xy,-25,-10;zoomy,60;zoomx,4);
+                OnCommand=function(self) self:xy(-25,-10); self:zoomy(60); self:zoomx(4); end;
             };
             LoadFont("Common Normal")..{
-				InitCommand=cmd(x,-15;y,-20;horizalign,left;maxwidth,220);
+				InitCommand=function(self) self:x(-15); self:y(-20); self:horizalign(left); self:maxwidth(220); end;
 				OnCommand=function(self) 
 				local thisSong = STATSMAN:GetPlayedStageStats(pageCrt - iPage):GetPlayedSongs()[1];	
 					local text = thisSong:GetDisplayMainTitle()
@@ -830,7 +830,7 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
 				end;
 			};
             LoadFont("Common Normal")..{
-				InitCommand=cmd(x,-15;y,-5;horizalign,left;vertalign,top;maxwidth,220;zoom,0.7);
+				InitCommand=function(self) self:x(-15); self:y(-5); self:horizalign(left); self:vertalign(top); self:maxwidth(220); self:zoom(0.7); end;
 				OnCommand=function(self) 
                     local thisSong = STATSMAN:GetPlayedStageStats(pageCrt - iPage):GetPlayedSongs()[1];	
                     local text = ""
@@ -845,7 +845,7 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
 			};
 
             LoadFont("Combo Number")..{
-				InitCommand=cmd(x,190;y,50;horizalign,right;skewx,-0.1;vertalign,top;maxwidth,250;zoom,0.7);
+				InitCommand=function(self) self:x(190); self:y(50); self:horizalign(right); self:skewx(-0.1); self:vertalign(top); self:maxwidth(250); self:zoom(0.7); end;
 				OnCommand=function(self) 
                     local thisSong = STATSMAN:GetPlayedStageStats(pageCrt - iPage):GetPlayedSongs()[1];	
                     local lenTime = thisSong:GetLastSecond()
@@ -861,10 +861,10 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
 			};
             LoadFont("Common Normal")..{
                 Text = "BPM";
-                InitCommand=cmd(horizalign,left;x,-175;y,40);
+                InitCommand=function(self) self:horizalign(left); self:x(-175); self:y(40); end;
             };
             LoadFont("Combo Number")..{
-				InitCommand=cmd(horizalign,left;x,-175;y,60;skewx,-0.1;vertalign,top;maxwidth,250;zoom,0.5);
+				InitCommand=function(self) self:horizalign(left); self:x(-175); self:y(60); self:skewx(-0.1); self:vertalign(top); self:maxwidth(250); self:zoom(0.5); end;
 				OnCommand=function(self) 
                     local thisSong = STATSMAN:GetPlayedStageStats(pageCrt - iPage):GetPlayedSongs()[1];	
                     local bpm = thisSong:GetDisplayBpms()

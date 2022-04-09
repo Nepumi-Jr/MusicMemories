@@ -1,12 +1,12 @@
 local t = Def.ActorFrame {};
 
 t[#t+1] = Def.Quad {
-	InitCommand=cmd(vertalign,bottom;zoomto,SCREEN_WIDTH,34;diffuse,color("#161616"));
+	InitCommand=function(self) self:vertalign(bottom); self:zoomto(SCREEN_WIDTH,34); self:diffuse(color("#161616")); end;
 };
 
 t[#t+1] = LoadActor(THEME:GetPathG("ScreenWithMenuElements","header/Header")) .. {
-	InitCommand=cmd(y,-48;vertalign,bottom;zoomtowidth,SCREEN_WIDTH);
-	OnCommand=cmd(zoomy,-1;diffuse,color("#ffd400"));
+	InitCommand=function(self) self:y(-48); self:vertalign(bottom); self:zoomtowidth(SCREEN_WIDTH); end;
+	OnCommand=function(self) self:zoomy(-1); self:diffuse(color("#ffd400")); end;
 };
 
 return t;

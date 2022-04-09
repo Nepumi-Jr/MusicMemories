@@ -23,20 +23,20 @@ local TNSFrames = {
 local muan = false;
 
 local JudgeCmdsYes = {
-	TapNoteScore_W1 = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W2 = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W3 = cmd(finishtweening;rotationz,5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0),
-	TapNoteScore_W4 = cmd(finishtweening;rotationz,7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W5 = cmd(finishtweening;rotationz,15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_Miss = cmd(finishtweening;rotationz,25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;zoomy,0.5;zoomx,2;diffusealpha,0)
+	TapNoteScore_W1 = function(self) self:finishtweening(); self:rotationz(0); self:shadowlength(0); self:y(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.2); self:addy(-10); self:decelerate(0.05*2.5); self:addy(10); self:zoomy(1); self:zoom(1); self:sleep(0.8); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W2 = function(self) self:finishtweening(); self:rotationz(0); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.15); self:addy(-7); self:decelerate(0.05*2.5); self:addy(7); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W3 = function(self) self:finishtweening(); self:rotationz(5); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.1); self:addy(-6); self:decelerate(0.05*2.5); self:addy(6); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W4 = function(self) self:finishtweening(); self:rotationz(7); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1); self:addy(-5); self:decelerate(0.05*2.5); self:addy(5); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W5 = function(self) self:finishtweening(); self:rotationz(15); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1); self:addy(-5); self:decelerate(0.05*2.5); self:addy(5); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_Miss = function(self) self:finishtweening(); self:rotationz(25); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoom(1); self:y(-20); self:linear(0.8); self:y(20); self:sleep(0.5); self:linear(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end
 };
 local JudgeCmdsNo = {
-	TapNoteScore_W1 = cmd(finishtweening;rotationz,0;shadowlength,0;y,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.2;addy,-10;decelerate,0.05*2.5;addy,10;zoomy,1;zoom,1;sleep,0.8;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W2 = cmd(finishtweening;rotationz,0;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.15;addy,-7;decelerate,0.05*2.5;addy,7;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W3 = cmd(finishtweening;rotationz,-5;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1.1;addy,-6;decelerate,0.05*2.5;addy,6;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0),
-	TapNoteScore_W4 = cmd(finishtweening;rotationz,-7;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_W5 = cmd(finishtweening;rotationz,-15;y,0;shadowlength,0;diffusealpha,1;zoomx,1;zoomy,1.1;zoom,1;addy,-5;decelerate,0.05*2.5;addy,5;zoomy,1;zoom,1;sleep,0.5;decelerate,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;),
-	TapNoteScore_Miss = cmd(finishtweening;rotationz,-25;y,0;shadowlength,0;diffusealpha,1;zoom,1;y,-20;linear,0.8;y,20;sleep,0.5;linear,0.1;zoomy,0.5;zoomx,2;diffusealpha,0;)
+	TapNoteScore_W1 = function(self) self:finishtweening(); self:rotationz(0); self:shadowlength(0); self:y(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.2); self:addy(-10); self:decelerate(0.05*2.5); self:addy(10); self:zoomy(1); self:zoom(1); self:sleep(0.8); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W2 = function(self) self:finishtweening(); self:rotationz(0); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.15); self:addy(-7); self:decelerate(0.05*2.5); self:addy(7); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W3 = function(self) self:finishtweening(); self:rotationz(-5); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1.1); self:addy(-6); self:decelerate(0.05*2.5); self:addy(6); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W4 = function(self) self:finishtweening(); self:rotationz(-7); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1); self:addy(-5); self:decelerate(0.05*2.5); self:addy(5); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_W5 = function(self) self:finishtweening(); self:rotationz(-15); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoomx(1); self:zoomy(1.1); self:zoom(1); self:addy(-5); self:decelerate(0.05*2.5); self:addy(5); self:zoomy(1); self:zoom(1); self:sleep(0.5); self:decelerate(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end,
+	TapNoteScore_Miss = function(self) self:finishtweening(); self:rotationz(-25); self:y(0); self:shadowlength(0); self:diffusealpha(1); self:zoom(1); self:y(-20); self:linear(0.8); self:y(20); self:sleep(0.5); self:linear(0.1); self:zoomy(0.5); self:zoomx(2); self:diffusealpha(0); end
 };
 
 return Def.ActorFrame{
@@ -165,7 +165,7 @@ return Def.ActorFrame{
 
     Def.ActorFrame{
         Name = "BigScorbi";
-        InitCommand=cmd(zoom,0.8;y,25;visible,false;);
+        InitCommand=function(self) self:zoom(0.8); self:y(25); self:visible(false); end;
         OnCommand=function(self)
             if LP == PLAYER_1 then
                 self:x(SCREEN_CENTER_X*2-141.25)
@@ -176,11 +176,11 @@ return Def.ActorFrame{
         end;
         LoadFont("Combo Numbers")..{
             Name = "Scortoke";
-            InitCommand=cmd(settext,"00.00%";zoom,0.4);
+            InitCommand=function(self) self:settext("00.00%"); self:zoom(0.4); end;
         };
         LoadFont("Combo Numbers")..{
             Name = "Scorbi";
-            InitCommand=cmd(settext,"00.00%";zoom,0.4);
+            InitCommand=function(self) self:settext("00.00%"); self:zoom(0.4); end;
         };
         
     };
@@ -188,7 +188,7 @@ return Def.ActorFrame{
 
     Def.ActorFrame{
         Name = "BigJudge";
-        InitCommand=cmd(zoom,0.4;y,20;visible,false;);
+        InitCommand=function(self) self:zoom(0.4); self:y(20); self:visible(false); end;
         OnCommand=function(self)
             if LP == PLAYER_1 then
                 self:x(SCREEN_CENTER_X*2-250)
@@ -209,7 +209,7 @@ return Def.ActorFrame{
                 end
             end;
             InitCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
-            ResetCommand=cmd(finishtweening;stopeffect;visible,false);
+            ResetCommand=function(self) self:finishtweening(); self:stopeffect(); self:visible(false); end;
         };
     };
 

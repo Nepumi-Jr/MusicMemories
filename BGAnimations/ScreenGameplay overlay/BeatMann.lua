@@ -1,7 +1,7 @@
 local Seri = false;
 local t = Def.ActorFrame{
 	Def.Quad{
-		OnCommand=cmd(visible,false;playcommand,"LOOPU");
+		OnCommand=function(self) self:visible(false); self:playcommand("LOOPU"); end;
 		LOOPUCommand=function(self)
 		
 			--SM("\n\n\n\n\n:)"..tostring(math.mod(GAMESTATE:GetSongBeat(),1)));

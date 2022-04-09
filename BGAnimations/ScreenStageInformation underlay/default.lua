@@ -7,21 +7,21 @@ end
 local t = Def.ActorFrame{};
 
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{0,0,0,1});
-		OnCommand=cmd(sleep,10.5);
+		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,1}); end;
+		OnCommand=function(self) self:sleep(10.5); end;
 	};
 
 
 
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{1,1,1,0});
-		OnCommand=cmd(sleep,2+2.5;linear,0.7;diffusealpha,1);
+		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
+		OnCommand=function(self) self:sleep(2+2.5); self:linear(0.7); self:diffusealpha(1); end;
 	};
 	t[#t+1] = Def.ActorFrame{
-		InitCommand=cmd(Center;zoom,1;rotationz,0;);
+		InitCommand=function(self) self:Center(); self:zoom(1); self:rotationz(0); end;
 		Def.Sprite {
-			InitCommand=cmd(diffusealpha,0);
-			BeginCommand=cmd(LoadFromCurrentSongBackground);
+			InitCommand=function(self) self:diffusealpha(0); end;
+			BeginCommand=function(self) self:LoadFromCurrentSongBackground(); end;
 			OnCommand=function(self)
 				if PREFSMAN:GetPreference("StretchBackgrounds") then
 					self:SetSize(SCREEN_WIDTH,SCREEN_HEIGHT)
@@ -34,19 +34,19 @@ local t = Def.ActorFrame{};
 		};
 	}
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{1,1,1,0});
-		OnCommand=cmd(sleep,2.2;diffusealpha,1);
+		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
+		OnCommand=function(self) self:sleep(2.2); self:diffusealpha(1); end;
 	};
 	t[#t+1]=LoadActor("BlurBG.lua")..{
-		InitCommand=cmd(visible,false;Center);
-		OnCommand=cmd(sleep,2.2;queuecommand,"app");
-		appCommand=cmd(visible,true;linear,3.8;zoom,1.1;rotationz,1);
+		InitCommand=function(self) self:visible(false); self:Center(); end;
+		OnCommand=function(self) self:sleep(2.2); self:queuecommand("app"); end;
+		appCommand=function(self) self:visible(true); self:linear(3.8); self:zoom(1.1); self:rotationz(1); end;
 	};
 	 
 	t[#t+1] = Def.ActorFrame{
-		InitCommand=cmd(zoom,1.2;x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-100;visible,false);
-		OnCommand=cmd(sleep,2.2;queuecommand,"app");
-		appCommand=cmd(visible,true;decelerate,2.5;y,SCREEN_CENTER_Y-70;diffusealpha,1);
+		InitCommand=function(self) self:zoom(1.2); self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y-100); self:visible(false); end;
+		OnCommand=function(self) self:sleep(2.2); self:queuecommand("app"); end;
+		appCommand=function(self) self:visible(true); self:decelerate(2.5); self:y(SCREEN_CENTER_Y-70); self:diffusealpha(1); end;
 		--Song Banner
 
 		
@@ -63,7 +63,7 @@ local t = Def.ActorFrame{};
 			end;
 		};
 		LoadActor(THEME:GetPathG("ScreenSelectMusic","BannerFrame"))..{
-			OnCommand=cmd();
+			OnCommand=function(self) end;
 		};
 	
 	
@@ -72,21 +72,21 @@ local t = Def.ActorFrame{};
 
 
 	t[#t+1]=LoadActor(sound)..{
-		OnCommand=cmd(sleep,0.2;queuecommand,"YEP");
-		YEPCommand=cmd(play);
+		OnCommand=function(self) self:sleep(0.2); self:queuecommand("YEP"); end;
+		YEPCommand=function(self) self:play(); end;
 	};
 
 --Title Stuff HERE
 	t[#t+1]=LoadActor("Title.lua");
 
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{1,1,1,0});
-		OnCommand=cmd(sleep,1;accelerate,1.2;diffusealpha,1;decelerate,2;diffusealpha,0);
+		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
+		OnCommand=function(self) self:sleep(1); self:accelerate(1.2); self:diffusealpha(1); self:decelerate(2); self:diffusealpha(0); end;
 	};
 
 	t[#t+1]=Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{0,0,0,0});
-		OnCommand=cmd(sleep,5;linear,1;diffusealpha,1);
+		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0}); end;
+		OnCommand=function(self) self:sleep(5); self:linear(1); self:diffusealpha(1); end;
 	};
 
 

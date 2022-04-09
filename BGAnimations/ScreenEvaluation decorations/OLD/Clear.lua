@@ -36,8 +36,8 @@ symbol = {'F','I','N','I','S','H','point'};
 end
 local t = Def.ActorFrame{};
 	t[#t+1] = LoadActor("Let/"..pic)..{
-		InitCommand=cmd(Center;FullScreen;);
-		OnCommand=cmd(diffusealpha,0.35;sleep,0.25;linear,0.5;diffusealpha,0);
+		InitCommand=function(self) self:Center(); self:FullScreen(); end;
+		OnCommand=function(self) self:diffusealpha(0.35); self:sleep(0.25); self:linear(0.5); self:diffusealpha(0); end;
 	};
 local Sped = 60;
 local Leaveit = 40;

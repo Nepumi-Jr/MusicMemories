@@ -1,15 +1,20 @@
 local ENDED = false;
-local x=Def.ActorFrame{
+
+local updateCmd = function(self)
+	if not ENDED then
+		local SONGg = GAMESTATE:GetCurrentSong();
+		local per =GAMESTATE:GetCurMusicSeconds()/SONGg:GetLastSecond();
+		self:x(per*SCREEN_RIGHT);
+	end
+end;
+
+local t=Def.ActorFrame{
 
 	Def.ActorFrame{
-		InitCommand=cmd(SetUpdateFunction,function(self)
-			if not ENDED then
-				local SONGg = GAMESTATE:GetCurrentSong();
-				local per =GAMESTATE:GetCurMusicSeconds()/SONGg:GetLastSecond();
-				self:x(per*SCREEN_RIGHT);
-			end
+		InitCommand=function(self) self:SetUpdateFunction(
+			updateCmd
+			);
 		end;
-		);
 
 	Def.Sprite{
 		Texture="Chiaki Nanami 1x3.png";
@@ -17,9 +22,7 @@ local x=Def.ActorFrame{
 		Delay0000 = 0.5;
 		Frame0001 = 0;
 		Delay0001 = 0.5;
-		InitCommand=cmd(play;y,SCREEN_BOTTOM-32;effectclock,"Beat";
-			SetTextureFiltering,false;zoom,1;
-			);
+		InitCommand=function(self) self:play(); self:y(SCREEN_BOTTOM-32); self:effectclock("Beat"); self:SetTextureFiltering(false); self:zoom(1); end;
 
 		OffCommand=function(self)
 			ENDED = true;
@@ -33,4 +36,4 @@ local x=Def.ActorFrame{
 
 };
 
-return x;
+return t;

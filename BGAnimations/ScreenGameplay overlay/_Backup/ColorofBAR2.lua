@@ -16,7 +16,7 @@ self:x((i-1)*(SCREEN_RIGHT/maxnum));
 self:y(wai)
 self:fadetop(0.5);
 end;
-OnCommand=cmd(playcommand,'Super');
+OnCommand=function(self) self:playcommand('Super'); end;
 		SuperCommand=function(self)
 		if GAMESTATE:GetCurMusicSeconds() < (GAMESTATE:GetCurrentSong():MusicLengthSeconds()/maxnum)*(i-1) then
 		self:diffusealpha(0)
@@ -55,7 +55,7 @@ OnCommand=cmd(playcommand,'Super');
 end
 t[#t+1] = Def.ActorFrame{
 Def.Quad {
-OnCommand=cmd(zoom,0);
+OnCommand=function(self) self:zoom(0); end;
 		LifeChangedMessageCommand=function(self,params)
 			if(params.Player == PLAYER_2) then
 				P2H = params.LifeMeter:GetLife()*100
@@ -63,7 +63,7 @@ OnCommand=cmd(zoom,0);
 		end;
 };
 Def.Quad {
-OnCommand=cmd(zoom,0);
+OnCommand=function(self) self:zoom(0); end;
 		LifeChangedMessageCommand=function(self,params)
 			if(params.Player == PLAYER_1) then
 				P1H = params.LifeMeter:GetLife()*100

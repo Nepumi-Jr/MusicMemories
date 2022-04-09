@@ -18,7 +18,7 @@ local SPGo = 1
 local Frame = 0;
 local t = Def.ActorFrame{
 Def.ActorFrame{
-OnCommand=cmd(playcommand,"Ne");
+OnCommand=function(self) self:playcommand("Ne"); end;
 NeCommand=function(self)
 if math.mod(math.abs(GAMESTATE:GetSongBeat()),1)< 0.5 and not Funny then
 Funny = true
@@ -32,9 +32,9 @@ end;
 
 
 Def.ActorFrame{
-	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); end;
 LoadActor("count 1x5.png")..{
-		InitCommand=cmd(diffusealpha,0);
+		InitCommand=function(self) self:diffusealpha(0); end;
 		OnCommand=function(self)
 FB = GAMESTATE:GetCurrentSong():GetFirstBeat();
 if math.mod(FB,4) <= 2 then

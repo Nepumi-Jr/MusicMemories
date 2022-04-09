@@ -151,20 +151,20 @@ end;
 end
 
 
-t[#t+1] = LoadActor("Floor")..{OnCommand=cmd(rotationx,-90;zoom,0.45);};
+t[#t+1] = LoadActor("Floor")..{OnCommand=function(self) self:rotationx(-90); self:zoom(0.45); end;};
 
 t[#t+1] = LoadActor("MUSIC_STAND.lua")..{
-	OnCommand=cmd(zoom,5);
+	OnCommand=function(self) self:zoom(5); end;
 };
 
 t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(y,-195;z,-5;zoom,0.16;rotationx,-15);
-	LoadActor("RNote")..{OnCommand=cmd(zoom,0.2;diffusealpha,1);};
-	LoadFont("Common Normal")..{OnCommand=cmd(y,-167;zoom,0.6;settext,title;diffuse,{0,0,0,1});};
-	LoadFont("Common Normal")..{OnCommand=cmd(y,-157;zoom,0.3;settext,SubTitle ~= "" and "-"..SubTitle.."-" or "";diffuse,{0,0,0,1});};
-	LoadFont("Common Normal")..{OnCommand=cmd(x,-123;y,-153;horizalign,left;zoom,0.3;settext,Artist~= nil and "By "..Artist or "";diffuse,{0,0,0,1});};
-	LoadFont("Common Normal")..{OnCommand=cmd(x,131;y,-153;horizalign,right;zoom,0.3;settext,#charter==0 and "Unknown Composer" or (#charter==2 and charter[1].." & "..charter[2] or charter[1]);diffuse,{0,0,0,1});};
-	LoadFont("Common Normal")..{OnCommand=cmd(x,-114;y,-143;horizalign,left;zoom,0.3;settext,#BPM==2 and tostring(BPM[1]).."-"..tostring(BPM[2]) or tostring(BPM[1]);diffuse,{0,0,0,1});};
+		OnCommand=function(self) self:y(-195); self:z(-5); self:zoom(0.16); self:rotationx(-15); end;
+	LoadActor("RNote")..{OnCommand=function(self) self:zoom(0.2); self:diffusealpha(1); end;};
+	LoadFont("Common Normal")..{OnCommand=function(self) self:y(-167); self:zoom(0.6); self:settext(title); self:diffuse({0,0,0,1}); end;};
+	LoadFont("Common Normal")..{OnCommand=function(self) self:y(-157); self:zoom(0.3); self:settext(SubTitle ~= "" and "-"..SubTitle.."-" or ""); self:diffuse({0,0,0,1}); end;};
+	LoadFont("Common Normal")..{OnCommand=function(self) self:x(-123); self:y(-153); self:horizalign(left); self:zoom(0.3); self:settext(Artist~= nil and "By "..Artist or ""); self:diffuse({0,0,0,1}); end;};
+	LoadFont("Common Normal")..{OnCommand=function(self) self:x(131); self:y(-153); self:horizalign(right); self:zoom(0.3); self:settext(#charter==0 and "Unknown Composer" or (#charter==2 and charter[1].." & "..charter[2] or charter[1])); self:diffuse({0,0,0,1}); end;};
+	LoadFont("Common Normal")..{OnCommand=function(self) self:x(-114); self:y(-143); self:horizalign(left); self:zoom(0.3); self:settext(#BPM==2 and tostring(BPM[1]).."-"..tostring(BPM[2]) or tostring(BPM[1])); self:diffuse({0,0,0,1}); end;};
 };
 
 

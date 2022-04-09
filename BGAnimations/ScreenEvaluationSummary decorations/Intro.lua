@@ -1,5 +1,5 @@
 local t = Def.ActorFrame{
-	OnCommand=cmd(draworder,50020);
+	OnCommand=function(self) self:draworder(50020); end;
 };
 t[#t+1] = Def.Quad{
 	InitCommand=function(self)

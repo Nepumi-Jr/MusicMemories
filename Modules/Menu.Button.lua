@@ -2,15 +2,15 @@ return function(XX,YY,BGColor,FGColor,pawColor,textColor,subTextColor,text,subTe
 	local L = Def.ActorFrame{};
 	local tableText = LoadModule("Utils.TextToTable.lua")(text);
 	L[#L+1] = Def.ActorFrame{
-		OnCommand=cmd(x,0;y,0);
+		OnCommand=function(self) self:x(0); self:y(0); end;
 		LoadActor(THEME:GetPathG("MC","BG"))..{
-			OnCommand=cmd(diffuse,BGColor);
+			OnCommand=function(self) self:diffuse(BGColor); end;
 		};
 		LoadActor(THEME:GetPathG("MC","CT"))..{
-			OnCommand=cmd(diffuse,pawColor);
+			OnCommand=function(self) self:diffuse(pawColor); end;
 		};
 		LoadActor(THEME:GetPathG("MC","FG"))..{
-			OnCommand=cmd(diffuse,FGColor);
+			OnCommand=function(self) self:diffuse(FGColor); end;
 		};
 	};
 	local NormalText = "";
@@ -23,25 +23,25 @@ return function(XX,YY,BGColor,FGColor,pawColor,textColor,subTextColor,text,subTe
 	end
 	L[#L+1] = LoadFont("Common Large")..{
 		Text = NormalText;
-		InitCommand=cmd(x,0+125;y,0-75;horizalign,right;zoom,0.7);
-		OnCommand=cmd(diffuse,textColor);
+		InitCommand=function(self) self:x(0+125); self:y(0-75); self:horizalign(right); self:zoom(0.7); end;
+		OnCommand=function(self) self:diffuse(textColor); end;
 	};
 	if #tableText > 5 then
 		for i = 1,#tableText - 5 do
 			L[#L+1] = Def.ActorFrame{
-				InitCommand=cmd(x,0+100-150;y,0-75+125;rotationz,-32.8*i);
+				InitCommand=function(self) self:x(0+100-150); self:y(0-75+125); self:rotationz(-32.8*i); end;
 				LoadFont("Common Large")..{
 					Text=tableText[(#tableText - 5) - i +1];
-					InitCommand=cmd(y,-125;zoom,0.7);
-					OnCommand=cmd(diffuse,textColor);
+					InitCommand=function(self) self:y(-125); self:zoom(0.7); end;
+					OnCommand=function(self) self:diffuse(textColor); end;
 				};
 			};
 		end
 	end
 	L[#L+1] = LoadFont("Common Large")..{
 		Text = subText;
-		InitCommand=cmd(x,0-75;y,0+25;horizalign,left;zoom,0.45);
-		OnCommand=cmd(diffuse,subTextColor);
+		InitCommand=function(self) self:x(0-75); self:y(0+25); self:horizalign(left); self:zoom(0.45); end;
+		OnCommand=function(self) self:diffuse(subTextColor); end;
 	};
 	return L
 end;

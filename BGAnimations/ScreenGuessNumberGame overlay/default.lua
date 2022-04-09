@@ -127,11 +127,11 @@ local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
 		name = "Sample Text";
 	LoadActor("BG.png")..{
-		OnCommand=cmd(FullScreen);
+		OnCommand=function(self) self:FullScreen(); end;
 	};
 
 	Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,{0,0,0,0.5});
+		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0.5}); end;
 		EnterMessageCommand=function(self)
 			if phase == 1 then
 				self:finishtweening():decelerate(0.7):diffusealpha(0)
@@ -142,7 +142,7 @@ t[#t+1] = Def.ActorFrame{
 	};
 
 	Def.Quad{
-		InitCommand=cmd(visible,false);
+		InitCommand=function(self) self:visible(false); end;
 		OnCommand=function(self)
 			SCREENMAN:GetTopScreen():AddInputCallback(InputOfArrow)
 			self:sleep(1000)
@@ -150,8 +150,7 @@ t[#t+1] = Def.ActorFrame{
 	};
 
 	LoadFont("Common Large")..{
-		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.3;diffuse,{0,0,0,1}
-		;zoom,0.4;vertalign,top;cropright,1);
+		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.3); self:diffuse({0,0,0,1}); self:zoom(0.4); self:vertalign(top); self:cropright(1); end;
 		EnterMessageCommand=function(self)
 			if phase == 1 then
 				self:settext("Please guess a number\nthat I am thinking...")
@@ -164,21 +163,21 @@ t[#t+1] = Def.ActorFrame{
 			MESSAGEMAN:Broadcast('StartGuess')
 			phase = 2
 		end;
-		QuitOrRetMessageCommand=cmd(decelerate,1.5;cropright,1);
+		QuitOrRetMessageCommand=function(self) self:decelerate(1.5); self:cropright(1); end;
 	};
 
 
 	LoadFont("Common Normal")..{
-		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.9;diffuse,Color.Magenta;diffusealpha,0);
+		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.9); self:diffuse(Color.Magenta); self:diffusealpha(0); end;
 		StartGuessMessageCommand=function(self)
 			self:settext("From 1 to "..maxNum[selectDiff + 1])
 			self:linear(2):diffusealpha(1)
 		end;
-		QuitOrRetMessageCommand=cmd(decelerate,2;diffusealpha,0);
+		QuitOrRetMessageCommand=function(self) self:decelerate(2); self:diffusealpha(0); end;
 	};
 
 	LoadFont("Common Normal")..{
-		InitCommand=cmd(Center;diffuse,Color.Blue;diffusealpha,0);
+		InitCommand=function(self) self:Center(); self:diffuse(Color.Blue); self:diffusealpha(0); end;
 		StartGuessMessageCommand=function(self)
 			self:settext("Number of remaining tries:"..numRemain)
 			self:linear(2):diffusealpha(1)
@@ -186,12 +185,11 @@ t[#t+1] = Def.ActorFrame{
 		ReNumRemainMessageCommand=function(self)
 			self:settext("Number of remaining tries:"..numRemain)
 		end;
-		QuitOrRetMessageCommand=cmd(decelerate,2;diffusealpha,0);
+		QuitOrRetMessageCommand=function(self) self:decelerate(2); self:diffusealpha(0); end;
 	};
 
 	LoadFont("Combo Number")..{
-		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.4;diffuse,Color.Orange;
-		zoom,0);
+		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.4); self:diffuse(Color.Orange); self:zoom(0); end;
 		StartGuessMessageCommand=function(self)
 			self:settext("0")
 			self:bounceend(1.2):zoom(1.3)
@@ -205,11 +203,11 @@ t[#t+1] = Def.ActorFrame{
 			
 			self:settextf("%d",numGuess)
 		end;
-		QuitOrRetMessageCommand=cmd(decelerate,1.5;zoom,0);
+		QuitOrRetMessageCommand=function(self) self:decelerate(1.5); self:zoom(0); end;
 	};
 
 	LoadFont("Common Normal")..{
-		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.7;diffuse,Color.Blue;diffusealpha,0);
+		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.7); self:diffuse(Color.Blue); self:diffusealpha(0); end;
 		EnterMessageCommand=function(self)
 			if phase == 3 then
 				self:stopeffect()
@@ -243,19 +241,19 @@ t[#t+1] = Def.ActorFrame{
 				end
 			end
 		end;
-		QuitOrRetMessageCommand=cmd(decelerate,1.5;diffusealpha,0);
+		QuitOrRetMessageCommand=function(self) self:decelerate(1.5); self:diffusealpha(0); end;
 	};
 
 	
 
-	LoadActor( THEME:GetPathS("Common","start") )..{EnterMessageCommand=cmd(play);};
-	LoadActor( THEME:GetPathS("Common","cancel") )..{BackSMessageCommand=cmd(play);};
-	LoadActor( THEME:GetPathS("Common","value") )..{TickMessageCommand=cmd(play);};	
+	LoadActor( THEME:GetPathS("Common","start") )..{EnterMessageCommand=function(self) self:play(); end;};
+	LoadActor( THEME:GetPathS("Common","cancel") )..{BackSMessageCommand=function(self) self:play(); end;};
+	LoadActor( THEME:GetPathS("Common","value") )..{TickMessageCommand=function(self) self:play(); end;};	
 };
 
 for i = 0,2 do
 	t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120+120*i;zoom,0;queuecommand,"ArrowPress");
+		OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-120+120*i); self:zoom(0); self:queuecommand("ArrowPress"); end;
 		ArrowPressMessageCommand = function(self)
 			if phase == 0 then
 				self:finishtweening()
@@ -284,8 +282,8 @@ end
 
 for i = 0,1 do
 	t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-80+160*i;zoom,0;queuecommand,"ArrowPress");
-		QuitOrRetMessageCommand=cmd(queuecommand,"ArrowPress");
+		OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-80+160*i); self:zoom(0); self:queuecommand("ArrowPress"); end;
+		QuitOrRetMessageCommand=function(self) self:queuecommand("ArrowPress"); end;
 		ArrowPressMessageCommand = function(self)
 			if phase == 5 then
 				self:finishtweening()

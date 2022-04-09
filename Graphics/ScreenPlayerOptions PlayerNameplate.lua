@@ -23,23 +23,23 @@ end
 
 local t = Def.ActorFrame {
     Def.Quad{
-        InitCommand=cmd(zoomx,300;zoomy,25;diffuse,color("#222222");fadeleft,0.12;faderight,0.12);
+        InitCommand=function(self) self:zoomx(300); self:zoomy(25); self:diffuse(color("#222222")); self:fadeleft(0.12); self:faderight(0.12); end;
     };
 	LoadFont("Common Normal") .. {
 		Text=ToEnumShortString(PlayerNumber);
 		Name="PlayerShortName",
-		InitCommand=cmd(x,-104;maxwidth,32),
-		OnCommand=cmd(diffuse,PlayerColor(PlayerNumber);shadowlength,1)
+		InitCommand=function(self) self:x(-104); self:maxwidth(32); end,
+		OnCommand=function(self) self:diffuse(PlayerColor(PlayerNumber)); self:shadowlength(1); end
 	},
 	LoadFont("Common Normal") .. {
 		Text=bpm_text;
 		Name="BPMRangeOld",
-		InitCommand=cmd(x,-40;maxwidth,88/bpm_text_zoom),
-		OnCommand=cmd(shadowlength,1;zoom,bpm_text_zoom)
+		InitCommand=function(self) self:x(-40); self:maxwidth(88/bpm_text_zoom); end,
+		OnCommand=function(self) self:shadowlength(1); self:zoom(bpm_text_zoom); end
 	},
 	LoadActor(THEME:GetPathG("_StepsDisplayListRow","arrow")) .. {
 		Name="Seperator",
-		InitCommand=cmd(x,14)
+		InitCommand=function(self) self:x(14); end
 	},
 	LoadFont("Common Normal") .. {
 		Text="100 - 200000";
@@ -49,8 +49,8 @@ local t = Def.ActorFrame {
 			local speed, mode= GetSpeedModeAndValueFromPoptions(PlayerNumber)
 			self:playcommand("SpeedChoiceChanged", {pn= PlayerNumber, mode= mode, speed= speed})
 		end,
-		BPMWillNotChangeCommand=cmd(stopeffect),
-		BPMWillChangeCommand=cmd(diffuseshift;effectcolor1,Color.White;effectcolor2,Color.Green),
+		BPMWillNotChangeCommand=function(self) self:stopeffect(); end,
+		BPMWillChangeCommand=function(self) self:diffuseshift(); self:effectcolor1(Color.White); self:effectcolor2(Color.Green); end,
 		SpeedChoiceChangedMessageCommand= function(self, param)
 			if param.pn ~= PlayerNumber then return end
 			local text= ""

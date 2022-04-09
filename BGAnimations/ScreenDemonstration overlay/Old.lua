@@ -1,12 +1,12 @@
 local t = Def.ActorFrame{--Mc is awesome!--Under lay life
 	LoadActor("Easter Egg.lua")..{
-		OnCommand=cmd(y,SCREEN_BOTTOM-40);
+		OnCommand=function(self) self:y(SCREEN_BOTTOM-40); end;
 	};
 	LoadActor("Stage!.lua")..{
-		OnCommand=cmd();
+		OnCommand=function(self) end;
 	};
 	LoadActor("Hardddddd.lua")..{
-		OnCommand=cmd();
+		OnCommand=function(self) end;
 	};
 };
 return t;

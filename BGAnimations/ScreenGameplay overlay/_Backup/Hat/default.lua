@@ -9,8 +9,8 @@ local Offset = -0.25;
 local t = Def.ActorFrame{
 
 LoadActor("Hat.mp3")..{
-		InitCommand=cmd(diffusealpha,0);
-		OnCommand=cmd(playcommand,'Hat');
+		InitCommand=function(self) self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('Hat'); end;
 		HatCommand=function(self)
 		--self:setstate(RD)
 FB = GAMESTATE:GetCurrentSong():GetFirstBeat();

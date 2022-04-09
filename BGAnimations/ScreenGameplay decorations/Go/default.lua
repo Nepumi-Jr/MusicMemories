@@ -59,7 +59,7 @@ end;
 
 
 local Tune = Def.ActorFrame{
-    OnCommand=cmd(sleep,0.1;queuecommand,"GM");--Use For Delay
+    OnCommand=function(self) self:sleep(0.1); self:queuecommand("GM"); end;--Use For Delay
         --IDK Why SM use > 0 beat and then turn back to real beat :(
     GMCommand=function(self)
         if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -110,10 +110,10 @@ local Tune = Def.ActorFrame{
 for i = 1,3 do
     Tune[#Tune + 1] = Def.ActorFrame{
         Name = "Count"..tostring(i);
-        InitCommand=cmd(Center);
+        InitCommand=function(self) self:Center(); end;
         Def.Sprite{
             Name = "Sym";
-            InitCommand=cmd(blend,"BlendMode_Add";animate,false;zoom,0.9;diffusealpha,0);
+            InitCommand=function(self) self:blend("BlendMode_Add"); self:animate(false); self:zoom(0.9); self:diffusealpha(0); end;
         };
     };
 end
@@ -122,15 +122,15 @@ Tune[#Tune + 1] = Def.ActorFrame{
     Name = "Go!";
     Def.Sprite{
         Name = "G";
-        OnCommand=cmd(x,-37;Load,path.."Cha3D/G.png");
+        OnCommand=function(self) self:x(-37); self:Load(path.."Cha3D/G.png"); end;
     };
     Def.Sprite{
         Name = "o";
-        OnCommand=cmd(x,37;Load,path.."Cha3D/O.png");
+        OnCommand=function(self) self:x(37); self:Load(path.."Cha3D/O.png"); end;
     };
     Def.Sprite{
         Name = "!";
-        OnCommand=cmd(x,85;Load,path.."Cha3D/!.png");
+        OnCommand=function(self) self:x(85); self:Load(path.."Cha3D/!.png"); end;
     };
 };
 

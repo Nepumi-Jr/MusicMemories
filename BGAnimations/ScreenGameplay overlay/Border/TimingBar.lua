@@ -58,7 +58,7 @@ return Def.ActorFrame{
             self:xy(14,69);
             self:SetDrawState{Mode="DrawMode_Quads"}
         end;
-        OnCommand=cmd(queuecommand,"Reload");
+        OnCommand=function(self) self:queuecommand("Reload"); end;
         ReloadCommand=function(self)
             startTime = GAMESTATE:GetCurrentSong():GetFirstSecond();
             endTime = GAMESTATE:GetCurrentSong():GetLastSecond();
@@ -181,7 +181,7 @@ return Def.ActorFrame{
             self:xy(14,69);
             self:SetDrawState{Mode="DrawMode_Quads"}
         end;
-        OnCommand=cmd(queuecommand,"Reload");
+        OnCommand=function(self) self:queuecommand("Reload"); end;
         ReloadCommand=function(self)
 
             local data = {};
@@ -213,8 +213,8 @@ return Def.ActorFrame{
     };
 
     Def.Quad{
-		OnCommand=cmd(diffuse,Color.White;x,14;horizalign,left;vertalign,top;y,69;zoomy,5.9;diffuseshift;effectcolor1,{0.6,0.6,0.6,0.7};effectcolor2,{1,1,1,1};effectperiod, 2;effectclock,"beat";queuecommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(queuecommand,"Nep");
+		OnCommand=function(self) self:diffuse(Color.White); self:x(14); self:horizalign(left); self:vertalign(top); self:y(69); self:zoomy(5.9); self:diffuseshift(); self:effectcolor1({0.6,0.6,0.6,0.7}); self:effectcolor2({1,1,1,1}); self:effectperiod(2); self:effectclock("beat"); self:queuecommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)
 		self:diffuse(Color.White)
 		self:diffusealpha(0.45)
@@ -225,11 +225,11 @@ return Def.ActorFrame{
             self:zoomx(scale(sec,startTime, endTime, 0,826))
             self:sleep(1/30):queuecommand("PRO")
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(finishtweening;accelerate,1;zoomx,0);
+		GETOUTOFGAMESMMessageCommand=function(self) self:finishtweening(); self:accelerate(1); self:zoomx(0); end;
 	};
     Def.Quad{
-		OnCommand=cmd(diffuse,Color.White;x,14;horizalign,left;vertalign,top;y,69;zoomy,5.9;zoomx,-3;diffuseshift;effectcolor1,{0,0,0,0.7};effectcolor2,{1,1,1,1};effectperiod, 2;effectclock,"beat";queuecommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(queuecommand,"Nep");
+		OnCommand=function(self) self:diffuse(Color.White); self:x(14); self:horizalign(left); self:vertalign(top); self:y(69); self:zoomy(5.9); self:zoomx(-3); self:diffuseshift(); self:effectcolor1({0,0,0,0.7}); self:effectcolor2({1,1,1,1}); self:effectperiod(2); self:effectclock("beat"); self:queuecommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)
 		self:diffuse(Color.White)
 		self:diffusealpha(0.45)
@@ -240,9 +240,9 @@ return Def.ActorFrame{
             self:x(scale(sec,startTime, endTime, 14,14+826))
             self:sleep(1/30):queuecommand("PRO")
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(finishtweening;accelerate,1;zoomx,0);
+		GETOUTOFGAMESMMessageCommand=function(self) self:finishtweening(); self:accelerate(1); self:zoomx(0); end;
 	};
     -- Def.Quad{
-    --     InitCommand=cmd(x,14;y,69;zoomy,7;zoomx,826;vertalign,top;horizalign,left;rainbow);
+    --     InitCommand=function(self) self:x(14); self:y(69); self:zoomy(7); self:zoomx(826); self:vertalign(top); self:horizalign(left); self:rainbow(); end;
     -- };
 };

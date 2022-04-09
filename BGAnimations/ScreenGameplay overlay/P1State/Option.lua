@@ -58,7 +58,7 @@ t[#t+1] =Def.ActorFrame{
 
 
 t[#t+1] = Def.Quad{
-	InitCommand=cmd(visible,false);
+	InitCommand=function(self) self:visible(false); end;
 	OnCommand=function(self)
 			local Isla = "";
 			if Op1:CMod() then
@@ -407,7 +407,7 @@ t[#t+1] = Def.Quad{
 local LoopI = 1;
 
 t[#t+1] = LoadFont("Common Normal")..{
-	InitCommand=cmd(x,10;y,7;zoom,0.8*0.6;horizalign,left;maxwidth,800);
+	InitCommand=function(self) self:x(10); self:y(7); self:zoom(0.8*0.6); self:horizalign(left); self:maxwidth(800); end;
 	OnCommand=function(self)
 
 		self:settext(STR[1]):diffuse(STRC[1])

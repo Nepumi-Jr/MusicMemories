@@ -29,7 +29,7 @@ end
 
 t[#t+1] = Def.ActorFrame {
 	stage_num_actor .. {--bounceendChoir Singing Hallelujah- Sound Effect--zoom,0.75;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM+65;decelerate,0.15;y,SCREEN_BOTTOM-60-35;sleep,0.15+0.15+0.15+0.15+0.15+0.15+2+3;decelerate,0.15;y,SCREEN_BOTTOM-35
-		OnCommand=cmd(zoom,0.25;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM+45;decelerate,0.15;y,SCREEN_BOTTOM-120-20;sleep,0.15+0.15+0.15+0.15+0.15+0.15+2+3;decelerate,0.15;y,SCREEN_BOTTOM-20;);
+		OnCommand=function(self) self:zoom(0.25); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM+45); self:decelerate(0.15); self:y(SCREEN_BOTTOM-120-20); self:sleep(0.15+0.15+0.15+0.15+0.15+0.15+2+3); self:decelerate(0.15); self:y(SCREEN_BOTTOM-20); end;
 	};
 };
 

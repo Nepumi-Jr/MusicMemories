@@ -1,6 +1,6 @@
 local t = Def.ActorFrame{
-	OnCommand=cmd(draworder,30000;x,SCREEN_CENTER_X*0.806+248-381;y,SCREEN_CENTER_Y*0.616+212;);
-	RIPVISIBLEMessageCommand=cmd(visible,false);
+	OnCommand=function(self) self:draworder(30000); self:x(SCREEN_CENTER_X*0.806+248-381); self:y(SCREEN_CENTER_Y*0.616+212); end;
+	RIPVISIBLEMessageCommand=function(self) self:visible(false); end;
 };
 
 local ISMISSION1 = false;
@@ -226,14 +226,14 @@ for i = 1,2 do
         --StagePls
         t[#t+1]=Def.ActorFrame{
 			Condition = FindInTable("StagePls",ContentP[i]);
-			InitCommand=cmd(diffusealpha,0);
-			OnCommand = cmd(x,(i==2 and SCREEN_CENTER_X+5 or 0););
+			InitCommand=function(self) self:diffusealpha(0); end;
+			OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
 			StagePlsOnMessageCommand=function(self,param)	if param.pni==i then 
 						self:stoptweening():decelerate(0.2):diffusealpha(1) end end;
 			StagePlsOffMessageCommand=function(self,param) if param.pni==i then 
 						self:stoptweening():accelerate(0.2):diffusealpha(0) end end;
 			Def.Quad{
-				OnCommand=cmd(diffuse,ColorDarkTone(Color.Green);diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+				OnCommand=function(self) self:diffuse(ColorDarkTone(Color.Green)); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
 			};
 
             Def.Sprite { 
@@ -244,7 +244,7 @@ for i = 1,2 do
                 end;
             };
             Def.ActorFrame{
-                InitCommand=cmd(x,-50;y,-18);
+                InitCommand=function(self) self:x(-50); self:y(-18); end;
                 LoadFont("Combo Number")..{
                     InitCommand=function(self)
                         self:x(-30):zoom(0.5):shadowlength(2):
@@ -256,13 +256,13 @@ for i = 1,2 do
                     end;
                 };
                 LoadFont("Common Normal")..{
-                    InitCommand=cmd(x,10;y,5;zoom,0.8;shadowlength,2;settext,"/"..(stageStates[i]:GetHoldNoteScores('HoldNoteScore_Held') + stageStates[i]:GetHoldNoteScores('HoldNoteScore_LetGo') + stageStates[i]:GetHoldNoteScores('HoldNoteScore_MissedHold')));
+                    InitCommand=function(self) self:x(10); self:y(5); self:zoom(0.8); self:shadowlength(2); self:settext("/"..(stageStates[i]:GetHoldNoteScores('HoldNoteScore_Held') + stageStates[i]:GetHoldNoteScores('HoldNoteScore_LetGo') + stageStates[i]:GetHoldNoteScores('HoldNoteScore_MissedHold'))); end;
                 };
             };
             
             
             Def.ActorFrame{
-                InitCommand=cmd(x,-170;y,35);
+                InitCommand=function(self) self:x(-170); self:y(35); end;
                 Def.ActorFrame{
                     InitCommand=function(self)
                         local mc = stageStates[i]:MaxCombo();
@@ -274,10 +274,10 @@ for i = 1,2 do
                     grabNote(i-1);
                 };
                 LoadFont("Common Large")..{
-                    InitCommand=cmd(x,50;y,-20;zoom,0.2;shadowlength,2;settext,"MC");
+                    InitCommand=function(self) self:x(50); self:y(-20); self:zoom(0.2); self:shadowlength(2); self:settext("MC"); end;
                 };
                 LoadFont("Combo Number")..{
-                    InitCommand=cmd(x,30;y,20;zoom,0.5;horizalign,left;shadowlength,2;settext,stageStates[i]:MaxCombo());
+                    InitCommand=function(self) self:x(30); self:y(20); self:zoom(0.5); self:horizalign(left); self:shadowlength(2); self:settext(stageStates[i]:MaxCombo()); end;
                     OnCommand=function(self)
                         curStage = LoadModule("Eva.CustomStageAward.lua")(PNS[i]);
                         if string.find(curStage,"W1") then
@@ -297,10 +297,10 @@ for i = 1,2 do
             };
 
             Def.ActorFrame{
-                InitCommand=cmd(x,-20;y,35);
+                InitCommand=function(self) self:x(-20); self:y(35); end;
                 grabBomb(i-1);
                 LoadFont("Combo Number")..{
-                    InitCommand=cmd(x,35;y,-5;zoom,0.5;horizalign,left;shadowlength,2;settext,"123");
+                    InitCommand=function(self) self:x(35); self:y(-5); self:zoom(0.5); self:horizalign(left); self:shadowlength(2); self:settext("123"); end;
                     OnCommand=function(self)
                         local hitBomb = stageStates[i]:GetTapNoteScores('TapNoteScore_HitMine')
                         if hitBomb == 0 then
@@ -310,7 +310,7 @@ for i = 1,2 do
                     end;
                 };
                 LoadFont("Common Normal")..{
-                    InitCommand=cmd(x,40;y,20;zoom,0.8;horizalign,left;shadowlength,2;settext,"123");
+                    InitCommand=function(self) self:x(40); self:y(20); self:zoom(0.8); self:horizalign(left); self:shadowlength(2); self:settext("123"); end;
                     OnCommand=function(self)
                         local allBomb = GetRadarData(PNS[i], "RadarCategory_Mines")
                         self:settext("/"..allBomb)
@@ -320,7 +320,7 @@ for i = 1,2 do
             };
 
             Def.ActorFrame{
-                InitCommand=cmd(x,150;y,-10);
+                InitCommand=function(self) self:x(150); self:y(-10); end;
                 LoadActor("Fire.png")..{
                     InitCommand=function(self)
                         local power = clamp(stageStates[i]:GetCaloriesBurned(),0,100);
@@ -330,7 +330,7 @@ for i = 1,2 do
                     end;
                 };
                 LoadFont("Combo number")..{
-                    InitCommand=cmd(y,60;zoom,0.3;shadowlength,2;settext,"123");
+                    InitCommand=function(self) self:y(60); self:zoom(0.3); self:shadowlength(2); self:settext("123"); end;
                     OnCommand=function(self)
                         local power = clamp(stageStates[i]:GetCaloriesBurned(),0,100);
                         self:diffusebottomedge(ScaleColor(power,0,100,{1,1,1,1},Color.Red))
@@ -338,7 +338,7 @@ for i = 1,2 do
                     end;
                 };
                 LoadFont("Common Large")..{
-                    InitCommand=cmd(y,70;zoom,0.2;shadowlength,2;settext,"kcal");
+                    InitCommand=function(self) self:y(70); self:zoom(0.2); self:shadowlength(2); self:settext("kcal"); end;
                     OnCommand=function(self)
                         self:settextf("kcal")
                     end;
@@ -357,7 +357,7 @@ for i = 1,2 do
 			local hst = PROFILEMAN:GetProfile(PNS[i]):GetHighScoreListIfExists(GAMESTATE:GetCurrentSong(),GAMESTATE:GetCurrentSteps(PNS[i])):GetHighScores();
             for xi = 1,math.min(#hst,3) do
 				temp[#temp+1]=Def.ActorFrame{
-					OnCommand=cmd(y,-35+(xi-1)*40);
+					OnCommand=function(self) self:y(-35+(xi-1)*40); end;
 					Def.ActorFrame{
 						OnCommand=function(self)
 							if hst[xi]:GetScore() == stageStates[i]:GetScore() then
@@ -367,77 +367,77 @@ for i = 1,2 do
 							end
 						end;
 						LoadFont("Common Normal")..{
-							OnCommand=cmd(zoom,0.95;x,-200+15;settextf,"#%d ",xi;);
+							OnCommand=function(self) self:zoom(0.95); self:x(-200+15); self:settextf("#%d ",xi); end;
 						};
 						LoadFont("Combo Number")..{
-							InitCommand=cmd(zoom,0.27;x,-60;horizalign,right;settextf,"%d",hst[xi]:GetScore());
-                            OnCommand=cmd(playcommand,"onLoop");
-                            onLoopCommand=cmd(sleep,5;decelerate,0.5;cropleft,1;sleep,5;decelerate,0.5;cropleft,0;sleep,0.02;queuecommand,"onLoop");
+							InitCommand=function(self) self:zoom(0.27); self:x(-60); self:horizalign(right); self:settextf("%d",hst[xi]:GetScore()); end;
+                            OnCommand=function(self) self:playcommand("onLoop"); end;
+                            onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropleft(1); self:sleep(5); self:decelerate(0.5); self:cropleft(0); self:sleep(0.02); self:queuecommand("onLoop"); end;
                         };
                         LoadFont("Combo Number")..{
-							InitCommand=cmd(zoom,0.27;x,-150;horizalign,left;settextf,"%.02f%%",hst[xi]:GetPercentDP()*100;cropright,1);
-                            OnCommand=cmd(playcommand,"onLoop");
-                            onLoopCommand=cmd(sleep,5;decelerate,0.5;cropright,0;sleep,5;decelerate,0.5;cropright,1;sleep,0.02;queuecommand,"onLoop");
+							InitCommand=function(self) self:zoom(0.27); self:x(-150); self:horizalign(left); self:settextf("%.02f%%",hst[xi]:GetPercentDP()*100); self:cropright(1); end;
+                            OnCommand=function(self) self:playcommand("onLoop"); end;
+                            onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropright(0); self:sleep(5); self:decelerate(0.5); self:cropright(1); self:sleep(0.02); self:queuecommand("onLoop"); end;
 						};
                         
                         LoadFont("Common Normal")..{
-							OnCommand=cmd(zoom,0.75;x,13;settextf,"MC:%d",math.min(hst[xi]:GetMaxCombo(),99999));
+							OnCommand=function(self) self:zoom(0.75); self:x(13); self:settextf("MC:%d",math.min(hst[xi]:GetMaxCombo(),99999)); end;
 						};
 						LoadFont("Common Normal")..{
-							OnCommand=cmd(zoom,0.75;x,80+15;settextf,"%.11s",hst[xi]:GetDate());
+							OnCommand=function(self) self:zoom(0.75); self:x(80+15); self:settextf("%.11s",hst[xi]:GetDate()); end;
 						};
 					};
                     Def.Sprite{
-                        OnCommand=cmd(x,-36;y,-2;Load,THEME:GetPathG("GradeDisplayEval",ToEnumShortString(hst[xi]:GetGrade()));zoom,0.3);
+                        OnCommand=function(self) self:x(-36); self:y(-2); self:Load(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(hst[xi]:GetGrade()))); self:zoom(0.3); end;
                     };
 					LoadActor("ICON/"..(hst[xi]:GetStageAward() or "Lose")..".png")..{
-						OnCommand=cmd(zoom,0.3;x,145+15;);
+						OnCommand=function(self) self:zoom(0.3); self:x(145+15); end;
 					};
 					LoadActor("ICON/"..(hst[xi]:GetPeakComboAward() or "Lose")..".png")..{
-						OnCommand=cmd(zoom,0.3;x,170+15;);
+						OnCommand=function(self) self:zoom(0.3); self:x(170+15); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_W1;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W1); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_W2;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*2+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_W3;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*2+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*3+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_W4;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*3+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*4+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_W5;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*4+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*5+15;y,20;diffuse,GameColor.Judgment.JudgmentLine_Miss;settextf,"%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*5+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*6+15;y,20;diffuse,Color.Yellow;settextf,"%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_Held"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*6+15); self:y(20); self:diffuse(Color.Yellow); self:settextf("%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_Held"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=cmd(zoom,0.65;x,-175+40*7+15;y,20;diffuse,Color.Magenta;settextf,"%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_LetGo"),99999));
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*7+15); self:y(20); self:diffuse(Color.Magenta); self:settextf("%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_LetGo"),99999)); end;
 					};
 				};
 			end
             t[#t+1]=Def.ActorFrame{
                 Condition = FindInTable("HighScore",ContentP[i]);
-                InitCommand=cmd(diffusealpha,0);
-                OnCommand = cmd(x,(i==2 and SCREEN_CENTER_X+5 or 0););
+                InitCommand=function(self) self:diffusealpha(0); end;
+                OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
                 HighScoreOnMessageCommand=function(self,param)	if param.pni==i then 
                             self:stoptweening():decelerate(0.2):diffusealpha(1) end end;
                 HighScoreOffMessageCommand=function(self,param) if param.pni==i then 
                             self:stoptweening():accelerate(0.2):diffusealpha(0) end end;
                 Def.Quad{
-                    OnCommand=cmd(diffuse,ColorDarkTone(Color.SkyBlue);diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+                    OnCommand=function(self) self:diffuse(ColorDarkTone(Color.SkyBlue)); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
                 };
                 LoadFont("Common Large")..{
-                    OnCommand=cmd(x,-230+40;y,-70;settext,THEME:GetString("ScreenHighScores","HeaderText");horizalign,left;zoom,0.25;shadowlength,3);
+                    OnCommand=function(self) self:x(-230+40); self:y(-70); self:settext(THEME:GetString("ScreenHighScores","HeaderText")); self:horizalign(left); self:zoom(0.25); self:shadowlength(3); end;
                 };
                 LoadFont("Common Large")..{
-                    OnCommand=cmd(x,140;y,-65;horizalign,right;settextf,"(%s)",PROFILEMAN:GetProfile(PNS[i]):GetDisplayName() or "P"..i.."Guy";horizalign,left;zoom,0.2/1.4;shadowlength,1);
+                    OnCommand=function(self) self:x(140); self:y(-65); self:horizalign(right); self:settextf("(%s)",PROFILEMAN:GetProfile(PNS[i]):GetDisplayName() or "P"..i.."Guy"); self:horizalign(left); self:zoom(0.2/1.4); self:shadowlength(1); end;
                 };
                 temp;
             };
@@ -510,66 +510,66 @@ for i = 1,2 do
         if FindInTable("TapOffset",ContentP[i]) then
             t[#t+1]=Def.ActorFrame{
                 Condition = FindInTable("TapOffset",ContentP[i]);
-                InitCommand=cmd(diffusealpha,0);
-                OnCommand = cmd(x,(i==2 and SCREEN_CENTER_X+5 or 0););
+                InitCommand=function(self) self:diffusealpha(0); end;
+                OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
                 TapOffsetOnMessageCommand=function(self,param)	if param.pni==i then 
                             self:stoptweening():decelerate(0.2):diffusealpha(1) end end;
                             TapOffsetOffMessageCommand=function(self,param) if param.pni==i then 
                             self:stoptweening():accelerate(0.2):diffusealpha(0) end end;
                 Def.Quad{
-                    OnCommand=cmd(diffuse,ColorDarkTone(Color.Purple);diffusealpha,0.9;zoomx,494*680/794;zoomy,170*263/256);
+                    OnCommand=function(self) self:diffuse(ColorDarkTone(Color.Purple)); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(170*263/256); end;
                 };
 
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_Miss;y,70;diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_Miss;y,-70;diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
-                };
-
-                Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W5;y,scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
-                };
-                Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W5;y,-scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(-70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W4;y,scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W4;y,-scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
-                };
-
-                Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W3;y,scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
-                };
-                Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W3;y,-scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W2;y,scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=cmd(diffuse,GameColor.Judgment.JudgmentLine_W2;y,-scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70);diffusealpha,0.3;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{
-                    OnCommand=cmd(diffuse,Color.White;diffusealpha,0.9;zoomx,494*680/794;zoomy,1);
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(Color.White); self:diffusealpha(0.9); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 to;
 
                 LoadFont("Common Large")..{
-                    OnCommand=cmd(x,-230+20;y,-85;settext,"TapsOffset";horizalign,left;zoom,0.15;shadowlength,3;diffusealpha,1);
+                    OnCommand=function(self) self:x(-230+20); self:y(-85); self:settext("TapsOffset"); self:horizalign(left); self:zoom(0.15); self:shadowlength(3); self:diffusealpha(1); end;
                 };
 
                 LoadFont("Common Normal")..{
-                    OnCommand=cmd(x,170;y,-77;settext,"Early-";horizalign,left;zoom,0.7;shadowlength,3;diffusealpha,0.5);
+                    OnCommand=function(self) self:x(170); self:y(-77); self:settext("Early-"); self:horizalign(left); self:zoom(0.7); self:shadowlength(3); self:diffusealpha(0.5); end;
                 };
                 LoadFont("Common Normal")..{
-                    OnCommand=cmd(x,170;y,77;settext,"Late+";horizalign,left;zoom,0.7;shadowlength,3;diffusealpha,0.5);
+                    OnCommand=function(self) self:x(170); self:y(77); self:settext("Late+"); self:horizalign(left); self:zoom(0.7); self:shadowlength(3); self:diffusealpha(0.5); end;
                 };
                 LoadFont("Common Normal")..{
                     OnCommand=function(self)

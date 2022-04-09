@@ -67,19 +67,19 @@ local function CreatePaneDisplayItemA( _pnPlayer, _sLabel, _rcRadarCategory )
 	return Def.ActorFrame {
 		LoadFont("Common Normal") .. {
 			Text=THEME:GetString("RadarCategory",_sLabel);
-			InitCommand=cmd(horizalign,left;x,-30);
-			OnCommand=cmd(zoom,0.5875;shadowlength,1);
+			InitCommand=function(self) self:horizalign(left); self:x(-30); end;
+			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
 		};
 		LoadFont("Common Normal") .. {
 			Text=string.format("%04i", 0);
-			InitCommand=cmd(horizalign,right;x,40);
-			OnCommand=cmd(zoom,0.5875;shadowlength,1);
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+			InitCommand=function(self) self:horizalign(right); self:x(40); end;
+			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
@@ -97,22 +97,22 @@ local function CreatePaneDisplayItemB( _pnPlayer, _sLabel, _rcRadarCategory )
 	return Def.ActorFrame {
 		LoadFont("Common Normal") .. {
 			Text=THEME:GetString("RadarCategory",_sLabel);
-			InitCommand=cmd(horizalign,left;x,-30);
-			OnCommand=cmd(zoom,0.5875;shadowlength,1);
+			InitCommand=function(self) self:horizalign(left); self:x(-30); end;
+			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(horizalign,left;x,20;diffuse,Color.Gray or {0.5,0.5,0.5,1});
-			OnCommand=cmd(zoomy,8;zoomx,150;shadowlength,1);
+			InitCommand=function(self) self:horizalign(left); self:x(20); self:diffuse(Color.Gray or {0.5,0.5,0.5,1}); end;
+			OnCommand=function(self) self:zoomy(8); self:zoomx(150); self:shadowlength(1); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(horizalign,left;x,20;diffuse,Color.White or {1,1,1,1};zoomy,8;zoomx,0;shadowlength,1;);
-			OnCommand=cmd(playcommand,"Set");
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+			InitCommand=function(self) self:horizalign(left); self:x(20); self:diffuse(Color.White or {1,1,1,1}); self:zoomy(8); self:zoomx(0); self:shadowlength(1); end;
+			OnCommand=function(self) self:playcommand("Set"); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
@@ -129,14 +129,14 @@ local function CreatePaneDisplayItemB( _pnPlayer, _sLabel, _rcRadarCategory )
 		};
 		--[[LoadFont("Common Normal") .. {
 			Text=string.format("%.3f", 0);
-			InitCommand=cmd(horizalign,right;x,40);
-			OnCommand=cmd(zoom,0.5875;shadowlength,1);
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+			InitCommand=function(self) self:horizalign(right); self:x(40); end;
+			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
@@ -155,22 +155,22 @@ end;
 	return Def.ActorFrame {
 		LoadFont("Common Normal") .. {
 			Text=_sLabel;
-			InitCommand=cmd(horizalign,left);
-			OnCommand=cmd(zoom,0.5;shadowlength,1);
+			InitCommand=function(self) self:horizalign(left); end;
+			OnCommand=function(self) self:zoom(0.5); self:shadowlength(1); end;
 		};
 		Def.Quad { 
-			InitCommand=cmd(x,12;zoomto,50,10;horizalign,left);
-			OnCommand=cmd(diffuse,Color("Black");shadowlength,1;diffusealpha,0.5);
+			InitCommand=function(self) self:x(12); self:zoomto(50,10); self:horizalign(left); end;
+			OnCommand=function(self) self:diffuse(Color("Black")); self:shadowlength(1); self:diffusealpha(0.5); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(x,12;zoomto,50,10;horizalign,left);
-			OnCommand=cmd(shadowlength,0;diffuse,Color("Green");diffusebottomedge,ColorLightTone(Color("Green")));
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+			InitCommand=function(self) self:x(12); self:zoomto(50,10); self:horizalign(left); end;
+			OnCommand=function(self) self:shadowlength(0); self:diffuse(Color("Green")); self:diffusebottomedge(ColorLightTone(Color("Green"))); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
@@ -186,14 +186,14 @@ end;
 			end;
 		};
 		LoadFont("Common Normal") .. {
-			InitCommand=cmd(x,14;zoom,0.5;halign,0;);
-			OnCommand=cmd(shadowlength,1;strokecolor,color("0.15,0.15,0.15,0.625"));
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-			CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+			InitCommand=function(self) self:x(14); self:zoom(0.5); self:halign(0); end;
+			OnCommand=function(self) self:shadowlength(1); self:strokecolor(color("0.15,0.15,0.15,0.625")); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+			CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
@@ -210,31 +210,31 @@ end;]]
 --[[ Numbers ]]
 t[#t+1] = Def.ActorFrame {
 	LoadActor("BG-1")..{
-		InitCommand=cmd(zoom,0.5);
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:zoom(0.5); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 			self:stoptweening()
 			self:linear(0.3):diffuse(GetColor(iPN))
 		end;
 	};
 	LoadActor("BG-2")..{
-		InitCommand=cmd(zoom,0.5);
+		InitCommand=function(self) self:zoom(0.5); end;
 	};
 	
 	
 	LoadFont("Common Normal") .. {
-		InitCommand=cmd(horizalign,left;x,-55;y,-52;zoom,0.75;shadowlength,1);
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:horizalign(left); self:x(-55); self:y(-52); self:zoom(0.75); self:shadowlength(1); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 			self:stoptweening()
 			self:settext(Str_Step(iPN))
@@ -245,61 +245,61 @@ t[#t+1] = Def.ActorFrame {
 	
 	--SEG A
 	Def.ActorFrame{
-		InitCommand=cmd(diffusealpha,1);
-		OnCommand=cmd(queuecommand,"GOIWAP");
-		GOIWAPCommand=cmd(sleep,3;decelerate,1;diffusealpha,0;sleep,3;decelerate,1;diffusealpha,1;queuecommand,"GOIWAP");
+		InitCommand=function(self) self:diffusealpha(1); end;
+		OnCommand=function(self) self:queuecommand("GOIWAP"); end;
+		GOIWAPCommand=function(self) self:sleep(3); self:decelerate(1); self:diffusealpha(0); self:sleep(3); self:decelerate(1); self:diffusealpha(1); self:queuecommand("GOIWAP"); end;
 		OffCommand=function(self)
 			self:stoptweening();
 		end;
 		CreatePaneDisplayItemA( iPN, "Taps", 'RadarCategory_TapsAndHolds' ) .. {
-			InitCommand=cmd(x,-60;y,-30+5;zoom,1.15);
+			InitCommand=function(self) self:x(-60); self:y(-30+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Holds", 'RadarCategory_Holds' ) .. {
-			InitCommand=cmd(x,-60;y,-13+5;zoom,1.15);
+			InitCommand=function(self) self:x(-60); self:y(-13+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Jumps", 'RadarCategory_Jumps' ) .. {
-			InitCommand=cmd(x,-60;y,4+5;zoom,1.15);
+			InitCommand=function(self) self:x(-60); self:y(4+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Hands", 'RadarCategory_Hands' ) .. {
-			InitCommand=cmd(x,-60;y,21+5;zoom,1.15);
+			InitCommand=function(self) self:x(-60); self:y(21+5); self:zoom(1.15); end;
 		};
 		
 		CreatePaneDisplayItemA( iPN, "Rolls", 'RadarCategory_Rolls' ) .. {
-			InitCommand=cmd(x,50;y,-30+5;zoom,1.15);
+			InitCommand=function(self) self:x(50); self:y(-30+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Mines", 'RadarCategory_Mines' ) .. {
-			InitCommand=cmd(x,50;y,-13+5;zoom,1.15);
+			InitCommand=function(self) self:x(50); self:y(-13+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Lifts", 'RadarCategory_Lifts' ) .. {
-			InitCommand=cmd(x,50;y,4+5;zoom,1.15);
+			InitCommand=function(self) self:x(50); self:y(4+5); self:zoom(1.15); end;
 		};
 		CreatePaneDisplayItemA( iPN, "Fakes", 'RadarCategory_Fakes' ) .. {
-			InitCommand=cmd(x,50;y,21+5;zoom,1.15);
+			InitCommand=function(self) self:x(50); self:y(21+5); self:zoom(1.15); end;
 		};
 	};
 	
 	--SEG B
 	Def.ActorFrame{
-		InitCommand=cmd(visible,true;diffusealpha,0);
-		OnCommand=cmd(queuecommand,"GOIWAP");
-		GOIWAPCommand=cmd(sleep,3;decelerate,1;diffusealpha,1;sleep,3;decelerate,1;diffusealpha,0;queuecommand,"GOIWAP");
+		InitCommand=function(self) self:visible(true); self:diffusealpha(0); end;
+		OnCommand=function(self) self:queuecommand("GOIWAP"); end;
+		GOIWAPCommand=function(self) self:sleep(3); self:decelerate(1); self:diffusealpha(1); self:sleep(3); self:decelerate(1); self:diffusealpha(0); self:queuecommand("GOIWAP"); end;
 		OffCommand=function(self)
 			self:stoptweening();
 		end;
 		CreatePaneDisplayItemB( iPN, "Stream", 'RadarCategory_Stream' ) .. {
-			InitCommand=cmd(x,-60;y,-25;zoom,0.9);
+			InitCommand=function(self) self:x(-60); self:y(-25); self:zoom(0.9); end;
 		};
 		CreatePaneDisplayItemB( iPN, "Voltage", 'RadarCategory_Voltage' ) .. {
-			InitCommand=cmd(x,-60;y,-25+(51/4)*1;zoom,0.9);
+			InitCommand=function(self) self:x(-60); self:y(-25+(51/4)*1); self:zoom(0.9); end;
 		};
 		CreatePaneDisplayItemB( iPN, "Air", 'RadarCategory_Air' ) .. {
-			InitCommand=cmd(x,-60;y,-25+(51/4)*2;zoom,0.9);
+			InitCommand=function(self) self:x(-60); self:y(-25+(51/4)*2); self:zoom(0.9); end;
 		};
 		CreatePaneDisplayItemB( iPN, "Freeze", 'RadarCategory_Freeze' ) .. {
-			InitCommand=cmd(x,-60;y,-25+(51/4)*3;zoom,0.9);
+			InitCommand=function(self) self:x(-60); self:y(-25+(51/4)*3); self:zoom(0.9); end;
 		};
 		CreatePaneDisplayItemB( iPN, "Chaos", 'RadarCategory_Chaos' ) .. {
-			InitCommand=cmd(x,-60;y,-25+(51/4)*4;zoom,0.9);
+			InitCommand=function(self) self:x(-60); self:y(-25+(51/4)*4); self:zoom(0.9); end;
 		};
 	};
 	

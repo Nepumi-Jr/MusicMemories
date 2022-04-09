@@ -114,30 +114,30 @@ t[#t+1] = Def.ActorFrame{
 	end;
 	LoadActor("inputoverlay-key")..{--LEFT
 		Name = "L";
-		InitCommand=cmd(x,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+		InitCommand=function(self) self:x(-Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end;
 	};
 	LoadActor("inputoverlay-key")..{--DOWN
 		Name = "D";
-		InitCommand=cmd(y,Sped;zoom,Kayay;diffuse,Dan1ClF);
+		InitCommand=function(self) self:y(Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end;
 	};
 	LoadActor("inputoverlay-key")..{--Up
 		Name = "U";
 		Condition=(Dan1TF[1]);
-		InitCommand=cmd(y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+		InitCommand=function(self) self:y(-Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end;
 	};
 	LoadActor("inputoverlay-key")..{--RIGHT
 		Name = "R";
-		InitCommand=cmd(x,Sped;zoom,Kayay;diffuse,Dan1ClF); 
+		InitCommand=function(self) self:x(Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end; 
 	};
 	LoadActor("inputoverlay-key")..{--UL
 		Name = "UL";
 		Condition=(Dan1TF[2]);
-		InitCommand=cmd(x,-Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+		InitCommand=function(self) self:x(-Sped); self:y(-Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end;
 	};
 	LoadActor("inputoverlay-key")..{--UR
 		Name = "UR";
 		Condition=(Dan1TF[2]);
-		InitCommand=cmd(x,Sped;y,-Sped;zoom,Kayay;diffuse,Dan1ClF);
+		InitCommand=function(self) self:x(Sped); self:y(-Sped); self:zoom(Kayay); self:diffuse(Dan1ClF); end;
 	};
 };
 

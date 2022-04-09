@@ -42,7 +42,7 @@ end
 
 local t = Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y*0.85-30);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y*0.85-30); end;
 		OnCommand=function(self)
 		TWA(GAMESTATE:GetCurrentSong():GetDisplayFullTitle(),self,240);
 		w = w + 1;
@@ -52,7 +52,7 @@ LoadFont("Common Normal")..{
 Def.ActorFrame{
 Condition = GAMESTATE:GetCurrentSong():GetDisplayMainTitle() ~= "" and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() ~= GAMESTATE:GetCurrentSong():GetDisplayFullTitle();
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85;horizalign,left;zoom,0.75);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85); self:horizalign(left); self:zoom(0.75); end;
 		OnCommand=function(self)
 		self:settext("Title:"):y(SCREEN_CENTER_Y*0.85-10+20*w)
 		
@@ -60,7 +60,7 @@ LoadFont("Common Normal")..{
 };
 
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85+100*w;horizalign,right;zoom,0.75);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85+100*w); self:horizalign(right); self:zoom(0.75); end;
 		OnCommand=function(self)
 		TWA(GAMESTATE:GetCurrentSong():GetDisplayMainTitle(),self,200);
 		self:y(SCREEN_CENTER_Y*0.85-10+20*w)
@@ -74,13 +74,13 @@ LoadFont("Common Normal")..{
 Def.ActorFrame{
 Condition = GAMESTATE:GetCurrentSong():GetDisplaySubTitle() ~= "";
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85;horizalign,left;zoom,0.75);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85); self:horizalign(left); self:zoom(0.75); end;
 		OnCommand=function(self)
 		self:settext("Sub:"):y(SCREEN_CENTER_Y*0.85-10+20*w)
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85+100*w;horizalign,right;zoom,0.75);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85+100*w); self:horizalign(right); self:zoom(0.75); end;
 		OnCommand=function(self)
 		TWA(GAMESTATE:GetCurrentSong():GetDisplaySubTitle(),self,200);
 		self:y(SCREEN_CENTER_Y*0.85-10+20*w)
@@ -92,13 +92,13 @@ LoadFont("Common Normal")..{
 Def.ActorFrame{
 Condition = GAMESTATE:GetCurrentSong():GetDisplayArtist() ~= "" and GAMESTATE:GetCurrentSong():GetDisplayArtist() ~= "Unknown artist";
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85;horizalign,left;zoom,0.75);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85); self:horizalign(left); self:zoom(0.75); end;
 		OnCommand=function(self)
 		self:settext("Artist:"):y(SCREEN_CENTER_Y*0.85-10+20*w)
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85+100*w;horizalign,right;zoom,0.75);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85+100*w); self:horizalign(right); self:zoom(0.75); end;
 		OnCommand=function(self)
 		TWA(GAMESTATE:GetCurrentSong():GetDisplayArtist(),self,180);
 		self:y(SCREEN_CENTER_Y*0.85-10+20*w)
@@ -110,13 +110,13 @@ LoadFont("Common Normal")..{
 
 Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,310;y,SCREEN_CENTER_Y*0.85;horizalign,left;zoom,0.75);
+		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85); self:horizalign(left); self:zoom(0.75); end;
 		OnCommand=function(self)
 		self:settext("Group:"):y(SCREEN_CENTER_Y*0.85-10+20*w)
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,545;y,SCREEN_CENTER_Y*0.85+100*w;horizalign,right;zoom,0.75);
+		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85+100*w); self:horizalign(right); self:zoom(0.75); end;
 		OnCommand=function(self)
 		TWA(GAMESTATE:GetCurrentSong():GetGroupName(),self,180)
 		self:y(SCREEN_CENTER_Y*0.85-10+20*w)
@@ -127,13 +127,13 @@ LoadFont("Common Normal")..{
 
 --[[Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,75;horizalign,left;zoom,1.1);
+		InitCommand=function(self) self:x(550); self:y(75); self:horizalign(left); self:zoom(1.1); end;
 		OnCommand=function(self)
 		self:settext("Time")
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,100;horizalign,left;zoom,1);
+		InitCommand=function(self) self:x(550); self:y(100); self:horizalign(left); self:zoom(1); end;
 		OnCommand=function(self)
 		if GAMESTATE:GetCurrentSong():MusicLengthSeconds() > 60*30 then
 		self:settext(SecondsToHHMMSS(GAMESTATE:GetCurrentSong():MusicLengthSeconds()))
@@ -147,13 +147,13 @@ LoadFont("Common Normal")..{
 
 Def.ActorFrame{
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,130;horizalign,left;zoom,1.1);
+		InitCommand=function(self) self:x(550); self:y(130); self:horizalign(left); self:zoom(1.1); end;
 		OnCommand=function(self)
 		self:settext("Bpm")
 		end;
 };
 LoadFont("Common Normal")..{
-		InitCommand=cmd(x,550;y,155;horizalign,left);
+		InitCommand=function(self) self:x(550); self:y(155); self:horizalign(left); end;
 		OnCommand=function(self)
 		if GAMESTATE:GetCurrentSong():GetDisplayBpms()[1] == GAMESTATE:GetCurrentSong():GetDisplayBpms()[2] then
 		self:settextf("%d",GAMESTATE:GetCurrentSong():GetDisplayBpms()[1])

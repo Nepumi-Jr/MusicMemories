@@ -7,31 +7,27 @@ local II = 0;
 local Ni = Def.ActorFrame{
 	Def.ActorFrame{
 		Def.Quad{
-			InitCommand=cmd(zoomx,WID;zoomy,7;diffuse,GameColor.Judgment["JudgmentLine_W5"]);
+			InitCommand=function(self) self:zoomx(WID); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W5"]); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(zoomx,WID*
+			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW4")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5");zoomy,7;diffuse,
-			GameColor.Judgment["JudgmentLine_W4"]);
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W4"]); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(zoomx,WID*
+			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW3")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5");zoomy,7;diffuse,
-			GameColor.Judgment["JudgmentLine_W3"]);
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W3"]); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(zoomx,WID*
+			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW2")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5");zoomy,7;diffuse,
-			GameColor.Judgment["JudgmentLine_W2"]);
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W2"]); end;
 		};
 		Def.Quad{
-			InitCommand=cmd(zoomx,WID*
+			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW1")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5");zoomy,7;diffuse,
-			GameColor.Judgment["JudgmentLine_W1"]);
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W1"]); end;
 			JudgmentMessageCommand=function()
 				II = math.mod(II+1,B);
 			end
@@ -43,7 +39,7 @@ local Ni = Def.ActorFrame{
 
 for i = 1,B do
 	Ni[#Ni+1]=Def.Quad{
-		InitCommand=cmd(zoomy,20;zoomx,1.5;diffusealpha,0;fadetop,0.5;fadebottom,0.5);
+		InitCommand=function(self) self:zoomy(20); self:zoomx(1.5); self:diffusealpha(0); self:fadetop(0.5); self:fadebottom(0.5); end;
 		JudgmentMessageCommand=function(self,param)
 			if II == i-1 and param.TapNoteOffset ~= nil  then
 				self:finishtweening()

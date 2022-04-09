@@ -32,20 +32,20 @@ for i=1,#statList do
 	local j = #statList - (i-1);
 	as[#as+1] = Def.ActorFrame {
 		Def.Sprite {
-			InitCommand=cmd(scaletoclipped,256,80);
+			InitCommand=function(self) self:scaletoclipped(256,80); end;
 			BeginCommand=function(self)
 				local path = statList[j]:GetPlayedSongs()[1]:GetBannerPath() or THEME:GetPathG("Common","fallback banner");
 				self:LoadBanner(path);
 			end;
 		};
 		Def.Quad {
-			InitCommand=cmd(x,128;y,40;horizalign,right;vertalign,bottom);
-			OnCommand=cmd(zoomto,80,18;diffuse,Color.Black;diffusealpha,0.5;fadeleft,0.5);
+			InitCommand=function(self) self:x(128); self:y(40); self:horizalign(right); self:vertalign(bottom); end;
+			OnCommand=function(self) self:zoomto(80,18); self:diffuse(Color.Black); self:diffusealpha(0.5); self:fadeleft(0.5); end;
 		};
 		LoadFont("Common Normal") .. {
 			Text=StageToLocalizedString( statList[j]:GetStage() );
-			InitCommand=cmd(x,128-4;y,40-4;horizalign,right;vertalign,bottom);
-			OnCommand=cmd(diffuse,StageToColor(statList[j]:GetStage());zoom,0.675;shadowlength,1);
+			InitCommand=function(self) self:x(128-4); self:y(40-4); self:horizalign(right); self:vertalign(bottom); end;
+			OnCommand=function(self) self:diffuse(StageToColor(statList[j]:GetStage())); self:zoom(0.675); self:shadowlength(1); end;
 		};
 	};
 end

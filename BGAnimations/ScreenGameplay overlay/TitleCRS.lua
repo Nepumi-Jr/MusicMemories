@@ -32,18 +32,18 @@ end;
 
 
 t[#t+1] = Def.Quad{
-	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.6;zoomx,SCREEN_RIGHT;zoomy,200;diffuse,{0,0,0,0.3};);
-	OnCommand=cmd(sleep,4.5;decelerate,0.5;zoomy,0);
+	InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.6); self:zoomx(SCREEN_RIGHT); self:zoomy(200); self:diffuse({0,0,0,0.3}); end;
+	OnCommand=function(self) self:sleep(4.5); self:decelerate(0.5); self:zoomy(0); end;
 };
 
 t[#t+1] = LoadFont("Common Large")..{
 	Text = "1st Memories";
-	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*1.2;diffuse,Color.Orange;zoom,0.75);
-	OnCommand=cmd(sleep,4.5;decelerate,0.5;diffusealpha,0);
+	InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.2); self:diffuse(Color.Orange); self:zoom(0.75); end;
+	OnCommand=function(self) self:sleep(4.5); self:decelerate(0.5); self:diffusealpha(0); end;
 };
 
 t[#t+1] = LoadFont("Common Normal") .. {
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+150;zoom,1;cropright,1;);
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+150); self:zoom(1); self:cropright(1); end;
 OnCommand=function(self)
 Title = GAMESTATE:GetCurrentSong():GetDisplayMainTitle();
 

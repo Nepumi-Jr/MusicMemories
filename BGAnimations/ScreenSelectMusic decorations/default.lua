@@ -6,7 +6,7 @@ local function StepsDisplay(pn)
 	end
 
 	local t = Def.StepsDisplay {
-		InitCommand=cmd(Load,"StepsDisplay",GAMESTATE:GetPlayerState(pn););
+		InitCommand=function(self) self:Load("StepsDisplay",GAMESTATE:GetPlayerState(pn)); end;
 	};
 
 	if pn == PLAYER_1 then
@@ -23,8 +23,8 @@ t[#t+1] = StandardDecorationFromFileOptional("AlternateHelpDisplay","AlternateHe
 
 local function PercentScore(pn)
 	local t = LoadFont("Common normal")..{
-		InitCommand=cmd(zoom,0.625;shadowlength,1);
-		BeginCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:zoom(0.625); self:shadowlength(1); end;
+		BeginCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 			local SongOrCourse, StepsOrTrail;
 			if GAMESTATE:IsCourseMode() then
@@ -71,16 +71,16 @@ local function PercentScore(pn)
 			end;
 			self:settext(text);
 		end;
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 	};
 
 	if pn == PLAYER_1 then
-		t.CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-		t.CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+		t.CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		t.CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
 	else
-		t.CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-		t.CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
+		t.CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		t.CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
 	end
 
 	return t;
@@ -94,13 +94,13 @@ for pn in ivalues(PlayerNumber) do
 		PlayerJoinedMessageCommand=function(self, params)
 			if params.Player == pn then
 				self:visible(true);
-				(cmd(zoom,0;bounceend,0.3;zoom,1))(self);
+				(function(self) self:zoom(0); self:bounceend(0.3); self:zoom(1); end)(self);
 			end;
 		end;
 		PlayerUnjoinedMessageCommand=function(self, params)
 			if params.Player == pn then
 				self:visible(true);
-				(cmd(bouncebegin,0.3;zoom,0))(self);
+				(function(self) self:bouncebegin(0.3); self:zoom(0); end)(self);
 			end;
 		end;
 	};
@@ -157,10 +157,10 @@ t[#t+1] = StandardDecorationFromFileOptional("SongTime","SongTime") .. {
 		end;
 		self:settext( SecondsToMSS(length) );
 	end;
-	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+	CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
+	CurrentTrailP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
+	CurrentTrailP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
 }
 
 if not GAMESTATE:IsCourseMode() then
@@ -183,20 +183,20 @@ if not GAMESTATE:IsCourseMode() then
 		self:zoom(scale(height,32,480,1,32/480))
 	end;
 	t[#t+1] = Def.ActorFrame {
-		OnCommand=cmd(draworder,105;x,SCREEN_CENTER_X-300;y,SCREEN_CENTER_Y-150;rotationz,5;zoom,0;sleep,0.5;decelerate,0.25;zoom,1;thump;effectclock,"beat";SetUpdateFunction,CDTitleUpdate);
-		OffCommand=cmd(bouncebegin,0.15;zoomx,0);
+		OnCommand=function(self) self:draworder(105); self:x(SCREEN_CENTER_X-300); self:y(SCREEN_CENTER_Y-150); self:rotationz(5); self:zoom(0); self:sleep(0.5); self:decelerate(0.25); self:zoom(1); self:thump(); self:effectclock("beat"); self:SetUpdateFunction(CDTitleUpdate); end;
+		OffCommand=function(self) self:bouncebegin(0.15); self:zoomx(0); end;
 		Def.Sprite {
 			Name="CDTitle";
-			OnCommand=cmd(draworder,106;shadowlength,1;zoom,0.75;diffusealpha,1;zoom,0;bounceend,0.35;zoom,0.75);
-			BackCullCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
+			OnCommand=function(self) self:draworder(106); self:shadowlength(1); self:zoom(0.75); self:diffusealpha(1); self:zoom(0); self:bounceend(0.35); self:zoom(0.75); end;
+			BackCullCommand=function(self) self:diffuse(color("0.5,0.5,0.5,1")); end;
 		};	
 	};
 	t[#t+1] = StandardDecorationFromFileOptional("NewSong","NewSong") .. {
 	-- 	ShowCommand=THEME:GetMetric(Var "LoadingScreen", "NewSongShowCommand" );
 	-- 	HideCommand=THEME:GetMetric(Var "LoadingScreen", "NewSongHideCommand" );
-		InitCommand=cmd(playcommand,"Set");
-		BeginCommand=cmd(playcommand,"Set");
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+		InitCommand=function(self) self:playcommand("Set"); end;
+		BeginCommand=function(self) self:playcommand("Set"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
 		SetCommand=function(self)
 	-- 		local pTargetProfile;
 			local sSong;
@@ -218,25 +218,17 @@ end;
 if GAMESTATE:IsCourseMode() then
 	t[#t+1] = Def.ActorFrame {
 		Def.Quad {
-			InitCommand=cmd(
-				x,THEME:GetMetric(Var "LoadingScreen","CourseContentsListX");
-				y,THEME:GetMetric(Var "LoadingScreen","CourseContentsListY") - 118;
-				zoomto,256+32,192;
-			);
-			OnCommand=cmd(diffuse,Color.Green;MaskSource);
+			InitCommand=function(self) self:x(THEME:GetMetric(Var "LoadingScreen","CourseContentsListX")); self:y(THEME:GetMetric(Var "LoadingScreen","CourseContentsListY") - 118); self:zoomto(256+32,192); end;
+			OnCommand=function(self) self:diffuse(Color.Green); self:MaskSource(); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(
-				x,THEME:GetMetric(Var "LoadingScreen","CourseContentsListX");
-				y,THEME:GetMetric(Var "LoadingScreen","CourseContentsListY") + 186;
-				zoomto,256+32,64;
-			);
-			OnCommand=cmd(diffuse,Color.Blue;MaskSource);
+			InitCommand=function(self) self:x(THEME:GetMetric(Var "LoadingScreen","CourseContentsListX")); self:y(THEME:GetMetric(Var "LoadingScreen","CourseContentsListY") + 186); self:zoomto(256+32,64); end;
+			OnCommand=function(self) self:diffuse(Color.Blue); self:MaskSource(); end;
 		};
 	};
 	t[#t+1] = StandardDecorationFromFileOptional("CourseContentsList","CourseContentsList");
 	t[#t+1] = StandardDecorationFromFileOptional("NumCourseSongs","NumCourseSongs")..{
-		InitCommand=cmd(horizalign,right);
+		InitCommand=function(self) self:horizalign(right); end;
 		SetCommand=function(self)
 			local curSelection= nil;
 			local sAppend = "";
@@ -253,15 +245,15 @@ if GAMESTATE:IsCourseMode() then
 				self:visible(false);
 			end;
 		end;
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentCourseChangedMessageCommand=function(self) self:playcommand("Set"); end;
 	};
 end
 
 t[#t+1] = StandardDecorationFromFileOptional("DifficultyDisplay","DifficultyDisplay");
 
 t[#t+1] = StandardDecorationFromFileOptional("SortOrder","SortOrderText") .. {
-	BeginCommand=cmd(playcommand,"Set");
-	SortOrderChangedMessageCommand=cmd(playcommand,"Set");
+	BeginCommand=function(self) self:playcommand("Set"); end;
+	SortOrderChangedMessageCommand=function(self) self:playcommand("Set"); end;
 	SetCommand=function(self)
 		local s = GAMESTATE:GetSortOrder()
 		if s ~= nil then
@@ -276,37 +268,37 @@ t[#t+1] = StandardDecorationFromFileOptional("SortOrder","SortOrderText") .. {
 
 
 t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
-    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,color("#555555");fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
-    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
-	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
+    ShowPressStartForOptionsCommand=function(self) self:visible(true); self:diffuse(color("#555555")); self:fadeleft(0.3); self:cropleft(1); self:decelerate(0.5); self:cropleft(0); self:fadeleft(0); end;
+    ShowEnteringOptionsCommand=function(self) self:sleep(0.5); self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
+	HidePressStartForOptionsCommand=function(self) self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
 };
 t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
-    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,GameColor.PlayerColors.PLAYER_1 or {1,0,0,1};zoomy,3;y,SCREEN_CENTER_Y+36;fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
-    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
-	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
+    ShowPressStartForOptionsCommand=function(self) self:visible(true); self:diffuse(GameColor.PlayerColors.PLAYER_1 or {1,0,0,1}); self:zoomy(3); self:y(SCREEN_CENTER_Y+36); self:fadeleft(0.3); self:cropleft(1); self:decelerate(0.5); self:cropleft(0); self:fadeleft(0); end;
+    ShowEnteringOptionsCommand=function(self) self:sleep(0.5); self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
+	HidePressStartForOptionsCommand=function(self) self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
 };
 t[#t+1] = StandardDecorationFromFileOptional("SongOptionsFrame","SongOptionsFrame") .. {
-    ShowPressStartForOptionsCommand=cmd(visible,true;diffuse,GameColor.PlayerColors.PLAYER_2 or {0,1,0,1};zoomy,3;y,SCREEN_CENTER_Y-36;fadeleft,0.3;cropleft,1;decelerate,0.5;cropleft,0;fadeleft,0);
-    ShowEnteringOptionsCommand=cmd(sleep,0.5;decelerate,0.3;faderight,0.3;cropright,1);
-	HidePressStartForOptionsCommand=cmd(decelerate,0.3;faderight,0.3;cropright,1);
+    ShowPressStartForOptionsCommand=function(self) self:visible(true); self:diffuse(GameColor.PlayerColors.PLAYER_2 or {0,1,0,1}); self:zoomy(3); self:y(SCREEN_CENTER_Y-36); self:fadeleft(0.3); self:cropleft(1); self:decelerate(0.5); self:cropleft(0); self:fadeleft(0); end;
+    ShowEnteringOptionsCommand=function(self) self:sleep(0.5); self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
+	HidePressStartForOptionsCommand=function(self) self:decelerate(0.3); self:faderight(0.3); self:cropright(1); end;
 };
 t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptionsText") .. {
-	ShowPressStartForOptionsCommand=cmd(visible,true;zoom,1.2;settext,THEME:GetString("ScreenSelectMusic","Press Start For Options");decelerate,1.5;zoom,1;);
-	ShowEnteringOptionsCommand=cmd(settext,THEME:GetString("ScreenSelectMusic","Entering Options");sleep,0.2;decelerate,0.2;diffusealpha,0;);
-	HidePressStartForOptionsCommand=cmd(decelerate,0.1;diffusealpha,0;);
+	ShowPressStartForOptionsCommand=function(self) self:visible(true); self:zoom(1.2); self:settext(THEME:GetString("ScreenSelectMusic","Press Start For Options")); self:decelerate(1.5); self:zoom(1); end;
+	ShowEnteringOptionsCommand=function(self) self:settext(THEME:GetString("ScreenSelectMusic","Entering Options")); self:sleep(0.2); self:decelerate(0.2); self:diffusealpha(0); end;
+	HidePressStartForOptionsCommand=function(self) self:decelerate(0.1); self:diffusealpha(0); end;
 };
 -- Sounds
 t[#t+1] = Def.ActorFrame {
 	LoadActor(THEME:GetPathS("_switch","up")) .. {
-		SelectMenuOpenedMessageCommand=cmd(stop;play);
+		SelectMenuOpenedMessageCommand=function(self) self:stop(); self:play(); end;
 	};
 	LoadActor(THEME:GetPathS("_switch","down")) .. {
-		SelectMenuClosedMessageCommand=cmd(stop;play);
+		SelectMenuClosedMessageCommand=function(self) self:stop(); self:play(); end;
 	};
 };
 
 t[#t+1] = Def.Quad{
-	InitCommand=cmd(visible,false);
+	InitCommand=function(self) self:visible(false); end;
 	OnCommand=function()
 		MESSAGEMAN:Broadcast("SystemRePoss",{state = "ProfileLoaded"});
 	end;

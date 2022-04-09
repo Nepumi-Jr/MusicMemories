@@ -43,38 +43,38 @@ end;
 local HOLD = 1;
 
 t[#t + 1] = Def.Quad {
-	InitCommand = cmd(FullScreen; diffuse, {
+	InitCommand = function(self) self:FullScreen(); self:diffuse({
 		0,
 		0,
 		0,
 		0
-	});
-	StartCommand = cmd(decelerate, 0.5; diffusealpha, 1);
-	FinishCommand = cmd(decelerate, 0.5; diffusealpha, 0);
+	}); end;
+	StartCommand = function(self) self:decelerate(0.5); self:diffusealpha(1); end;
+	FinishCommand = function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 }
 
 t[#t + 1] = Def.Quad {
-	InitCommand = cmd(CenterX; y, SCREEN_CENTER_Y * 1.6; zoomx, SCREEN_RIGHT; zoomy, 200; diffuse, {
+	InitCommand = function(self) self:CenterX(); self:y(SCREEN_CENTER_Y * 1.6); self:zoomx(SCREEN_RIGHT); self:zoomy(200); self:diffuse({
 		0,
 		0,
 		0,
 		0.3
-	};);
-	FinishCommand = cmd(decelerate, 0.5; zoomy, 200; sleep, math.max(0.001, HOLD - 1); decelerate, 0.5; zoomy, 0);
+	}); end;
+	FinishCommand = function(self) self:decelerate(0.5); self:zoomy(200); self:sleep(math.max(0.001, HOLD - 1)); self:decelerate(0.5); self:zoomy(0); end;
 };
 
 t[#t + 1] = LoadFont("Common Large").. {
 	Text = "Isla : ERROR";
-	InitCommand = cmd(CenterX; y, SCREEN_CENTER_Y * 1.3; diffuse, Color.Orange; zoom, 0.75; diffusealpha, 0);
+	InitCommand = function(self) self:CenterX(); self:y(SCREEN_CENTER_Y * 1.3); self:diffuse(Color.Orange); self:zoom(0.75); self:diffusealpha(0); end;
 	BeforeLoadingNextCourseSongMessageCommand = function (self)
 	self: settext(NumtoST(GAMESTATE: GetCourseSongIndex() + 2)..
 		" Memories");
 	end;
-	FinishCommand = cmd(decelerate, 0.5; diffusealpha, 1; sleep, math.max(0.001, HOLD - 1); decelerate, 0.5; diffusealpha, 0);
+	FinishCommand = function(self) self:decelerate(0.5); self:diffusealpha(1); self:sleep(math.max(0.001, HOLD - 1)); self:decelerate(0.5); self:diffusealpha(0); end;
 };
 
 t[#t + 1] = LoadFont("Common Normal").. {
-	InitCommand = cmd(CenterX; y, SCREEN_CENTER_Y + 150; zoom, 1; cropright, 1; diffusealpha, 0;);
+	InitCommand = function(self) self:CenterX(); self:y(SCREEN_CENTER_Y + 150); self:zoom(1); self:cropright(1); self:diffusealpha(0); end;
 	BeforeLoadingNextCourseSongMessageCommand = function (self)
 	local ppeng = SCREENMAN: GetTopScreen(): GetNextCourseSong();
 
@@ -116,7 +116,7 @@ t[#t + 1] = LoadFont("Common Normal").. {
 	end
 	self: linear(0.5): cropright(0)
 	end;
-	FinishCommand = cmd(decelerate, 0.5; diffusealpha, 1; sleep, math.max(0.001, HOLD - 1); decelerate, 0.5; diffusealpha, 0);
+	FinishCommand = function(self) self:decelerate(0.5); self:diffusealpha(1); self:sleep(math.max(0.001, HOLD - 1)); self:decelerate(0.5); self:diffusealpha(0); end;
 };
 
 

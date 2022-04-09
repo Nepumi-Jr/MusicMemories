@@ -44,24 +44,24 @@ local t = Def.ActorFrame{
 		Def.ActorFrame{
 			Name = "lifeBG";
 			Def.Quad{
-				InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15;zoomx,248;diffusealpha,1);
-				OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,0.7};effectcolor2,{1,1,1,0.2};effectperiod,1/16);
+				InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX); self:zoomy(15); self:zoomx(248); self:diffusealpha(1); end;
+				OnCommand=function(self) self:effectclock("beat"); self:diffuseramp(); self:effectcolor1({1,1,1,0.7}); self:effectcolor2({1,1,1,0.2}); self:effectperiod(1/16); end;
 			};
 		};
 		LoadActor("Life_Max2.png")..{
 			Name = "lifeMax";
-			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX;zoomy,15/128;effectclock,"beat";customtexturerect,0,0.9,0.9,1;texcoordvelocity,0,0.2);
-			OnCommand=cmd(blend,"BlendMode_WeightedMultiply");
+			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX); self:zoomy(15/128); self:effectclock("beat"); self:customtexturerect(0,0.9,0.9,1); self:texcoordvelocity(0,0.2); end;
+			OnCommand=function(self) self:blend("BlendMode_WeightedMultiply"); end;
 		};
 		LoadActor("Life_MaxUp.png")..{
 			Name = "lifeMaxUp";
-			InitCommand=cmd(y,SCREEN_CENTER_Y-210.25+22;horizalign,left;zoomy,15/256;x,PX;customtexturerect,0,0,0.9,0.1;texcoordvelocity,0,0.6);
-			OnCommand=cmd(effectclock,"beat";diffuseramp;effectcolor1,{1,1,1,1};effectcolor2,{0.7,0.7,0.7,1};effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:zoomy(15/256); self:x(PX); self:customtexturerect(0,0,0.9,0.1); self:texcoordvelocity(0,0.6); end;
+			OnCommand=function(self) self:effectclock("beat"); self:diffuseramp(); self:effectcolor1({1,1,1,1}); self:effectcolor2({0.7,0.7,0.7,1}); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
 		};
 	};
 
 	LoadActor("Life_Bar.png")..{
-		InitCommand=cmd(x,PX;y,SCREEN_CENTER_Y-210.25+22;horizalign,left;cropright,1);
+		InitCommand=function(self) self:x(PX); self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:cropright(1); end;
 		LifeChangedMessageCommand=function(self,params)
 			if (params.Player == PN) then
 
@@ -84,7 +84,7 @@ local t = Def.ActorFrame{
 	};
 
 	Def.ActorFrame{
-		InitCommand=cmd(x,PX;y,SCREEN_CENTER_Y-210.25+22);
+		InitCommand=function(self) self:x(PX); self:y(SCREEN_CENTER_Y-210.25+22); end;
 		LifeChangedMessageCommand=function(self,params)
 			if(params.Player == PN) then
 
@@ -144,9 +144,9 @@ local t = Def.ActorFrame{
 
 			self:visible(TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden);
 		end;
-		OnCommand=cmd(zoomy,23.75*0.64;zoomx,246.5;y,SCREEN_CENTER_Y-210.25+22;horizalign,left;x,PX
-			effectclock,"beat";diffuseramp;effectcolor1,clmain;effectcolor2,clsub;effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
-		GETOUTOFGAMESMMessageCommand=cmd(stoptweening;sleep,0.7;accelerate,0.5;zoomy,0);
+		OnCommand=function(self) self:zoomy(23.75*0.64); self:zoomx(246.5); self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX
+			effectclock,"beat"); self:diffuseramp(); self:effectcolor1(clmain); self:effectcolor2(clsub); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+		GETOUTOFGAMESMMessageCommand=function(self) self:stoptweening(); self:sleep(0.7); self:accelerate(0.5); self:zoomy(0); end;
 	};
 };
 return t;

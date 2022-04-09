@@ -9,24 +9,24 @@ local t;
 t=Def.ActorFrame{
 	LoadActor("Creeper.lua")..{
 		Name="_SEC_";
-		InitCommand=cmd(animate,false;setstate,0;diffusealpha,0;zoom,2;blend,"BlendMode_Add";x,-size/2);
+		InitCommand=function(self) self:animate(false); self:setstate(0); self:diffusealpha(0); self:zoom(2); self:blend("BlendMode_Add"); self:x(-size/2); end;
 		OnCommand=function(self)
-			(cmd(diffusealpha,0;sleep,1;bounceend,0.5;zoom,1;diffusealpha,1))(self);
+			(function(self) self:diffusealpha(0); self:sleep(1); self:bounceend(0.5); self:zoom(1); self:diffusealpha(1); end)(self);
 		end;
 	};
 	LoadActor("Steve.lua")..{
 		Name="_BEAT_";
-		InitCommand=cmd(diffusealpha,0;zoom,2;blend,"BlendMode_Add";,-size/2);
+		InitCommand=function(self) self:diffusealpha(0); self:zoom(2); self:blend("BlendMode_Add"); end;
 		OnCommand=function(self)
-			(cmd(diffusealpha,0;sleep,1;bounceend,0.5;zoom,1;diffusealpha,1))(self);
+			(function(self) self:diffusealpha(0); self:sleep(1); self:bounceend(0.5); self:zoom(1); self:diffusealpha(1); end)(self);
 		end;
 	};
 	--[[
 	LoadFont("Common Normal")..{
 		Name="_DEBUG_";
-		InitCommand=cmd(diffuse,Color("White");socketcolor,Color("Blank"));
+		InitCommand=function(self) self:diffuse(Color("White")); self:socketcolor(Color("Blank")); end;
 		OnCommand=function(self)
-			(cmd(diffusealpha,0;sleep,1;bounceend,0.5;zoom,1;diffusealpha,1;settext,"DEBUG"))(self);
+			(function(self) self:diffusealpha(0); self:sleep(1); self:bounceend(0.5); self:zoom(1); self:diffusealpha(1); self:settext("DEBUG"); end)(self);
 		end;
 	};
 	--]]
@@ -54,5 +54,5 @@ local function update(self)
 --	local dbg = self:GetChild("_DEBUG_");
 --	dbg:settextf("%f",nowbeat);
 end;
-t.InitCommand=cmd(SetUpdateFunction,update;);
+t.InitCommand=function(self) self:SetUpdateFunction(update); end;
 return t;

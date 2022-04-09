@@ -17,15 +17,15 @@ local t = Def.ActorFrame {};
 
 
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(x,SCREEN_CENTER_X/4;y,70;rotationz,90;zoomx,0.7;zoomy,3);
--- 	GainFocusCommand=cmd(visible,true);
--- 	LoseFocusCommand=cmd(visible,false);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X/4); self:y(70); self:rotationz(90); self:zoomx(0.7); self:zoomy(3); end;
+-- 	GainFocusCommand=function(self) self:visible(true); end;
+-- 	LoseFocusCommand=function(self) self:visible(false); end;
 };
 t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(y,-120;);
+	InitCommand=function(self) self:y(-120); end;
     LoadFont("Common Large")..{
 		InitCommand=function(self)
-            (cmd(settext,bigText;horizalign,left;zoom,0.4;y,15;x,30-SCREEN_CENTER_X;skewx,-0.2;))(self)
+            (function(self) self:settext(bigText); self:horizalign(left); self:zoom(0.4); self:y(15); self:x(30-SCREEN_CENTER_X); self:skewx(-0.2); end)(self)
             bigTextWidth = self:GetWidth()
             self:visible(false);
         end;
@@ -33,26 +33,26 @@ t[#t+1] = Def.ActorFrame {
 	};
 
     Def.Quad{
-        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,bigTextColor;horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,-2;zoomy,2;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
-        GainFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,1);
-        LoseFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,0);
+        InitCommand=function(self) self:visible(bigTextWidth ~= 0); self:diffuse(bigTextColor); self:horizalign(right); self:vertalign(top); self:x(SCREEN_CENTER_X); self:y(-2); self:zoomy(2); self:zoomx(bigTextWidth*0.4 + 150); self:fadeleft(0.3); end;
+        GainFocusCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:diffusealpha(1); end;
+        LoseFocusCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:diffusealpha(0); end;
     };
     Def.Quad{
-        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_CENTER_X;zoomy,50;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
-        GainFocusCommand=cmd(visible,true);
-        LoseFocusCommand=cmd(visible,false);
+        InitCommand=function(self) self:visible(bigTextWidth ~= 0); self:diffuse(color("#333333")); self:horizalign(right); self:vertalign(top); self:x(SCREEN_CENTER_X); self:zoomy(50); self:zoomx(bigTextWidth*0.4 + 150); self:fadeleft(0.3); end;
+        GainFocusCommand=function(self) self:visible(true); end;
+        LoseFocusCommand=function(self) self:visible(false); end;
     };
     Def.Quad{
-        InitCommand=cmd(visible,bigTextWidth ~= 0;diffuse,bigTextColor;horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,50;zoomy,2;zoomx,bigTextWidth*0.4 + 150;fadeleft,0.3);
-        GainFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,1);
-        LoseFocusCommand=cmd(stoptweening;decelerate,0.3;diffusealpha,0);
+        InitCommand=function(self) self:visible(bigTextWidth ~= 0); self:diffuse(bigTextColor); self:horizalign(right); self:vertalign(top); self:x(SCREEN_CENTER_X); self:y(50); self:zoomy(2); self:zoomx(bigTextWidth*0.4 + 150); self:fadeleft(0.3); end;
+        GainFocusCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:diffusealpha(1); end;
+        LoseFocusCommand=function(self) self:stoptweening(); self:decelerate(0.3); self:diffusealpha(0); end;
     };
     
 
 	LoadFont("Common Large")..{
-		InitCommand=cmd(settext, bigText ;diffuse,bigTextColor;diffusebottomedge,ColorLightTone(bigTextColor);horizalign,right;zoom,0.4;y,15;x,-30+SCREEN_CENTER_X;skewx,-0.2);
-        GainFocusCommand=cmd(stoptweening;visible,true;x,-30+SCREEN_CENTER_X-20;decelerate,0.5;x,-30+SCREEN_CENTER_X);
-        LoseFocusCommand=cmd(stoptweening;visible,false;);
+		InitCommand=function(self) self:settext(bigText); self:diffuse(bigTextColor); self:diffusebottomedge(ColorLightTone(bigTextColor)); self:horizalign(right); self:zoom(0.4); self:y(15); self:x(-30+SCREEN_CENTER_X); self:skewx(-0.2); end;
+        GainFocusCommand=function(self) self:stoptweening(); self:visible(true); self:x(-30+SCREEN_CENTER_X-20); self:decelerate(0.5); self:x(-30+SCREEN_CENTER_X); end;
+        LoseFocusCommand=function(self) self:stoptweening(); self:visible(false); end;
     };
 };
 
@@ -91,7 +91,7 @@ local function NoteAndBomb(name)
 
     for i = 1,#veryList do
         thisDef[#thisDef+1] = LoadActor(THEME:GetPathG("OutfoxNote/_"..veryList[i][1], "")) .. {
-            InitCommand=cmd(x,veryList[i][2];y,veryList[i][3];zoom,0.7;bob;effectmagnitude,0,10,0;effectperiod,math.random(10,40)/2;effectoffset,math.random(4,10)/10;rotationz,veryList[i][4]);
+            InitCommand=function(self) self:x(veryList[i][2]); self:y(veryList[i][3]); self:zoom(0.7); self:bob(); self:effectmagnitude(0,10,0); self:effectperiod(math.random(10,40)/2); self:effectoffset(math.random(4,10)/10); self:rotationz(veryList[i][4]); end;
         };
     end
 
@@ -100,14 +100,14 @@ end
 
 t[#t+1] = Def.ActorFrame {
     FOV=90;
-    InitCommand=cmd(y,SCREEN_TOP-20;x,-150);
-    OffFocusedCommand=cmd(decelerate,0.8;rotationy,360*2;y,SCREEN_TOP;x,-150;zoom,1.3;accelerate,0.4;y,30;decelerate,0.7;y,-SCREEN_CENTER_Y*4;zoomx,0);
+    InitCommand=function(self) self:y(SCREEN_TOP-20); self:x(-150); end;
+    OffFocusedCommand=function(self) self:decelerate(0.8); self:rotationy(360*2); self:y(SCREEN_TOP); self:x(-150); self:zoom(1.3); self:accelerate(0.4); self:y(30); self:decelerate(0.7); self:y(-SCREEN_CENTER_Y*4); self:zoomx(0); end;
     -- Main Emblem
     Def.ActorFrame {
-        GainFocusCommand=cmd(finishtweening;visible,true;x,50;glow,Color("White");decelerate,0.5;glow,Color("Invisible");x,0;bob;effectmagnitude,0,5,0;effectperiod,7;);
-        LoseFocusCommand=cmd(finishtweening;stopeffect;visible,false);
+        GainFocusCommand=function(self) self:finishtweening(); self:visible(true); self:x(50); self:glow(Color("White")); self:decelerate(0.5); self:glow(Color("Invisible")); self:x(0); self:bob(); self:effectmagnitude(0,5,0); self:effectperiod(7); end;
+        LoseFocusCommand=function(self) self:finishtweening(); self:stopeffect(); self:visible(false); end;
         LoadActor( gc:GetName() ) .. {
-            InitCommand=cmd(diffusealpha,1;zoom,0.4);
+            InitCommand=function(self) self:diffusealpha(1); self:zoom(0.4); end;
         };
         NoteAndBomb(gc:GetName());
     };
@@ -118,24 +118,23 @@ t[#t+1] = Def.ActorFrame {
     LoadFont("Common Normal") .. {
 		Text= expText;
 		InitCommand=function(self)
-            (cmd(horizalign,right;x,SCREEN_CENTER_X-20;y,-30;skewx,-0.125;zoom,1.2;shadowlength,1;diffusebottomedge,BoostColor(bigTextColor,2)))(self)
+            (function(self) self:horizalign(right); self:x(SCREEN_CENTER_X-20); self:y(-30); self:skewx(-0.125); self:zoom(1.2); self:shadowlength(1); self:diffusebottomedge(BoostColor(bigTextColor,2)); end)(self)
             expTextWidth = self:GetWidth()
             self:visible(false)
         end;
 	};
     Def.Quad{
-        InitCommand=cmd(diffuse,color("#333333");horizalign,right;vertalign,top;x,SCREEN_CENTER_X;y,-55;
-        zoomy,30 * (LoadModule("Utils.CountText.lua")(expText, "\n") + 1) + 20;zoomx,expTextWidth*1.7 + 10;fadeleft,0.3);
-        GainFocusCommand=cmd(visible,true);
-        LoseFocusCommand=cmd(visible,false);
-        OffFocusedCommand=cmd(stoptweening;decelerate,0.75;cropleft,1)
+        InitCommand=function(self) self:diffuse(color("#333333")); self:horizalign(right); self:vertalign(top); self:x(SCREEN_CENTER_X); self:y(-55); self:zoomy(30 * (LoadModule("Utils.CountText.lua")(expText, "\n") + 1) + 20); self:zoomx(expTextWidth*1.7 + 10); self:fadeleft(0.3); end;
+        GainFocusCommand=function(self) self:visible(true); end;
+        LoseFocusCommand=function(self) self:visible(false); end;
+        OffFocusedCommand=function(self) self:stoptweening(); self:decelerate(0.75); self:cropleft(1); end
     };
 	LoadFont("Common Normal") .. {
 		Text= expText;
-		InitCommand=cmd(horizalign,right;vertalign,top;x,SCREEN_CENTER_X-20;y,-30;skewx,-0.125;zoom,1.2;shadowlength,1;diffusebottomedge,BoostColor(bigTextColor,2));
-		GainFocusCommand=cmd(stoptweening;visible,true;x,SCREEN_CENTER_X-60;decelerate,0.45;x,SCREEN_CENTER_X-20);
-		LoseFocusCommand=cmd(stoptweening;visible,false;);
-		OffFocusedCommand=cmd(stoptweening;linear,0.75;cropleft,1);
+		InitCommand=function(self) self:horizalign(right); self:vertalign(top); self:x(SCREEN_CENTER_X-20); self:y(-30); self:skewx(-0.125); self:zoom(1.2); self:shadowlength(1); self:diffusebottomedge(BoostColor(bigTextColor,2)); end;
+		GainFocusCommand=function(self) self:stoptweening(); self:visible(true); self:x(SCREEN_CENTER_X-60); self:decelerate(0.45); self:x(SCREEN_CENTER_X-20); end;
+		LoseFocusCommand=function(self) self:stoptweening(); self:visible(false); end;
+		OffFocusedCommand=function(self) self:stoptweening(); self:linear(0.75); self:cropleft(1); end;
 	};
     
 };

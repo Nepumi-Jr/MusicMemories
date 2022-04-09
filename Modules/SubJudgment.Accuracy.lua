@@ -2,7 +2,7 @@
 return function(player)
     return Def.ActorFrame {
         LoadFont("Combo Number") .. {
-            InitCommand=cmd(x,-35;y,5;horizalign,left;zoom,0.3);
+            InitCommand=function(self) self:x(-35); self:y(5); self:horizalign(left); self:zoom(0.3); end;
             JudgmentMessageCommand=function(self, param)
                 if param.Player ==  player then
                     local stat = STATSMAN:GetCurStageStats():GetPlayerStageStats(player)

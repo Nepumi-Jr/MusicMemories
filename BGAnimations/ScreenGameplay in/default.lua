@@ -1,6 +1,6 @@
 
 local t = Def.ActorFrame{
-	OnCommand=cmd(draworder,50000;);
+	OnCommand=function(self) self:draworder(50000); end;
 }
 
 local CX = SCREEN_CENTER_X;
@@ -17,7 +17,7 @@ for i = 1, SB+1 do
 		self:zoomy(CY*2);
 	
 	end,
-	OnCommand=cmd(sleep,math.random(0,70)/70*0.7;draworder,600;accelerate,2;fadetop,2;linear,0.5;diffusealpha,0)
+	OnCommand=function(self) self:sleep(math.random(0,70)/70*0.7); self:draworder(600); self:accelerate(2); self:fadetop(2); self:linear(0.5); self:diffusealpha(0); end
 }
 end
 

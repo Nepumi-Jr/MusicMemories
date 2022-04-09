@@ -64,20 +64,20 @@ for idx,diff in pairs(Difficulty) do
 			c.Meter:settext( meter );
 			self:playcommand( bHasStepsTypeAndDifficulty and "Show" or "Hide" );
 		end;
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
 		--
 		LoadActor("_barpeice " .. sDifficulty ) .. {
 			Name="BarPeice";
-			ShowCommand=cmd(stoptweening;linear,0.1;effectclock,"beat";diffuseramp;effectcolor1,color('#FFFFFF00');effectcolor2,CustomDifficultyToColor( sDifficulty );effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
-			HideCommand=cmd(stoptweening;decelerate,0.05;effectclock,"beat";diffuseramp;effectcolor1,color('#FFFFFF00');effectcolor2,CustomDifficultyToColor( sDifficulty );effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
-			InitCommand=cmd(glowshift;effectcolor1,color('#00000000');effectcolor2,CustomDifficultyToColor( sDifficulty );effectclock,'beat';effectperiod,1);
+			ShowCommand=function(self) self:stoptweening(); self:linear(0.1); self:effectclock("beat"); self:diffuseramp(); self:effectcolor1(color('#FFFFFF00')); self:effectcolor2(CustomDifficultyToColor( sDifficulty )); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+			HideCommand=function(self) self:stoptweening(); self:decelerate(0.05); self:effectclock("beat"); self:diffuseramp(); self:effectcolor1(color('#FFFFFF00')); self:effectcolor2(CustomDifficultyToColor( sDifficulty )); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+			InitCommand=function(self) self:glowshift(); self:effectcolor1(color('#00000000')); self:effectcolor2(CustomDifficultyToColor( sDifficulty )); self:effectclock('beat'); self:effectperiod(1); end;
 		};
 		LoadFont("StepsDisplay","Meter") .. {
 			Name="Meter";
 			Text=(sDifficulty == "Edit") and "0 Edits" or "0";
-			ShowCommand=cmd(stoptweening;linear,0.1;effectclock,"beat";diffuseramp;effectcolor2,color('#FFFFFF00');effectcolor1,CustomDifficultyToColor( sDifficulty );effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
-			HideCommand=cmd(stoptweening;decelerate,0.05;effectclock,"beat";diffuseramp;effectcolor2,color('#FFFFFF00');effectcolor1,CustomDifficultyToColor( sDifficulty );effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
-			InitCommand=cmd(x,-64-8+tLocation[sDifficulty];shadowlength,1;zoom,0.75;effectclock,"beat";diffuseramp;effectcolor2,color('#FFFFFF00');effectcolor1,CustomDifficultyToColor( sDifficulty );effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);
+			ShowCommand=function(self) self:stoptweening(); self:linear(0.1); self:effectclock("beat"); self:diffuseramp(); self:effectcolor2(color('#FFFFFF00')); self:effectcolor1(CustomDifficultyToColor( sDifficulty )); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+			HideCommand=function(self) self:stoptweening(); self:decelerate(0.05); self:effectclock("beat"); self:diffuseramp(); self:effectcolor2(color('#FFFFFF00')); self:effectcolor1(CustomDifficultyToColor( sDifficulty )); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+			InitCommand=function(self) self:x(-64-8+tLocation[sDifficulty]); self:shadowlength(1); self:zoom(0.75); self:effectclock("beat"); self:diffuseramp(); self:effectcolor2(color('#FFFFFF00')); self:effectcolor1(CustomDifficultyToColor( sDifficulty )); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
 		};
 	};
 end

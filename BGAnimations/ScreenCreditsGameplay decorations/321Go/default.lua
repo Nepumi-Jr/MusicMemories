@@ -37,7 +37,7 @@ local PY = 0;
 local Tune = Def.ActorFrame{
 
 Def.Quad{
-OnCommand=cmd(sleep,0.1;queuecommand,"GM");--Use For Delay
+OnCommand=function(self) self:sleep(0.1); self:queuecommand("GM"); end;--Use For Delay
 --IDK Why SM use > 0 beat and then turn back to real beat :(
 GMCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -60,7 +60,7 @@ end;
 
 
 LoadFont("Common Normal")..{
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.4;settext,"";rainbow);
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.4); self:settext(""); self:rainbow(); end;
 SFBMessageCommand=function(self)
 self:playcommand("Nep")
 end;
@@ -105,99 +105,69 @@ end;
 };
 
 Def.ActorFrame{
-	InitCommand=cmd(Center);
-	SamMessageCommand=cmd(x,CX+100*0.4;
-	decelerate,(TFB(FB-3)-TFB(FB-4));x,CX
-	);
-	SongMessageCommand=cmd(x,CX;
-	decelerate,(TFB(FB-2)-TFB(FB-3));x,CX-5
-	);
-	RIPRMessageCommand=cmd(visible,false);
+	InitCommand=function(self) self:Center(); end;
+	SamMessageCommand=function(self) self:x(CX+100*0.4); self:decelerate((TFB(FB-3)-TFB(FB-4))); self:x(CX); end;
+	SongMessageCommand=function(self) self:x(CX); self:decelerate((TFB(FB-2)-TFB(FB-3))); self:x(CX-5); end;
+	RIPRMessageCommand=function(self) self:visible(false); end;
 	Def.Sprite{
-		InitCommand=cmd(blend,"BlendMode_Add";animate,false;zoom,0.9;diffusealpha,0);
-		SFBMessageCommand=cmd(diffuse,CL;Load,path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."3.png";diffusealpha,0;);
-		SamMessageCommand=cmd(
-		linear,(TFB(FB-3)-TFB(FB-4))*0.25;diffusealpha,.7;);
-		SongMessageCommand=cmd(
-		linear,(TFB(FB-2)-TFB(FB-3))*0.25;diffusealpha,.0;
-		);
+		InitCommand=function(self) self:blend("BlendMode_Add"); self:animate(false); self:zoom(0.9); self:diffusealpha(0); end;
+		SFBMessageCommand=function(self) self:diffuse(CL); self:Load(path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."3.png"); self:diffusealpha(0); end;
+		SamMessageCommand=function(self) self:linear((TFB(FB-3)-TFB(FB-4))*0.25); self:diffusealpha(.7); end;
+		SongMessageCommand=function(self) self:linear((TFB(FB-2)-TFB(FB-3))*0.25); self:diffusealpha(.0); end;
 	};
 };
 
 Def.ActorFrame{
-	InitCommand=cmd(Center);
-	SongMessageCommand=cmd(x,CX-100*0.4;
-	decelerate,(TFB(FB-2)-TFB(FB-3));x,CX
-	);
-	NuengMessageCommand=cmd(x,CX;
-	decelerate,(TFB(FB-1)-TFB(FB-2));x,CX+5
-	);
-	RIPRMessageCommand=cmd(visible,false);
+	InitCommand=function(self) self:Center(); end;
+	SongMessageCommand=function(self) self:x(CX-100*0.4); self:decelerate((TFB(FB-2)-TFB(FB-3))); self:x(CX); end;
+	NuengMessageCommand=function(self) self:x(CX); self:decelerate((TFB(FB-1)-TFB(FB-2))); self:x(CX+5); end;
+	RIPRMessageCommand=function(self) self:visible(false); end;
 	Def.Sprite{
-		InitCommand=cmd(blend,"BlendMode_Add";animate,false;zoom,0.9;diffusealpha,0);
-		SFBMessageCommand=cmd(diffuse,CL;Load,path.."BigCount/"..(((TFB(FB-2)-TFB(FB-3)) < 0.3) and "M" or "").."2.png";diffusealpha,0;);
-		SongMessageCommand=cmd(
-		linear,(TFB(FB-2)-TFB(FB-3))*0.25;diffusealpha,.7;);
-		NuengMessageCommand=cmd(
-		linear,(TFB(FB-1)-TFB(FB-2))*0.25;diffusealpha,.0;
-		);
+		InitCommand=function(self) self:blend("BlendMode_Add"); self:animate(false); self:zoom(0.9); self:diffusealpha(0); end;
+		SFBMessageCommand=function(self) self:diffuse(CL); self:Load(path.."BigCount/"..(((TFB(FB-2)-TFB(FB-3)) < 0.3) and "M" or "").."2.png"); self:diffusealpha(0); end;
+		SongMessageCommand=function(self) self:linear((TFB(FB-2)-TFB(FB-3))*0.25); self:diffusealpha(.7); end;
+		NuengMessageCommand=function(self) self:linear((TFB(FB-1)-TFB(FB-2))*0.25); self:diffusealpha(.0); end;
 	};
 };
 
 Def.ActorFrame{
-	InitCommand=cmd(Center);
-	NuengMessageCommand=cmd(y,CY+50*0.4;
-	decelerate,(TFB(FB-1)-TFB(FB-2));y,CY
-	);
-	GoooMessageCommand=cmd(x,CX;
-	decelerate,(TFB(FB)-TFB(FB-1));y,CY-5
-	);
-	RIPRMessageCommand=cmd(visible,false);
+	InitCommand=function(self) self:Center(); end;
+	NuengMessageCommand=function(self) self:y(CY+50*0.4); self:decelerate((TFB(FB-1)-TFB(FB-2))); self:y(CY); end;
+	GoooMessageCommand=function(self) self:x(CX); self:decelerate((TFB(FB)-TFB(FB-1))); self:y(CY-5); end;
+	RIPRMessageCommand=function(self) self:visible(false); end;
 	Def.Sprite{
-		InitCommand=cmd(blend,"BlendMode_Add";animate,false;zoom,0.9;diffusealpha,0);
-		SFBMessageCommand=cmd(diffuse,CL;Load,path.."BigCount/"..(((TFB(FB-1)-TFB(FB-2)) < 0.3) and "M" or "").."1.png";diffusealpha,0;);
-		NuengMessageCommand=cmd(
-		linear,(TFB(FB-1)-TFB(FB-2))*0.25;diffusealpha,.7;);
-		GoooMessageCommand=cmd(
-		linear,(TFB(FB)-TFB(FB-1))*0.25;diffusealpha,.0;
-		);
+		InitCommand=function(self) self:blend("BlendMode_Add"); self:animate(false); self:zoom(0.9); self:diffusealpha(0); end;
+		SFBMessageCommand=function(self) self:diffuse(CL); self:Load(path.."BigCount/"..(((TFB(FB-1)-TFB(FB-2)) < 0.3) and "M" or "").."1.png"); self:diffusealpha(0); end;
+		NuengMessageCommand=function(self) self:linear((TFB(FB-1)-TFB(FB-2))*0.25); self:diffusealpha(.7); end;
+		GoooMessageCommand=function(self) self:linear((TFB(FB)-TFB(FB-1))*0.25); self:diffusealpha(.0); end;
 	};
 };
 
 --[[Def.Sprite{
-SFBMessageCommand=cmd(blend,"BlendMode_Add";Center;animate,false;diffuse,CL;zoom,0.9;diffusealpha,0);
-SamMessageCommand=cmd(Load,path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."3.png";diffusealpha,0;
-	x,CX+100*0.4;linear,(TFB(FB-3)-TFB(FB-4))*0.22;diffusealpha,.7;
-	x,CX+78*0.4;linear,(TFB(FB-3)-TFB(FB-4))*0.56;
-	x,CX+22*0.4;linear,(TFB(FB-3)-TFB(FB-4))*0.22;diffusealpha,0;x,CX;);
-SongMessageCommand=cmd(Load,path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."2.png";diffusealpha,0;
-	x,CX-100*0.4;linear,(TFB(FB-2)-TFB(FB-3))*0.22;diffusealpha,.7;
-	x,CX-78*0.4;linear,(TFB(FB-2)-TFB(FB-3))*0.56;
-	x,CX-22*0.4;linear,(TFB(FB-2)-TFB(FB-3))*0.22;diffusealpha,0;x,CX;);
-NuengMessageCommand=cmd(Load,path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."1.png";diffusealpha,0;
-	y,CY+100*0.4;linear,(TFB(FB-1)-TFB(FB-2))*0.22;diffusealpha,.7;
-	y,CY+78*0.4;linear,(TFB(FB-1)-TFB(FB-2))*0.56;
-	y,CY+22*0.4;linear,(TFB(FB-1)-TFB(FB-2))*0.22;diffusealpha,0;y,CY;);
-GoooMessageCommand=cmd(decelerate,(TFB(FB)-TFB(FB-1))/1.5;diffusealpha,0);
-RIPRMessageCommand=cmd(visible,false);
+SFBMessageCommand=function(self) self:blend("BlendMode_Add"); self:Center(); self:animate(false); self:diffuse(CL); self:zoom(0.9); self:diffusealpha(0); end;
+SamMessageCommand=function(self) self:Load(path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."3.png"); self:diffusealpha(0); self:x(CX+100*0.4); self:linear((TFB(FB-3)-TFB(FB-4))*0.22); self:diffusealpha(.7); self:x(CX+78*0.4); self:linear((TFB(FB-3)-TFB(FB-4))*0.56); self:x(CX+22*0.4); self:linear((TFB(FB-3)-TFB(FB-4))*0.22); self:diffusealpha(0); self:x(CX); end;
+SongMessageCommand=function(self) self:Load(path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."2.png"); self:diffusealpha(0); self:x(CX-100*0.4); self:linear((TFB(FB-2)-TFB(FB-3))*0.22); self:diffusealpha(.7); self:x(CX-78*0.4); self:linear((TFB(FB-2)-TFB(FB-3))*0.56); self:x(CX-22*0.4); self:linear((TFB(FB-2)-TFB(FB-3))*0.22); self:diffusealpha(0); self:x(CX); end;
+NuengMessageCommand=function(self) self:Load(path.."BigCount/"..(((TFB(FB-3)-TFB(FB-4)) < 0.3) and "M" or "").."1.png"); self:diffusealpha(0); self:y(CY+100*0.4); self:linear((TFB(FB-1)-TFB(FB-2))*0.22); self:diffusealpha(.7); self:y(CY+78*0.4); self:linear((TFB(FB-1)-TFB(FB-2))*0.56); self:y(CY+22*0.4); self:linear((TFB(FB-1)-TFB(FB-2))*0.22); self:diffusealpha(0); self:y(CY); end;
+GoooMessageCommand=function(self) self:decelerate((TFB(FB)-TFB(FB-1))/1.5); self:diffusealpha(0); end;
+RIPRMessageCommand=function(self) self:visible(false); end;
 };]]
 
 Def.ActorFrame{
-SFBMessageCommand=cmd(xy,PX,PY;diffuse,CL;);
+SFBMessageCommand=function(self) self:xy(PX,PY); self:diffuse(CL); end;
 Def.Sprite{
-OnCommand=cmd(x,-37;Load,path.."Cha3D/G.png";zoomy,0);
-GoooMessageCommand=cmd(decelerate,(TFB(FB)-TFB(FB-1))/1.5;zoomy,1);
-RIPRMessageCommand=cmd(decelerate,(TFB(FB+1)-TFB(FB))/1.5;diffusealpha,0);
+OnCommand=function(self) self:x(-37); self:Load(path.."Cha3D/G.png"); self:zoomy(0); end;
+GoooMessageCommand=function(self) self:decelerate((TFB(FB)-TFB(FB-1))/1.5); self:zoomy(1); end;
+RIPRMessageCommand=function(self) self:decelerate((TFB(FB+1)-TFB(FB))/1.5); self:diffusealpha(0); end;
 };
 Def.Sprite{
-OnCommand=cmd(x,37;Load,path.."Cha3D/O.png";zoomy,0);
-GoooMessageCommand=cmd(decelerate,(TFB(FB)-TFB(FB-1))/1.5;zoomy,1);
-RIPRMessageCommand=cmd(decelerate,(TFB(FB+1)-TFB(FB))/1.5;diffusealpha,0);
+OnCommand=function(self) self:x(37); self:Load(path.."Cha3D/O.png"); self:zoomy(0); end;
+GoooMessageCommand=function(self) self:decelerate((TFB(FB)-TFB(FB-1))/1.5); self:zoomy(1); end;
+RIPRMessageCommand=function(self) self:decelerate((TFB(FB+1)-TFB(FB))/1.5); self:diffusealpha(0); end;
 };
 Def.Sprite{
-OnCommand=cmd(x,85;Load,path.."Cha3D/!.png";zoomy,0);
-GoooMessageCommand=cmd(decelerate,(TFB(FB)-TFB(FB-1))/1.5;zoomy,1);
-RIPRMessageCommand=cmd(decelerate,(TFB(FB+1)-TFB(FB))/1.5;diffusealpha,0);
+OnCommand=function(self) self:x(85); self:Load(path.."Cha3D/!.png"); self:zoomy(0); end;
+GoooMessageCommand=function(self) self:decelerate((TFB(FB)-TFB(FB-1))/1.5); self:zoomy(1); end;
+RIPRMessageCommand=function(self) self:decelerate((TFB(FB+1)-TFB(FB))/1.5); self:diffusealpha(0); end;
 };
 };
 

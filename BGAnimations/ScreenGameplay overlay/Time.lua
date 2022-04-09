@@ -43,7 +43,7 @@ end
 end;
 
 
-local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
+local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); end;};
 	t[#t+1] = Def.ActorFrame{
 		OnCommand=function(self)
 			self:sleep(math.random(7*8,15*8)/8):decelerate(.5):rotationx(180)
@@ -51,9 +51,9 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 			self:sleep(0.02):rotationx(0):queuecommand("On")
 		end;
 		Def.ActorFrame{
-			InitCommand=cmd(diffuse,Color.SkyBlue;zoom,1.7;rotationx,180;); 
+			InitCommand=function(self) self:diffuse(Color.SkyBlue); self:zoom(1.7); self:rotationx(180); end; 
 			LoadFont("Combo Number") .. {
-                OnCommand=cmd(zoom,0.2;y,3;cullmode,'back';playcommand,"Row");
+                OnCommand=function(self) self:zoom(0.2); self:y(3); self:cullmode('back'); self:playcommand("Row"); end;
                 RowCommand=function(self)
                     REM = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
                     if REM > 60*60 then
@@ -66,10 +66,10 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
             };
 		};
 		Def.ActorFrame{
-			InitCommand=cmd(); 
+			InitCommand=function(self) end; 
 			LoadFont("Common Normal") .. {
 				Condition = not (TP.Battle.IsBattle);
-				InitCommand=cmd(y,3;cullmode,'back');
+				InitCommand=function(self) self:y(3); self:cullmode('back'); end;
 				OnCommand=function(self)
 					local NS = GAMESTATE:GetCurrentStageIndex()+1;
 					if IsNetConnected() then
@@ -100,7 +100,7 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 			};
 			LoadFont("Common Normal") .. {
 				Condition = TP.Battle.IsBattle;
-				InitCommand=cmd(y,3;cullmode,'back');
+				InitCommand=function(self) self:y(3); self:cullmode('back'); end;
 				OnCommand=function(self)
 					--SM("\n\n\n\nISLALA:"..math.random( 10, 99 ));
 					sc = {0,0};
@@ -116,7 +116,7 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 			};
 			LoadFont("Common Normal") .. {
 				Condition = TP.Battle.IsBattle;
-				InitCommand=cmd(x,-50;y,3;cullmode,'back');
+				InitCommand=function(self) self:x(-50); self:y(3); self:cullmode('back'); end;
 				OnCommand=function(self)
 					self:settext(sc[1]);
 					self:diffuse(PlayerColor(PLAYER_1));
@@ -124,7 +124,7 @@ local t = Def.ActorFrame{OnCommand=cmd(CenterX;y,20);};
 			};
 			LoadFont("Common Normal") .. {
 				Condition = TP.Battle.IsBattle;
-				InitCommand=cmd(x,50;y,3;cullmode,'back');
+				InitCommand=function(self) self:x(50); self:y(3); self:cullmode('back'); end;
 				OnCommand=function(self)
 					self:settext(sc[2]);
 					self:diffuse(PlayerColor(PLAYER_2));

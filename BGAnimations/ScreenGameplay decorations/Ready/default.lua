@@ -145,7 +145,7 @@ end
 
 
 local Tune = Def.ActorFrame{
-    OnCommand=cmd(sleep,0.1;queuecommand,"GM");--Use For Delay
+    OnCommand=function(self) self:sleep(0.1); self:queuecommand("GM"); end;--Use For Delay
     --IDK Why SM use > 0 beat and then turn back to real beat :(
     GMCommand=function(self)
 
@@ -230,8 +230,8 @@ for i = 1,string.len( RDText ) do
         Name = "Alphabet"..tostring(i);
 		Def.Sprite{
             Name = "Symbol";
-			InitCommand=cmd(zoom,0.75;Load,path..tellme(RDText, i)..".png";diffusealpha,0);
-			OnCommand=cmd(diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{.75,.75,.75,1};effectoffset,math.random(0,10)/10);
+			InitCommand=function(self) self:zoom(0.75); self:Load(path..tellme(RDText, i)..".png"); self:diffusealpha(0); end;
+			OnCommand=function(self) self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({.75,.75,.75,1}); self:effectoffset(math.random(0,10)/10); end;
 		};
 	};
 end

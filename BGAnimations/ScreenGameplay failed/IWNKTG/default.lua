@@ -7,10 +7,10 @@ local function Blood(amo)
         local velo = math.random(100,300)*2
         local g = 400
         x[#x+1] = Def.ActorFrame{
-            OnCommand=cmd(decelerate,velo*math.sin(Ang/180*math.pi)/g;addy,-velo*math.sin(Ang/180*math.pi)/2/g*velo*math.sin(Ang/180*math.pi);accelerate,3-velo*math.sin(Ang/180*math.pi)/g;addy,0.5*g*math.pow(3-velo*math.sin(Ang/180*math.pi)/g,2);diffusealpha,0);
+            OnCommand=function(self) self:decelerate(velo*math.sin(Ang/180*math.pi)/g); self:addy(-velo*math.sin(Ang/180*math.pi)/2/g*velo*math.sin(Ang/180*math.pi)); self:accelerate(3-velo*math.sin(Ang/180*math.pi)/g); self:addy(0.5*g*math.pow(3-velo*math.sin(Ang/180*math.pi)/g,2)); self:diffusealpha(0); end;
             Def.Quad{
-                InitCommand=cmd(x,math.random(-64*2.5,64*2.5);y,math.random(-SCREEN_CENTER_Y,SCREEN_CENTER_Y);zoom,math.random(3,15)/2;rotationx,math.random(0,360);rotationy,math.random(0,360);diffuse,{1,0,0,1});
-                OnCommand=cmd(diffusealpha,1;linear,3;addx,velo*math.cos(Ang/180*math.pi)*3;rotationx,math.random(0,360);rotationy,math.random(0,360));
+                InitCommand=function(self) self:x(math.random(-64*2.5,64*2.5)); self:y(math.random(-SCREEN_CENTER_Y,SCREEN_CENTER_Y)); self:zoom(math.random(3,15)/2); self:rotationx(math.random(0,360)); self:rotationy(math.random(0,360)); self:diffuse({1,0,0,1}); end;
+                OnCommand=function(self) self:diffusealpha(1); self:linear(3); self:addx(velo*math.cos(Ang/180*math.pi)*3); self:rotationx(math.random(0,360)); self:rotationy(math.random(0,360)); end;
             };
         };
     end
@@ -21,19 +21,19 @@ end
 local t = Def.ActorFrame{
 
     Def.Quad{
-        InitCommand=cmd(FullScreen;diffuse,{0,0,0,0});
-        OnCommand=cmd(decelerate,1;diffusealpha,0.7);
+        InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0}); end;
+        OnCommand=function(self) self:decelerate(1); self:diffusealpha(0.7); end;
     };
     LoadActor("Sudden.png")..{
-        InitCommand=cmd(Center;diffusealpha,0);
-        OnCommand=cmd(sleep,1;diffusealpha,1);
+        InitCommand=function(self) self:Center(); self:diffusealpha(0); end;
+        OnCommand=function(self) self:sleep(1); self:diffusealpha(1); end;
     };
     LoadActor("SuddenDeath.mp3")..{
-        StartTransitioningCommand=cmd(play);
+        StartTransitioningCommand=function(self) self:play(); end;
     };
 
     Def.ActorFrame{
-        OnCommand=cmd(Center);
+        OnCommand=function(self) self:Center(); end;
         Blood(100);
     };
 

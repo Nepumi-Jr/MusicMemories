@@ -51,31 +51,31 @@ return Def.ActorFrame{
 		end
 	end;
 	Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1"));
-		OnCommand=cmd(decelerate,0.5;diffusealpha,0);
+		InitCommand=function(self) self:FullScreen(); self:diffuse(color("0,0,0,1")); end;
+		OnCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 	};
 	
 	Def.Quad{
-		InitCommand=cmd(Center;zoomx,SCREEN_RIGHT;zoomy,125;fadetop,0.15;fadebottom,0.15;diffuse,color("0,0,0,0"));
-		OnCommand=cmd(sleep,nepa[1];decelerate,0.5;diffusealpha,.8;sleep,nepa[2];decelerate,0.5;y,SCREEN_BOTTOM-75*0.75;);
+		InitCommand=function(self) self:Center(); self:zoomx(SCREEN_RIGHT); self:zoomy(125); self:fadetop(0.15); self:fadebottom(0.15); self:diffuse(color("0,0,0,0")); end;
+		OnCommand=function(self) self:sleep(nepa[1]); self:decelerate(0.5); self:diffusealpha(.8); self:sleep(nepa[2]); self:decelerate(0.5); self:y(SCREEN_BOTTOM-75*0.75); end;
 	};
 	
 	Def.BitmapText{
 		Font="_determination mono 24px";
 		Text="Song Information..";
-		InitCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y*0.85);
-		OnCommand=cmd(sleep,nepa[1]+0.5+nepa[2]+0.1*1;decelerate,0.5;addy,183.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y*0.85); end;
+		OnCommand=function(self) self:sleep(nepa[1]+0.5+nepa[2]+0.1*1); self:decelerate(0.5); self:addy(183.75); end;
 	};
 	Def.BitmapText{
 		Font="_determination mono 24px";
 		Text="Song:"..GAMESTATE:GetCurrentSong():GetDisplayMainTitle();
-		InitCommand=cmd(x,SCREEN_CENTER_X*0.3;y,SCREEN_CENTER_Y*0.97;horizalign,left);
-		OnCommand=cmd(sleep,nepa[1]+0.5+nepa[2]+0.1*2;decelerate,0.5;addy,183.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X*0.3); self:y(SCREEN_CENTER_Y*0.97); self:horizalign(left); end;
+		OnCommand=function(self) self:sleep(nepa[1]+0.5+nepa[2]+0.1*2); self:decelerate(0.5); self:addy(183.75); end;
 	};
 	Def.BitmapText{
 		Font="_determination mono 24px";
 		Text="Pack:"..GAMESTATE:GetCurrentSong():GetGroupName();
-		InitCommand=cmd(x,SCREEN_CENTER_X*0.3;y,SCREEN_CENTER_Y*1.09;horizalign,left);
-		OnCommand=cmd(sleep,nepa[1]+0.5+nepa[2]+0.1*3;decelerate,0.5;addy,183.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X*0.3); self:y(SCREEN_CENTER_Y*1.09); self:horizalign(left); end;
+		OnCommand=function(self) self:sleep(nepa[1]+0.5+nepa[2]+0.1*3); self:decelerate(0.5); self:addy(183.75); end;
 	};
 };

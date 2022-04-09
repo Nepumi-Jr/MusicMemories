@@ -2,7 +2,7 @@ local fac = 20;
 local CX = SCREEN_CENTER_X;
 local CY = SCREEN_CENTER_Y;
 local x = Def.ActorFrame{
-		InitCommand=cmd(Center;zoom,1);
+		InitCommand=function(self) self:Center(); self:zoom(1); end;
 		OnCommand=function(self)
 			local B = self:GetChild('Blur')
 			local G = self:GetChild('BG')
@@ -29,10 +29,10 @@ local x = Def.ActorFrame{
 	Def.ActorFrameTexture{
 		Name="Blur";
 	};
-	Def.Sprite { Name = 'S';OnCommand=cmd(zoom,fac;); };
+	Def.Sprite { Name = 'S';OnCommand=function(self) self:zoom(fac); end; };
 	Def.Sprite {
 		Name="BG";
-		OnCommand=cmd(finishtweening;queuecommand,"ModifySongBackground");
+		OnCommand=function(self) self:finishtweening(); self:queuecommand("ModifySongBackground"); end;
 		ModifySongBackgroundCommand=function(self)
 			self:diffusealpha(0);
 			if GAMESTATE:GetCurrentSong() then

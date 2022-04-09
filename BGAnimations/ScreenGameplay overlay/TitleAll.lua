@@ -78,9 +78,9 @@ end
 
 
 t[#t+1] = LoadFont("Common Normal") .. {
-	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+200;zoom,1.3;strokecolor,{0,0,0,1};);
-	OnCommand=cmd(queuecommand,"BOI");
-	CurrentSongChangedMessageCommand=cmd(queuecommand,"BOI");
+	InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+200); self:zoom(1.3); self:strokecolor({0,0,0,1}); end;
+	OnCommand=function(self) self:queuecommand("BOI"); end;
+	CurrentSongChangedMessageCommand=function(self) self:queuecommand("BOI"); end;
 	BOICommand=function(self)
 	
 		self:finishtweening()
@@ -136,9 +136,9 @@ t[#t+1] = LoadFont("Common Normal") .. {
 };
 
 t[#t+1] = LoadFont("Common Normal") .. {
-	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+218;zoom,0.5;strokecolor,{0,0,0,1};);
-	OnCommand=cmd(queuecommand,"BOI");
-	CurrentSongChangedMessageCommand=cmd(queuecommand,"BOI");
+	InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+218); self:zoom(0.5); self:strokecolor({0,0,0,1}); end;
+	OnCommand=function(self) self:queuecommand("BOI"); end;
+	CurrentSongChangedMessageCommand=function(self) self:queuecommand("BOI"); end;
 	BOICommand=function(self)
 		self:finishtweening()
 		if GAMESTATE:IsCourseMode() then

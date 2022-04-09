@@ -37,7 +37,7 @@ t[#t+1] = Def.ActorFrame{
 --GetSurvivalSeconds
 Def.ActorFrame{
 	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-	InitCommand=cmd(x,xScore2;y,25;zoom,0.8);
+	InitCommand=function(self) self:x(xScore2); self:y(25); self:zoom(0.8); end;
 	BoomYeahMessageCommand=function(self,param)
 		if param.pn == pn then
 			self:zoom(0.9):decelerate(0.2):zoom(0.8)
@@ -45,7 +45,7 @@ Def.ActorFrame{
 	end;
 	LoadFont("Combo Numbers")..{
 		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=cmd(zoom,0.35;visible,GAMESTATE:IsPlayerEnabled(pn););
+		InitCommand=function(self) self:zoom(0.35); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
 		OnCommand=function(self)
             
 			self:playcommand("reloadScore");
@@ -93,12 +93,12 @@ Def.ActorFrame{
 			end
             self:sleep(1/30):queuecommand("reloadScore")
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 };
 Def.ActorFrame{
 	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-	InitCommand=cmd(x,xScore;y,25;zoom,0.8);
+	InitCommand=function(self) self:x(xScore); self:y(25); self:zoom(0.8); end;
 	BoomYeahMessageCommand=function(self,param)
 		if param.pn == pn then
 			self:zoom(0.9):decelerate(0.2):zoom(0.8)
@@ -106,7 +106,7 @@ Def.ActorFrame{
 	end;
     LoadFont("Combo Numbers")..{
 		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(pn););
+		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
 		OnCommand=function(self)
 			self:queuecommand("Judgment");
 		end;
@@ -140,12 +140,12 @@ Def.ActorFrame{
 				self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
 			end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 	LoadFont("Combo Numbers")..{
 		Condition = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():IsEndless());
-		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(pn););
-		OnCommand=cmd(playcommand,"Tick");
+		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
+		OnCommand=function(self) self:playcommand("Tick"); end;
 		TickCommand=function(self)
 			if IG ~= curStageState:GetGrade() then
 				IG = curStageState:GetGrade()
@@ -156,14 +156,14 @@ Def.ActorFrame{
 		
 			self:sleep(0.04):queuecommand("Tick");
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 };
 };
 t[#t+1] = LoadActor("Option.lua",pn)..{
-	InitCommand=cmd(x,xOption;y,70;diffusealpha,1);
-	OnCommand=cmd(sleep,math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1);decelerate,1;diffusealpha,0.3);
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-150;);
+	InitCommand=function(self) self:x(xOption); self:y(70); self:diffusealpha(1); end;
+	OnCommand=function(self) self:sleep(math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1)); self:decelerate(1); self:diffusealpha(0.3); end;
+	GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-150); end;
 };
 
 
@@ -176,7 +176,7 @@ end
 
 t[#t+1] = Def.ActorFrame{
 		 LoadFont("Combo Number")..{
-		InitCommand=cmd(x,xDiff;y,SCREEN_TOP+47;zoom,1;visible,GAMESTATE:IsPlayerEnabled(pn);diffuse,PlayerColor(pn));
+		InitCommand=function(self) self:x(xDiff); self:y(SCREEN_TOP+47); self:zoom(1); self:visible(GAMESTATE:IsPlayerEnabled(pn)); self:diffuse(PlayerColor(pn)); end;
 		OnCommand=function(self)
 			local zom = 0.75;
 			if x:GetMeter() then
@@ -195,10 +195,10 @@ t[#t+1] = Def.ActorFrame{
 				end
 			end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;x,pn == PLAYER_1 and -80 or SCREEN_RIGHT-80;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:x(pn == PLAYER_1 and -80 or SCREEN_RIGHT-80); end;
 	};
 LoadFont("Common","Normal")..{
-		InitCommand=cmd(x,xDiff;y,SCREEN_TOP+17;zoom,0.75;diffuse,PlayerColor(pn));
+		InitCommand=function(self) self:x(xDiff); self:y(SCREEN_TOP+17); self:zoom(0.75); self:diffuse(PlayerColor(pn)); end;
 		OnCommand=function(self)
 		local DIFFU = ""
 		if x:GetDifficulty() then
@@ -216,7 +216,7 @@ LoadFont("Common","Normal")..{
 			self:maxwidth(70)
 		end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 };
 

@@ -5,12 +5,12 @@ end;
 local LP={0,0};
 local DP={0,0};
 local t = Def.ActorFrame{
-	OnCommand=cmd(y,-10);
+	OnCommand=function(self) self:y(-10); end;
 };
 t[#t+1] = Def.Quad{
-InitCommand=cmd(CenterX;y,35.5;zoomx,SCREEN_RIGHT;zoomy,(1/6)*SCREEN_BOTTOM;diffusealpha,0.1);
-OnCommand=cmd(queuecommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(queuecommand,"Nep");
+InitCommand=function(self) self:CenterX(); self:y(35.5); self:zoomx(SCREEN_RIGHT); self:zoomy((1/6)*SCREEN_BOTTOM); self:diffusealpha(0.1); end;
+OnCommand=function(self) self:queuecommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)
 
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -23,14 +23,14 @@ OnCommand=cmd(queuecommand,"Nep");
 		end
 		self:diffusetopedge({0,0,0,1})
 		end;
-GETOUTOFGAMESMMessageCommand=cmd(sleep,math.random(0,10)/10;accelerate,1;zoomx,0);
+GETOUTOFGAMESMMessageCommand=function(self) self:sleep(math.random(0,10)/10); self:accelerate(1); self:zoomx(0); end;
 };
 
 
 t[#t+1] = Def.ActorFrame{
 Def.ActorFrame{
-		OnCommand=cmd(diffusealpha,0;queuecommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(queuecommand,"Nep");
+		OnCommand=function(self) self:diffusealpha(0); self:queuecommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 		self:diffuserightedge(Diff2Cl(GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty(),1))
@@ -41,7 +41,7 @@ Def.ActorFrame{
 		self:diffuse(Diff2Cl(GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty(),1))
 		end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,0.75;accelerate,1;diffusealpha,0);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(0.75); self:accelerate(1); self:diffusealpha(0); end;
 		Def.ActorFrame{
 			JudgmentMessageCommand=function(self)
 
@@ -77,8 +77,8 @@ Def.ActorFrame{
 		end
 		end;
 		LoadActor("Awesome2.png")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+10;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-			OnCommand=cmd(diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.7};effectclock,"beat");
+			InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+10); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
+			OnCommand=function(self) self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({1,1,1,0.7}); self:effectclock("beat"); end;
 		};
 		};
 		
@@ -88,8 +88,8 @@ t[#t+1] = LoadActor("ANO.lua");
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 t[#t+1]=LoadActor("Under aorrar.png")..{
 		Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+10;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;diffuse,color("#FF0000"));
-		OnCommand=cmd(queuecommand,"Judgment");
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+10); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); self:diffuse(color("#FF0000")); end;
+		OnCommand=function(self) self:queuecommand("Judgment"); end;
 		JudgmentMessageCommand=function(self)
 		if SCREENMAN:GetTopScreen():GetLifeMeter(PLAYER_1):IsFailing() then
 			self:playcommand("Fail1")
@@ -110,15 +110,15 @@ t[#t+1]=LoadActor("Under aorrar.png")..{
 			end
 		end
 		end;
-		Fail1Command=cmd(diffuse,PlayerColor(PLAYER_1);decelerate,0.5;diffuse,color("#00000000"));
-		GETOUTOFGAMESMMessageCommand=cmd(stoptweening;sleep,0.75;accelerate,1;diffusealpha,0);
+		Fail1Command=function(self) self:diffuse(PlayerColor(PLAYER_1)); self:decelerate(0.5); self:diffuse(color("#00000000")); end;
+		GETOUTOFGAMESMMessageCommand=function(self) self:stoptweening(); self:sleep(0.75); self:accelerate(1); self:diffusealpha(0); end;
 		};
 end
 if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 t[#t+1]=LoadActor("Under aorrar.png")..{
 		Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+10;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;diffuse,color("#FF0000"));
-		OnCommand=cmd(queuecommand,"Judgment");
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+10); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); self:diffuse(color("#FF0000")); end;
+		OnCommand=function(self) self:queuecommand("Judgment"); end;
 		JudgmentMessageCommand=function(self)
 		if SCREENMAN:GetTopScreen():GetLifeMeter(PLAYER_2):IsFailing() then
 			self:playcommand("Fail2")
@@ -139,8 +139,8 @@ t[#t+1]=LoadActor("Under aorrar.png")..{
 			end
 		end
 		end;
-		Fail2Command=cmd(diffuse,PlayerColor(PLAYER_2);decelerate,0.5;diffuse,color("#00000000"));
-		GETOUTOFGAMESMMessageCommand=cmd(stoptweening;sleep,0.75;accelerate,1;diffusealpha,0);
+		Fail2Command=function(self) self:diffuse(PlayerColor(PLAYER_2)); self:decelerate(0.5); self:diffuse(color("#00000000")); end;
+		GETOUTOFGAMESMMessageCommand=function(self) self:stoptweening(); self:sleep(0.75); self:accelerate(1); self:diffusealpha(0); end;
 		};
 end
 return t;

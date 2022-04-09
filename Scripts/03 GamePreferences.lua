@@ -131,7 +131,7 @@ function GetGamePrefN(name)
 end
 
 --[[
-Copyright © 2008-2009 AJ Kelly/KKI Labs
+Copyright ï¿½ 2008-2009 AJ Kelly/KKI Labs
 All rights reserved.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"

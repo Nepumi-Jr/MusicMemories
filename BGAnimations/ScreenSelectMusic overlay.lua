@@ -1,7 +1,7 @@
 local Nep = 0;
 local t = Def.ActorFrame{
     --[[Def.ActorFrame{
-        InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
+        InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); end;
         OnCommand=function(self)
             if MonthOfYear() == 4-1 and DayOfMonth() == 1 then
                 self:spin()
@@ -13,9 +13,9 @@ local t = Def.ActorFrame{
                 self:sleep(0.075);
                 self:diffuse(ColorRandom());
             end;
-            OnCommand=cmd(queuecommand,"CurrentSongChangedMessage");
+            OnCommand=function(self) self:queuecommand("CurrentSongChangedMessage"); end;
             LoadActor(THEME:GetPathG("","_Robot_Note")) .. {
-                InitCommand=cmd(x,-20;z,100;zoom,0.75;rotationz,-90);
+                InitCommand=function(self) self:x(-20); self:z(100); self:zoom(0.75); self:rotationz(-90); end;
                 StartSelectingStepsMessageCommand=function(self)
                     self:decelerate(0.5);
                     if GAMESTATE:IsCourseMode() then
@@ -27,7 +27,7 @@ local t = Def.ActorFrame{
                         self:rotationz(-90+360);
                     end
                 end;
-                SongUnchosenMessageCommand=cmd(decelerate,0.5;x,-130;zoom,0.75;rotationz,-90);
+                SongUnchosenMessageCommand=function(self) self:decelerate(0.5); self:x(-130); self:zoom(0.75); self:rotationz(-90); end;
                 OnCommand=function(self)
                     self:bounce();
                     self:effectmagnitude(-15,0,0);
@@ -48,20 +48,20 @@ local t = Def.ActorFrame{
         };
     };]]
     LoadActor(THEME:GetPathG("Arrow","Left"))..{
-        InitCommand=cmd(x,SCREEN_CENTER_X+20;y,SCREEN_CENTER_Y-2;zoom,0.5);
+        InitCommand=function(self) self:x(SCREEN_CENTER_X+20); self:y(SCREEN_CENTER_Y-2); self:zoom(0.5); end;
     };
     LoadActor(THEME:GetPathG("Arrow","right"))..{
-        InitCommand=cmd(x,SCREEN_CENTER_X+380;y,SCREEN_CENTER_Y-2;zoom,0.5);
+        InitCommand=function(self) self:x(SCREEN_CENTER_X+380); self:y(SCREEN_CENTER_Y-2); self:zoom(0.5); end;
     };
 };
 
 --Custom Text helper here...
 t[#t+1] = Def.ActorFrame{
 	Def.Quad{
-		InitCommand=cmd(diffuse,color("#555555");x,SCREEN_CENTER_X;y,SCREEN_BOTTOM;zoomx,SCREEN_RIGHT;zoomy,60);	
+		InitCommand=function(self) self:diffuse(color("#555555")); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM); self:zoomx(SCREEN_RIGHT); self:zoomy(60); end;	
 	};
 	Def.Quad{
-		InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_1 or {1,0,0,1};x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-60/2;zoomx,SCREEN_RIGHT;zoomy,2.5);	
+		InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_1 or {1,0,0,1}); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM-60/2); self:zoomx(SCREEN_RIGHT); self:zoomy(2.5); end;	
 	};
 	StandardDecorationFromFileOptional( "SeSongHelp", "NewHelp" );
 

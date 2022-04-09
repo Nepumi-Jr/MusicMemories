@@ -35,7 +35,7 @@ end
 t[#t+1] = Def.ActorFrame {
 LoadFont("_special elite 108px")..{
 		Text=Say;
-		OnCommand=cmd(zoom,0.25;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-20;diffuse,Cl;diffusebottomedge,ColorDarkTone(Cl);diffusetopedge,ColorLightTone(Cl));
+		OnCommand=function(self) self:zoom(0.25); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM-20); self:diffuse(Cl); self:diffusebottomedge(ColorDarkTone(Cl)); self:diffusetopedge(ColorLightTone(Cl)); end;
 	};
 };
 

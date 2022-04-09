@@ -6,7 +6,7 @@ return Def.ActorFrame{
 
 
     Def.Quad{--Timing
-        InitCommand=cmd(zoom,20;visible,false);
+        InitCommand=function(self) self:zoom(20); self:visible(false); end;
         OnCommand=function(self)
             for pn in ivalues(Players) do
                 thisTapTiming[pn] = {};
@@ -44,7 +44,7 @@ return Def.ActorFrame{
 
     --[[Def.Quad{--Battle Memories
         Condition = (not GAMESTATE:IsCourseMode()) ;
-        InitCommand=cmd(zoom,20;visible,false);
+        InitCommand=function(self) self:zoom(20); self:visible(false); end;
         JudgmentMessageCommand=function(self,params)
             PP[params.Player] = params;
             LP = params.Player;

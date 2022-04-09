@@ -9,10 +9,10 @@ local t = Def.ActorFrame{};
 
 t[#t+1] = LoadActor(gOverlayPath.."SoundReady");
 t[#t+1] = LoadActor(gOverlayPath.."Time.lua")..{
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+	GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 };
 t[#t+1] = LoadActor(gOverlayPath.."BPM")..{
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-50;);
+	GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-50); end;
 };
 
 
@@ -36,7 +36,7 @@ t[#t+1] = LoadActor(gOverlayPath.."Border");
 
 
 t[#t+1] = LoadActor(gOverlayPath.."ButtomLifeLine/NewDefault.lua")..{
-    GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,10;);
+    GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(10); end;
 };
 
 return t;

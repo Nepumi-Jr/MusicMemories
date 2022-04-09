@@ -35,7 +35,7 @@ local FCA = {false,false,false,false,false,false,false,false,false}
 
 
 local out = Def.ActorFrame{
-OnCommand=cmd(draworder,5000;z,-20);
+OnCommand=function(self) self:draworder(5000); self:z(-20); end;
 StartTransitioningCommand=function(self)
 
 	local SA = false;
@@ -307,7 +307,7 @@ end;
 
 if TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and not TP.Battle.Hidden then
 	out[#out+1] = Def.Quad{
-	FallBatMessageCommand=cmd(zoom,999999;diffuse,color("#00000000");sleep,3;linear,1;diffuse,color("#000000FF"));
+	FallBatMessageCommand=function(self) self:zoom(999999); self:diffuse(color("#00000000")); self:sleep(3); self:linear(1); self:diffuse(color("#000000FF")); end;
 	};
 end
 
@@ -316,92 +316,92 @@ local WID,WIDS = PLAYER_1,"PlayerP1";
 out[#out+1] = Def.ActorFrame{
 
 	Def.Quad{
-		OnCommand=cmd(zoom,99999;diffuse,{0,0,0,0});
-		FastISLAMessageCommand=cmd(decelerate,2;diffusealpha,1);
+		OnCommand=function(self) self:zoom(99999); self:diffuse({0,0,0,0}); end;
+		FastISLAMessageCommand=function(self) self:decelerate(2); self:diffusealpha(1); end;
 	};
 	Def.Quad{
-		OnCommand=cmd(FullScreen;diffuse,{0.7,0.7,0.7,0.5};croptop,1);
-		FcStageMessageCommand=cmd(sleep,3;decelerate,0.2;croptop,0;);
+		OnCommand=function(self) self:FullScreen(); self:diffuse({0.7,0.7,0.7,0.5}); self:croptop(1); end;
+		FcStageMessageCommand=function(self) self:sleep(3); self:decelerate(0.2); self:croptop(0); end;
 	};
 	Def.Quad{
-		OnCommand=cmd(FullScreen;diffuse,{0.7,0.7,0.7,1};croptop,1);
-		FcStageMessageCommand=cmd(sleep,3+0.2;decelerate,0.2;croptop,0);
+		OnCommand=function(self) self:FullScreen(); self:diffuse({0.7,0.7,0.7,1}); self:croptop(1); end;
+		FcStageMessageCommand=function(self) self:sleep(3+0.2); self:decelerate(0.2); self:croptop(0); end;
 	};
 
 
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(1-4)):CenterY() :zoom(0) :diffuse(CCl[1]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[1]..".png";zoom,0);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FCAAMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBAWMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[1]..".png"); self:zoom(0); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FCAAMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBAWMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(2-4)):CenterY() :zoom(0) :diffuse(CCl[2]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[2]..".png";zoom,0);
-		FCAWMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBAWMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[2]..".png"); self:zoom(0); end;
+		FCAWMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBAWMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(3-4)):CenterY() :zoom(0) :diffuse(CCl[3]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[3]..".png";zoom,0);
-		FCAEMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBEMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[3]..".png"); self:zoom(0); end;
+		FCAEMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(4-4)):CenterY() :zoom(0) :diffuse(CCl[4]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[4]..".png";zoom,0);
-		FCASMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBSMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[4]..".png"); self:zoom(0); end;
+		FCASMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBSMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(5-4)):CenterY() :zoom(0) :diffuse(CCl[5]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[5]..".png";zoom,0);
-		FCAOMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBOMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[5]..".png"); self:zoom(0); end;
+		FCAOMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBOMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(6-4)):CenterY() :zoom(0) :diffuse(CCl[6]) end;
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[6]..".png";zoom,0);
-		FCAMMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBMEMessageCommand=cmd(linear,0.1;zoom,1);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[6]..".png"); self:zoom(0); end;
+		FCAMMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBMEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(7-4)):CenterY() :zoom(0) :diffuse(CCl[7]) end;
-		FCAETMessageCommand=cmd(vibrate;zoom,20;linear,0.1;zoom,1);
-		FCBMEMessageCommand=cmd(linear,0.1;zoom,1);
-		FinmakeMessageCommand=cmd(Load,THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[7]..".png";zoom,0);
-		YutMessageCommand=cmd(zoom,1.2;stopeffect);
-		HentMessageCommand=cmd(bounceend,0.75;zoom,1);
-		FALLLRMessageCommand=cmd(finishtweening;sleep,0.5;linear,1;diffusealpha,0);
+		FCAETMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
+		FCBMEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
+		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[7]..".png"); self:zoom(0); end;
+		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
+		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
+		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;
 	};
 
 	
 	
 LoadActor("KnockOut.png")..{
-InitCommand=cmd(Center;FullScreen;cropright,1);
-KOGMessageCommand=cmd(sleep,0.25;linear,0.5;cropright,0)
+InitCommand=function(self) self:Center(); self:FullScreen(); self:cropright(1); end;
+KOGMessageCommand=function(self) self:sleep(0.25); self:linear(0.5); self:cropright(0); end
 };
 	Def.Quad{
-		OnCommand=cmd(FullScreen;diffuse,color("#00000000"));
-		FALLLRMessageCommand=cmd(sleep,0.5;linear,2;diffusealpha,1;);
+		OnCommand=function(self) self:FullScreen(); self:diffuse(color("#00000000")); end;
+		FALLLRMessageCommand=function(self) self:sleep(0.5); self:linear(2); self:diffusealpha(1); end;
 	};
 
 
@@ -428,35 +428,35 @@ end
 	SCREENMAN:GetTopScreen():GetChild(WIDS):accelerate(0.7):rotationz(math.random(30)*Me):y(SCREEN_BOTTOM*1.5):addx(30*Me);
 	self:x(SCREENMAN:GetTopScreen():GetChild(WIDS):GetX()):y(SCREENMAN:GetTopScreen():GetChild(WIDS):GetY()-50):visible(true):sleep(0.7):queuecommand("Ma")
 	end;
-	MaCommand=cmd(bob;effectmagnitude,0,5,0);
+	MaCommand=function(self) self:bob(); self:effectmagnitude(0,5,0); end;
 	LoadFont("Common Normal")..{
 	Text = "O";
-	InitCommand = cmd(x,-50;y,-25;zoom,3;diffusebottomedge,Color.Red or color("#FF0000"));
-	OnCommand = cmd(y,-SCREEN_CENTER_Y+50-50;rotationz,math.random(-10,10);sleep,math.random(1,5)/10;bouncebegin,0.7;y,-25;rotationz,0;);
+	InitCommand = function(self) self:x(-50); self:y(-25); self:zoom(3); self:diffusebottomedge(Color.Red or color("#FF0000")); end;
+	OnCommand = function(self) self:y(-SCREEN_CENTER_Y+50-50); self:rotationz(math.random(-10,10)); self:sleep(math.random(1,5)/10); self:bouncebegin(0.7); self:y(-25); self:rotationz(0); end;
 	};
 	LoadFont("Common Normal")..{
 	Text = "h";
-	InitCommand = cmd(x,0;y,-25;zoom,3;diffusebottomedge,Color.Red or color("#FF0000"));
-	OnCommand = cmd(y,-SCREEN_CENTER_Y+50-50;rotationz,math.random(-10,10);sleep,math.random(1,5)/10;bouncebegin,0.7;y,-25;rotationz,0;);
+	InitCommand = function(self) self:x(0); self:y(-25); self:zoom(3); self:diffusebottomedge(Color.Red or color("#FF0000")); end;
+	OnCommand = function(self) self:y(-SCREEN_CENTER_Y+50-50); self:rotationz(math.random(-10,10)); self:sleep(math.random(1,5)/10); self:bouncebegin(0.7); self:y(-25); self:rotationz(0); end;
 	};
 	LoadFont("Common Normal")..{
 	Text = "N";
-	InitCommand = cmd(x,0-20;y,25;zoom,3;diffusebottomedge,Color.Red or color("#FF0000"));
-	OnCommand = cmd(y,-SCREEN_CENTER_Y+50-50;rotationz,math.random(-10,10);sleep,math.random(1,5)/10;bouncebegin,0.7;y,25;rotationz,0;);
+	InitCommand = function(self) self:x(0-20); self:y(25); self:zoom(3); self:diffusebottomedge(Color.Red or color("#FF0000")); end;
+	OnCommand = function(self) self:y(-SCREEN_CENTER_Y+50-50); self:rotationz(math.random(-10,10)); self:sleep(math.random(1,5)/10); self:bouncebegin(0.7); self:y(25); self:rotationz(0); end;
 	};
 	LoadFont("Common Normal")..{
 	Text = "o";
-	InitCommand = cmd(x,50-30;y,25;zoom,3;diffusebottomedge,Color.Red or color("#FF0000"));
-	OnCommand = cmd(y,-SCREEN_CENTER_Y+50-50;rotationz,math.random(-10,10);sleep,math.random(1,5)/10;bouncebegin,0.7;y,25;rotationz,0;);
+	InitCommand = function(self) self:x(50-30); self:y(25); self:zoom(3); self:diffusebottomedge(Color.Red or color("#FF0000")); end;
+	OnCommand = function(self) self:y(-SCREEN_CENTER_Y+50-50); self:rotationz(math.random(-10,10)); self:sleep(math.random(1,5)/10); self:bouncebegin(0.7); self:y(25); self:rotationz(0); end;
 	};
 	LoadFont("Common Normal")..{
 	Text = "!";
-	InitCommand = cmd(x,80-30;y,25;zoom,3;diffusebottomedge,Color.Red or color("#FF0000"));
-	OnCommand = cmd(y,-SCREEN_CENTER_Y+50-50;rotationz,math.random(-10,10);sleep,math.random(1,5)/10;bouncebegin,0.7;y,25;rotationz,0;);
+	InitCommand = function(self) self:x(80-30); self:y(25); self:zoom(3); self:diffusebottomedge(Color.Red or color("#FF0000")); end;
+	OnCommand = function(self) self:y(-SCREEN_CENTER_Y+50-50); self:rotationz(math.random(-10,10)); self:sleep(math.random(1,5)/10); self:bouncebegin(0.7); self:y(25); self:rotationz(0); end;
 	};
 };
 LoadActor("MAY")..{
-FallBatMessageCommand=cmd(play);
+FallBatMessageCommand=function(self) self:play(); end;
 };
 	Def.Quad{
 		FinmakeMessageCommand=function(self)

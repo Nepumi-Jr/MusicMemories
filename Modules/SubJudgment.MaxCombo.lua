@@ -2,7 +2,7 @@
 return function(player)
     return Def.ActorFrame {
         LoadFont("Common Normal") .. {
-            InitCommand=cmd(x,-35;y,5;horizalign,left);
+            InitCommand=function(self) self:x(-35); self:y(5); self:horizalign(left); end;
             ComboCommand=function(self, param)
                 local oldMaxCombo = tonumber(string.match( self:GetText(),"%d+")) or 0
                 local newMaxCombo = param.Combo or 0

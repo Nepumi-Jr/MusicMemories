@@ -15,7 +15,7 @@ local N = Def.ActorFrame{
         end;
 	};
 	LoadActor("OffsetBar")..{
-		OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y*2-30);
+		OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*2-30); end;
 	};
 	
 	

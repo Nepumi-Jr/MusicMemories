@@ -1,12 +1,12 @@
 local t = Def.ActorFrame{
 
     Def.Quad{
-        InitCommand=cmd(FullScreen;diffuse,{0,0,0,1});
+        InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,1}); end;
     };
 
     LoadActor("dance.lua")..{
-        InitCommand=cmd(Center);
-        OnCommand=cmd(wag);
+        InitCommand=function(self) self:Center(); end;
+        OnCommand=function(self) self:wag(); end;
     };
 
 

@@ -66,11 +66,11 @@ end
 
 
 local Tune = Def.ActorFrame{
-InitCommand=cmd(SetUpdateFunction,MS);
+InitCommand=function(self) self:SetUpdateFunction(MS); end;
 
 LoadFont("Common Normal")..{
 Name = "Ma";
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.65;zoom,0;rainbow;settext,"Nope");
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.65); self:zoom(0); self:rainbow(); self:settext("Nope"); end;
 };
 
 

@@ -19,12 +19,12 @@ local t = Def.ActorFrame{};
 
 
 t[#t+1] = Def.ActorFrame{
---OnCommand=cmd(effectclock,'beat';diffuseramp;effectcolor1,0.25,0.25,1,1;effectcolor2,1,0.25,0.25,1;effectperiod,0.5;effecttiming,0.25,0.50,0,0.25;effectoffset,-0.25);--Condition=MonthOfYear() == 12 or MonthOfYear() < 3
+--OnCommand=function(self) self:effectclock('beat'); self:diffuseramp(); self:effectcolor1(0.25,0.25,1,1); self:effectcolor2(1,0.25,0.25,1); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;--Condition=MonthOfYear() == 12 or MonthOfYear() < 3
 Def.ActorFrame{
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,-30;diffusealpha,0;zoomx,0;sleep,0.15+0.15+0.15+0.15+0.15+0.15+2+3;diffusealpha,1;linear,0.11126465746435357;zoomx,1);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(-30); self:diffusealpha(0); self:zoomx(0); self:sleep(0.15+0.15+0.15+0.15+0.15+0.15+2+3); self:diffusealpha(1); self:linear(0.11126465746435357); self:zoomx(1); end;
 		LoadFont("_the unseen 24px") .. {
-			OnCommand=cmd(diffuse,color("#ff1100");playcommand,"Update");
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Update");
+			OnCommand=function(self) self:diffuse(color("#ff1100")); self:playcommand("Update"); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Update"); end;
 			UpdateCommand=function(self)
 				local text = ""
 				local song = GAMESTATE:GetCurrentSong()
@@ -42,8 +42,8 @@ Def.ActorFrame{
 		};
 		
 	LoadFont("_the unseen 24px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X+2.5-160;y,56.75214415523215378951351-SCREEN_BOTTOM+40;zoom,0.7;horizalign,left);
-		OnCommand=cmd(playcommand,'Super');--fail! ## i forgeted '(self)'
+				InitCommand=function(self) self:x(SCREEN_CENTER_X+2.5-160); self:y(56.75214415523215378951351-SCREEN_BOTTOM+40); self:zoom(0.7); self:horizalign(left); end;
+		OnCommand=function(self) self:playcommand('Super'); end;--fail! ## i forgeted '(self)'
 		SuperCommand=function(self)
 		self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 							self:diffuse(color("#ff0000"))
@@ -68,8 +68,8 @@ Def.ActorFrame{
 				end;
 };
 	LoadFont("_the unseen 24px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X+2.5-160;y,56.75214415523215378951351-SCREEN_BOTTOM+40;zoom,0.7;horizalign,left);
-		OnCommand=cmd(playcommand,'Super');--fail! ## i forgeted '(self)'
+				InitCommand=function(self) self:x(SCREEN_CENTER_X+2.5-160); self:y(56.75214415523215378951351-SCREEN_BOTTOM+40); self:zoom(0.7); self:horizalign(left); end;
+		OnCommand=function(self) self:playcommand('Super'); end;--fail! ## i forgeted '(self)'
 		SuperCommand=function(self)
 		self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 							self:diffuse(color("#ff0000"))
@@ -94,8 +94,8 @@ Def.ActorFrame{
 				end;
 };
 LoadFont("_the unseen 24px") .. {
-				InitCommand=cmd(x,SCREEN_CENTER_X+2.5-160;y,56.75214415523215378951351-SCREEN_BOTTOM+40;zoom,0.7;horizalign,left);
-		OnCommand=cmd(playcommand,'Super');--fail! ## i forgeted '(self)'
+				InitCommand=function(self) self:x(SCREEN_CENTER_X+2.5-160); self:y(56.75214415523215378951351-SCREEN_BOTTOM+40); self:zoom(0.7); self:horizalign(left); end;
+		OnCommand=function(self) self:playcommand('Super'); end;--fail! ## i forgeted '(self)'
 		SuperCommand=function(self)
 		self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 							self:diffuse(color("#ff0000"))
@@ -124,8 +124,8 @@ LoadFont("_the unseen 24px") .. {
 				end;
 };
 	LoadFont("_the unseen 24px")..{
-				InitCommand=cmd(x,SCREEN_CENTER_X-2.5+160;y,56.75214415523215378951351-SCREEN_BOTTOM+40;zoom,0.7;horizalign,right);
-		OnCommand=cmd(playcommand,'Super');--fail! ## i forgeted '(self)'
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-2.5+160); self:y(56.75214415523215378951351-SCREEN_BOTTOM+40); self:zoom(0.7); self:horizalign(right); end;
+		OnCommand=function(self) self:playcommand('Super'); end;--fail! ## i forgeted '(self)'
 		SuperCommand=function(self)
 		self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 							self:diffuse(color("#5555FF"))
@@ -150,8 +150,8 @@ LoadFont("_the unseen 24px") .. {
 				end;
 };
 LoadFont("_the unseen 24px") .. {
-				InitCommand=cmd(x,SCREEN_CENTER_X-2.5+160;y,56.75214415523215378951351-SCREEN_BOTTOM+40;zoom,0.7;horizalign,right);
-		OnCommand=cmd(playcommand,'Super');--fail! ## i forgeted '(self)'
+				InitCommand=function(self) self:x(SCREEN_CENTER_X-2.5+160); self:y(56.75214415523215378951351-SCREEN_BOTTOM+40); self:zoom(0.7); self:horizalign(right); end;
+		OnCommand=function(self) self:playcommand('Super'); end;--fail! ## i forgeted '(self)'
 		SuperCommand=function(self)
 		self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 							self:diffuse(color("#5555FF"))
@@ -185,7 +185,7 @@ LoadFont("_the unseen 24px") .. {
 		Delay0000=1;
 		Frame0001=1;
 		Delay0001=1;
-		OnCommand=cmd(effectclock,'beat';x,SCREEN_CENTER_X+10;zoom,0.7;y,-383+2;playcommand,'loop';);
+		OnCommand=function(self) self:effectclock('beat'); self:x(SCREEN_CENTER_X+10); self:zoom(0.7); self:y(-383+2); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		WTF=GAMESTATE:GetCurrentSong():GetLastSecond()-GAMESTATE:GetCurMusicSeconds()
 		Hi=SecondsToMSSMsMs(GAMESTATE:GetCurrentSong():GetLastSecond()-GAMESTATE:GetCurMusicSeconds())
@@ -205,9 +205,9 @@ LoadFont("_the unseen 24px") .. {
 
 if GAMESTATE:IsCourseMode() then
 t[#t+1] = Def.ActorFrame{
-	OnCommand=cmd(y,-SCREEN_BOTTOM+40);
+	OnCommand=function(self) self:y(-SCREEN_BOTTOM+40); end;
 		 LoadFont("_terror pro 24px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-135-85-55-85-17;y,SCREEN_TOP+45;zoom,2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-135-85-55-85-17); self:y(SCREEN_TOP+45); self:zoom(2); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 								self:diffuse(color("#FF0000"))
@@ -237,7 +237,7 @@ t[#t+1] = Def.ActorFrame{
 		end;
 	};
 	 LoadFont("_terror pro 24px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+135+85+55+85+17;y,SCREEN_TOP+45;zoom,2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X+135+85+55+85+17); self:y(SCREEN_TOP+45); self:zoom(2); end;
 			OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 								self:diffuse(color("#5555ff"))
@@ -268,9 +268,9 @@ t[#t+1] = Def.ActorFrame{
 	};
 else
 	t[#t+1] = Def.ActorFrame{
-	OnCommand=cmd(y,-SCREEN_BOTTOM+40);
+	OnCommand=function(self) self:y(-SCREEN_BOTTOM+40); end;
 		 LoadFont("_terror pro 24px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-135-85-55-85-17;y,SCREEN_TOP+45;zoom,2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-135-85-55-85-17); self:y(SCREEN_TOP+45); self:zoom(2); end;
 		OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1))
 								self:diffuse(color("#FF0000"))
@@ -300,7 +300,7 @@ else
 		end;
 	};
 	 LoadFont("_terror pro 24px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+135+85+55+85+17;y,SCREEN_TOP+45;zoom,2);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X+135+85+55+85+17); self:y(SCREEN_TOP+45); self:zoom(2); end;
 				OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2))
 								self:diffuse(color("#5555ff"))

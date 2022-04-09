@@ -52,8 +52,8 @@ InitializeMeasureCounterAndModsLevel()
 local t = Def.ActorFrame{
 
 	Def.Quad{
-		InitCommand=cmd(diffuse,Color.Black; diffusealpha,1; Center; FullScreen),
-		OnCommand=cmd(sleep,1.4; accelerate,0.6;diffusealpha,0)
+		InitCommand=function(self) self:diffuse(Color.Black); self:diffusealpha(1); self:Center(); self:FullScreen(); end,
+		OnCommand=function(self) self:sleep(1.4); self:accelerate(0.6); self:diffusealpha(0); end
 	},
 }
 

@@ -1,11 +1,11 @@
 local t = Def.ActorFrame {};
 t[#t + 1] = StandardDecorationFromFileOptional("BackgroundFrame","BackgroundFrame");
 t[#t + 1] = LoadActor(THEME:GetPathG("Arrow", "Right")) ..{
-    OnCommand = cmd(xy, SCREEN_CENTER_X + 370, SCREEN_CENTER_Y + 120;zoom,0.7);
-    OffCommand= cmd(accelerate,0.3;addx,100);
+    OnCommand = function(self) self:xy(SCREEN_CENTER_X + 370, SCREEN_CENTER_Y + 120); self:zoom(0.7); end;
+    OffCommand= function(self) self:accelerate(0.3); self:addx(100); end;
 };
 t[#t + 1] = LoadActor(THEME:GetPathG("Arrow", "Left")) ..{
-    OnCommand = cmd(xy, SCREEN_CENTER_X - 370, SCREEN_CENTER_Y + 120;zoom,0.7);
-    OffCommand= cmd(accelerate,0.3;addx,-100);
+    OnCommand = function(self) self:xy(SCREEN_CENTER_X - 370, SCREEN_CENTER_Y + 120); self:zoom(0.7); end;
+    OffCommand= function(self) self:accelerate(0.3); self:addx(-100); end;
 };
 return t

@@ -103,7 +103,7 @@ local Tune = Def.ActorFrame{
 
 --
 Def.Quad{
-OnCommand=cmd(sleep,0.1;queuecommand,"GM");--Use For Delay
+OnCommand=function(self) self:sleep(0.1); self:queuecommand("GM"); end;--Use For Delay
 --IDK Why SM use > 0 beat and then turn back to real beat :(
 GMCommand=function(self)
 
@@ -134,7 +134,7 @@ end;
 };
 
 LoadFont("Common Normal")..{
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.65;rainbow);
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.65); self:rainbow(); end;
 SFBMessageCommand=function(self)
 self:playcommand("Nep")
 end;
@@ -180,9 +180,9 @@ end;
 };
 
 Def.ActorFrame{
-OnCommand=cmd(y,wai);
+OnCommand=function(self) self:y(wai); end;
 Def.Quad{
-OnCommand=cmd(visible,true);
+OnCommand=function(self) self:visible(true); end;
 DanceMessageCommand=function()
 if IsNetConnected() and ((SCREENMAN:GetTopScreen():GetChild('PlayerP1') and SCREENMAN:GetTopScreen():GetChild('PlayerP1'):GetX() == SCREEN_CENTER_X)
 			or (SCREENMAN:GetTopScreen():GetChild('PlayerP2') and SCREENMAN:GetTopScreen():GetChild('PlayerP2'):GetX() == SCREEN_CENTER_X)) then
@@ -212,19 +212,17 @@ end;
 };
 for i = 1,string.len( RDText ) do
 	Tune[#Tune+1]=Def.ActorFrame{
-		SFBMessageCommand=cmd(x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*40;CenterY;zoom,0.8;
-			diffuse,Meter2Color(
+		SFBMessageCommand=function(self) self:x(SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*40); self:CenterY(); self:zoom(0.8); self:diffuse(Meter2Color(
 				Meter
-				)
-			);
-		AppMessageCommand=cmd(ease,lenA+lenB+0.1,80;x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*55;zoom,0.7);
-		DanceMessageCommand=cmd(x,SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*60;zoom,0.65);
+				)); end;
+		AppMessageCommand=function(self) self:ease(lenA+lenB+0.1,80); self:x(SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*55); self:zoom(0.7); end;
+		DanceMessageCommand=function(self) self:x(SCREEN_CENTER_X+(i-((string.len( RDText )+1)/2))*60); self:zoom(0.65); end;
 		Def.Sprite{
-			InitCommand=cmd(zoom,0.75;Load,path..tellme(RDText, i)..".png";diffusealpha,0);
-			OnCommand=cmd(diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{.75,.75,.75,1};effectoffset,math.random(0,10)/10);
-			AppMessageCommand=cmd(linear,math.min(0.7,lenA);diffusealpha,1;sleep,math.max(lenA-0.7,0.001);decelerate,lenB;zoomx,0);
-			DanceMessageCommand=cmd(diffusealpha,1;y,-115);
-			RIPMessageCommand=cmd(decelerate,0.5;diffusealpha,0);
+			InitCommand=function(self) self:zoom(0.75); self:Load(path..tellme(RDText, i)..".png"); self:diffusealpha(0); end;
+			OnCommand=function(self) self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({.75,.75,.75,1}); self:effectoffset(math.random(0,10)/10); end;
+			AppMessageCommand=function(self) self:linear(math.min(0.7,lenA)); self:diffusealpha(1); self:sleep(math.max(lenA-0.7,0.001)); self:decelerate(lenB); self:zoomx(0); end;
+			DanceMessageCommand=function(self) self:diffusealpha(1); self:y(-115); end;
+			RIPMessageCommand=function(self) self:decelerate(0.5); self:diffusealpha(0); end;
 		};
 	};
 end

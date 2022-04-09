@@ -21,21 +21,21 @@ local t = Def.ActorFrame{
 
 	Def.Quad{
 		Name ="VeryBG";
-		OnCommand=cmd(FullScreen;diffuse,color("#000000FF"));
+		OnCommand=function(self) self:FullScreen(); self:diffuse(color("#000000FF")); end;
 	};
 
 	LoadActor("Night.png")..{
 		Name ="NightBG";
-		InitCommand=cmd(FullScreen;diffuse,{1,1,1,0.7});
+		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0.7}); end;
 	};
 	LoadActor("Day.png")..{
 		Name ="DayBG";
-		InitCommand=cmd(FullScreen;diffuse,{1,1,1,1});
+		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,1}); end;
 	};
 
 	LoadActor("cloud.png")..{
 		Name ="Cloud";
-		InitCommand=cmd(Center;zoom,1;diffuse,{1,1,1,1};texcoordvelocity,0.0003,0;);
+		InitCommand=function(self) self:Center(); self:zoom(1); self:diffuse({1,1,1,1}); self:texcoordvelocity(0.0003,0); end;
 	};
 
 };
@@ -69,14 +69,14 @@ for i = 1,30 do
 
 	if math.random(1,10) == 1 then
 		Stars[#Stars+1] = Def.ActorFrame{
-            InitCommand=cmd(zoom,math.random(1,10)/10*0.5;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30;rotationz,math.random(-60,60));
-			OnCommand=cmd(effectclock,"beat";diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.2};effectperiod,16;effectoffset,math.random(1,8));
+            InitCommand=function(self) self:zoom(math.random(1,10)/10*0.5); self:x(math.random(0,SCREEN_RIGHT)); self:y(math.random(0,SCREEN_BOTTOM)); self:diffusealpha(math.random(0,30)/30); self:rotationz(math.random(-60,60)); end;
+			OnCommand=function(self) self:effectclock("beat"); self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({1,1,1,0.2}); self:effectperiod(16); self:effectoffset(math.random(1,8)); end;
             loadVectorStar(PicDlcRand());
         };
 	else
 		Stars[#Stars+1] = LoadActor("LittleCircle.png")..{
-			InitCommand=cmd(zoom,math.random(30,70)/50/8;x,math.random(0,SCREEN_RIGHT);y,math.random(0,SCREEN_BOTTOM);diffusealpha,math.random(0,30)/30);
-			OnCommand=cmd(effectclock,"beat";diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.2};effectperiod,16;effectoffset,math.random(1,8));
+			InitCommand=function(self) self:zoom(math.random(30,70)/50/8); self:x(math.random(0,SCREEN_RIGHT)); self:y(math.random(0,SCREEN_BOTTOM)); self:diffusealpha(math.random(0,30)/30); end;
+			OnCommand=function(self) self:effectclock("beat"); self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({1,1,1,0.2}); self:effectperiod(16); self:effectoffset(math.random(1,8)); end;
 		};
 	end
 end
@@ -100,8 +100,8 @@ end
 --GAMESTATE:GetCurrentSong()
 
 t[#t+1]=Def.ActorFrame{
-    InitCommand=cmd(x,math.random(100,200);y,math.random(250,300);zoom,0.75;diffusealpha,0.75;rotationz,math.random(0,35));
-	OnCommand=cmd(wag;effectmagnitude,0,0,5;effectclock,"beat";effectperiod,32);
+    InitCommand=function(self) self:x(math.random(100,200)); self:y(math.random(250,300)); self:zoom(0.75); self:diffusealpha(0.75); self:rotationz(math.random(0,35)); end;
+	OnCommand=function(self) self:wag(); self:effectmagnitude(0,0,5); self:effectclock("beat"); self:effectperiod(32); end;
     loadVectorStar(GameTypePic());
 };
 

@@ -1,17 +1,17 @@
 local item_width = THEME:GetMetric("OptionRow","ItemsStartX") + scale( SCREEN_WIDTH, 960, 1280, SCREEN_RIGHT-300 + 30, SCREEN_RIGHT-20 + 30)
 return Def.ActorFrame{
     Def.Quad{
-        OnCommand=cmd(x,223;zoomto,item_width,35;diffuse,{0,0,0,0.6}; fadeleft,0.2;faderight,0.2;);
+        OnCommand=function(self) self:x(223); self:zoomto(item_width,35); self:diffuse({0,0,0,0.6}); self:fadeleft(0.2); self:faderight(0.2); end;
     };
     Def.Sprite{
         OnCommand=function(self)
-            (cmd(x,223;diffuse,{1,1,1,0}; fadeleft,0.1;faderight,0.1;))(self)
+            (function(self) self:x(223); self:diffuse({1,1,1,0}); self:fadeleft(0.1); self:faderight(0.1); end)(self)
             local isFocus = self:GetParent():GetParent():GetParent():HasFocus( GAMESTATE:GetMasterPlayerNumber() )
             if isFocus then
                 self:playcommand("GainFocus")
             end
         end;
-        --cmd(x,223;y,-34.5/2;zoomto,0, 0;diffuse,{1,1,1,1}; fadeleft,0.1;faderight,0.1;);
+        --function(self) self:x(223); self:y(-34.5/2); self:zoomto(0, 0); self:diffuse({1,1,1,1}); self:fadeleft(0.1); self:faderight(0.1); end;
         GainFocusCommand=function(self)
             self:Load(THEME:GetPathG("OptionRow","FG"))
             
@@ -29,29 +29,29 @@ return Def.ActorFrame{
             end
             self:stoptweening():decelerate(0.2):diffusealpha(0.7)
         end;
-        LoseFocusCommand=cmd(stoptweening;decelerate,0.2;diffusealpha,0);
+        LoseFocusCommand=function(self) self:stoptweening(); self:decelerate(0.2); self:diffusealpha(0); end;
     };
     Def.Quad{
         OnCommand=function(self)
-            (cmd(x,223;y,-34.5/2;zoomto,0, 0;diffuse,{1,1,1,1}; fadeleft,0.1;faderight,0.1;))(self)
+            (function(self) self:x(223); self:y(-34.5/2); self:zoomto(0, 0); self:diffuse({1,1,1,1}); self:fadeleft(0.1); self:faderight(0.1); end)(self)
             local isFocus = self:GetParent():GetParent():GetParent():HasFocus( GAMESTATE:GetMasterPlayerNumber() )
             if isFocus then
                 self:playcommand("GainFocus")
             end
         end;
-        --cmd(x,223;y,-34.5/2;zoomto,0, 0;diffuse,{1,1,1,1}; fadeleft,0.1;faderight,0.1;);
-        GainFocusCommand=cmd(stoptweening;decelerate,0.2;zoomto,item_width, 2);
-        LoseFocusCommand=cmd(stoptweening;decelerate,0.2;zoomto,0 ,0);
+        --function(self) self:x(223); self:y(-34.5/2); self:zoomto(0, 0); self:diffuse({1,1,1,1}); self:fadeleft(0.1); self:faderight(0.1); end;
+        GainFocusCommand=function(self) self:stoptweening(); self:decelerate(0.2); self:zoomto(item_width, 2); end;
+        LoseFocusCommand=function(self) self:stoptweening(); self:decelerate(0.2); self:zoomto(0 ,0); end;
     };
     Def.Quad{
         OnCommand=function(self)
-            (cmd(x,223;y,34.5/2;zoomto,0, 0;diffuse,{1,1,1,1}; fadeleft,0.1;faderight,0.1;))(self)
+            (function(self) self:x(223); self:y(34.5/2); self:zoomto(0, 0); self:diffuse({1,1,1,1}); self:fadeleft(0.1); self:faderight(0.1); end)(self)
             local isFocus = self:GetParent():GetParent():GetParent():HasFocus( GAMESTATE:GetMasterPlayerNumber() )
             if isFocus then
                 self:playcommand("GainFocus")
             end
         end;
-        GainFocusCommand=cmd(stoptweening;decelerate,0.2;zoomto,item_width, 2);
-        LoseFocusCommand=cmd(stoptweening;decelerate,0.2;zoomto,0, 0);
+        GainFocusCommand=function(self) self:stoptweening(); self:decelerate(0.2); self:zoomto(item_width, 2); end;
+        LoseFocusCommand=function(self) self:stoptweening(); self:decelerate(0.2); self:zoomto(0, 0); end;
     };
 };

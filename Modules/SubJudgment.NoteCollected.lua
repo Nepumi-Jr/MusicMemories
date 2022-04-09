@@ -3,8 +3,8 @@ return function(player)
     return Def.ActorFrame {
         LoadFont("Common Normal") .. {
             Text = "0/0";
-            InitCommand=cmd(x,-35;y,5;horizalign,left;zoom,1);
-            OnCommand=cmd(settext,"0/"..(GAMESTATE:GetCurrentSteps(player):GetRadarValues(player):GetValue('RadarCategory_TapsAndHolds')+GAMESTATE:GetCurrentSteps(player):GetRadarValues(player):GetValue('RadarCategory_Holds')));
+            InitCommand=function(self) self:x(-35); self:y(5); self:horizalign(left); self:zoom(1); end;
+            OnCommand=function(self) self:settext("0/"..(GAMESTATE:GetCurrentSteps(player):GetRadarValues(player):GetValue('RadarCategory_TapsAndHolds')+GAMESTATE:GetCurrentSteps(player):GetRadarValues(player):GetValue('RadarCategory_Holds'))); end;
             JudgmentMessageCommand=function(self, param)
                 if param.Player ==  player then
                     local curValue =  GAMESTATE:GetCurrentSteps(player):GetRadarValues(player);

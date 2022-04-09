@@ -6,10 +6,10 @@ function GetLocalProfiles()
 		local item = Def.ActorFrame {
 			LoadFont("Common Normal") .. {
 				Text=profile:GetDisplayName();
-				InitCommand=cmd(shadowlength,1;y,-10;zoom,1;ztest,true);
+				InitCommand=function(self) self:shadowlength(1); self:y(-10); self:zoom(1); self:ztest(true); end;
 			};
 			LoadFont("Common Normal") .. {
-				InitCommand=cmd(shadowlength,1;y,8;zoom,0.5;vertspacing,-8;ztest,true);
+				InitCommand=function(self) self:shadowlength(1); self:y(8); self:zoom(0.5); self:vertspacing(-8); self:ztest(true); end;
 				BeginCommand=function(self)
 					local numSongsPlayed = profile:GetNumTotalSongsPlayed();
 					local s = numSongsPlayed == 1 and "Song" or "Songs";
@@ -28,7 +28,7 @@ local Haa = 0;
 function LoadCard(cColor)
 	local t = Def.ActorFrame {
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBackground") ) .. {
-			InitCommand=cmd(diffuse,cColor);
+			InitCommand=function(self) self:diffuse(cColor); end;
 		};
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardFrame") );
 	};
@@ -46,17 +46,17 @@ function LoadPlayerStuff(Player)
 		Name = 'JoinFrame';
 		LoadCard(Color('Orange'));
 --[[ 		Def.Quad {
-			InitCommand=cmd(zoomto,200+4,230+4);
-			OnCommand=cmd(shadowlength,1;diffuse,color("0,0,0,0.5"));
+			InitCommand=function(self) self:zoomto(200+4,230+4); end;
+			OnCommand=function(self) self:shadowlength(1); self:diffuse(color("0,0,0,0.5")); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(zoomto,200,230);
-			OnCommand=cmd(diffuse,Color('Orange');diffusealpha,0.5);
+			InitCommand=function(self) self:zoomto(200,230); end;
+			OnCommand=function(self) self:diffuse(Color('Orange')); self:diffusealpha(0.5); end;
 		}; --]]
 		LoadFont("Common Normal") .. {
 			Text=THEME:GetString("ScreenSelectProfile","PressStart");
-			InitCommand=cmd(shadowlength,1);
-			OnCommand=cmd(diffuseshift;effectcolor1,Color('White');effectcolor2,color("0.5,0.5,0.5"));
+			InitCommand=function(self) self:shadowlength(1); end;
+			OnCommand=function(self) self:diffuseshift(); self:effectcolor1(Color('White')); self:effectcolor2(color("0.5,0.5,0.5")); end;
 		};
 	};
 	table.insert( ret, t );
@@ -73,25 +73,25 @@ function LoadPlayerStuff(Player)
 	t = Def.ActorFrame {
 		Name = 'SmallFrame';
 --[[ 		Def.Quad {
-			InitCommand=cmd(zoomto,170+4,32+4);
-			OnCommand=cmd(shadowlength,1);
+			InitCommand=function(self) self:zoomto(170+4,32+4); end;
+			OnCommand=function(self) self:shadowlength(1); end;
 		}; --]]
-		InitCommand=cmd(y,-2);
+		InitCommand=function(self) self:y(-2); end;
 		Def.Quad {
-			InitCommand=cmd(zoomto,200-10,40+2);
-			OnCommand=cmd(diffuse,Color('Black');diffusealpha,0.5);
+			InitCommand=function(self) self:zoomto(200-10,40+2); end;
+			OnCommand=function(self) self:diffuse(Color('Black')); self:diffusealpha(0.5); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(zoomto,200-10,40);
-			OnCommand=cmd(diffuse,PlayerColor(Player);fadeleft,0.25;faderight,0.25;glow,color("1,1,1,0.25"));
+			InitCommand=function(self) self:zoomto(200-10,40); end;
+			OnCommand=function(self) self:diffuse(PlayerColor(Player)); self:fadeleft(0.25); self:faderight(0.25); self:glow(color("1,1,1,0.25")); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(zoomto,200-10,40;y,-40/2+20);
-			OnCommand=cmd(diffuse,Color("Black");fadebottom,1;diffusealpha,0.35);
+			InitCommand=function(self) self:zoomto(200-10,40); self:y(-40/2+20); end;
+			OnCommand=function(self) self:diffuse(Color("Black")); self:fadebottom(1); self:diffusealpha(0.35); end;
 		};
 		Def.Quad {
-			InitCommand=cmd(zoomto,200-10,1;y,-40/2+1);
-			OnCommand=cmd(diffuse,PlayerColor(Player);glow,color("1,1,1,0.25"));
+			InitCommand=function(self) self:zoomto(200-10,1); self:y(-40/2+1); end;
+			OnCommand=function(self) self:diffuse(PlayerColor(Player)); self:glow(color("1,1,1,0.25")); end;
 		};	
 	};
 	table.insert( ret, t );
@@ -99,8 +99,8 @@ function LoadPlayerStuff(Player)
 	t = Def.ActorScroller{
 		Name = 'ProfileScroller';
 		NumItemsToDraw=6;
--- 		InitCommand=cmd(y,-230/2+20;);
-		OnCommand=cmd(y,1;SetFastCatchup,true;SetMask,200,58;SetSecondsPerItem,0.15);
+-- 		InitCommand=function(self) self:y(-230/2+20); end;
+		OnCommand=function(self) self:y(1); self:SetFastCatchup(true); self:SetMask(200,58); self:SetSecondsPerItem(0.15); end;
 		TransformFunction=function(self, offset, itemIndex, numItems)
 			local focus = scale(math.abs(offset),0,2,1,0);
 			self:visible(false);
@@ -116,35 +116,35 @@ function LoadPlayerStuff(Player)
 	t = Def.ActorFrame {
 		Name = "EffectFrame";
 	--[[ 		Def.Quad {
-				InitCommand=cmd(y,-230/2;vertalign,top;zoomto,200,8;fadebottom,1);
-				OnCommand=cmd(diffuse,Color("Black");diffusealpha,0.25);
+				InitCommand=function(self) self:y(-230/2); self:vertalign(top); self:zoomto(200,8); self:fadebottom(1); end;
+				OnCommand=function(self) self:diffuse(Color("Black")); self:diffusealpha(0.25); end;
 			};
 			Def.Quad {
-				InitCommand=cmd(y,230/2;vertalign,bottom;zoomto,200,8;fadetop,1);
-				OnCommand=cmd(diffuse,Color("Black");diffusealpha,0.25);
+				InitCommand=function(self) self:y(230/2); self:vertalign(bottom); self:zoomto(200,8); self:fadetop(1); end;
+				OnCommand=function(self) self:diffuse(Color("Black")); self:diffusealpha(0.25); end;
 			}; --]]
 	};
 	table.insert( ret, t );
 --[[ 	t = Def.BitmapText {
-		OnCommand = cmd(y,160);
+		OnCommand = function(self) self:y(160); end;
 		Name = 'SelectedProfileText';
 		Font = "Common Normal";
 		Text = 'No profile';
 	}; --]]
 	t = LoadFont("Common Normal") .. {
 		Name = 'SelectedProfileText';
-		--InitCommand=cmd(y,160;shadowlength,1;diffuse,PlayerColor(Player));
-		InitCommand=cmd(y,160;shadowlength,1;);
+		--InitCommand=function(self) self:y(160); self:shadowlength(1); self:diffuse(PlayerColor(Player)); end;
+		InitCommand=function(self) self:y(160); self:shadowlength(1); end;
 	};
 	table.insert( ret, t );
     table.insert( ret,
         Def.ActorFrame{
             Name="Arrows";
             LoadActor(THEME:GetPathG("Arrow","Up")).. {
-                InitCommand=cmd(y,-130;zoom,0.4);
+                InitCommand=function(self) self:y(-130); self:zoom(0.4); end;
             };
             LoadActor(THEME:GetPathG("Arrow","Down")).. {
-                InitCommand=cmd(y,130;zoom,0.4);
+                InitCommand=function(self) self:y(130); self:zoom(0.4); end;
             }
         }
         
@@ -310,8 +310,8 @@ end
 
 local t = Def.ActorFrame {
 Def.ActorFrame {
-YessssMessageCommand=cmd(accelerate,0.5;y,-480);
-NopeMessageCommand=cmd(accelerate,0.5;y,0);
+YessssMessageCommand=function(self) self:accelerate(0.5); self:y(-480); end;
+NopeMessageCommand=function(self) self:accelerate(0.5); self:y(0); end;
 	StorageDevicesChangedMessageCommand=function(self, params)
 		self:queuecommand('UpdateInternal2');
 	end;
@@ -340,24 +340,24 @@ NopeMessageCommand=cmd(accelerate,0.5;y,0);
 	children = {
 		Def.ActorFrame {
 			Name = 'P1Frame';
-			InitCommand=cmd(x,SCREEN_CENTER_X-160;y,SCREEN_CENTER_Y);
-			OnCommand=cmd(zoom,0;bounceend,0.35;zoom,1);
-			OffCommand=cmd(bouncebegin,0.35;zoom,0);
+			InitCommand=function(self) self:x(SCREEN_CENTER_X-160); self:y(SCREEN_CENTER_Y); end;
+			OnCommand=function(self) self:zoom(0); self:bounceend(0.35); self:zoom(1); end;
+			OffCommand=function(self) self:bouncebegin(0.35); self:zoom(0); end;
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_1 then
-					(cmd(;zoom,1.15;bounceend,0.175;zoom,1.0;))(self);
+					(function(self) self:zoom(1.15); self:bounceend(0.175); self:zoom(1.0); end)(self);
 				end;
 			end;
 			children = LoadPlayerStuff(PLAYER_1);
 		};
 		Def.ActorFrame {
 			Name = 'P2Frame';
-			InitCommand=cmd(x,SCREEN_CENTER_X+160;y,SCREEN_CENTER_Y);
-			OnCommand=cmd(zoom,0;bounceend,0.35;zoom,1);
-			OffCommand=cmd(bouncebegin,0.35;zoom,0);
+			InitCommand=function(self) self:x(SCREEN_CENTER_X+160); self:y(SCREEN_CENTER_Y); end;
+			OnCommand=function(self) self:zoom(0); self:bounceend(0.35); self:zoom(1); end;
+			OffCommand=function(self) self:bouncebegin(0.35); self:zoom(0); end;
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_2 then
-					(cmd(zoom,1.15;bounceend,0.175;zoom,1.0;))(self);
+					(function(self) self:zoom(1.15); self:bounceend(0.175); self:zoom(1.0); end)(self);
 				end;
 			end;
 			children = LoadPlayerStuff(PLAYER_2);
@@ -365,20 +365,20 @@ NopeMessageCommand=cmd(accelerate,0.5;y,0);
         
 		-- sounds
 		LoadActor( THEME:GetPathS("Common","start") )..{
-			StartButtonMessageCommand=cmd(play);
+			StartButtonMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
-			BackButtonMessageCommand=cmd(play);
+			BackButtonMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","value") )..{
-			DirectionButtonMessageCommand=cmd(play);
+			DirectionButtonMessageCommand=function(self) self:play(); end;
 		};
 Def.ActorFrame {
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,480*1.5);
-	YeyyyyyyMessageCommand=cmd(y,450*1.5;bounceend,0.175;y,480*2;);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(480*1.5); end;
+	YeyyyyyyMessageCommand=function(self) self:y(450*1.5); self:bounceend(0.175); self:y(480*2); end;
 LoadActor("FFFFFFF.png")..{
-	InitCommand=cmd(zoom,0.5);
-OnCommand=cmd(playcommand,'hhhat');
+	InitCommand=function(self) self:zoom(0.5); end;
+OnCommand=function(self) self:playcommand('hhhat'); end;
 hhhatCommand=function(self)
 	if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 	self:cropleft(0)
@@ -400,9 +400,9 @@ end;
 };
 };
 Def.ActorFrame {
-	OnCommand=cmd(diffuse,PlayerColor(PLAYER_1));
+	OnCommand=function(self) self:diffuse(PlayerColor(PLAYER_1)); end;
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-155;y,SCREEN_CENTER_Y-66+458;vertalign,top;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-155); self:y(SCREEN_CENTER_Y-66+458); self:vertalign(top); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 			self:visible(GAMESTATE:IsHumanPlayer(PLAYER_1))
@@ -420,10 +420,10 @@ LoadFont("common edit") .. {
 				end
 				end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-250;y,SCREEN_CENTER_Y-66+458+35;vertalign,top;horizalign,left;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-250); self:y(SCREEN_CENTER_Y-66+458+35); self:vertalign(top); self:horizalign(left); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 			self:visible(GAMESTATE:IsHumanPlayer(PLAYER_1))
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
@@ -471,10 +471,10 @@ LoadFont("common normal") .. {
 			end
 			end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X-155;y,SCREEN_CENTER_Y-66+458+177.5;vertalign,top;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-155); self:y(SCREEN_CENTER_Y-66+458+177.5); self:vertalign(top); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 			self:visible(GAMESTATE:IsHumanPlayer(PLAYER_1))
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
@@ -497,16 +497,16 @@ LoadFont("common edit") .. {
 				end
 				end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 	};
 	
 	
 	
 	Def.ActorFrame {
-	OnCommand=cmd(diffuse,PlayerColor(PLAYER_2));
+	OnCommand=function(self) self:diffuse(PlayerColor(PLAYER_2)); end;
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X+155;y,SCREEN_CENTER_Y-66+458;vertalign,top;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X+155); self:y(SCREEN_CENTER_Y-66+458); self:vertalign(top); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 					self:visible(GAMESTATE:IsHumanPlayer(PLAYER_2))
 				if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -524,10 +524,10 @@ LoadFont("common edit") .. {
 			end
 			end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 LoadFont("common normal") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X+250;y,SCREEN_CENTER_Y-66+458+35;vertalign,top;horizalign,right;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X+250); self:y(SCREEN_CENTER_Y-66+458+35); self:vertalign(top); self:horizalign(right); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 			self:visible(GAMESTATE:IsHumanPlayer(PLAYER_2))
 			if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -575,10 +575,10 @@ LoadFont("common normal") .. {
 			end
 			end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 LoadFont("common edit") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X+155;y,SCREEN_CENTER_Y-66+458+177.5;vertalign,top;zoom,0.75);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X+155); self:y(SCREEN_CENTER_Y-66+458+177.5); self:vertalign(top); self:zoom(0.75); end;
 		YessssMessageCommand=function(self)
 					self:visible(GAMESTATE:IsHumanPlayer(PLAYER_2))
 					if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
@@ -601,7 +601,7 @@ LoadFont("common edit") .. {
 				end
 				end
 end;
-	YeyyyyyyMessageCommand=cmd(bounceend,0.175;zoom,0;);
+	YeyyyyyyMessageCommand=function(self) self:bounceend(0.175); self:zoom(0); end;
 	};
 	};
 	};

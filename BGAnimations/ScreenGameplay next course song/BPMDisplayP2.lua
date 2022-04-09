@@ -24,7 +24,7 @@ end
 
 local t = Def.ActorFrame{
 	Name="BottomFrame";
-	InitCommand=cmd(CenterX;y,SCREEN_TOP+45;valign,1;zoom,1.33;draworder,-1);
+	InitCommand=function(self) self:CenterX(); self:y(SCREEN_TOP+45); self:valign(1); self:zoom(1.33); self:draworder(-1); end;
 	BeginCommand=function(self)
 	end;
 	
@@ -43,7 +43,7 @@ local t = Def.ActorFrame{
 	LoadFont("Common Normal")..{
 		Name="RatemodDisplay";
 		Text=ratemod.."xMusic";
-		InitCommand=cmd(zoom,0.4;NoStroke;draworder,1);
+		InitCommand=function(self) self:zoom(0.4); self:NoStroke(); self:draworder(1); end;
 		OnCommand=function(self)
 			self:addy(19);
 			if self:GetText() == "1xMusic" then
@@ -62,11 +62,11 @@ local t = Def.ActorFrame{
 local displaySingle = Def.ActorFrame{
 	LoadFont("Common Editor")..{
 		Name="BPMDisplay";
-		InitCommand=cmd(zoomx,0.65;zoomy,0.55;);
+		InitCommand=function(self) self:zoomx(0.65); self:zoomy(0.55); end;
 	};
 };
 
-displaySingle.InitCommand=cmd(SetUpdateFunction,UpdateSingleBPM);
+displaySingle.InitCommand=function(self) self:SetUpdateFunction(UpdateSingleBPM); end;
 
 -- in CourseMode, both players should always be playing the same charts, right?
 if numPlayers == 1 or GAMESTATE:IsCourseMode() then
@@ -115,15 +115,15 @@ else
 		-- manual bpm displays
 		LoadFont("Common Editor")..{
 			Name="DisplayP1";
-			InitCommand=cmd(zoom,0;shadowlength,1;NoStroke;);
+			InitCommand=function(self) self:zoom(0); self:shadowlength(1); self:NoStroke(); end;
 		};
 		LoadFont("Common Editor")..{
 			Name="DisplayP2";
-			InitCommand=cmd(zoom,1;shadowlength,1;NoStroke;);
+			InitCommand=function(self) self:zoom(1); self:shadowlength(1); self:NoStroke(); end;
 		};
 	};
 
-	displayTwoPlayers.InitCommand=cmd(SetUpdateFunction,Update2PBPM);
+	displayTwoPlayers.InitCommand=function(self) self:SetUpdateFunction(Update2PBPM); end;
 
 	t[#t+1] = displayTwoPlayers
 end

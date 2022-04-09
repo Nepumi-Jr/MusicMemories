@@ -1,12 +1,12 @@
 local t = Def.ActorFrame{
     LoadActor("MEMEDirected (loop)")..{
-        StartTransitioningCommand=cmd(play);
+        StartTransitioningCommand=function(self) self:play(); end;
     };
     Def.Quad{
-        OnCommand=cmd(zoom,99999;diffuse,color("#000000FF"););
+        OnCommand=function(self) self:zoom(99999); self:diffuse(color("#000000FF")); end;
     };
     LoadFont("Common Normal")..{
-        InitCommand=cmd(diffusealpha,0;Center;zoom,1.2;);
+        InitCommand=function(self) self:diffusealpha(0); self:Center(); self:zoom(1.2); end;
         OnCommand=function(self)
             
     
@@ -16,7 +16,7 @@ local t = Def.ActorFrame{
             self:sleep(4.526-1.234)
             self:queuecommand("Ex")
         end;
-        ExCommand=cmd(settext,"Executive Producer\nLARRY DAVID";sleep,7.794-4.526;queuecommand,"me");
+        ExCommand=function(self) self:settext("Executive Producer\nLARRY DAVID"); self:sleep(7.794-4.526); self:queuecommand("me"); end;
         meCommand=function(self)
             local lt = "Failed Player\n";
             for player in ivalues(GAMESTATE:GetHumanPlayers()) do

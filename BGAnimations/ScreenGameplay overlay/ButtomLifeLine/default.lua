@@ -465,9 +465,9 @@ local ns = math.huge;
 			
 		end;
 		Def.ActorFrame{
-		OnCommand=cmd(diffuseshift;effectcolor1,{1,1,1,1};effectcolor2,{1,1,1,0.7};effectclock,"beat");
+		OnCommand=function(self) self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({1,1,1,0.7}); self:effectclock("beat"); end;
 			Def.Quad{
-			InitCommand=cmd(diffuse,{0,0,0,1};CenterX;y,SCREEN_BOTTOM-((1/9)*SCREEN_BOTTOM/2)+10;zoomx,SCREEN_RIGHT;zoomy,(1/9)*SCREEN_BOTTOM;diffuse,{0,0,0,1};fadetop,0.8);
+			InitCommand=function(self) self:diffuse({0,0,0,1}); self:CenterX(); self:y(SCREEN_BOTTOM-((1/9)*SCREEN_BOTTOM/2)+10); self:zoomx(SCREEN_RIGHT); self:zoomy((1/9)*SCREEN_BOTTOM); self:diffuse({0,0,0,1}); self:fadetop(0.8); end;
 			HealthStateChangedMessageCommand=function(self,params)
 				
 				--SM("\n\nISLA : Change HealthState of "..tostring(params.PlayerNumber).." as "..tostring(params.HealthState)..
@@ -501,14 +501,14 @@ local ns = math.huge;
 
 for i = 1,lim do
 	M[#M+1] = Def.Quad{
-		InitCommand=cmd(x,((i-1)/lim)*SCREEN_RIGHT;y,SCREEN_BOTTOM;horizalign,left;vertalign,bottom;zoomx,SCREEN_RIGHT/lim;zoomy,math.random(5,20);diffuse,{1,1,1,0});
+		InitCommand=function(self) self:x(((i-1)/lim)*SCREEN_RIGHT); self:y(SCREEN_BOTTOM); self:horizalign(left); self:vertalign(bottom); self:zoomx(SCREEN_RIGHT/lim); self:zoomy(math.random(5,20)); self:diffuse({1,1,1,0}); end;
 		OnCommand=function(self) NEPcmd[i] = self end;
 	};
 end
 local NOWT;
 	M[#M+1] = Def.Quad{
-		InitCommand=cmd(visible,true);
-		OnCommand=cmd(queuecommand,"Reloading");
+		InitCommand=function(self) self:visible(true); end;
+		OnCommand=function(self) self:queuecommand("Reloading"); end;
 		
 		ReloadingCommand=function(self)
 		for i = 1,lim do
@@ -595,7 +595,7 @@ local NOWT;
 	}
 	
 	M[#M+1] = Def.Quad{
-		OnCommand=cmd(visible,false);
+		OnCommand=function(self) self:visible(false); end;
 		LifeChangedMessageCommand=function(self,param)
 			if param.Player == PLAYER_1 then if HNUM[1] == 6969 then HNUM[1] = param.LivesLeft elseif HNUM[1] ~= param.LivesLeft then HUAJAIP[1] = true HNUM[1] = param.LivesLeft end end
 			if param.Player == PLAYER_2 then if HNUM[2] == 6969 then HNUM[2] = param.LivesLeft elseif HNUM[2] ~= param.LivesLeft then HUAJAIP[2] = true HNUM[2] = param.LivesLeft end end

@@ -350,10 +350,10 @@ end
 
 
 local t = Def.ActorFrame{
-	OnCommand=cmd(draworder,50025);
+	OnCommand=function(self) self:draworder(50025); end;
 	Def.Quad{
 		Condition = VI;
-		OnCommand=cmd(visible,false;playcommand,"ISLALA");
+		OnCommand=function(self) self:visible(false); self:playcommand("ISLALA"); end;
 		ISLALACommand=function(self)
 			if STR > 0 then
 				STR = STR - 0.02*SP;
@@ -363,62 +363,67 @@ local t = Def.ActorFrame{
 	};
 	Def.Quad{
 		Condition = VI;
-		OnCommand=cmd(sleep,PREFSMAN:GetPreference("GlobalOffsetSeconds")*(-1) or 0;visible,false;playcommand,"ISLALA2");
+		OnCommand=function(self) self:sleep(PREFSMAN:GetPreference("GlobalOffsetSeconds")*(-1) or 0); self:visible(false); self:playcommand("ISLALA2"); end;
 		ISLALA2Command=function(self)
 			STR = REST;
 			self:sleep(60/BPM):queuecommand("ISLALA2");
 		end;
 	};
 	Def.ActorFrame{
-		OnCommand=cmd(SetUpdateFunction,function(self)
-			local RSTR = math.ceil( STR )
-			local Force = 0.1;
-			if RSTR > 0 then
-				--self:x(math.random(-RSTR,RSTR)*Force);
-				SCREENMAN:GetTopScreen():x(math.random(-RSTR,RSTR)*Force);
-				SCREENMAN:GetTopScreen():y(math.random(-RSTR,RSTR)*Force);
-			else SCREENMAN:GetTopScreen():x(0):y(0)
-			end
-			end;);
+		-- TODO : 
+		OnCommand=function(self) self:SetUpdateFunction(function(self)
+				local RSTR = math.ceil( STR )
+				local Force = 0.1;
+				if RSTR > 0 then
+					--self:x(math.random(-RSTR,RSTR)*Force);
+					SCREENMAN:GetTopScreen():x(math.random(-RSTR,RSTR)*Force);
+					SCREENMAN:GetTopScreen():y(math.random(-RSTR,RSTR)*Force);
+				else SCREENMAN:GetTopScreen():x(0):y(0)
+				end
+				end;
+			);
+		end;
 	};
 
 	LoadActor("IslaYey")..{
 		Condition = OP();
-		InitCommand=cmd(vertalign,top;x,CX*1.7;diffusealpha,0;zoom,0.25);
-		OnCommand=cmd(decelerate,0.3;x,CX*1.1;diffusealpha,0.7;linear,TICK * (math.max(#ConB,#ConA));x,CX*0.9;decelerate,0.3;x,CX*0.3;diffusealpha,0;);
+		InitCommand=function(self) self:vertalign(top); self:x(CX*1.7); self:diffusealpha(0); self:zoom(0.25); end;
+		OnCommand=function(self) self:decelerate(0.3); self:x(CX*1.1); self:diffusealpha(0.7); self:linear(TICK * (math.max(#ConB,#ConA))); self:x(CX*0.9); self:decelerate(0.3); self:x(CX*0.3); self:diffusealpha(0); end;
 	};
 	
 
 	--A
 	Def.ActorFrame{
-		InitCommand=cmd(y,(#ConA == #ConA + #ConB) and CY or CY*0.75);
+		InitCommand=function(self) self:y((#ConA == #ConA + #ConB) and CY or CY*0.75); end;
 		Condition = (#ConA > 0);
 		Def.Quad{
-			InitCommand=cmd(CenterX;zoomy,150;zoomx,CX*2;fadetop,0.2;fadebottom,0.2;cropright,1;diffusealpha,0);
-			OnCommand=cmd(decelerate,0.3;cropright,0;diffusealpha,0.7;sleep,TICK * (#ConA);decelerate,0.3;cropleft,1;diffusealpha,0;);
+			InitCommand=function(self) self:CenterX(); self:zoomy(150); self:zoomx(CX*2); self:fadetop(0.2); self:fadebottom(0.2); self:cropright(1); self:diffusealpha(0); end;
+			OnCommand=function(self) self:decelerate(0.3); self:cropright(0); self:diffusealpha(0.7); self:sleep(TICK * (#ConA)); self:decelerate(0.3); self:cropleft(1); self:diffusealpha(0); end;
 		};
 		LoadFont("Common Normal")..{
 			Text = "Player 1";
-			InitCommand=cmd(x,30;y,-35;zoom,0.7;diffuse,{0,0,0,0};);
-			OnCommand=cmd(decelerate,0.3;diffusealpha,1;sleep,TICK * (#ConA);decelerate,0.3;diffusealpha,0;);
+			InitCommand=function(self) self:x(30); self:y(-35); self:zoom(0.7); self:diffuse({0,0,0,0}); end;
+			OnCommand=function(self) self:decelerate(0.3); self:diffusealpha(1); self:sleep(TICK * (#ConA)); self:decelerate(0.3); self:diffusealpha(0); end;
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(linear,0.3;x,350;linear,TICK * (#ConA);x,CX*2-350;linear,0.3;x,CX*2);
+			OnCommand=function(self) self:linear(0.3); self:x(350); self:linear(TICK * (#ConA)); self:x(CX*2-350); self:linear(0.3); self:x(CX*2); end;
 			Def.ActorFrame{
-				OnCommand=cmd(SetUpdateFunction,function(self)
-				local RSTR = math.ceil( STR )
-				local Force = 0.3;
-				if RSTR > 0 then
-					self:x(math.random(-RSTR,RSTR)*Force);
-					self:y(math.random(-RSTR,RSTR)*Force);
-					self:zoom(math.random(0,RSTR)/10*Force+1);
-					self:rotationz(math.random(-RSTR,RSTR)/0.7*Force);
-				else self:x(0):y(0):zoom(1):rotationz(0)
-				end
-				end;);
+				OnCommand=function(self) self:SetUpdateFunction(function(self)
+						local RSTR = math.ceil( STR )
+						local Force = 0.3;
+						if RSTR > 0 then
+							self:x(math.random(-RSTR,RSTR)*Force);
+							self:y(math.random(-RSTR,RSTR)*Force);
+							self:zoom(math.random(0,RSTR)/10*Force+1);
+							self:rotationz(math.random(-RSTR,RSTR)/0.7*Force);
+						else self:x(0):y(0):zoom(1):rotationz(0)
+						end
+						end;
+					);
+				end;
 				LoadFont("Common Normal")..{
-					InitCommand=cmd(diffuse,{0,0,0,0};zoom,2.5);
-					OnCommand=cmd(sleep,0.3;playcommand,"ILALA");
+					InitCommand=function(self) self:diffuse({0,0,0,0}); self:zoom(2.5); end;
+					OnCommand=function(self) self:sleep(0.3); self:playcommand("ILALA"); end;
 					ILALACommand=function(self)
 					
 						if RI then
@@ -442,34 +447,36 @@ local t = Def.ActorFrame{
 
 	--B
 	Def.ActorFrame{
-		InitCommand=cmd(y,(#ConB == #ConA + #ConB) and CY or CY*1.25);
+		InitCommand=function(self) self:y((#ConB == #ConA + #ConB) and CY or CY*1.25); end;
 		Condition = (#ConB > 0);
 		Def.Quad{
-			InitCommand=cmd(CenterX;zoomy,150;zoomx,CX*2;fadetop,0.2;fadebottom,0.2;cropright,1;diffusealpha,0);
-			OnCommand=cmd(decelerate,0.3;cropright,0;diffusealpha,0.7;sleep,TICK * (#ConB);decelerate,0.3;cropleft,1;diffusealpha,0;);
+			InitCommand=function(self) self:CenterX(); self:zoomy(150); self:zoomx(CX*2); self:fadetop(0.2); self:fadebottom(0.2); self:cropright(1); self:diffusealpha(0); end;
+			OnCommand=function(self) self:decelerate(0.3); self:cropright(0); self:diffusealpha(0.7); self:sleep(TICK * (#ConB)); self:decelerate(0.3); self:cropleft(1); self:diffusealpha(0); end;
 		};
 		LoadFont("Common Normal")..{
 			Text = "Player 2";
-			InitCommand=cmd(x,30;y,-35;zoom,0.7;diffuse,{0,0,0,0};);
-			OnCommand=cmd(decelerate,0.3;diffusealpha,1;sleep,TICK * (#ConB);decelerate,0.3;diffusealpha,0;);
+			InitCommand=function(self) self:x(30); self:y(-35); self:zoom(0.7); self:diffuse({0,0,0,0}); end;
+			OnCommand=function(self) self:decelerate(0.3); self:diffusealpha(1); self:sleep(TICK * (#ConB)); self:decelerate(0.3); self:diffusealpha(0); end;
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(linear,0.3;x,350;linear,TICK * (#ConB);x,CX*2-350;linear,0.3;x,CX*2);
+			OnCommand=function(self) self:linear(0.3); self:x(350); self:linear(TICK * (#ConB)); self:x(CX*2-350); self:linear(0.3); self:x(CX*2); end;
 			Def.ActorFrame{
-				OnCommand=cmd(SetUpdateFunction,function(self)
-				local RSTR = math.ceil( STR )
-				local Force = 0.3;
-				if RSTR > 0 then
-					self:x(math.random(-RSTR,RSTR)*Force);
-					self:y(math.random(-RSTR,RSTR)*Force);
-					self:zoom(math.random(0,RSTR)/10*Force+1);
-					self:rotationz(math.random(-RSTR,RSTR)/0.7*Force);
-				else self:x(0):y(0):zoom(1):rotationz(0)
-				end
-				end;);
+				OnCommand=function(self) self:SetUpdateFunction(function(self)
+						local RSTR = math.ceil( STR )
+						local Force = 0.3;
+						if RSTR > 0 then
+							self:x(math.random(-RSTR,RSTR)*Force);
+							self:y(math.random(-RSTR,RSTR)*Force);
+							self:zoom(math.random(0,RSTR)/10*Force+1);
+							self:rotationz(math.random(-RSTR,RSTR)/0.7*Force);
+						else self:x(0):y(0):zoom(1):rotationz(0)
+						end
+						end;
+					);
+				end;
 				LoadFont("Common Normal")..{
-					InitCommand=cmd(diffuse,{0,0,0,0};zoom,2.5);
-					OnCommand=cmd(sleep,0.3;playcommand,"ILALA");
+					InitCommand=function(self) self:diffuse({0,0,0,0}); self:zoom(2.5); end;
+					OnCommand=function(self) self:sleep(0.3); self:playcommand("ILALA"); end;
 					ILALACommand=function(self)
 					
 						if RI then

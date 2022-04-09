@@ -338,19 +338,19 @@ t[#t+1] = Def.Quad{--InitNote
 
 --[[for m= 1,#PnI do
 	t[#t+1] =Def.ActorFrame{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,0);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(0); end;
 
 	 Def.Quad{
-		OnCommand=cmd(x,64*(-1.5);y,wai;zoom,60;diffuse,color("#FF8495"));
+		OnCommand=function(self) self:x(64*(-1.5)); self:y(wai); self:zoom(60); self:diffuse(color("#FF8495")); end;
 	};
 	 Def.Quad{
-		OnCommand=cmd(x,64*(-.5);y,wai;zoom,60;diffuse,color("#FFFF88"));
+		OnCommand=function(self) self:x(64*(-.5)); self:y(wai); self:zoom(60); self:diffuse(color("#FFFF88")); end;
 	};
 	 Def.Quad{
-		OnCommand=cmd(x,64*(.5);y,wai;zoom,60;diffuse,color("#8799FF"));
+		OnCommand=function(self) self:x(64*(.5)); self:y(wai); self:zoom(60); self:diffuse(color("#8799FF")); end;
 	};
 	 Def.Quad{
-		OnCommand=cmd(x,64*(1.5);y,wai;zoom,60;diffuse,color("#72FF89"));
+		OnCommand=function(self) self:x(64*(1.5)); self:y(wai); self:zoom(60); self:diffuse(color("#72FF89")); end;
 	};
 };
 end]]
@@ -374,8 +374,8 @@ for i = 1,#IQBrain do
 					if (GETT > 2 and IQBrain[i][6][5][nc] ~= 37) or GETT <= 2 then
 
 					t[#t+1] = Def.ActorFrame{
-						InitCommand=cmd(y,SCREEN_BOTTOM+32);--IQBrain[i][2]
-						OnCommand=cmd(x,(SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2)););
+						InitCommand=function(self) self:y(SCREEN_BOTTOM+32); end;--IQBrain[i][2]
+						OnCommand=function(self) self:x((SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2))); end;
 						PRECMessageCommand=function(self,param)
 							if param.NOOTO == i then
 							--[[self:sleep()]]
@@ -394,7 +394,7 @@ for i = 1,#IQBrain do
 						end;
 
 						LoadActor("CHOICE")..{
-							OnCommand=cmd(zoom,((256/coll)-4)/60;diffuse,color("#3355FF"));
+							OnCommand=function(self) self:zoom(((256/coll)-4)/60); self:diffuse(color("#3355FF")); end;
 						};
 						LoadFont("_double pixel-7 28px")..{
 							OnCommand=function(self)
@@ -417,8 +417,8 @@ for i = 1,#IQBrain do
 				--else
 				elseif GET == "Missing" then
 					t[#t+1] = Def.ActorFrame{
-						InitCommand=cmd(y,SCREEN_BOTTOM+32;zoom,((256/coll)-4)/60);--IQBrain[i][2]
-						OnCommand=cmd(x,(SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2)););
+						InitCommand=function(self) self:y(SCREEN_BOTTOM+32); self:zoom(((256/coll)-4)/60); end;--IQBrain[i][2]
+						OnCommand=function(self) self:x((SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2))); end;
 						PRECMessageCommand=function(self,param)
 							if param.NOOTO == i then
 							self:linear((SCREEN_BOTTOM+32+32)/(GAMESTATE:GetCurrentSong():GetTimingData():GetBPMAtBeat(IQBrain[i][2])*IQSPEED)):y(-32);
@@ -435,7 +435,7 @@ for i = 1,#IQBrain do
 						end;
 
 						LoadActor("CHOICE")..{
-							OnCommand=cmd(zoom,1;diffuse,color("#2255FF"));
+							OnCommand=function(self) self:zoom(1); self:diffuse(color("#2255FF")); end;
 						};
 						LoadFont("_double pixel-7 28px")..{
 							Condition=(IQBrain[i][5]==1);
@@ -482,8 +482,7 @@ end
 for np = 1,#PnI do
 	for nc = 1,coll do
 		t[#t+1] = LoadActor("_flash")..{
-			OnCommand=cmd(x,(SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2));y,wai
-				;blend,"BlendMode_Add";diffusealpha,0;);
+			OnCommand=function(self) self:x((SCREENMAN:GetTopScreen():GetChild('PlayerP'..PnI[np][1]):GetX())+(256/coll)*(nc-((coll+1)/2))); self:y(wai); self:blend("BlendMode_Add"); self:diffusealpha(0); end;
 			IQAnsMessageCommand=function(self,param)
 				if param.PPN == PnI[np][1] and param.COLN == nc and param.JUD <= 2 then
 					self:finishtweening():diffusealpha(1):zoom(1):linear(0.2):diffusealpha(0):zoom(1.2)
@@ -494,7 +493,7 @@ for np = 1,#PnI do
 end
 
 	t[#t+1] =Def.ActorFrame{--REAL Control Panal
-		InitCommand=cmd(Center;playcommand,"JOD");
+		InitCommand=function(self) self:Center(); self:playcommand("JOD"); end;
 		JODCommand=function(self)
 			local camsang = self:GetChildren();
 
@@ -595,26 +594,26 @@ end
 		end;
 		Def.Quad{
 			Name = "FRAME";
-			InitCommand=cmd(diffuse,color("#6699FFAA");diffusebottomedge,color("#6699FF55");zoomx,SCREEN_RIGHT*0.9;zoomy,0);
+			InitCommand=function(self) self:diffuse(color("#6699FFAA")); self:diffusebottomedge(color("#6699FF55")); self:zoomx(SCREEN_RIGHT*0.9); self:zoomy(0); end;
 
 		};
 		LoadFont("_double pixel-7 28px")..{
 			Name = "Say";
-			InitCommand=cmd(zoom,2;cropright,1);
+			InitCommand=function(self) self:zoom(2); self:cropright(1); end;
 		};
 
 
 		Def.Quad{
 			Name = "FRAMELek";
-			InitCommand=cmd(diffuse,color("#66FF99AA");diffusebottomedge,color("#6699FF55");zoomx,0;zoomy,SCREEN_CENTER_Y*0.5);
+			InitCommand=function(self) self:diffuse(color("#66FF99AA")); self:diffusebottomedge(color("#6699FF55")); self:zoomx(0); self:zoomy(SCREEN_CENTER_Y*0.5); end;
 		};
 		Def.Quad{
 			Name = "RailWay";
-			InitCommand=cmd(diffuse,color("#66FF99AA");diffusebottomedge,color("#6699FF55");zoomx,0;zoomy,SCREEN_CENTER_Y*2);
+			InitCommand=function(self) self:diffuse(color("#66FF99AA")); self:diffusebottomedge(color("#6699FF55")); self:zoomx(0); self:zoomy(SCREEN_CENTER_Y*2); end;
 		};
 		LoadFont("_double pixel-7 28px")..{
 			Name = "SayNoi";
-			InitCommand=cmd(zoom,2;settext,"HELOOOOOOO";cropright,1);
+			InitCommand=function(self) self:zoom(2); self:settext("HELOOOOOOO"); self:cropright(1); end;
 		};
 
 	};
@@ -636,7 +635,7 @@ for i = 1,#IQBrain do
 				end
 			end;
 						LoadActor("CHOICE")..{
-							OnCommand=cmd(zoom,((256/coll)-4)/60;diffuse,color("#2255FF"));
+							OnCommand=function(self) self:zoom(((256/coll)-4)/60); self:diffuse(color("#2255FF")); end;
 						};
 						LoadFont("_double pixel-7 28px")..{
 							Condition=(IQBrain[i][5]==1);
@@ -674,7 +673,7 @@ end
 --DE BUG
 
 --[[t[#t+1] = LoadFont("Common Normal")..{
-	OnCommand=cmd(CenterX;y,SCREEN_BOTTOM*.95;settext,"Nep";playcommand,"May");
+	OnCommand=function(self) self:CenterX(); self:y(SCREEN_BOTTOM*.95); self:settext("Nep"); self:playcommand("May"); end;
 	MayCommand=function(self)
 
 		self:settextf("BEAT : %.2f\nNown : %d",GAMESTATE:GetSongBeat(),Nown)

@@ -44,7 +44,7 @@ local x = Def.ActorFrame{
 			end		
 		end			
 	end;
-	FinishCommand=cmd(playcommand,"Start");
+	FinishCommand=function(self) self:playcommand("Start"); end;
 
 };
 
@@ -68,7 +68,7 @@ for i = 1,10 do
 		Delay0006 = 0.2;
 		Frame0007 = 6;
 		Delay0007 = 0.8;
-		InitCommand=cmd(x,(i/13)*barWidth-(barWidth)*0.5;play;effectclock,"Beat";SetTextureFiltering,false;zoomy,1.5*1.2;zoomx,1.2;);
+		InitCommand=function(self) self:x((i/13)*barWidth-(barWidth)*0.5); self:play(); self:effectclock("Beat"); self:SetTextureFiltering(false); self:zoomy(1.5*1.2); self:zoomx(1.2); end;
 	};
 end
 

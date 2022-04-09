@@ -1,7 +1,7 @@
 local ScaleBack = {8,6};
 local t = Def.ActorFrame{
 	LoadActor(THEME:GetPathS("_Screen","cancel")) .. {
-		StartTransitioningCommand=cmd(play);
+		StartTransitioningCommand=function(self) self:play(); end;
 	};
 };
 

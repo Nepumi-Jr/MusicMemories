@@ -33,7 +33,7 @@ local t = Def.ActorFrame {};
 				Delay0014=1/16;
 				Frame0015=7;
 				Delay0015=1/16;
-				InitCommand=cmd(effectclock,'beat';wag;zoom,0.75);
+				InitCommand=function(self) self:effectclock('beat'); self:wag(); self:zoom(0.75); end;
 				OnCommand=function(self)
 				if GAMESTATE:GetCurrentGame():GetName() == 'dance' then
 					self:visible(true);

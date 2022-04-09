@@ -6,11 +6,11 @@ local call = 0
 
 local t = Def.ActorFrame{
 --[[ 	LoadActor("TestStep") .. {
-		InitCommand=cmd(zoomto,20,20);
+		InitCommand=function(self) self:zoomto(20,20); end;
 	}; --]]
 
     Def.ActorFrame{
-        InitCommand=cmd(x,7;zoom,0.5;pause);
+        InitCommand=function(self) self:x(7); self:zoom(0.5); self:pause(); end;
 		SetMessageCommand=function(self,param)
             picList = {}
 
@@ -42,7 +42,7 @@ local t = Def.ActorFrame{
         end;
         Def.Sprite{
             Name = "P1";
-            InitCommand=cmd(x,0;SetTextureFiltering,false);
+            InitCommand=function(self) self:x(0); self:SetTextureFiltering(false); end;
             SetMessageCommand=function(self)
                 self:visible(#picList >= 1)
                 self:Load(picList[1])
@@ -51,7 +51,7 @@ local t = Def.ActorFrame{
         };
         Def.Sprite{
             Name = "P2";
-            InitCommand=cmd(x,40;SetTextureFiltering,false);
+            InitCommand=function(self) self:x(40); self:SetTextureFiltering(false); end;
             SetMessageCommand=function(self)
                 self:visible(#picList >= 2)
                 self:Load(picList[2])
@@ -60,7 +60,7 @@ local t = Def.ActorFrame{
         };
         Def.Sprite{
             Name = "P3";
-            InitCommand=cmd(x,80;SetTextureFiltering,false);
+            InitCommand=function(self) self:x(80); self:SetTextureFiltering(false); end;
             SetMessageCommand=function(self)
                 self:visible(#picList >= 3)
                 self:Load(picList[3])
@@ -71,7 +71,7 @@ local t = Def.ActorFrame{
 
 
 	--[[LoadActor(THEME:GetPathG("StepStyle","Pad"))..{
-		InitCommand=cmd(x,7;zoomto,23,23;pause;SetTextureFiltering,false;effectclock,"beat");
+		InitCommand=function(self) self:x(7); self:zoomto(23,23); self:pause(); self:SetTextureFiltering(false); self:effectclock("beat"); end;
 		SetMessageCommand=function(self,param)
 
 			self:pause()

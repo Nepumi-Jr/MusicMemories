@@ -17,7 +17,7 @@ t[#t+1] = Def.ActorFrame{
 --GetSurvivalSeconds
 Def.ActorFrame{
 	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-	InitCommand=cmd(x,SCREEN_CENTER_X+2.5-175*1.25+75;y,25;zoom,0.8);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X+2.5-175*1.25+75); self:y(25); self:zoom(0.8); end;
 	BoomYeahMessageCommand=function(self,param)
 		if param.pn == PLAYER_1 then
 			self:zoom(0.9):decelerate(0.2):zoom(0.8)
@@ -25,7 +25,7 @@ Def.ActorFrame{
 	end;
 	LoadFont("Combo Numbers")..{
 		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1););
+		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1)); end;
 		OnCommand=function(self)
 
 			SCREENMAN:GetTopScreen():GetChild('ScoreP1'):x(SCREEN_CENTER_X+2.5-175*1.25-40)
@@ -68,12 +68,12 @@ Def.ActorFrame{
 				self:settext(KodPercent(STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints()*100))
 			end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 	LoadFont("Combo Numbers")..{
 		Condition = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():IsEndless());
-		InitCommand=cmd(zoom,0.4;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1););
-		OnCommand=cmd(playcommand,"Tick");
+		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1)); end;
+		OnCommand=function(self) self:playcommand("Tick"); end;
 		TickCommand=function(self)
 			if IG ~= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetGrade() then
 				IG = STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetGrade()
@@ -84,14 +84,14 @@ Def.ActorFrame{
 		
 			self:sleep(0.04):queuecommand("Tick");
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 };
 };
 t[#t+1] = LoadActor("Option.lua")..{
-	InitCommand=cmd(x,5;y,70;diffusealpha,1);
-	OnCommand=cmd(sleep,math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1);decelerate,1;diffusealpha,0.3);
-	GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-150;);
+	InitCommand=function(self) self:x(5); self:y(70); self:diffusealpha(1); end;
+	OnCommand=function(self) self:sleep(math.max(0.001,GAMESTATE:GetCurrentSong():GetFirstSecond()-1)); self:decelerate(1); self:diffusealpha(0.3); end;
+	GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-150); end;
 };
 
 
@@ -104,7 +104,7 @@ end
 
 t[#t+1] = Def.ActorFrame{
 		 LoadFont("_squares bold 72px")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-377;y,SCREEN_TOP+37;zoom,1;visible,GAMESTATE:IsPlayerEnabled(PLAYER_1);diffuse,PlayerColor(PLAYER_1));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-377); self:y(SCREEN_TOP+37); self:zoom(1); self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1)); self:diffuse(PlayerColor(PLAYER_1)); end;
 		OnCommand=function(self)
 			local zom = 0.75;
 			if x:GetMeter() then
@@ -121,10 +121,10 @@ t[#t+1] = Def.ActorFrame{
 				end
 			end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;x,-80;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:x(-80); end;
 	};
 LoadFont("Common","Normal")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-377;y,SCREEN_TOP+17;zoom,0.75;diffuse,PlayerColor(PLAYER_1));
+		InitCommand=function(self) self:x(SCREEN_CENTER_X-377); self:y(SCREEN_TOP+17); self:zoom(0.75); self:diffuse(PlayerColor(PLAYER_1)); end;
 		OnCommand=function(self)
 		local DIFFU = ""
 		if x:GetDifficulty() then
@@ -142,7 +142,7 @@ LoadFont("Common","Normal")..{
 			self:maxwidth(70)
 		end
 		end;
-		GETOUTOFGAMESMMessageCommand=cmd(sleep,.75;accelerate,0.5;y,-100;);
+		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 	};
 };
 

@@ -3,7 +3,7 @@ local Nope = 14.524-8.704;
 local t = Def.ActorFrame{
 --troll = string.len(you suck);
 	LoadActor("Bow") .. {
-		OnCommand=cmd(sleep,19.750;playcommand,'loop');
+		OnCommand=function(self) self:sleep(19.750); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		if Nope <= 0 then
 		i_suck = SCREENMAN:GetTopScreen():GetNextCourseSong():MusicLengthSeconds()

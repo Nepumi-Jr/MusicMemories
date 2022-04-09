@@ -2,7 +2,7 @@ local sString;
 local t = Def.ActorFrame{
 	
 	--[[LoadFont("Common normal")..{
-		InitCommand=cmd(shadowlength,1);
+		InitCommand=function(self) self:shadowlength(1); end;
 		SetMessageCommand=function(self,param)
 			if param.StepsType then
 				sString = THEME:GetString("StepsDisplay StepsType",ToEnumShortString(param.StepsType));

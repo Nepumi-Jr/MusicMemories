@@ -18,8 +18,8 @@ local function Parti(am)
         local ang = math.random(0,360)/180*math.pi
         local sp = math.random(60,120)
         P[#P+1] = LoadActor("Aura.png")..{
-            InitCommand=cmd(x,64*2.1*(math.random(0,1)==1 and -1 or 1);y,math.random(0,SCREEN_BOTTOM)-SCREEN_CENTER_Y;zoom,0.03;diffusealpha,0);
-            FcStageMessageCommand=cmd(sleep,0.5;diffuse,Color.White;decelerate,1.5;addx,math.cos(ang)*sp;addy,math.sin(ang)*sp;diffusealpha,0);
+            InitCommand=function(self) self:x(64*2.1*(math.random(0,1)==1 and -1 or 1)); self:y(math.random(0,SCREEN_BOTTOM)-SCREEN_CENTER_Y); self:zoom(0.03); self:diffusealpha(0); end;
+            FcStageMessageCommand=function(self) self:sleep(0.5); self:diffuse(Color.White); self:decelerate(1.5); self:addx(math.cos(ang)*sp); self:addy(math.sin(ang)*sp); self:diffusealpha(0); end;
         }
     end
 
@@ -37,7 +37,7 @@ local t = Def.ActorFrame{};
 
 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
     t[#t+1] = Def.ActorFrame{
-        InitCommand=cmd(Center);
+        InitCommand=function(self) self:Center(); end;
         FcStageMessageCommand=function(self)
             if LoadModule("Eva.CustomStageAward.lua")(pn) ~= "Nope" then--Stage
 
@@ -73,10 +73,10 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 self:visible(false)
             end
         end;
-        EXECommand=cmd();
+        EXECommand=function(self) end;
         Def.Quad{
-            InitCommand=cmd(visible,false);
-            EXECommand=cmd(playcommand,"MOD");
+            InitCommand=function(self) self:visible(false); end;
+            EXECommand=function(self) self:playcommand("MOD"); end;
             MODCommand=function(self)
                 if YEP[pn] then
                     GAMESTATE:GetPlayerState(pn):GetPlayerOptions('ModsLevel_Song'):Stealth(1,1,true):Dark(1,1,true):Blind(1,1,true)
@@ -85,24 +85,24 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             end;
         };
         Def.Quad{
-            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*2.5;fadeleft,0.1;faderight,0.1;croptop,1;diffuse,{1,1,1,0.4};);
-            EXECommand=cmd(decelerate,0.4;croptop,0;sleep,0.1;decelerate,0.4;cropbottom,1);
+            InitCommand=function(self) self:zoomx(cols*50+20); self:zoomy(SCREEN_BOTTOM*2.5); self:fadeleft(0.1); self:faderight(0.1); self:croptop(1); self:diffuse({1,1,1,0.4}); end;
+            EXECommand=function(self) self:decelerate(0.4); self:croptop(0); self:sleep(0.1); self:decelerate(0.4); self:cropbottom(1); end;
         };
         Def.Quad{
-            InitCommand=cmd(zoomx,cols*50+20;zoomy,SCREEN_BOTTOM*2.5;fadeleft,0.1;faderight,0.1;croptop,1;diffusealpha,0.7);
-            EXECommand=cmd(diffuse,Color_SA[pn];sleep,0.5;decelerate,0.1;croptop,0;decelerate,0.4;zoomx,64*5.5;diffusealpha,0.4;fadeleft,0.12;faderight,0.12;);
+            InitCommand=function(self) self:zoomx(cols*50+20); self:zoomy(SCREEN_BOTTOM*2.5); self:fadeleft(0.1); self:faderight(0.1); self:croptop(1); self:diffusealpha(0.7); end;
+            EXECommand=function(self) self:diffuse(Color_SA[pn]); self:sleep(0.5); self:decelerate(0.1); self:croptop(0); self:decelerate(0.4); self:zoomx(64*5.5); self:diffusealpha(0.4); self:fadeleft(0.12); self:faderight(0.12); end;
         };
         Def.Sprite{
-            InitCommand=cmd(y,-150;diffusealpha,0;zoom,0.25);
-            EXECommand=cmd(Load,path.."FC"..TitleText[pn]..".png";diffusealpha,0;sleep,0.5;decelerate,0.2;y,-60;diffusealpha,1);
+            InitCommand=function(self) self:y(-150); self:diffusealpha(0); self:zoom(0.25); end;
+            EXECommand=function(self) self:Load(path.."FC"..TitleText[pn]..".png"); self:diffusealpha(0); self:sleep(0.5); self:decelerate(0.2); self:y(-60); self:diffusealpha(1); end;
         };
         LoadFont("Common Normal")..{
-            InitCommand=cmd(y,70;diffusealpha,0;shadowlength,1;);
-            EXECommand=cmd(settext,SubText[pn];diffuse,Color_SA[pn];diffusealpha,0;sleep,0.5;decelerate,0.25;y,30;diffusealpha,1);
+            InitCommand=function(self) self:y(70); self:diffusealpha(0); self:shadowlength(1); end;
+            EXECommand=function(self) self:settext(SubText[pn]); self:diffuse(Color_SA[pn]); self:diffusealpha(0); self:sleep(0.5); self:decelerate(0.25); self:y(30); self:diffusealpha(1); end;
         };
     
         Def.ActorFrame{
-            EXECommand=cmd(diffuse,Color_SA[pn]);
+            EXECommand=function(self) self:diffuse(Color_SA[pn]); end;
             Parti(30);
         };
         

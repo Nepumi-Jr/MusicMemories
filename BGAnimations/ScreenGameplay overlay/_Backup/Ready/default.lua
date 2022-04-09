@@ -14,7 +14,7 @@ end
 local t = Def.ActorFrame{};
 if PPeng:GetFirstBeat() > 8 then
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(playcommand,"Ne");
+OnCommand=function(self) self:playcommand("Ne"); end;
 NeCommand=function(self)
 if math.abs(math.mod(GAMESTATE:GetSongBeat(),1))< 0.5 and not Funny then
 Funny = true
@@ -26,8 +26,8 @@ self:sleep(1/30)
 self:queuecommand("Ne")
 end;
 LoadActor("Ready.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
-		OnCommand=cmd(playcommand,'Rea');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('Rea'); end;
 		ReaCommand=function(self)
 		if LentRea then
 		FB = PPeng:GetFirstBeat();
@@ -54,7 +54,7 @@ LoadActor("Ready.png")..{
 };
 elseif PPeng:GetFirstBeat() < 8 and PPeng:GetFirstBeat() > 4 then
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(playcommand,"Ne");
+OnCommand=function(self) self:playcommand("Ne"); end;
 NeCommand=function(self)
 if math.abs(math.mod(GAMESTATE:GetSongBeat(),1))< 0.5 and not Funny then
 Funny = true
@@ -66,8 +66,8 @@ self:sleep(1/30)
 self:queuecommand("Ne")
 end;
 LoadActor("Ready.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-80;diffusealpha,0);
-		OnCommand=cmd(playcommand,'Rea');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y-80); self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('Rea'); end;
 		ReaCommand=function(self)
 		if LentRea then
 		FB = PPeng:GetFirstBeat();

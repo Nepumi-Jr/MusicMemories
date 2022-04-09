@@ -54,7 +54,7 @@ local EmiliaWanttoPause = true;
 local t = Def.ActorFrame{};
 
 --LoadActor("../_save/SaveForDay")..{
-	--OnCommand=cmd();
+	--OnCommand=function(self) end;
 --};
 --local Neppress = {back,L1,D1,U1,R1,L2,D2,U2,R2}
 local Neppress = {0,0,0,0,0,0,0,0,0,0}
@@ -173,11 +173,11 @@ end
 
 t[#t+1] = Def.ActorFrame{
 Def.ActorFrame{
-OnCommand=cmd(diffusealpha,0.25);
+OnCommand=function(self) self:diffusealpha(0.25); end;
 Def.Quad{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,0;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT/3);
-		OnCommand=cmd(playcommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Nep");
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(0); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT/3); end;
+		OnCommand=function(self) self:playcommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Nep"); end;
 		NepCommand=function(self)
 		if GAMESTATE:IsHumanPlayer(PLAYER_1) and GAMESTATE:IsHumanPlayer(PLAYER_2) then
 			if GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Beginner" then
@@ -241,9 +241,9 @@ Def.Quad{
 
 
 LoadActor("Under lay.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-		OnCommand=cmd(queuecommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(queuecommand,"Nep");
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:queuecommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)
 		if GAMESTATE:IsHumanPlayer(PLAYER_1) and GAMESTATE:IsHumanPlayer(PLAYER_2) then
 			if GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Beginner" then
@@ -304,8 +304,8 @@ LoadActor("Under lay.png")..{
 		end;
 };
 LoadActor("Under lay.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-		OnCommand=cmd(playcommand,'Super');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:playcommand('Super'); end;
 		SuperCommand=function(self)
 		if true then
 		DB = math.abs(math.sin(GAMESTATE:GetSongBeat()*(3.14)))*0.396+0.6
@@ -319,7 +319,7 @@ LoadActor("Under lay.png")..{
 };
 
 LoadActor("Under aorrar.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;diffuse,color("#FF000000");playcommand,"LL");
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); self:diffuse(color("#FF000000")); self:playcommand("LL"); end;
 		LLCommand=function(self)
 		if (GAMESTATE:GetPlayMode() == "PlayMode_Rave") or (GAMESTATE:GetPlayerState(PLAYER_1):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_1)) or (GAMESTATE:GetPlayerState(PLAYER_2):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_2)) then
 			if LoadModule("Easter.today.lua")() == "FOOL" then
@@ -363,7 +363,7 @@ LoadActor("Under aorrar.png")..{
 		end;
 };
 LoadActor("Awesome.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 		JudgmentMessageCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 			if GAMESTATE:GetCurrentSteps(PLAYER_2):GetDifficulty() == "Difficulty_Beginner" then
@@ -455,8 +455,8 @@ LoadActor("Awesome.png")..{
 		end;
 };
 LoadActor("Under lay.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-		OnCommand=cmd(playcommand,'Super');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:playcommand('Super'); end;
 		SuperCommand=function(self)
 		if Isbattle and not HiddenScore then
 		--GAMESTATE:GetSongBeat() *100 / GAMESTATE:GetCurrentSong():GetLastBeat()
@@ -513,13 +513,13 @@ end;
 	
 
 	LoadActor("blurredsnowFar.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1.40,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1.40,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	LoadActor("blurredsnow.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1.20,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1.20,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	LoadActor("blurredsnowNear.png")..{
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;customtexturerect,0,0,1,1;texcoordvelocity,1,-0.90;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:customtexturerect(0,0,1,1); self:texcoordvelocity(1,-0.90); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); end;
 	};
 	};
 };
@@ -556,8 +556,8 @@ if MonthOfYear() == 10-1 and DayOfMonth() == 8 then
 	end
 end;
 LoadActor("Hat.mp3")..{
-		InitCommand=cmd(diffusealpha,0);
-		OnCommand=cmd(playcommand,'Hat');
+		InitCommand=function(self) self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('Hat'); end;
 		HatCommand=function(self)
 		--self:setstate(RD)
 		real = (math.ceil(GAMESTATE:GetCurrentSong():GetFirstBeat()))/4
@@ -589,9 +589,9 @@ LoadActor("Hat.mp3")..{
 		end;
 };
 Def.ActorFrame{
-	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); end;
 LoadActor("Hcount 1x5.png")..{
-		InitCommand=cmd(diffusealpha,0);
+		InitCommand=function(self) self:diffusealpha(0); end;
 		OnCommand=function(self)
 		self:animate(0);
 		self:playcommand('James')
@@ -658,8 +658,8 @@ LoadActor("Hcount 1x5.png")..{
 };
 };
 LoadActor("HReady.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
-		OnCommand=cmd(playcommand,'James');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('James'); end;
 		JamesCommand=function(self)
 		if GAMESTATE:GetSongBeat() >= start-8 and GAMESTATE:GetSongBeat() <= start-5 and toii == 0 then
 		toii = 1
@@ -713,8 +713,8 @@ if MonthOfYear() == 10-1 and DayOfMonth() == 8 then
 	end
 end;
 LoadActor("Hat.mp3")..{
-		InitCommand=cmd(diffusealpha,0);
-		OnCommand=cmd(playcommand,'Hat');
+		InitCommand=function(self) self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('Hat'); end;
 		HatCommand=function(self)
 		--self:setstate(RD)
 		real = (math.ceil(GAMESTATE:GetCurrentSong():GetFirstBeat()))/4
@@ -746,9 +746,9 @@ LoadActor("Hat.mp3")..{
 		end;
 };
 Def.ActorFrame{
-	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
+	InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); end;
 LoadActor("count 1x5.png")..{
-		InitCommand=cmd(diffusealpha,0);
+		InitCommand=function(self) self:diffusealpha(0); end;
 		OnCommand=function(self)
 		self:animate(0);
 		self:playcommand('James')
@@ -815,8 +815,8 @@ LoadActor("count 1x5.png")..{
 };
 };
 LoadActor("Ready.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
-		OnCommand=cmd(playcommand,'James');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('James'); end;
 		JamesCommand=function(self)
 		if GAMESTATE:GetSongBeat() >= start-8 and GAMESTATE:GetSongBeat() <= start-5 and toii == 0 then
 		self:linear(0.25)
@@ -843,7 +843,7 @@ end
 t[#t+1]= Def.ActorFrame{----SCREENMAN:GetTopScreen():GetNextCourseSong()
 
 Def.Quad {
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FF5555");horizalign,left;zoomy,23.75;zoomx,246.5/2;zoom,0);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5-126); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#FF5555")); self:horizalign(left); self:zoomy(23.75); self:zoomx(246.5/2); self:zoom(0); end;
 		HealthStateChangedMessageCommand=function(self,params)
 			if(params.PlayerNumber == PLAYER_1) then
 				if(params.HealthState == 'HealthState_Hot') then
@@ -883,7 +883,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("
 Def.ActorFrame{
 --InitCommand=function(self) SCREENMAN:GetTopScreen():GetChild('LifeP1') = self end;
 Def.Quad {
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FF5555");horizalign,left;zoomy,23.75;zoomx,246.5/2;playcommand,'loop');
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5-126); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#FF5555")); self:horizalign(left); self:zoomy(23.75); self:zoomx(246.5/2); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		ttt = (math.mod(GAMESTATE:GetSongBeat(),1))*15
 		if whatnowP1 == "full" then
@@ -913,7 +913,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("
 };
 };
 LoadFont(NumF)..{
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#00FF00");playcommand,'loop');
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#00FF00")); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		if not GAMESTATE:IsHumanPlayer(PLAYER_1) then
 			self:settext("")
@@ -932,7 +932,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X*0.5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#00F
 
 
 Def.Quad {
-OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FF5555");horizalign,left;zoomy,23.75;zoomx,246.5/2;zoom,0);
+OnCommand=function(self) self:x(SCREEN_CENTER_X*0.5-126); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#FF5555")); self:horizalign(left); self:zoomy(23.75); self:zoomx(246.5/2); self:zoom(0); end;
 		HealthStateChangedMessageCommand=function(self,params)
 			if(params.PlayerNumber == PLAYER_2) then
 				if(params.HealthState == 'HealthState_Hot') then
@@ -968,7 +968,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X*0.5-126;y,SCREEN_CENTER_Y-210.25;diffuse,color("
 		end;
 };
 Def.Quad {
-OnCommand=cmd(x,SCREEN_CENTER_X*1.5-120;y,SCREEN_CENTER_Y-210.25;diffuse,color("#5555FF");horizalign,left;zoomy,23.75;zoomx,246.5/2;playcommand,'loop');
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.5-120); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#5555FF")); self:horizalign(left); self:zoomy(23.75); self:zoomx(246.5/2); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		ttt = (math.mod(GAMESTATE:GetSongBeat(),1))*15
 		if whatnowP2 == "full" then
@@ -993,7 +993,7 @@ OnCommand=cmd(x,SCREEN_CENTER_X*1.5-120;y,SCREEN_CENTER_Y-210.25;diffuse,color("
 		end;
 };
 LoadFont(NumF)..{
-OnCommand=cmd(x,SCREEN_CENTER_X*1.5+5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#FF8800");playcommand,'loop');
+OnCommand=function(self) self:x(SCREEN_CENTER_X*1.5+5); self:y(SCREEN_CENTER_Y-210.25); self:diffuse(color("#FF8800")); self:playcommand('loop'); end;
 		loopCommand=function(self)
 		self:settext(lifeP2)
 		self:sleep(0.02)
@@ -1003,9 +1003,9 @@ OnCommand=cmd(x,SCREEN_CENTER_X*1.5+5;y,SCREEN_CENTER_Y-210.25;diffuse,color("#F
 };
 --SCREENMAN:GetTopScreen():GetChild('PlayerP2'):GetChild('Combo')
 LoadFont(TextF)..{
-InitCommand=cmd(x,SCREEN_CENTER_X-305;y,SCREEN_BOTTOM-40-383;zoom,0.8);
-		OnCommand=cmd(playcommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Nep");
+InitCommand=function(self) self:x(SCREEN_CENTER_X-305); self:y(SCREEN_BOTTOM-40-383); self:zoom(0.8); end;
+		OnCommand=function(self) self:playcommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Nep"); end;
 		NepCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1));
 			self:diffuse(color("#FF0000"));
@@ -1018,9 +1018,9 @@ InitCommand=cmd(x,SCREEN_CENTER_X-305;y,SCREEN_BOTTOM-40-383;zoom,0.8);
 		end;
 };
 LoadFont(TextF)..{
-InitCommand=cmd(x,SCREEN_CENTER_X+305;y,SCREEN_BOTTOM-40-383;zoom,0.8);
-		OnCommand=cmd(playcommand,"Nep");
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Nep");
+InitCommand=function(self) self:x(SCREEN_CENTER_X+305); self:y(SCREEN_BOTTOM-40-383); self:zoom(0.8); end;
+		OnCommand=function(self) self:playcommand("Nep"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Nep"); end;
 		NepCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2));
 			self:diffuse(color("#5555FF"));
@@ -1028,7 +1028,7 @@ InitCommand=cmd(x,SCREEN_CENTER_X+305;y,SCREEN_BOTTOM-40-383;zoom,0.8);
 };
 	
 LoadFont("_digital-7 black mono 20px")..{
-InitCommand=cmd(x,SCREEN_CENTER_X+100+55+60;y,SCREEN_BOTTOM-40-383;draworder,101;settext,"0.00%");
+InitCommand=function(self) self:x(SCREEN_CENTER_X+100+55+60); self:y(SCREEN_BOTTOM-40-383); self:draworder(101); self:settext("0.00%"); end;
 				OnCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2));
 			self:diffuse(PlayerColor(PLAYER_2));
@@ -1054,7 +1054,7 @@ InitCommand=cmd(x,SCREEN_CENTER_X+100+55+60;y,SCREEN_BOTTOM-40-383;draworder,101
 		end;
 };
 Def.ActorFrame{
-	OnCommand=cmd(playcommand,"NepuNepu");
+	OnCommand=function(self) self:playcommand("NepuNepu"); end;
 	NepuNepuCommand=function(self)
 		self:x(SCREENMAN:GetTopScreen():GetChild('ScoreP1'):GetX()-212)
 		self:y(SCREENMAN:GetTopScreen():GetChild('ScoreP1'):GetY()-99999997952)
@@ -1062,7 +1062,7 @@ Def.ActorFrame{
 		self:queuecommand("NepuNepu")
 	end;
 LoadFont("_digital-7 black mono 20px")..{
-InitCommand=cmd(x,SCREEN_CENTER_X-100-55-60;y,SCREEN_BOTTOM-40-383;draworder,101;settext,"0.00%";visible,GAMESTATE:IsPlayerEnabled(PLAYER_1);diffuse,PlayerColor(PLAYER_1));
+InitCommand=function(self) self:x(SCREEN_CENTER_X-100-55-60); self:y(SCREEN_BOTTOM-40-383); self:draworder(101); self:settext("0.00%"); self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1)); self:diffuse(PlayerColor(PLAYER_1)); end;
 				JudgmentMessageCommand=function(self)
 			self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1));
 			self:diffuse(PlayerColor(PLAYER_1));
@@ -1089,8 +1089,8 @@ InitCommand=cmd(x,SCREEN_CENTER_X-100-55-60;y,SCREEN_BOTTOM-40-383;draworder,101
 };
 };
 LoadFont(NumF)..{
-InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_TOP+32;zoom,1);
-		OnCommand=cmd(playcommand,'James');
+InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_TOP+32); self:zoom(1); end;
+		OnCommand=function(self) self:playcommand('James'); end;
 		JamesCommand=function(self)
 	if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 	local pState = GAMESTATE:GetPlayerState(PLAYER_1);
@@ -1179,14 +1179,14 @@ InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_TOP+32;zoom,1);
 		end;
 };
 LoadActor("Old.lua")..{
-OnCommand=cmd();
+OnCommand=function(self) end;
 };
 LoadActor("Harderdafault.lua")..{
-InitCommand=cmd();
+InitCommand=function(self) end;
 };
 Def.Quad{
-InitCommand=cmd(y,SCREEN_BOTTOM-5;horizalign,left;zoomx,SCREEN_RIGHT;zoomy,10);
-		OnCommand=cmd(playcommand,'Super');
+InitCommand=function(self) self:y(SCREEN_BOTTOM-5); self:horizalign(left); self:zoomx(SCREEN_RIGHT); self:zoomy(10); end;
+		OnCommand=function(self) self:playcommand('Super'); end;
 		SuperCommand=function(self)
 		P = GAMESTATE:GetCurMusicSeconds() / GAMESTATE:GetCurrentSong():MusicLengthSeconds()
 		self:cropright(1-P)
@@ -1196,7 +1196,7 @@ InitCommand=cmd(y,SCREEN_BOTTOM-5;horizalign,left;zoomx,SCREEN_RIGHT;zoomy,10);
 		end;
 };
 LoadActor("ColorofBAR2.lua")..{
-InitCommand=cmd(y,SCREEN_BOTTOM-5);
+InitCommand=function(self) self:y(SCREEN_BOTTOM-5); end;
 };
 --inputoverlay-key
 --Neppress = {esc,L1,D1,U1,R1,L2,D2,U2,R2,enter}----------
@@ -1204,9 +1204,9 @@ InitCommand=cmd(y,SCREEN_BOTTOM-5);
 ---------------I hate myself-----------------------------
 --------P1--------
 Def.ActorFrame{
-InitCommand=cmd(zoom,0.75;x,(43/2*0.75+5);y,SCREEN_CENTER_Y);
+InitCommand=function(self) self:zoom(0.75); self:x((43/2*0.75+5)); self:y(SCREEN_CENTER_Y); end;
 Def.Quad{--control panel
-OnCommand=cmd(zoom,0;playcommand,"Nep");
+OnCommand=function(self) self:zoom(0); self:playcommand("Nep"); end;
 NepCommand=function(self)
 self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_1));
 	if Neppress[2] == 1 then MESSAGEMAN:Broadcast("L1") else MESSAGEMAN:Broadcast("L1re") end
@@ -1218,23 +1218,23 @@ self:queuecommand("Nep")
 end;
 };
 LoadActor("inputoverlay-key.png")..{
-L1MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP1));
-L1reMessageCommand=cmd(stoptweening;y,-23*3*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+L1MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP1)); end;
+L1reMessageCommand=function(self) self:stoptweening(); self:y(-23*3*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,-23*1*7.75);
-D1MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP1));
-D1reMessageCommand=cmd(stoptweening;y,-23*1*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(-23*1*7.75); end;
+D1MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP1)); end;
+D1reMessageCommand=function(self) self:stoptweening(); self:y(-23*1*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,23*1*7.75);
-U1MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP1));
-U1reMessageCommand=cmd(stoptweening;y,23*1*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(23*1*7.75); end;
+U1MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP1)); end;
+U1reMessageCommand=function(self) self:stoptweening(); self:y(23*1*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,23*3*7.75);
-R1MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP1));
-R1reMessageCommand=cmd(stoptweening;y,23*3*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(23*3*7.75); end;
+R1MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP1)); end;
+R1reMessageCommand=function(self) self:stoptweening(); self:y(23*3*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadFont("_special elite 24px")..{
 Text="L"; L1MessageCommand=function(self)
@@ -1263,9 +1263,9 @@ Text="R"; R1MessageCommand=function(self)
 };
 
 Def.ActorFrame{
-InitCommand=cmd(zoom,0.75;x,SCREEN_RIGHT-(43/2*0.75+5);y,SCREEN_CENTER_Y);
+InitCommand=function(self) self:zoom(0.75); self:x(SCREEN_RIGHT-(43/2*0.75+5)); self:y(SCREEN_CENTER_Y); end;
 Def.Quad{--control panel
-OnCommand=cmd(zoom,0;playcommand,"Nep");
+OnCommand=function(self) self:zoom(0); self:playcommand("Nep"); end;
 NepCommand=function(self)
 self:visible(GAMESTATE:IsPlayerEnabled(PLAYER_2));
 	if Neppress[6] == 1 then MESSAGEMAN:Broadcast("L2") else MESSAGEMAN:Broadcast("L2re") end
@@ -1277,23 +1277,23 @@ self:queuecommand("Nep")
 end;
 };
 LoadActor("inputoverlay-key.png")..{
-L2MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP2));
-L2reMessageCommand=cmd(stoptweening;y,-23*3*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+L2MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP2)); end;
+L2reMessageCommand=function(self) self:stoptweening(); self:y(-23*3*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,-23*1*7.75);
-D2MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP2));
-D2reMessageCommand=cmd(stoptweening;y,-23*1*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(-23*1*7.75); end;
+D2MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP2)); end;
+D2reMessageCommand=function(self) self:stoptweening(); self:y(-23*1*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,23*1*7.75);
-U2MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP2));
-U2reMessageCommand=cmd(stoptweening;y,23*1*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(23*1*7.75); end;
+U2MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP2)); end;
+U2reMessageCommand=function(self) self:stoptweening(); self:y(23*1*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadActor("inputoverlay-key.png")..{
-OnCommand=cmd(y,23*3*7.75);
-R2MessageCommand=cmd(stoptweening;linear,0.1;zoom,0.85;diffuse,color(ColorP2));
-R2reMessageCommand=cmd(stoptweening;y,23*3*1.25;linear,0.1;zoom,1;diffuse,color("#FFFFFF"));
+OnCommand=function(self) self:y(23*3*7.75); end;
+R2MessageCommand=function(self) self:stoptweening(); self:linear(0.1); self:zoom(0.85); self:diffuse(color(ColorP2)); end;
+R2reMessageCommand=function(self) self:stoptweening(); self:y(23*3*1.25); self:linear(0.1); self:zoom(1); self:diffuse(color("#FFFFFF")); end;
 };
 LoadFont("_special elite 24px")..{
 Text="L"; L2MessageCommand=function(self)
@@ -1321,53 +1321,53 @@ Text="R"; R2MessageCommand=function(self)
 };
 };
 Def.Quad{
-InitCommand=cmd(zoom,99999;diffuse,color("#000000");diffusealpha,0);
-StopgameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0.75);
-contigameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0);
+InitCommand=function(self) self:zoom(99999); self:diffuse(color("#000000")); self:diffusealpha(0); end;
+StopgameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0.75); end;
+contigameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0); end;
 };
 LoadFont("_special elite 108px")..{
 Text="Pause";
-OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y*0.5;zoom,5;diffuse,color("#FFFF00");diffusealpha,0;wag;effectmagnitude,0,0,2;effectperiod,10);
-StopgameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,1;zoom,1);
-contigameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0;zoom,5);
+OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*0.5); self:zoom(5); self:diffuse(color("#FFFF00")); self:diffusealpha(0); self:wag(); self:effectmagnitude(0,0,2); self:effectperiod(10); end;
+StopgameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(1); self:zoom(1); end;
+contigameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0); self:zoom(5); end;
 };
 LoadFont("_special elite 24px")..{
 Text="-Resume-";
-OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y-30;zoom,5;diffuse,color("#E6C8EE");diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,1);
-StopgameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,1;zoom,1.5);
-contigameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0;zoom,5);
-YestoResumeMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#FFFF00");diffusealpha,1;zoom,2);
-NotoResumeMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#E6C8EE");diffusealpha,1;zoom,1.5);
+OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y-30); self:zoom(5); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); self:wag(); self:effectmagnitude(0,0,-2); self:effectperiod(10); self:effectoffset(1); end;
+StopgameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(1); self:zoom(1.5); end;
+contigameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0); self:zoom(5); end;
+YestoResumeMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#FFFF00")); self:diffusealpha(1); self:zoom(2); end;
+NotoResumeMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#E6C8EE")); self:diffusealpha(1); self:zoom(1.5); end;
 };
 LoadFont("_special elite 24px")..{
 Text="-Retry-";
-OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+15;zoom,5;diffuse,color("#E6C8EE");diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,3);
-StopgameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,1;zoom,1.5);
-contigameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0;zoom,5);
-YestoRetryMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#FFFF00");diffusealpha,1;zoom,2);
-NotoRetryMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#E6C8EE");diffusealpha,1;zoom,1.5);
+OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+15); self:zoom(5); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); self:wag(); self:effectmagnitude(0,0,-2); self:effectperiod(10); self:effectoffset(3); end;
+StopgameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(1); self:zoom(1.5); end;
+contigameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0); self:zoom(5); end;
+YestoRetryMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#FFFF00")); self:diffusealpha(1); self:zoom(2); end;
+NotoRetryMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#E6C8EE")); self:diffusealpha(1); self:zoom(1.5); end;
 };
 LoadFont("_special elite 24px")..{
 Text="-Back-";
-OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60;zoom,5;diffuse,color("#E6C8EE");diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,5);
-StopgameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,1;zoom,1.5);
-contigameMessageCommand=cmd(stoptweening;linear,0.25;diffusealpha,0;zoom,5);
-YestoBackMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#FFFF00");diffusealpha,1;zoom,2);
-NotoBackMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#E6C8EE");diffusealpha,1;zoom,1.5);
+OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+60); self:zoom(5); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); self:wag(); self:effectmagnitude(0,0,-2); self:effectperiod(10); self:effectoffset(5); end;
+StopgameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(1); self:zoom(1.5); end;
+contigameMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffusealpha(0); self:zoom(5); end;
+YestoBackMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#FFFF00")); self:diffusealpha(1); self:zoom(2); end;
+NotoBackMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#E6C8EE")); self:diffusealpha(1); self:zoom(1.5); end;
 };
 LoadFont("_special elite 24px")..{
 Text="Warning : You will restart from first song!";
-OnCommand=cmd(CenterX;y,SCREEN_CENTER_Y+150;zoom,5;diffuse,color("#E6C8EE");diffusealpha,0;wag;effectmagnitude,0,0,-2;effectperiod,10;effectoffset,5);
-CrouseYBackMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#FFFF00");diffusealpha,1;zoom,0.75);
-CrouseNBackMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#E6C8EE");diffusealpha,0;zoom,3);
+OnCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+150); self:zoom(5); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); self:wag(); self:effectmagnitude(0,0,-2); self:effectperiod(10); self:effectoffset(5); end;
+CrouseYBackMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#FFFF00")); self:diffusealpha(1); self:zoom(0.75); end;
+CrouseNBackMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); self:zoom(3); end;
 };
 LoadFont("_special elite 24px")..{
 Text="You know you can't pause in mutiplayer,don't you?";
-OnCommand=cmd(x,SCREEN_CENTER_X-100;y,SCREEN_CENTER_Y+180+10;diffuse,color("#E6C8EE");diffusealpha,0);
-MutiMessageCommand=cmd(stoptweening;linear,0.25;diffuse,color("#E6C8EE");diffusealpha,1;y,SCREEN_CENTER_Y+180;sleep,2;linear,0.25;diffusealpha,0;y,SCREEN_CENTER_Y+180+10);
+OnCommand=function(self) self:x(SCREEN_CENTER_X-100); self:y(SCREEN_CENTER_Y+180+10); self:diffuse(color("#E6C8EE")); self:diffusealpha(0); end;
+MutiMessageCommand=function(self) self:stoptweening(); self:linear(0.25); self:diffuse(color("#E6C8EE")); self:diffusealpha(1); self:y(SCREEN_CENTER_Y+180); self:sleep(2); self:linear(0.25); self:diffusealpha(0); self:y(SCREEN_CENTER_Y+180+10); end;
 };
 Def.Quad{
-InitCommand=cmd(zoom,999999;diffuse,color("#55555500"));
+InitCommand=function(self) self:zoom(999999); self:diffuse(color("#55555500")); end;
 		OnCommand=function(self)
 		SCREENMAN:GetTopScreen():AddInputCallback( InputHandler )
 			self:playcommand('James')
@@ -1523,12 +1523,12 @@ InitCommand=cmd(zoom,999999;diffuse,color("#55555500"));
 		end;
 };
 Def.Quad{
-InitCommand=cmd(zoom,99999;diffuse,color("#000000");diffusealpha,0);
-FADEMessageCommand=cmd(stoptweening;linear,0.5;diffusealpha,1);
+InitCommand=function(self) self:zoom(99999); self:diffuse(color("#000000")); self:diffusealpha(0); end;
+FADEMessageCommand=function(self) self:stoptweening(); self:linear(0.5); self:diffusealpha(1); end;
 };
 Def.Sprite {
-	InitCommand=cmd(Center;draworder,1001;diffusealpha,0);
-	BeginCommand=cmd(LoadFromCurrentSongBackground);
+	InitCommand=function(self) self:Center(); self:draworder(1001); self:diffusealpha(0); end;
+	BeginCommand=function(self) self:LoadFromCurrentSongBackground(); end;
 	OnCommand=function(self)
 		if PREFSMAN:GetPreference("StretchBackgrounds") then
 			self:SetSize(SCREEN_WIDTH,SCREEN_HEIGHT)
@@ -1541,11 +1541,11 @@ Def.Sprite {
 		self:rotationx(p*360)
 		self:zoom(0.5)
 	end;
-	FADE2MessageCommand=cmd(stoptweening;linear,0.5;diffusealpha,1);
+	FADE2MessageCommand=function(self) self:stoptweening(); self:linear(0.5); self:diffusealpha(1); end;
 };
 LoadFont("_special elite 24px")..{
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60;zoom,2;rainbow;diffusealpha,0.5);
-		OnCommand=cmd(playcommand,'Emilia');
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+60); self:zoom(2); self:rainbow(); self:diffusealpha(0.5); end;
+		OnCommand=function(self) self:playcommand('Emilia'); end;
 		EmiliaCommand=function(self)
 		if GAMESTATE:GetCurMusicSeconds() >= GAMESTATE:GetCurrentSong():GetLastSecond() then
 		EmiliaWanttoPause = false
@@ -1564,7 +1564,7 @@ InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60;zoom,2;rainbow;diffusealpha,0.5);
 		end;
 };
 LoadFont("_special elite 24px")..{
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60;zoom,2;rainbow;diffusealpha,1;playcommand,"Debuggg");
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+60); self:zoom(2); self:rainbow(); self:diffusealpha(1); self:playcommand("Debuggg"); end;
 		DebugggCommand=function(self)
 		--self:x(SCREENMAN:GetTopScreen():GetChild('ScoreP1'):GetX())
 		--[[for i=1,GAMESTATE:GetCurrentCourse():GetEstimatedNumStages() do
@@ -1578,7 +1578,7 @@ InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60;zoom,2;rainbow;diffusealpha,1;playc
 		end;
 };
 LoadFont("_special elite 24px")..{
-InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60+50;zoom,2;rainbow;diffusealpha,1);
+InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y+60+50); self:zoom(2); self:rainbow(); self:diffusealpha(1); end;
 		OnCommand=function(self)
 		--self:x(SCREENMAN:GetTopScreen():GetChild('ScoreP1'):GetX())
 		for i=1,GAMESTATE:GetCurrentCourse():GetEstimatedNumStages() do
@@ -1590,21 +1590,21 @@ InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+60+50;zoom,2;rainbow;diffusealpha,1);
 		end;
 };
 		LoadActor( THEME:GetPathS("Common","start") )..{
-			OkayMessageCommand=cmd(play);
+			OkayMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
-			NopeMessageCommand=cmd(play);
+			NopeMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","value") )..{
-			ArrowMessageCommand=cmd(play);
+			ArrowMessageCommand=function(self) self:play(); end;
 		};
 		Def.ActorFrame{
-			OnCommand=cmd(y,SCREEN_BOTTOM-40);
+			OnCommand=function(self) self:y(SCREEN_BOTTOM-40); end;
 Def.ActorFrame{
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,-30;diffusealpha,0;zoomx,0;sleep,0.15+0.15+0.15+0.15+0.15+0.15+2+3;diffusealpha,1;linear,0.11126465746435357;zoomx,1);
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(-30); self:diffusealpha(0); self:zoomx(0); self:sleep(0.15+0.15+0.15+0.15+0.15+0.15+2+3); self:diffusealpha(1); self:linear(0.11126465746435357); self:zoomx(1); end;
 		LoadFont(TextF) .. {
-			OnCommand=cmd(diffuse,color("#ff1100");playcommand,"Update");
-			CurrentSongChangedMessageCommand=cmd(playcommand,"Update");
+			OnCommand=function(self) self:diffuse(color("#ff1100")); self:playcommand("Update"); end;
+			CurrentSongChangedMessageCommand=function(self) self:playcommand("Update"); end;
 			UpdateCommand=function(self)
 				local text = ""
 				local song = GAMESTATE:GetCurrentSong()
@@ -1622,10 +1622,10 @@ Def.ActorFrame{
 };
 	};	
 	LoadActor("Time.lua")..{
-		OnCommand=cmd();
+		OnCommand=function(self) end;
 	};
 	LoadFont("_special elite 108px")..{
-			OnCommand=cmd(x,SCREEN_CENTER_X-90;y,SCREEN_BOTTOM-20;zoom,0.25;diffuse,color("#FF8800");diffusebottomedge,ColorDarkTone(color("#FF8800"));diffusetopedge,ColorLightTone(color("#FF8800")));
+			OnCommand=function(self) self:x(SCREEN_CENTER_X-90); self:y(SCREEN_BOTTOM-20); self:zoom(0.25); self:diffuse(color("#FF8800")); self:diffusebottomedge(ColorDarkTone(color("#FF8800"))); self:diffusetopedge(ColorLightTone(color("#FF8800"))); end;
 			JudgmentMessageCommand=function(self)
 			self:settext(P1Sc)
 		if  (STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() >= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() and Isbattle and not HiddenScore) or (HiddenScore and Isbattle) then
@@ -1639,7 +1639,7 @@ Def.ActorFrame{
 			end;
 	};
 	LoadFont("_special elite 108px")..{
-			OnCommand=cmd(x,SCREEN_CENTER_X+90;y,SCREEN_BOTTOM-20;zoom,0.25;diffuse,color("#FF8800");diffusebottomedge,ColorDarkTone(color("#FF8800"));diffusetopedge,ColorLightTone(color("#FF8800")));
+			OnCommand=function(self) self:x(SCREEN_CENTER_X+90); self:y(SCREEN_BOTTOM-20); self:zoom(0.25); self:diffuse(color("#FF8800")); self:diffusebottomedge(ColorDarkTone(color("#FF8800"))); self:diffusetopedge(ColorLightTone(color("#FF8800"))); end;
 			JudgmentMessageCommand=function(self)
 			self:settext(P2Sc)
 		if  (STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_2):GetPercentDancePoints() >= STATSMAN:GetCurStageStats():GetPlayerStageStats(PLAYER_1):GetPercentDancePoints() and Isbattle and not HiddenScore) or (HiddenScore and Isbattle) then
@@ -1655,7 +1655,7 @@ Def.ActorFrame{
 			end;
 	};
 Def.ActorFrame{
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+100;zoom,1.5;diffusealpha,0;playcommand,"Hae");
+	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+100); self:zoom(1.5); self:diffusealpha(0); self:playcommand("Hae"); end;
 	HaeCommand=function(self)
 	if ((GAMESTATE:GetPlayerState(PLAYER_1):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_1)) or (GAMESTATE:GetPlayerState(PLAYER_2):GetCurrentPlayerOptions():DrainSetting() == "DrainType_SuddenDeath" and GAMESTATE:IsPlayerEnabled(PLAYER_2))) then
 		if GAMESTATE:GetCurrentSong():GetFirstSecond() >= GAMESTATE:GetCurMusicSeconds() then
@@ -1717,7 +1717,7 @@ Def.ActorFrame{
 	end
 	end;
 	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,50;zoom,0.25;playcommand,"Wa");
+		OnCommand=function(self) self:x(50); self:zoom(0.25); self:playcommand("Wa"); end;
 		WaCommand=function(self)
 		self:animate(false)
 		self:setstate(Wario[4])
@@ -1726,7 +1726,7 @@ Def.ActorFrame{
 		end;
 	};
 	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,25;zoom,0.25;playcommand,"ri");
+		OnCommand=function(self) self:x(25); self:zoom(0.25); self:playcommand("ri"); end;
 		riCommand=function(self)
 		self:animate(false)
 		self:setstate(Wario[3])
@@ -1735,7 +1735,7 @@ Def.ActorFrame{
 		end;
 	};
 	LoadActor("WarioTime")..{
-		OnCommand=cmd(x,-25;zoom,0.25;playcommand,"OO");
+		OnCommand=function(self) self:x(-25); self:zoom(0.25); self:playcommand("OO"); end;
 		OOCommand=function(self)
 		self:animate(false)
 		self:setstate(Wario[2])
@@ -1745,7 +1745,7 @@ Def.ActorFrame{
 	};
 };
 	LoadActor("Ticktock")..{
-		OnCommand=cmd(zoom,0.25;playcommand,"OO");
+		OnCommand=function(self) self:zoom(0.25); self:playcommand("OO"); end;
 		OOCommand=function(self)
 		self:animate(false)
 		if ( Wario[1] - math.floor(Wario[1]) >= 0.5) or (GAMESTATE:GetCurrentSong():GetFirstSecond() >= GAMESTATE:GetCurMusicSeconds()) then
@@ -1760,8 +1760,8 @@ Def.ActorFrame{
 };
 	--[[
 LoadActor("Ready.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
-		OnCommand=cmd(playcommand,'James');
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(0); end;
+		OnCommand=function(self) self:playcommand('James'); end;
 		JamesCommand=function(self)
 		if GAMESTATE:GetSongBeat() >= start-8 and GAMESTATE:GetSongBeat() <= start-5 and toii == 0 then
 		self:linear(0.25)

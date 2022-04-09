@@ -13,7 +13,7 @@ if BG2 == "Nope" then Dim2 = 0; elseif BG2 == "Hide" then Dim2 = 1; else Dim2 = 
 local t = Def.ActorFrame{};
 if string.match(Vdo1,".mp4") or string.match(Vdo1,".mpg") or string.match(Vdo1,".mpeg") or string.match(Vdo1,".avi") then
 	t[#t+1] = LoadActor("../../Resource/BGAV/"..Vdo1)..{
-	InitCommand=cmd(FullScreen;fadeleft,0);
+	InitCommand=function(self) self:FullScreen(); self:fadeleft(0); end;
 	OnCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_2) and Vdo1 ~= Vdo2 then
 			self:faderight(1)
@@ -21,7 +21,7 @@ if string.match(Vdo1,".mp4") or string.match(Vdo1,".mpg") or string.match(Vdo1,"
 	end;
 	};
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;fadeleft,0;diffuse,{0,0,0,Dim1});
+		InitCommand=function(self) self:FullScreen(); self:fadeleft(0); self:diffuse({0,0,0,Dim1}); end;
 		OnCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_2) and Dim1 ~= Dim2 then
 				self:faderight(1)
@@ -30,7 +30,7 @@ if string.match(Vdo1,".mp4") or string.match(Vdo1,".mpg") or string.match(Vdo1,"
 	};
 elseif Vdo1 ~= "Default" then
 	t[#t+1] = LoadActor("../../Resource/BGAV/"..Vdo1)..{
-	InitCommand=cmd(fadeleft,0);
+	InitCommand=function(self) self:fadeleft(0); end;
 	OnCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_2) and Vdo1 ~= Vdo2 then
 			self:faderight(1)
@@ -38,7 +38,7 @@ elseif Vdo1 ~= "Default" then
 	end;
 	};
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;fadeleft,0;diffuse,{0,0,0,Dim1});
+		InitCommand=function(self) self:FullScreen(); self:fadeleft(0); self:diffuse({0,0,0,Dim1}); end;
 		OnCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_2) and Dim1 ~= Dim2 then
 				self:faderight(1)
@@ -49,7 +49,7 @@ end
 
 if string.match(Vdo2,".mp4") or string.match(Vdo2,".mpg") or string.match(Vdo2,".mpeg") or string.match(Vdo2,".avi") then
 	t[#t+1] = LoadActor("../../Resource/BGAV/"..Vdo2)..{
-	InitCommand=cmd(FullScreen;fadeleft,0);
+	InitCommand=function(self) self:FullScreen(); self:fadeleft(0); end;
 	OnCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and Vdo1 ~= Vdo2 then
 			self:faderight(1)
@@ -57,7 +57,7 @@ if string.match(Vdo2,".mp4") or string.match(Vdo2,".mpg") or string.match(Vdo2,"
 	end;
 	};
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;fadeleft,0;diffuse,{0,0,0,Dim2});
+		InitCommand=function(self) self:FullScreen(); self:fadeleft(0); self:diffuse({0,0,0,Dim2}); end;
 		OnCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) and Dim1 ~= Dim2 then
 				self:faderight(1)
@@ -66,7 +66,7 @@ if string.match(Vdo2,".mp4") or string.match(Vdo2,".mpg") or string.match(Vdo2,"
 	};
 elseif Vdo2 ~= "Default" then
 	t[#t+1] = LoadActor("../../Resource/BGAV/"..Vdo2)..{
-	InitCommand=cmd(fadeleft,0);
+	InitCommand=function(self) self:fadeleft(0); end;
 	OnCommand=function(self)
 		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and Vdo1 ~= Vdo2 then
 			self:fadeleft(1)
@@ -74,7 +74,7 @@ elseif Vdo2 ~= "Default" then
 	end;
 	};
 	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;fadeleft,0;diffuse,{0,0,0,Dim2});
+		InitCommand=function(self) self:FullScreen(); self:fadeleft(0); self:diffuse({0,0,0,Dim2}); end;
 		OnCommand=function(self)
 			if GAMESTATE:IsPlayerEnabled(PLAYER_1) and Dim1 ~= Dim2 then
 				self:fadeleft(1)

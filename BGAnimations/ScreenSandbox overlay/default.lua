@@ -12,24 +12,24 @@ end;
 
 t[#t+1] = Def.ActorFrame{
 	name = "YEY";
-	InitCommand=cmd();
+	InitCommand=function(self) end;
 	OnCommand=function(self)
 		SCREENMAN:GetTopScreen():AddInputCallback(InputOfArrow)
 		self:sleep(1):queuecommand("ISLA")
 	end;
 	
 		LoadActor( THEME:GetPathS("Common","start") )..{
-			ConfirmMessageCommand=cmd(play);
+			ConfirmMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
-			NopeMessageCommand=cmd(play);
+			NopeMessageCommand=function(self) self:play(); end;
 		};
 		LoadActor( THEME:GetPathS("Common","value") )..{
-			ChanMessageCommand=cmd(play);
+			ChanMessageCommand=function(self) self:play(); end;
 		};
 };
 t[#t+1]=Def.Quad{
-	OnCommand=cmd(visible,false;sleep,9999999);
+	OnCommand=function(self) self:visible(false); self:sleep(9999999); end;
 };
 
 t[#t+1] = LoadActor("StarVector");

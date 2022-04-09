@@ -1,65 +1,65 @@
 local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
-		OnCommand=cmd(z,20);
+		OnCommand=function(self) self:z(20); end;
 Def.Quad {
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,1;diffuse,color("#000000");zoomtoheight,SCREEN_HEIGHT;zoomtowidth,SCREEN_WIDTH;sleep,14.602;diffusealpha,0.999999999;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(1); self:diffuse(color("#000000")); self:zoomtoheight(SCREEN_HEIGHT); self:zoomtowidth(SCREEN_WIDTH); self:sleep(14.602); self:diffusealpha(0.999999999); end;
 };
 	LoadActor("gameover") .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0;zoomtoheight,SCREEN_HEIGHT;zoomtowidth,SCREEN_WIDTH;);
-		OnCommand=cmd(sleep,3;linear,1;diffusealpha,1);
+		InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:diffusealpha(0); self:zoomtoheight(SCREEN_HEIGHT); self:zoomtowidth(SCREEN_WIDTH); end;
+		OnCommand=function(self) self:sleep(3); self:linear(1); self:diffusealpha(1); end;
 	};--2.582
 	LoadActor("Heart") .. {
-		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;zoom,0.3;sleep,1.310;diffusealpha,0;);
+		OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); self:zoom(0.3); self:sleep(1.310); self:diffusealpha(0); end;
 	};
 			Def.ActorFrame{ 
-				InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;);--decelerate accelerate SCREEN_BOTTOM
-				OnCommand=cmd(diffusealpha,0;sleep,1.310;diffusealpha,1;decelerate,0.75*2;addy,-200;accelerate,1.25*2;addy,SCREEN_BOTTOM+300);
+				InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y); end;--decelerate accelerate SCREEN_BOTTOM
+				OnCommand=function(self) self:diffusealpha(0); self:sleep(1.310); self:diffusealpha(1); self:decelerate(0.75*2); self:addy(-200); self:accelerate(1.25*2); self:addy(SCREEN_BOTTOM+300); end;
 				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
 				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
-				};
-				};
-				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
-				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
 				};
 				};
 				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
 				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
 				};
 				};
 				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
 				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
 				};
 				};
 				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
 				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
 				};
 				};
 				Def.ActorFrame{
-				InitCommand=cmd(x,math.random(0,20)-10;y,math.random(0,20)-10;);
-				OnCommand=cmd(sleep,1.310;linear,4;addx,math.random(-1200,1200);addy,math.random(-200,200)-100;); 
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
 				Def.Quad{
-				InitCommand=cmd(zoomto,10,6;diffuse,1.0,0.11,0.11,1;);
-				OnCommand=cmd(spin;effectmagnitude,360,360,360;); 
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
+				};
+				};
+				Def.ActorFrame{
+				InitCommand=function(self) self:x(math.random(0,20)-10); self:y(math.random(0,20)-10); end;
+				OnCommand=function(self) self:sleep(1.310); self:linear(4); self:addx(math.random(-1200,1200)); self:addy(math.random(-200,200)-100); end; 
+				Def.Quad{
+				InitCommand=function(self) self:zoomto(10,6); self:diffuse(1.0,0.11,0.11,1); end;
+				OnCommand=function(self) self:spin(); self:effectmagnitude(360,360,360); end; 
 				};
 				};
 			};
@@ -67,11 +67,11 @@ Def.Quad {
 if not GAMESTATE:IsCourseMode() then
 if GAMESTATE:GetCurrentSong():GetDisplayFullTitle() == 'Your best nightmare & Finale' then
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(z,20);
+OnCommand=function(self) self:z(20); end;
 LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = self end; };
 		LoadFont("_determination sans 26px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1;cropright,1;);
-			OnCommand=cmd(sleep,5.582;playcommand,'Nep');
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1); self:cropright(1); end;
+			OnCommand=function(self) self:sleep(5.582); self:playcommand('Nep'); end;
 			NepCommand=function(self)
 		clearThis()
 		hideBubble()
@@ -85,8 +85,8 @@ LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = 
 			end;
 		};
 		LoadFont("_determination sans 26px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1;cropright,1;);
-			OnCommand=cmd(sleep,8.833;playcommand,'Nep');
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1); self:cropright(1); end;
+			OnCommand=function(self) self:sleep(8.833); self:playcommand('Nep'); end;
 			NepCommand=function(self)
 		clearThis()
 		hideBubble()
@@ -102,19 +102,19 @@ LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = 
 			end;
 		};--			troll = string.len(you suck);
 	LoadActor("flowey") .. {
-		OnCommand=cmd();
+		OnCommand=function(self) end;
 	};
 	LoadActor("Kill Stepmania") .. {
-		StartTransitioningCommand=cmd(play);
+		StartTransitioningCommand=function(self) self:play(); end;
 	};
 };
 else
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(z,20);
+OnCommand=function(self) self:z(20); end;
 LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = self end; };
 		LoadFont("_determination sans 26px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1;cropright,1;);
-			OnCommand=cmd(sleep,5.582;playcommand,'Nep';sleep,8.704-5.582;playcommand,'Tor');
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1); self:cropright(1); end;
+			OnCommand=function(self) self:sleep(5.582); self:playcommand('Nep'); self:sleep(8.704-5.582); self:playcommand('Tor'); end;
 			NepCommand=function(self)
 			NepNep = math.random(1,5);
 		clearThis()
@@ -215,17 +215,17 @@ LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = 
 			end;
 		};--			troll = string.len(you suck);
 	LoadActor("Died") .. {
-		StartTransitioningCommand=cmd(play);
+		StartTransitioningCommand=function(self) self:play(); end;
 	};
 };
 end
 else
 t[#t+1] = Def.ActorFrame{
-OnCommand=cmd(z,20);
+OnCommand=function(self) self:z(20); end;
 LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = self end; };
 		LoadFont("_determination sans 26px")..{
-			InitCommand=cmd(horizalign,left;x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+80;diffuse,color("#FFFFFF");zoom,1;cropright,1;);
-			OnCommand=cmd(sleep,5.582;playcommand,'Nep';sleep,8.704-5.582;playcommand,'Tor');
+			InitCommand=function(self) self:horizalign(left); self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y+80); self:diffuse(color("#FFFFFF")); self:zoom(1); self:cropright(1); end;
+			OnCommand=function(self) self:sleep(5.582); self:playcommand('Nep'); self:sleep(8.704-5.582); self:playcommand('Tor'); end;
 			NepCommand=function(self)
 			NepNep = math.random(1,5);
 		clearThis()
@@ -326,7 +326,7 @@ LoadActor( "text/madness.lua" )..{ InitCommand=function(self) Neptune_textbox = 
 			end;
 		};
 	LoadActor("Died") .. {
-		StartTransitioningCommand=cmd(play);
+		StartTransitioningCommand=function(self) self:play(); end;
 	};--			troll = string.len(you suck);
 };
 end

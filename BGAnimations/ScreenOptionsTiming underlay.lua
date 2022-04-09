@@ -29,13 +29,13 @@ end;
 
 local function createTiming()
     local t = Def.ActorFrame{
-        InitCommand=cmd(x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y-85);
+        InitCommand=function(self) self:x(SCREEN_CENTER_X-200); self:y(SCREEN_CENTER_Y-85); end;
     };
     for i,vTime in pairs({"ProW1","ProW2","ProW3","ProW4","ProW5","W1","W2","W3","W4","W5"}) do
         t[#t+1] = Def.ActorFrame{
-            InitCommand=cmd(y,i*19;zoom,0.8);
+            InitCommand=function(self) self:y(i*19); self:zoom(0.8); end;
             LoadFont("Common normal").. {
-                InitCommand=cmd(settext,nameTime[vTime];diffuse,LoadModule("Color.Judgment.lua")(vTime);diffusebottomedge,LoadModule("Color.Judgment.lua")(vTime));
+                InitCommand=function(self) self:settext(nameTime[vTime]); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); self:diffusebottomedge(LoadModule("Color.Judgment.lua")(vTime)); end;
                 UserPlayerJudgmentMessageCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     self:stoptweening():decelerate(0.5)
@@ -43,7 +43,7 @@ local function createTiming()
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=cmd(x,100;horizalign,left;zoom,0.3;diffuse,LoadModule("Color.Judgment.lua")(vTime));
+                InitCommand=function(self) self:x(100); self:horizalign(left); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
                 OnCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     local thisStr = string.format( "%g",math.mod( thisVal,1 ))
@@ -52,7 +52,7 @@ local function createTiming()
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=cmd(x,100;horizalign,right;zoom,0.3;diffuse,LoadModule("Color.Judgment.lua")(vTime));
+                InitCommand=function(self) self:x(100); self:horizalign(right); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
                 OnCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     self:settextf("%d",thisVal)
@@ -61,7 +61,7 @@ local function createTiming()
             };
 
             LoadFont("Combo Number").. {
-                InitCommand=cmd(x,350;horizalign,left;zoom,0.3;diffuse,LoadModule("Color.Judgment.lua")(vTime));
+                InitCommand=function(self) self:x(350); self:horizalign(left); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
                 OnCommand=function(self, param)
                     self:playcommand("ReloadTime", {})
                 end;
@@ -86,7 +86,7 @@ local function createTiming()
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=cmd(x,350;horizalign,right;zoom,0.3;diffuse,LoadModule("Color.Judgment.lua")(vTime));
+                InitCommand=function(self) self:x(350); self:horizalign(right); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
                 OnCommand=function(self, param)
                     self:playcommand("ReloadTime", {})
                 end;
@@ -116,18 +116,18 @@ local function createTiming()
 end
 return Def.ActorFrame{
     Def.Quad{
-        InitCommand=cmd(xy,SCREEN_CENTER_X, SCREEN_CENTER_Y+20;zoomto,700,200;);
+        InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+20); self:zoomto(700,200); end;
     };
     Def.Quad{
-        InitCommand=cmd(xy,SCREEN_CENTER_X, SCREEN_CENTER_Y+20;zoomto,695,195;diffuse,{0.1,0.1,0.1,1});
+        InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+20); self:zoomto(695,195); self:diffuse({0.1,0.1,0.1,1}); end;
     };
     createTiming();
     LoadActor(THEME:GetPathG("Arrow","Right"),Color.Green).. {
-        InitCommand=cmd(xy,SCREEN_CENTER_X, SCREEN_CENTER_Y+20);
+        InitCommand=function(self) self:xy(SCREEN_CENTER_X, SCREEN_CENTER_Y+20); end;
     };
     LoadFont("Common Normal").. {
         Text = THEME:GetString("ScreenOptionsTiming","unitExplain");
-        InitCommand=cmd(xy,SCREEN_CENTER_X+200, SCREEN_CENTER_Y+105;skewx,-0.2;zoom,0.5)
+        InitCommand=function(self) self:xy(SCREEN_CENTER_X+200, SCREEN_CENTER_Y+105); self:skewx(-0.2); self:zoom(0.5); end
     };
     
 };

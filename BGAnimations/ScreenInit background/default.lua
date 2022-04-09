@@ -1,42 +1,42 @@
 local t = Def.ActorFrame {};
 
 t[#t+1] = Def.ActorFrame {
-  InitCommand=cmd(Center);
+  InitCommand=function(self) self:Center(); end;
 	Def.Quad {
-		InitCommand=cmd(diffuse,{0,0,0,1};scaletoclipped,SCREEN_WIDTH,SCREEN_HEIGHT);
-		OnCommand=cmd(linear,0.5;diffuse,{1,1,1,1};sleep,13.15);
+		InitCommand=function(self) self:diffuse({0,0,0,1}); self:scaletoclipped(SCREEN_WIDTH,SCREEN_HEIGHT); end;
+		OnCommand=function(self) self:linear(0.5); self:diffuse({1,1,1,1}); self:sleep(13.15); end;
 	};
 };
 t[#t+1] = Def.ActorFrame {
-  InitCommand=cmd(Center);
+  InitCommand=function(self) self:Center(); end;
 	Def.ActorFrame {
 		LoadActor("_arrow") .. {
-			InitCommand=cmd(diffusealpha,0;y,-50);
-			OnCommand=cmd(x,-200;sleep,0.75;decelerate,0.5;diffusealpha,1;addx,150;linear,2;addx,150;accelerate,0.5;diffusealpha,0;addx,150);
+			InitCommand=function(self) self:diffusealpha(0); self:y(-50); end;
+			OnCommand=function(self) self:x(-200); self:sleep(0.75); self:decelerate(0.5); self:diffusealpha(1); self:addx(150); self:linear(2); self:addx(150); self:accelerate(0.5); self:diffusealpha(0); self:addx(150); end;
 		};
 		LoadFont("Common normal") .. {
 			Text = ProductID();
-			InitCommand=cmd(diffuse,{0,0,0,0};y,75;zoom,2.5);
-			OnCommand=cmd(x,200;sleep,0.75;decelerate,0.5;diffusealpha,1;addx,-150;linear,2;addx,-150;accelerate,0.5;diffusealpha,0;addx,-150);
+			InitCommand=function(self) self:diffuse({0,0,0,0}); self:y(75); self:zoom(2.5); end;
+			OnCommand=function(self) self:x(200); self:sleep(0.75); self:decelerate(0.5); self:diffusealpha(1); self:addx(-150); self:linear(2); self:addx(-150); self:accelerate(0.5); self:diffusealpha(0); self:addx(-150); end;
 		};
 		LoadActor("ssc") .. {
-			InitCommand=cmd(diffusealpha,0;x,0;y,-85);
-			OnCommand=cmd(x,-200;sleep,0.75+3.2;decelerate,0.5;diffusealpha,1;addx,150;linear,2;addx,150;accelerate,0.5;diffusealpha,0;addx,150);
+			InitCommand=function(self) self:diffusealpha(0); self:x(0); self:y(-85); end;
+			OnCommand=function(self) self:x(-200); self:sleep(0.75+3.2); self:decelerate(0.5); self:diffusealpha(1); self:addx(150); self:linear(2); self:addx(150); self:accelerate(0.5); self:diffusealpha(0); self:addx(150); end;
 		};
 		LoadFont("Common normal") .. {
 			Text = "Nepumi";
-			InitCommand=cmd(diffuse,{0,0,0,0};y,0;zoom,2.5);
-			OnCommand=cmd(x,200;sleep,0.75+3.2;decelerate,0.5;diffusealpha,1;addx,-150;linear,2;addx,-150;accelerate,0.5;diffusealpha,0;addx,-150);
+			InitCommand=function(self) self:diffuse({0,0,0,0}); self:y(0); self:zoom(2.5); end;
+			OnCommand=function(self) self:x(200); self:sleep(0.75+3.2); self:decelerate(0.5); self:diffusealpha(1); self:addx(-150); self:linear(2); self:addx(-150); self:accelerate(0.5); self:diffusealpha(0); self:addx(-150); end;
 		};
 		LoadFont("Common normal") .. {
 			Text = "TEAMRIZU";
-			InitCommand=cmd(diffuse,{0,0,0,0};x,0;y,85;zoom,2.5);
-			OnCommand=cmd(x,-200;sleep,0.75+3.2;decelerate,0.5;diffusealpha,1;addx,150;linear,2;addx,150;accelerate,0.5;diffusealpha,0;addx,150);
+			InitCommand=function(self) self:diffuse({0,0,0,0}); self:x(0); self:y(85); self:zoom(2.5); end;
+			OnCommand=function(self) self:x(-200); self:sleep(0.75+3.2); self:decelerate(0.5); self:diffusealpha(1); self:addx(150); self:linear(2); self:addx(150); self:accelerate(0.5); self:diffusealpha(0); self:addx(150); end;
 		};
 		LoadFont("Common Normal") .. {
 			Text=THEME:GetThemeDisplayName();
-			InitCommand=cmd(diffuse,{0,0,0,0};y,100;zoom,1.5);
-			OnCommand=cmd(y,100;sleep,0.75+3.2*2;decelerate,0.5;diffusealpha,1;addy,-100;linear,5;addy,-50;accelerate,0.5;diffusealpha,0;addy,-100);
+			InitCommand=function(self) self:diffuse({0,0,0,0}); self:y(100); self:zoom(1.5); end;
+			OnCommand=function(self) self:y(100); self:sleep(0.75+3.2*2); self:decelerate(0.5); self:diffusealpha(1); self:addy(-100); self:linear(5); self:addy(-50); self:accelerate(0.5); self:diffusealpha(0); self:addy(-100); end;
 		};
 	};
 

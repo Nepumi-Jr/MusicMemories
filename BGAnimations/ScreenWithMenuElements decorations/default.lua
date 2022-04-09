@@ -1,10 +1,10 @@
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
     Def.Quad{
-        InitCommand=cmd(diffuse,color("#555555");x,SCREEN_CENTER_X;y,SCREEN_BOTTOM;zoomx,SCREEN_RIGHT;zoomy,60);	
+        InitCommand=function(self) self:diffuse(color("#555555")); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM); self:zoomx(SCREEN_RIGHT); self:zoomy(60); end;	
     };
     Def.Quad{
-        InitCommand=cmd(diffuse,GameColor.PlayerColors.PLAYER_1 or {1,0,0,1};x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-60/2;zoomx,SCREEN_RIGHT;zoomy,2.5);	
+        InitCommand=function(self) self:diffuse(GameColor.PlayerColors.PLAYER_1 or {1,0,0,1}); self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM-60/2); self:zoomx(SCREEN_RIGHT); self:zoomy(2.5); end;	
     };
 };
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");

@@ -82,7 +82,7 @@ end
 local savefordaybitch = false
 local t = Def.ActorFrame{
 	LoadFont("_determination mono 24px") .. {
-InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-20;zoom,0.85;diffusealpha,1);
+InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_BOTTOM-20); self:zoom(0.85); self:diffusealpha(1); end;
 OnCommand=function(self)
 --MonthOfYear() == 12-1 and DayOfMonth() == 31
 	if nowd ~= DayOfMonth() and nowmon+1 ~= MonthOfYear() then

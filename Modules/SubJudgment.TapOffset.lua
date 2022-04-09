@@ -1,7 +1,7 @@
 return function(player)
     return Def.ActorFrame{
         LoadFont("Common Normal")..{
-            OnCommand=cmd(strokecolor,{1,1,1,1};horizalign,left);
+            OnCommand=function(self) self:strokecolor({1,1,1,1}); self:horizalign(left); end;
             JudgmentMessageCommand=function(self,param)
 
 				if param.Player ~= player then return end;
@@ -26,7 +26,7 @@ return function(player)
 			end;
         };
         LoadFont("Common Normal")..{
-            OnCommand=cmd(strokecolor,{1,1,1,1};horizalign,right);
+            OnCommand=function(self) self:strokecolor({1,1,1,1}); self:horizalign(right); end;
             JudgmentMessageCommand=function(self,param)
 
 				if param.Player ~= player then return end;
