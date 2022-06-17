@@ -1,6 +1,6 @@
 
 
-local curDir = THEMEDIR().."/BGAnimations/ScreenGameplay failed/Pump/Media/"
+local curDir = getThemeDir().."/BGAnimations/ScreenGameplay failed/Pump/Media/"
 
 local files = FILEMAN:GetDirListing(curDir)
 

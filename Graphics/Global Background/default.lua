@@ -1,7 +1,7 @@
 
 local Timu = 0
 local Dayy = 0
-local thisPath = THEMEDIR().."/Graphics/Global Background/"
+local thisPath = getThemeDir().."/Graphics/Global Background/"
 
 local function DayNight(self)
 	local this = self:GetChildren()

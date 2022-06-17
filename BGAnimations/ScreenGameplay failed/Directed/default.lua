@@ -20,7 +20,7 @@ local t = Def.ActorFrame{
         meCommand=function(self)
             local lt = "Failed Player\n";
             for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-                lt=lt..string.upper( PN_Name(player) ).." ";
+                lt=lt..string.upper( getPlayerName(player) ).." ";
             end
             self:settext(lt)
         end

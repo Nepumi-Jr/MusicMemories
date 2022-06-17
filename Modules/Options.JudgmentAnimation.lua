@@ -55,9 +55,9 @@ return function(judgeName)
 		end
 	end
     
-	local path = "/"..THEMEDIR().."/CustomStuff/Judgment Animation/";
+	local path = "/"..getThemeDir().."/CustomStuff/Judgment Animation/";
 	local files = FILEMAN:GetDirListing(path)
-    --printf("%s....\n%s",THEMEDIR().."Graphics/_Judgement Font/Animate",TableToString(files))
+    --printf("%s....\n%s",getThemeDir().."Graphics/_Judgement Font/Animate",TableToString(files))
 
 	for k,filename in ipairs(files) do
 		if string.match(filename, ".lua") and string.match(filename,JudAni) then

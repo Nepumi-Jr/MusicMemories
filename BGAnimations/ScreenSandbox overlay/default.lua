@@ -39,7 +39,7 @@ t[#t+1] = Def.Quad{
         
 
         local RowOptions = {}
-        local files = FILEMAN:GetDirListing(THEMEDIR().."/Modules/",false,false)
+        local files = FILEMAN:GetDirListing(getThemeDir().."/Modules/",false,false)
         for _,file in pairs(files) do
             local pl,pr = string.find( file, "RowOption." )
             local sl,sr = string.find( file, ".lua" )

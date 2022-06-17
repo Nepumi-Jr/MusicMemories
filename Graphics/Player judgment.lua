@@ -292,7 +292,7 @@ t[#t+1] = Def.ActorFrame {
 		if param.HoldNoteScore then return end;
 
 		if param.Cor ~= nil then
-			c.Judgment:Load(THEMEDIR().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
+			c.Judgment:Load(getThemeDir().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
 			PTAM=true;
 		elseif PTAM then
 			PTAM=false;
@@ -469,7 +469,7 @@ t[#t+1]=Def.ActorFrame {
 			if param.pn ~= player then return end;
             if self:GetParent():GetParent():GetName() ~= "Judgment" and tonumber(ToEnumShortString(self:GetParent():GetParent():GetName())) ~= 1 then return; end;
 			if param.cor ~= nil then
-				self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
+				self:Load(getThemeDir().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
 			else
 				self:Load(JudPath);
 			end

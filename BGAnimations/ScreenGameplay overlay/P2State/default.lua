@@ -1,7 +1,7 @@
 local yao1 = 0;
 local Lim1 = 400;
-local RealName1 = PN_Name(PLAYER_2);
-local SamName1 = PN_Name(PLAYER_2);
+local RealName1 = getPlayerName(PLAYER_2);
+local SamName1 = getPlayerName(PLAYER_2);
 function KodPercent(p)
 if p < 10 then
 return string.format("0%.2f",p).."%";

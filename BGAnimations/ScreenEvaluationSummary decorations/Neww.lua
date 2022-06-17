@@ -804,7 +804,7 @@ for i,v in pairs({PLAYER_1,PLAYER_2}) do
                 if thisSong:HasBanner() then
                     self:Load(thisSong:GetBannerPath())
                 else
-                    self:Load(THEMEDIR().."/Graphics/Common fallback banner.png")
+                    self:Load(getThemeDir().."/Graphics/Common fallback banner.png")
                 end
                 self:zoomtoheight(60):zoomtowidth(150)
                 end;

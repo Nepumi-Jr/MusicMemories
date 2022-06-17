@@ -150,7 +150,7 @@ elseif string.match( string.lower(GAMESTATE:GetCurrentSong():GetDisplayFullTitle
 		OnCommand=function(self) self:play(); end;
 	};
 	t[#t+1] = LoadActor("fail-background")..{
-		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
+		Condition =(string.match( getPlayerName(PLAYER_1), "Isla") or string.match( getPlayerName(PLAYER_2), "Isla"));
 		InitCommand=function(self) self:FullScreen(); end;
 	};
 elseif TP.Battle.IsBattle then
@@ -167,7 +167,7 @@ elseif STATSMAN:GetCurStageStats():AllFailed() then
 	};
 
 	t[#t+1] = LoadActor("fail-background")..{
-		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
+		Condition =(string.match( getPlayerName(PLAYER_1), "Isla") or string.match( getPlayerName(PLAYER_2), "Isla"));
 		InitCommand=function(self) self:FullScreen(); end;
 	};
 elseif OMW == "ISLA" or OMW == "BEAT" or OMW == "WOW" then
@@ -191,7 +191,7 @@ else
 
 end
 	t[#t+1]=LoadActor("Parti")..{
-		Condition =(string.match( PN_Name(PLAYER_1), "Isla") or string.match( PN_Name(PLAYER_2), "Isla"));
+		Condition =(string.match( getPlayerName(PLAYER_1), "Isla") or string.match( getPlayerName(PLAYER_2), "Isla"));
 		InitCommand=function(self) self:FullScreen(); self:blend('BlendMode_Add'); end;
 	};
 

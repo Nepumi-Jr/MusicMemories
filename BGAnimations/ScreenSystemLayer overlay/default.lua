@@ -75,8 +75,8 @@ local function CreditsText( pn )
 				if params.state == "ProfileLoaded" and GAMESTATE:IsPlayerEnabled(pn) then
 					if FILEMAN:DoesFileExist(TP[ToEnumShortString(pn)].ActiveModifiers.IconDir) then
 						self:Load(TP[ToEnumShortString(pn)].ActiveModifiers.IconDir);
-					elseif FILEMAN:DoesFileExist("Appearance/Avatars/"..PN_Name(pn)..".png") then
-						self:Load("Appearance/Avatars/"..PN_Name(pn)..".png");
+					elseif FILEMAN:DoesFileExist("Appearance/Avatars/"..getPlayerName(pn)..".png") then
+						self:Load("Appearance/Avatars/"..getPlayerName(pn)..".png");
 						
 					else
 						self:Load(THEME:GetPathG("Missing","Icon"));

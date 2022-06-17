@@ -1,9 +1,9 @@
 
-function THEMEDIR()
+function getThemeDir()
 	return THEME:GetCurrentThemeDirectory()
 end
 
-function PN_Name(pn)
+function getPlayerName(pn)
 	if PROFILEMAN:GetProfile(pn):GetDisplayName() then
 		return PROFILEMAN:GetProfile(pn):GetDisplayName();
 	elseif GAMESTATE:IsHumanPlayer(pn) then
@@ -19,7 +19,7 @@ function OP()
 
 	for i = 1,#ENTITY do
 		if GAMESTATE:IsPlayerEnabled(ENTITY[i]) then
-			if string.match( PN_Name(ENTITY[i]), "Isla") then
+			if string.match( getPlayerName(ENTITY[i]), "Isla") then
 				return true;
 			end
 		end

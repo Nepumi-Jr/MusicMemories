@@ -58,7 +58,7 @@ local t = Def.ActorFrame{};
 			elseif GAMESTATE:GetCurrentSong():HasBanner() then
 			self:Load(GAMESTATE:GetCurrentSong():GetBannerPath()):scaletoclipped(256,80)
 			else
-			self:Load(THEMEDIR().."/Graphics/Common fallback banner.png"):scaletoclipped(256,80)
+			self:Load(getThemeDir().."/Graphics/Common fallback banner.png"):scaletoclipped(256,80)
 			end
 			end;
 		};

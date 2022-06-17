@@ -1,5 +1,5 @@
 local DiffRow = 1;
-local PathS = THEMEDIR().."BGAnimations/ScreenGamesMem overlay/";
+local PathS = getThemeDir().."BGAnimations/ScreenGamesMem overlay/";
 --[[
 1 = 8Digit
 2 = 10Digit

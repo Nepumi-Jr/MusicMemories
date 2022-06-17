@@ -1,6 +1,6 @@
 return function(prefix)
     local result = {}
-    local files = FILEMAN:GetDirListing(THEMEDIR().."/Modules/",false,false)
+    local files = FILEMAN:GetDirListing(getThemeDir().."/Modules/",false,false)
     for _,file in pairs(files) do
         local pl,pr = string.find( file, prefix.."." )
         local sl,sr = string.find( file, ".lua" )

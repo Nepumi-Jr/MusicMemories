@@ -99,7 +99,7 @@ self:Load(GAMESTATE:GetCurrentCourse():GetBannerPath())
 elseif GAMESTATE:GetCurrentSong():HasBanner() then
 self:Load(GAMESTATE:GetCurrentSong():GetBannerPath())
 else
-self:Load(THEMEDIR().."/Graphics/Common fallback banner.png")
+self:Load(getThemeDir().."/Graphics/Common fallback banner.png")
 end
 self:zoomtoheight(90):zoomtowidth(250)
 end;

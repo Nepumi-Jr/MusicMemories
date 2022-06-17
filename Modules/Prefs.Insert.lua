@@ -1,5 +1,5 @@
 local RowOptions = LoadModule("Utils.GetModules.Class.lua")("RowOption")
-local files = FILEMAN:GetDirListing(THEMEDIR().."/Modules/",false,false)
+local files = FILEMAN:GetDirListing(getThemeDir().."/Modules/",false,false)
 
 return function()
     for i,v in pairs(RowOptions) do

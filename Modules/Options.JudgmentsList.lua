@@ -3,7 +3,7 @@ return function(mode)
     
     TimingName = LoadModule("Options.ReturnCurrentTiming.lua")().Name
     
-    local paths = {THEMEDIR().."/CustomStuff/Judgment Font","/Appearance/Judgments"}
+    local paths = {getThemeDir().."/CustomStuff/Judgment Font","/Appearance/Judgments"}
     local JG = {}
     local JudgmentGraphics = {}
 

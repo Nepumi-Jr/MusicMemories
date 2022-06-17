@@ -177,7 +177,7 @@ LoadFont("_century schoolbook 72px")..{
 	meCommand=function(self)
 		local lt = "Executive Producer\n";
 		for player in ivalues(GAMESTATE:GetHumanPlayers()) do
-			lt=lt..PN_Name(player).." ";
+			lt=lt..getPlayerName(player).." ";
 		end
 		self:settext(lt)
 	end

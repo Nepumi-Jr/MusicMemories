@@ -16,7 +16,7 @@ local FB = round(round(PPeng:GetFirstBeat())/4)*4
 local cha = PREFSMAN:GetPreference('GlobalOffsetSeconds')*2;
 
 local Stat = 0;
-local Pat = THEMEDIR().."/BGAnimations/ScreenGameplay overlay/SoundReady/";
+local Pat = getThemeDir().."/BGAnimations/ScreenGameplay overlay/SoundReady/";
 function LentSeng(num)
 		if num == 4 then
 			SOUND:PlayOnce(Pat.."readyOr.mp3");

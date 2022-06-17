@@ -147,7 +147,7 @@ end
 
 
 
-local path = THEMEDIR().."/BGAnimations/ScreenGameplay out/"
+local path = getThemeDir().."/BGAnimations/ScreenGameplay out/"
 
 
 
@@ -331,7 +331,7 @@ out[#out+1] = Def.ActorFrame{
 
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(1-4)):CenterY() :zoom(0) :diffuse(CCl[1]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[1]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[1]..".png"); self:zoom(0); end;
 		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
 		FCAAMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBAWMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
@@ -340,7 +340,7 @@ out[#out+1] = Def.ActorFrame{
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(2-4)):CenterY() :zoom(0) :diffuse(CCl[2]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[2]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[2]..".png"); self:zoom(0); end;
 		FCAWMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBAWMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
@@ -349,7 +349,7 @@ out[#out+1] = Def.ActorFrame{
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(3-4)):CenterY() :zoom(0) :diffuse(CCl[3]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[3]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[3]..".png"); self:zoom(0); end;
 		FCAEMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
@@ -358,7 +358,7 @@ out[#out+1] = Def.ActorFrame{
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(4-4)):CenterY() :zoom(0) :diffuse(CCl[4]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[4]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[4]..".png"); self:zoom(0); end;
 		FCASMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBSMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
@@ -367,7 +367,7 @@ out[#out+1] = Def.ActorFrame{
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(5-4)):CenterY() :zoom(0) :diffuse(CCl[5]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[5]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[5]..".png"); self:zoom(0); end;
 		FCAOMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBOMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
@@ -376,7 +376,7 @@ out[#out+1] = Def.ActorFrame{
 	};
 	Def.Sprite{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(6-4)):CenterY() :zoom(0) :diffuse(CCl[6]) end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[6]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[6]..".png"); self:zoom(0); end;
 		FCAMMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBMEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
@@ -387,7 +387,7 @@ out[#out+1] = Def.ActorFrame{
 		InitCommand=function(self)	self:x(SCREEN_CENTER_X + Sped*(7-4)):CenterY() :zoom(0) :diffuse(CCl[7]) end;
 		FCAETMessageCommand=function(self) self:vibrate(); self:zoom(20); self:linear(0.1); self:zoom(1); end;
 		FCBMEMessageCommand=function(self) self:linear(0.1); self:zoom(1); end;
-		FinmakeMessageCommand=function(self) self:Load(THEMEDIR().."/BGAnimations/ScreenGameplay out/"..symbol[7]..".png"); self:zoom(0); end;
+		FinmakeMessageCommand=function(self) self:Load(getThemeDir().."/BGAnimations/ScreenGameplay out/"..symbol[7]..".png"); self:zoom(0); end;
 		YutMessageCommand=function(self) self:zoom(1.2); self:stopeffect(); end;
 		HentMessageCommand=function(self) self:bounceend(0.75); self:zoom(1); end;
 		FALLLRMessageCommand=function(self) self:finishtweening(); self:sleep(0.5); self:linear(1); self:diffusealpha(0); end;

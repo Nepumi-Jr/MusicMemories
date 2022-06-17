@@ -1,5 +1,5 @@
 local DiffRow = 1;
-local PathS = THEMEDIR().."BGAnimations/ScreenGuessNumberGame overlay/";
+local PathS = getThemeDir().."BGAnimations/ScreenGuessNumberGame overlay/";
 --[[
 1 = 1 - 10 with 3 tries
 2 = 1 - 35 with 5 tries
