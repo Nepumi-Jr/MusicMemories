@@ -102,6 +102,7 @@ local t = Def.ActorFrame{
             table.sort(noteData, compareNoteData);
 
 
+            --printf("%s",TableToString(noteData))
             for k,v in pairs(noteData) do
                 --? {time, col, NoteType}
                 local NowBeat = v[1];
@@ -115,22 +116,24 @@ local t = Def.ActorFrame{
                         Now_Score = 1 + (0.7*nHold) + (1.5*nRoll)
 
                         if thisNoteType == "TapNoteSubType_Hold" then
-                            nHold = nHold + 1;
+                            --nHold = nHold + 1;
                             SegmentHoldAndRoll[thisCol] = 'H';
                         end
                         if thisNoteType == "TapNoteSubType_Roll" then
-                            nRoll = nRoll + 1;
+                            --nRoll = nRoll + 1;
                             SegmentHoldAndRoll[thisCol] = 'R';
                         end
 
                 end
 
                 if thisNoteType == "TapNoteType_HoldTail" then
+                    --! TapNoteType_HoldTail never found in noteData :|
                     if SegmentHoldAndRoll[thisCol] == "H" then
-                        nHold = nHold - 1;
+                        
+                        --nHold = nHold - 1;
                         SegmentHoldAndRoll[thisCol] = "-"
                     elseif SegmentHoldAndRoll[thisCol] == "R" then
-                        nRoll = nRoll - 1;
+                        --nRoll = nRoll - 1;
                         SegmentHoldAndRoll[thisCol] = "-"
                     end
                 end
@@ -146,7 +149,8 @@ local t = Def.ActorFrame{
                 end
                 
                 if FindInTable(thisNoteType, {"TapNoteType_Tap", "TapNoteSubType_Hold","TapNoteSubType_Roll","TapNoteType_Mine","TapNoteType_Fake","TapNoteType_Lift", "TapNoteType_HoldTail"}) then
-                    lastnote = math.max(lastnote,B2S(NowBeat))
+                    lastnote = math.max(lastnote,B2S(NowBeat + 4))
+                    
                     if math.abs(B2S(NowBeat) - LN) >= 4 and nHold == 0 and nRoll == 0 then
                         BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-2};
                     end
@@ -169,6 +173,7 @@ local t = Def.ActorFrame{
                 (PointPerQSec[math.floor(B2S(NowBeat)*4)] or 0) + Now_Score;
 
             end
+            --printf(">>>> Final n hold :| %d",nHold)
         end
 
         
@@ -313,10 +318,7 @@ local t = Def.ActorFrame{
 
         if lastnote == -99999 then
             lastnote = GAMESTATE:GetCurrentSong():GetLastSecond()
-        else
-            lastnote = math.min(lastnote,GAMESTATE:GetCurrentSong():GetLastSecond())
         end
-
         
         
         local xt = function(self)
@@ -408,7 +410,7 @@ local t = Def.ActorFrame{
             end
             
             --SM("\n\n\n\n"..tostring(LoadModule("Eva.CustomStageAward.lua")(PLAYER_1)))
-
+            --printf(">>>? Last note %d", lastnote)
             if CurSec >= lastnote and not GAMESTATE:IsCourseMode() and not BOOMStage then
                 local SA = false;
                 for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
