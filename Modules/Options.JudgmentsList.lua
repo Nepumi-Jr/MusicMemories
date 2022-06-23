@@ -3,7 +3,7 @@ return function(mode)
     
     TimingName = LoadModule("Options.ReturnCurrentTiming.lua")().Name
     
-    local paths = {getThemeDir().."/CustomStuff/Judgment Font","/Appearance/Judgments"}
+    local paths = {"/Appearance/Judgments"}
     local JG = {}
     local JudgmentGraphics = {}
 
@@ -13,11 +13,7 @@ return function(mode)
     
         for k,filename in ipairs(files) do
             if string.match(filename, " %dx%d") and string.match(filename, ".png") then
-                if LoadModule("Options.JudgmentsFileShortName.lua")(filename) == "MemoryP2" then
-                    table.insert(JG, 1, filename)
-                else
-                    JG[#JG+1] = filename
-                end
+                JG[#JG+1] = filename
             end
         end
 

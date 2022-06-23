@@ -10,7 +10,6 @@ return function()
         LoadSelections = function(self, list, pn)
             local userJudgmentGraphic = TP[ToEnumShortString(pn)].ActiveModifiers.JudgmentGraphic
             local i = FindInTable(userJudgmentGraphic, self.Values)
-            lua.ReportScriptError(string.format("Try to load %s got %s",userJudgmentGraphic, i));
             if i == nil then
                 i = 1
             end
