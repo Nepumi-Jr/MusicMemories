@@ -276,15 +276,15 @@ for i = 1,2 do
                     OnCommand=function(self)
                         curStage = LoadModule("Eva.CustomStageAward.lua")(PNS[i]);
                         if string.find(curStage,"W1") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W1"])
+                            self:diffusebottomedge(JudgmentLineToColor("W1"))
                         elseif string.find(curStage,"W2") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W2"])
+                            self:diffusebottomedge(JudgmentLineToColor("W2"))
                         elseif string.find(curStage,"W3") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W3"])
+                            self:diffusebottomedge(JudgmentLineToColor("W3"))
                         elseif curStage == "StageAward_Choke"  then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W4"])
+                            self:diffusebottomedge(JudgmentLineToColor("W4"))
                         elseif curStage == "StageAward_NoMiss" then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W5"])
+                            self:diffusebottomedge(JudgmentLineToColor("W5"))
                         end
                         self:zoom(0.5 * 2 / math.max(2, math.floor(math.log10(stageStates[i]:MaxCombo()))))
                     end;
@@ -352,65 +352,122 @@ for i = 1,2 do
 			local temp = Def.ActorFrame{};
 			local hst = PROFILEMAN:GetProfile(PNS[i]):GetHighScoreListIfExists(GAMESTATE:GetCurrentSong(),GAMESTATE:GetCurrentSteps(PNS[i])):GetHighScores();
             for xi = 1,math.min(#hst,3) do
+                local isThisRow = false;
 				temp[#temp+1]=Def.ActorFrame{
 					OnCommand=function(self) self:y(-35+(xi-1)*40); end;
-					Def.ActorFrame{
+                    Def.ActorFrame{
 						OnCommand=function(self)
 							if hst[xi]:GetScore() == stageStates[i]:GetScore() then
-								self:rainbow()
+								self:rainbow():effectperiod(2)
+                                isThisRow = true
 							else
-								self:diffuse(GameColor.Judgment["JudgmentLine_W"..xi])
-							end
+								self:diffuse(JudgmentLineToColor("W"..xi))
+                                isThisRow = false
+                            end
 						end;
 						LoadFont("Common Normal")..{
-							OnCommand=function(self) self:zoom(0.95); self:x(-200+15); self:settextf("#%d ",xi); end;
+							OnCommand=function(self) 
+                                if isThisRow then self:strokecolor(JudgmentLineToColor("W"..xi)):diffuse(color("#AAAAAA")) end
+                                self:zoom(0.95); self:x(-200+15); self:settextf("#%d ",xi); 
+                            end;
 						};
 						LoadFont("Combo Number")..{
 							InitCommand=function(self) self:zoom(0.27); self:x(-60); self:horizalign(right); self:settextf("%d",hst[xi]:GetScore()); end;
-                            OnCommand=function(self) self:playcommand("onLoop"); end;
+                            OnCommand=function(self) 
+                                if isThisRow then self:strokecolor(JudgmentLineToColor("W"..xi)):diffuse(color("#AAAAAA")) end
+                                self:playcommand("onLoop"); 
+                            end;
                             onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropleft(1); self:sleep(5); self:decelerate(0.5); self:cropleft(0); self:sleep(0.02); self:queuecommand("onLoop"); end;
                         };
                         LoadFont("Combo Number")..{
 							InitCommand=function(self) self:zoom(0.27); self:x(-150); self:horizalign(left); self:settextf("%.02f%%",hst[xi]:GetPercentDP()*100); self:cropright(1); end;
-                            OnCommand=function(self) self:playcommand("onLoop"); end;
+                            OnCommand=function(self) 
+                                if isThisRow then self:strokecolor(JudgmentLineToColor("W"..xi)):diffuse(color("#AAAAAA")) end
+                                self:playcommand("onLoop"); 
+                            end;
                             onLoopCommand=function(self) self:sleep(5); self:decelerate(0.5); self:cropright(0); self:sleep(5); self:decelerate(0.5); self:cropright(1); self:sleep(0.02); self:queuecommand("onLoop"); end;
 						};
                         
                         LoadFont("Common Normal")..{
-							OnCommand=function(self) self:zoom(0.75); self:x(13); self:settextf("MC:%d",math.min(hst[xi]:GetMaxCombo(),99999)); end;
+							OnCommand=function(self) 
+                                if isThisRow then self:strokecolor(JudgmentLineToColor("W"..xi)):diffuse(color("#AAAAAA")) end
+                                self:zoom(0.75); self:x(13); self:settextf("MC:%d",math.min(hst[xi]:GetMaxCombo(),99999)); 
+                            end;
 						};
 						LoadFont("Common Normal")..{
-							OnCommand=function(self) self:zoom(0.75); self:x(80+15); self:settextf("%.11s",hst[xi]:GetDate()); end;
+							OnCommand=function(self) 
+                                if isThisRow then self:strokecolor(JudgmentLineToColor("W"..xi)):diffuse(color("#AAAAAA")) end
+                                self:zoom(0.75); self:x(80+15); self:settextf("%.11s",hst[xi]:GetDate()); 
+                            end;
 						};
 					};
                     Def.Sprite{
                         OnCommand=function(self) self:x(-36); self:y(-2); self:Load(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(hst[xi]:GetGrade()))); self:zoom(0.3); end;
                     };
                     Def.Sprite{
-                        Condition = hst[xi]:GetStageAward() ~= nil;
-						OnCommand=function(self) self:Load(THEME:GetPathG("StageAward", ToEnumShortString(hst[xi]:GetStageAward()))); self:zoom(0.22); self:x(160); end;
+						OnCommand=function(self) 
+                            --? We have to calculate PeakComboAward and StageAward by ourself
+                            local W1 = hst[xi]:GetTapNoteScore("TapNoteScore_W1")
+                            local W2 = hst[xi]:GetTapNoteScore("TapNoteScore_W2")
+                            local W3 = hst[xi]:GetTapNoteScore("TapNoteScore_W3")
+                            local bad = hst[xi]:GetTapNoteScore("TapNoteScore_W4") + hst[xi]:GetTapNoteScore("TapNoteScore_W5") + hst[xi]:GetTapNoteScore("TapNoteScore_Miss") + hst[xi]:GetTapNoteScore("TapNoteScore_CheckpointMiss") + hst[xi]:GetHoldNoteScore("HoldNoteScore_LetGo")
+
+                            local thisStageAward;
+
+                            if bad > 0 then return end
+
+                            if W2+W3+bad == 0 then
+                                thisStageAward = "FullComboW1"
+                            elseif W3+bad == 0 and W2 == 1 then
+                                thisStageAward = "OneW2"
+                            elseif W3+bad == 0 and W2 < 10 then
+                                thisStageAward = "SingleDigitW2"
+                            elseif W3+bad == 0 then
+                                thisStageAward = "FullComboW2"
+                            elseif bad == 0 and W3 == 1 then
+                                thisStageAward = "OneW3"
+                            elseif bad == 0 and W3 < 10 then
+                                thisStageAward = "SingleDigitW3"
+                            else
+                                thisStageAward = "FullComboW3"
+                            end
+
+                            self:Load(THEME:GetPathG("StageAward", thisStageAward)); 
+                            self:zoom(0.22):x(160):y(5); 
+                        end;
 					};
                     Def.Sprite{
-						Condition = hst[xi]:GetPeakComboAward() ~= nil;
-                        OnCommand=function(self) self:Load(THEME:GetPathG("PeakCombo", ToEnumShortString(hst[xi]:GetPeakComboAward()))); self:zoom(0.22); self:x(190); end;
+                        OnCommand=function(self) 
+                            local thisMaxCombo = hst[xi]:GetMaxCombo();
+                            local peak = math.floor(thisMaxCombo / 1000)
+
+                            if peak == 0 then return end
+                            if peak >= 10 then
+                                peak = "10k"
+                            else
+                                peak = tostring(peak).."000"
+                            end
+
+                            self:Load(THEME:GetPathG("PeakCombo", peak)); self:zoom(0.22); self:x(190);
+                        end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W1); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+15); self:y(20); self:diffuse(JudgmentLineToColor("W1")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40+15); self:y(20); self:diffuse(JudgmentLineToColor("W2")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*2+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*2+15); self:y(20); self:diffuse(JudgmentLineToColor("W3")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*3+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*3+15); self:y(20); self:diffuse(JudgmentLineToColor("W4")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*4+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*4+15); self:y(20); self:diffuse(JudgmentLineToColor("W5")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*5+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*5+15); self:y(20); self:diffuse(JudgmentLineToColor("Miss")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
 						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*6+15); self:y(20); self:diffuse(Color.Yellow); self:settextf("%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_Held"),99999)); end;
@@ -476,12 +533,12 @@ for i = 1,2 do
 								Y = p
 								
 							end
-							CL = LoadModule("Color.Judgment.lua")(ToEnumShortString(v[2]))
+							CL = JudgmentLineToColor(ToEnumShortString(v[2]))
 							
 
 						else
 							Y = 9999
-							CL = GameColor.Judgment.JudgmentLine_Miss
+							CL = JudgmentLineToColor("Miss")
 							CL = {CL[1],CL[2],CL[3],0.3}
 						end
 
@@ -510,10 +567,10 @@ for i = 1,2 do
             
             for i = 1,#TName do
                 to[#to + 1] = Def.Quad{
-                    OnCommand=function(self) self:diffuse(LoadModule("Color.Judgment.lua")(TName[i])); self:y(scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
                 };
                 to[#to + 1] = Def.Quad{
-                    OnCommand=function(self) self:diffuse(LoadModule("Color.Judgment.lua")(TName[i])); self:y(-scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(-scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
                 };
             end
 
@@ -536,17 +593,17 @@ for i = 1,2 do
                 to;
 
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(70); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("Miss")); self:y(70); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(-70); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("Miss")); self:y(-70); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
                 };
 
                 LoadFont("Common Normal")..{
-                    OnCommand=function(self) self:x(423/2); self:settext(string.format( "-%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(-65); self:horizalign(right); self:vertalign(top); self:zoom(0.6); self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:diffusealpha(0.7); end;
+                    OnCommand=function(self) self:x(423/2); self:settext(string.format( "-%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(-65); self:horizalign(right); self:vertalign(top); self:zoom(0.6); self:diffuse(JudgmentLineToColor("Miss")); self:diffusealpha(0.7); end;
                 };
                 LoadFont("Common Normal")..{
-                    OnCommand=function(self) self:x(423/2); self:settext(string.format( "%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(65); self:horizalign(right); self:vertalign(bottom); self:zoom(0.6); self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:diffusealpha(0.7); end;
+                    OnCommand=function(self) self:x(423/2); self:settext(string.format( "%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(65); self:horizalign(right); self:vertalign(bottom); self:zoom(0.6); self:diffuse(JudgmentLineToColor("Miss")); self:diffusealpha(0.7); end;
                 };
 
                 Def.Quad{

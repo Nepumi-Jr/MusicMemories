@@ -123,7 +123,7 @@ t[#t+1] = Def.ActorFrame{
                 TName = LoadModule("Utils.SortTiming.lua")(TName)
                 self:settext(LoadModule("Options.ReturnCurrentTiming.lua")().Name):skewx(-0.2)
                 self:diffusebottomedge(
-                    LoadModule("Color.Judgment.lua")(TName[1])
+                    JudgmentLineToColor(TName[1])
                 )
             end;
 		};
@@ -165,66 +165,78 @@ for iterPn in ivalues(Players) do
     t[#t+1] = Def.ActorFrame{
         Condition = GAMESTATE:IsPlayerEnabled(thisPn);
         Def.ActorFrame{
-            OnCommand=function(self) self:x(thisPn == PLAYER_1 and -297 or 138); self:y(210); self:zoomx(677/794); self:zoomy(255/256); end;
-                StandardDecorationFromTable( "GraphDisplay" .. ToEnumShortString(thisPn), GraphDisplay(thisPn) );
-                --StandardDecorationFromTable( "ComboGraph" .. ToEnumShortString(thisPn));
-                Def.ActorMultiVertex{
-                    InitCommand=function(self)
-                        self:xy(SCREEN_CENTER_X*0.806,SCREEN_CENTER_Y*0.616)
-                        self:SetDrawState{Mode="DrawMode_Quads"}
-                    end;
-                    OnCommand=function(self)
-                        local Vers = {}
-                        local mxX = 496
-                        local lastX = 0
-                        local isDoom = true
-                        for i,v in pairs(tapScoreName) do
-                            local val = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
-                            if v == LoadModule("Options.BestJudge.lua")() then--For Pump
-                                val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
-                            elseif v == "Miss" then--For Pump
-                                val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
-                            end
-
-                            if val > 0 then
-                                isDoom = false
-                                break
-                            end
-                        end
-                        
-                        if isDoom then
-                            if thisPn == PLAYER_1 then
-                                table.insert(Vers,{{mxX,85,0},PlayerColor(PLAYER_2)})
-                                table.insert(Vers,{{mxX,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{0,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{0,85,0},PlayerColor(PLAYER_1)})
-                            else
-                                table.insert(Vers,{{mxX,85,0},PlayerColor(PLAYER_1)})
-                                table.insert(Vers,{{mxX,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{0,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{0,85,0},PlayerColor(PLAYER_2)})
-                            end
-                        else
-                            for i,v in pairs(tapScoreName) do
-                                local val = curPNStateStat:GetPercentageOfTaps("TapNoteScore_"..v)
-                                if v == LoadModule("Options.BestJudge.lua")() then--For Pump
-                                    val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointHit")
-                                elseif v == "Miss" then--For Pump
-                                    val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointMiss")
-                                end
-                                local nextX = lastX + val * mxX
-                                local thisColor = LoadModule("Color.Judgment.lua")(v)
-                                table.insert(Vers,{{nextX,85,0},thisColor})
-                                table.insert(Vers,{{nextX,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{lastX,-85,0},{1,1,1,0}})
-                                table.insert(Vers,{{lastX,85,0},thisColor})
-                                lastX = nextX;
-                            end
-                        end
-                        self:SetNumVertices(#Vers):SetVertices( Vers )
-                    end;
-                };	
+            OnCommand=function(self) self:x(thisPn == PLAYER_1 and 0 or SCREEN_CENTER_X+3); self:y(SCREEN_BOTTOM-31); end;
+            --? from outfox
+            Def.GraphDisplay{
+                InitCommand=function(self) self:vertalign(bottom):horizalign(left):y(-15) end;
+                OnCommand=function(self)
+                    self:Load("GraphDisplay"..ToEnumShortString(thisPn))
+                    local playerStageStats = STATSMAN:GetCurStageStats():GetPlayerStageStats(thisPn)
+                    local stageStats = STATSMAN:GetCurStageStats()
+                    self:Set(stageStats, playerStageStats)
+                    local Line = self:GetChild("Line")
+                    
+                    Line:visible(false)
+                end;
+            };
+            Def.ComboGraph{
+                InitCommand=function(self) self:vertalign(bottom):horizalign(left) end;
+                OnCommand=function(self)
+                    self:Load("ComboGraph"..ToEnumShortString(thisPn))
+                    local playerStageStats = STATSMAN:GetCurStageStats():GetPlayerStageStats(thisPn)
+                    local stageStats = STATSMAN:GetCurStageStats()
+                    self:Set(stageStats, playerStageStats)
+                end;
+            };
         };
+        Def.ActorMultiVertex{
+            InitCommand=function(self)
+                
+                self:horizalign(left)
+                self:x(thisPn == PLAYER_1 and -0.5 or 554.5):y(SCREEN_CENTER_Y+20.5);
+                self:SetDrawState{Mode="DrawMode_Quads"}
+            end;
+            OnCommand=function(self)
+                local Vers = {}
+                local width = 298
+                local height = 5
+                local lastX = 0
+                local isDoom = true
+                for i,v in pairs(tapScoreName) do
+                    local val = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
+                    if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                        val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
+                    elseif v == "Miss" then--For Pump
+                        val = val + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+                    end
+
+                    if val > 0 then
+                        isDoom = false
+                        break
+                    end
+                end
+                
+                if not isDoom then
+                    for i,v in pairs(tapScoreName) do
+                        local val = curPNStateStat:GetPercentageOfTaps("TapNoteScore_"..v)
+                        if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                            val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointHit")
+                        elseif v == "Miss" then--For Pump
+                            val = val + curPNStateStat:GetPercentageOfTaps("TapNoteScore_CheckpointMiss")
+                        end
+                        local nextX = lastX + val * width
+                        local thisColor = JudgmentLineToColor(v)
+                        table.insert(Vers,{{nextX,height,0},thisColor})
+                        table.insert(Vers,{{nextX,-height,0},thisColor})
+                        table.insert(Vers,{{lastX,-height,0},thisColor})
+                        table.insert(Vers,{{lastX,height,0},thisColor})
+                        lastX = nextX;
+                    end
+                end
+                self:SetNumVertices(#Vers):SetVertices( Vers )
+            end;
+        };	
+        
         Def.Quad{
             InitCommand=function(self) self:x(thisPn == PLAYER_1 and 0 or SCREEN_RIGHT); self:y(SCREEN_CENTER_Y*0.3); self:horizalign(thisPn == PLAYER_1 and left or right); self:zoomx(170); self:zoomy(25); self:faderight(thisPn == PLAYER_1 and 1 or 0); self:fadeleft(thisPn == PLAYER_2 and 1 or 0); self:diffuse(GameColor.Difficulty[StepSt1:GetDifficulty()]); end;
         };
@@ -234,18 +246,31 @@ for iterPn in ivalues(Players) do
         };
         Def.Sprite{
             Condition=LoadModule("Eva.CustomStageAward.lua")(thisPn) ~= "Nope";
-            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 205 or 595); self:y(SCREEN_CENTER_Y-23); self:zoom(0.4); self:shadowlength(2); end;
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 205 or 595); self:y(SCREEN_CENTER_Y-30); self:zoom(0.4); self:shadowlength(2); end;
             OnCommand=function(self) self:Load(THEME:GetPathG("StageAward", ToEnumShortString(LoadModule("Eva.CustomStageAward.lua")(thisPn)))); self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.2); self:rotationz(0); self:diffusealpha(1); end;
         };
         Def.Sprite{
             Condition=(curPNStateStat:GetPeakComboAward() ~= nil);
-            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 250 or 640); self:y(SCREEN_CENTER_Y-23); self:zoom(0.4); self:shadowlength(2); end;
-            OnCommand=function(self) self:Load(THEME:GetPathG("PeakCombo", ToEnumShortString(curPNStateStat:GetPeakComboAward()))); self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.3); self:rotationz(0); self:diffusealpha(1); end;
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 250 or 640); self:y(SCREEN_CENTER_Y-30); self:zoom(0.4); self:shadowlength(2); end;
+            OnCommand=function(self) 
+                local peak = ToEnumShortString(curPNStateStat:GetPeakComboAward())
+                if peak == "10000" then peak = "10k" end
+                self:Load(THEME:GetPathG("PeakCombo", peak)); 
+                self:diffusealpha(0); self:zoom(3); self:rotationz(-60); self:sleep(2); self:decelerate(0.5); self:zoom(0.3); self:rotationz(0); self:diffusealpha(1); 
+            end;
+        };
+        LoadFont("Common Normal")..{
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 100 or (SCREEN_CENTER_X + 330)); self:y(243); self:zoom(1);  end;
+            OnCommand=function(self) 
+                local percent = STATSMAN:GetCurStageStats():GetPlayerStageStats(thisPn):GetPercentDancePoints()
+                self:settext(FormatPercentScore(percent))
+                self:shadowlength(0.5):addx(thisPn == PLAYER_1 and -70 or 70):diffusealpha(0):sleep(1.3):decelerate(0.25):addx(thisPn == PLAYER_1 and 70 or -70):diffusealpha(1)
+            end;
         };
         LoadFont("Common Normal")..{
             InitCommand=function(self)
                 self:settext("Sample Text"):zoom(0.6):shadowlength(1)
-                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-130)
+                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-145)
             end;
             OnCommand=function(self)
                 local PRInd = curPNStateStat:GetPersonalHighScoreIndex()
@@ -257,7 +282,7 @@ for iterPn in ivalues(Players) do
         LoadFont("Common Normal")..{
             InitCommand=function(self)
                 self:settext("Sample Text"):zoom(0.6):shadowlength(1)
-                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-145)
+                self:x(thisPn == PLAYER_1 and 230 or SCREEN_RIGHT - 230):y(SCREEN_CENTER_Y-160)
             end;
             OnCommand=function(self)
                 local MRInd = curPNStateStat:GetMachineHighScoreIndex()
@@ -300,7 +325,7 @@ for iterPn in ivalues(Players) do
                         elseif v == "Miss" then--For Pump
                             nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
                         end
-                        local thisCl  = LoadModule("Color.Judgment.lua")(v)
+                        local thisCl  = JudgmentLineToColor(v)
                         self:diffuse(thisCl)
                         self:settextf("%04d",nowNum);
                         self:AddAttribute(0,{Length = math.max(3-math.floor(math.log10(round(math.max(nowNum,1)))),0); Diffuse = ColorDarkTone(thisCl)})
@@ -327,6 +352,7 @@ end
 local ScP1 = 0;
 local ScP2 = 0;
 
+--! another dead code 
 if TP.Battle.IsBattle then 
 if TP.Battle.Mode == "Ac" then
 t[#t+1] = Def.ActorFrame{
