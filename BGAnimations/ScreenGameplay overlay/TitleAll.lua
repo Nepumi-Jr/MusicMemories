@@ -13,32 +13,6 @@ else
 end
 
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-elseif math.mod(n,100) <= 20 then
-	return n.."th"
-else
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-end
-end;
-
 local function GetDiff()
 	local DIFFU =nil;
 	local METER = -1;
@@ -123,14 +97,13 @@ t[#t+1] = LoadFont("Common Normal") .. {
 		GAMESTATE:UpdateDiscordSongPlaying(status,songname,GAMESTATE:GetCurrentSong():GetLastSecond())
 		
 		self:diffuse(N_CL)
-		self:diffuseshift():effectcolor1(N_CL):effectcolor2(ColorMidTone(N_CL)):effectperiod(2):effectclock("beat")
 		
 		if GAMESTATE:IsCourseMode() then
 			self:zoom(0.7):diffusealpha(0.7):y(SCREEN_CENTER_Y+210)
 			self:zoomx(0)
 			self:sleep(Tog_LEN):decelerate(1):zoomx(0.7)
 		else
-			self:sleep(Tog_LEN):decelerate(1):zoom(0.7):diffusealpha(0.7):y(SCREEN_CENTER_Y+210)
+			self:sleep(Tog_LEN):decelerate(1):zoom(0.7):diffusealpha(0.7):y(SCREEN_CENTER_Y+220)
 		end
 	end;
 };
@@ -152,11 +125,11 @@ t[#t+1] = LoadFont("Common Normal") .. {
 		
 		
 		if GAMESTATE:IsCourseMode() then
-			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+225)
+			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_BOTTOM+50)
 			self:zoomx(0)
 			self:sleep(Tog_LEN):decelerate(1):zoomx(0.35)
 		else
-			self:sleep(Tog_LEN):decelerate(1):zoom(0.35):diffusealpha(0.7):y(SCREEN_CENTER_Y+225)
+			self:sleep(Tog_LEN):decelerate(1):diffusealpha(0)
 		end
 	end;
 };

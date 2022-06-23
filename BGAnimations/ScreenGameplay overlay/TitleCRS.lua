@@ -4,31 +4,6 @@ local Sub;
 local Time;
 
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-elseif math.mod(n,100) <= 20 then
-	return n.."th"
-else
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-end
-end;
 
 
 t[#t+1] = Def.Quad{

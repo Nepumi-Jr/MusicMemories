@@ -64,31 +64,6 @@ local function StrUti(str)
 end;
 
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n..StrUti("st")
-	elseif math.mod(n,10) == 2 then
-		return n..StrUti("nd")
-	elseif math.mod(n,10) == 3 then
-		return n..StrUti("rd")
-	else
-		return n..StrUti("th")
-	end
-elseif math.mod(n,100) <= 20 then
-	return n..StrUti("th")
-else
-	if math.mod(n,10) == 1 then
-		return n..StrUti("st")
-	elseif math.mod(n,10) == 2 then
-		return n..StrUti("nd")
-	elseif math.mod(n,10) == 3 then
-		return n..StrUti("rd")
-	else
-		return n..StrUti("th")
-	end
-end
-end;
 
 NS = GAMESTATE:GetCurrentStageIndex()+1;
 
@@ -99,14 +74,14 @@ if IsNetConnected() then
 	Text1 = THEME:GetString("sStageInfo","Online")
 	See1 = GameColor.Stage["Stage_Event"]
 	See2 = NumStageColor(NS)
-	Text2 = string.format(THEME:GetString("sStageInfo","ssStage"),NumtoST(NS));
+	Text2 = string.format(THEME:GetString("sStageInfo","ssStage"),FormatNumberAndSuffix(NS));
 	Fasst = 0.5;
 elseif TP.Battle.IsBattle then--BattleTor
 	Picdir = THEME:GetPathG("ScreenStageInformation stage","battle")
 	Text1 = THEME:GetString("PlayMode","Battle");
 	See1 = ModeIconColors["Rave"]
 	See2 = NumStageColor(NS)
-	Text2 = string.format(THEME:GetString("sStageInfo","ssRound"),NumtoST(NS));
+	Text2 = string.format(THEME:GetString("sStageInfo","ssRound"),FormatNumberAndSuffix(NS));
 	Fasst = 0.5;
 elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then--if EventMode
 	Picdir = THEME:GetPathG("ScreenStageInformation stage","event")
@@ -128,7 +103,7 @@ elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then--if EventM
 			Text2 = THEME:GetString("PlayMode","Rave");
 		else
 			See2 = NumStageColor(NS)
-			Text2 = string.format(THEME:GetString("sStageInfo","ssStage"),NumtoST(NS));
+			Text2 = string.format(THEME:GetString("sStageInfo","ssStage"),FormatNumberAndSuffix(NS));
 		end
 	Fasst = 0.5;
 else

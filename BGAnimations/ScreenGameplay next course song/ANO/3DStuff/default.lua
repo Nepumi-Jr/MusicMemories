@@ -59,31 +59,6 @@ local See2;
 See2 = color("#22FFAA")
 
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-elseif math.mod(n,100) <= 20 then
-	return n.."th"
-else
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-end
-end;
 
 NS = GAMESTATE:GetCurrentStageIndex()+1;
 
@@ -91,13 +66,13 @@ if IsNetConnected() then
 	Text1 = "Online Mode";
 	See1 = GameColor.Stage["Stage_Event"]
 	See2 = NumStageColor(NS)
-	Text2 = NumtoST(NS).." Stage";
+	Text2 = FormatNumberAndSuffix(NS).." Stage";
 	Fasst = 0.5;
 elseif TP.Battle.IsBattle then--BattleTor
 	Text1 = "Battle Mode";
 	See1 = ModeIconColors["Rave"]
 	See2 = NumStageColor(NS)
-	Text2 = NumtoST(NS).." Round";
+	Text2 = FormatNumberAndSuffix(NS).." Round";
 	Fasst = 0.5;
 elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then--if EventMode
 	Text1 = "Event Mode";
@@ -118,7 +93,7 @@ elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then--if EventM
 			Text2 = "Magic Dance";
 		else
 			See2 = NumStageColor(NS)
-			Text2 = NumtoST(NS).." Stage";
+			Text2 = FormatNumberAndSuffix(NS).." Stage";
 		end
 	Fasst = 0.5;
 else

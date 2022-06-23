@@ -11,31 +11,7 @@ local function BtS(x)
 	return GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(x) or 0;
 end
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-elseif math.mod(n,100) <= 20 then
-	return n.."th"
-else
-	if math.mod(n,10) == 1 then
-		return n.."st"
-	elseif math.mod(n,10) == 2 then
-		return n.."nd"
-	elseif math.mod(n,10) == 3 then
-		return n.."rd"
-	else
-		return n.."th"
-	end
-end
-end;
+
 
 local path = THEME:GetCurrentThemeDirectory().."Graphics/_GraphFont/Cha3D/";
 
@@ -43,12 +19,12 @@ local NS = GAMESTATE:GetCurrentStageIndex()+1;
 
 local RDText = "?????";
 	if TP.Battle.IsBattle then
-		RDText = NumtoST(NS).." Round";
+		RDText = FormatNumberAndSuffix(NS).." Round";
 	elseif GAMESTATE:IsCourseMode() then
 		RDText = "Ready?"
 	elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then
-		--RDText = string.format(THEME:GetString("NewContent","nStage") or "%s MEMORIES",NumtoST(NS))
-		RDText = string.format("%s Memories",NumtoST(NS))
+		--RDText = string.format(THEME:GetString("NewContent","nStage") or "%s MEMORIES",FormatNumberAndSuffix(NS))
+		RDText = string.format("%s Memories",FormatNumberAndSuffix(NS))
 	else
 						local playMode = GAMESTATE:GetPlayMode()
 						local sStage = ""

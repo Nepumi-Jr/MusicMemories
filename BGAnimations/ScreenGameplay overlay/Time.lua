@@ -16,33 +16,6 @@ local function StrUti(str)
 end;
 
 
-local function NumtoST(n)
-if math.mod(n,100) <= 10 then
-	if math.mod(n,10) == 1 then
-		return n..StrUti("st")
-	elseif math.mod(n,10) == 2 then
-		return n..StrUti("nd")
-	elseif math.mod(n,10) == 3 then
-		return n..StrUti("rd")
-	else
-		return n..StrUti("th")
-	end
-elseif math.mod(n,100) <= 20 then
-	return n..StrUti("th")
-else
-	if math.mod(n,10) == 1 then
-		return n..StrUti("st")
-	elseif math.mod(n,10) == 2 then
-		return n..StrUti("nd")
-	elseif math.mod(n,10) == 3 then
-		return n..StrUti("rd")
-	else
-		return n..StrUti("th")
-	end
-end
-end;
-
-
 local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); end;};
 	t[#t+1] = Def.ActorFrame{
 		OnCommand=function(self)
@@ -75,7 +48,7 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 					if IsNetConnected() then
 						self:settext("Online Mode"):diffuse(Color.Green)
 					elseif TP.Battle.IsBattle then
-						self:settextf("%s Round",NumtoST(NS)):diffuse(ModeIconColors["Rave"])
+						self:settextf("%s Round",FormatNumberAndSuffix(NS)):diffuse(ModeIconColors["Rave"])
 					elseif GAMESTATE:IsCourseMode() then
 						if GAMESTATE:GetCurrentCourse():IsNonstop()  then
 							self:settext("NonStop!!"):diffuse(ModeIconColors["Nonstop"])
@@ -85,7 +58,7 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 							self:settext("Endless"):diffuse(ModeIconColors["Endless"])
 						end
 					elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then
-						self:settextf(NameString("SMemories"),NumtoST(NS)):diffuse(NumStageColor(NS))
+						self:settextf(NameString("SMemories"),FormatNumberAndSuffix(NS)):diffuse(NumStageColor(NS))
 					else
 						local playMode = GAMESTATE:GetPlayMode()
 						local sStage = ""
@@ -104,7 +77,7 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 				OnCommand=function(self)
 					--SM("\n\n\n\nISLALA:"..math.random( 10, 99 ));
 					sc = {0,0};
-					self:settextf("Vs",NumtoST(NS)):diffuse({1,1,1,1})		
+					self:settextf("Vs",FormatNumberAndSuffix(NS)):diffuse({1,1,1,1})		
 					for i = 1,#TP.Battle.Info do
 					if TP.Battle.Info[i][4] == 1 then
 					sc[1] = sc[1] +1
