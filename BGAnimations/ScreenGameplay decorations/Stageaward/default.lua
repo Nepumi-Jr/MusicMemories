@@ -47,19 +47,19 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
                 self:y(SCREENMAN:GetTopScreen():GetChild(pn == PLAYER_1 and 'PlayerP1' or 'PlayerP2'):GetY())
                 
                 if string.find( SA,"W1") then
-                    Color_SA[pn] = GameColor.Judgment.JudgmentLine_W1
+                    Color_SA[pn] = JudgmentLineToColor("W1")
                     TitleText[pn] = "W1"
                 elseif string.find( SA,"W2") then
-                    Color_SA[pn] = GameColor.Judgment.JudgmentLine_W2
+                    Color_SA[pn] = JudgmentLineToColor("W2")
                     TitleText[pn] = "W2"
                 elseif string.find( SA,"W3") then
-                    Color_SA[pn] = GameColor.Judgment.JudgmentLine_W3
+                    Color_SA[pn] = JudgmentLineToColor("W3")
                     TitleText[pn] = "W3"
                 elseif string.find( SA,"Choke") then
-                    Color_SA[pn] = GameColor.Judgment.JudgmentLine_W4
+                    Color_SA[pn] = JudgmentLineToColor("W4")
                     TitleText[pn] = "W4"
                 elseif string.find( SA,"NoMiss") then
-                    Color_SA[pn] = GameColor.Judgment.JudgmentLine_W5
+                    Color_SA[pn] = JudgmentLineToColor("W5")
                     TitleText[pn] = "W5"
                 end
 

@@ -281,15 +281,15 @@ for i = 1,2 do
                     OnCommand=function(self)
                         curStage = LoadModule("Eva.CustomStageAward.lua")(PNS[i]);
                         if string.find(curStage,"W1") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W1"])
+                            self:diffusebottomedge(JudgmentLineToColor("W1"))
                         elseif string.find(curStage,"W2") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W2"])
+                            self:diffusebottomedge(JudgmentLineToColor("W2"))
                         elseif string.find(curStage,"W3") then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W3"])
+                            self:diffusebottomedge(JudgmentLineToColor("W3"))
                         elseif curStage == "StageAward_Choke"  then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W4"])
+                            self:diffusebottomedge(JudgmentLineToColor("W4"))
                         elseif curStage == "StageAward_NoMiss" then
-                            self:diffusebottomedge(GameColor["Judgment"]["JudgmentLine_W5"])
+                            self:diffusebottomedge(JudgmentLineToColor("W5"))
                         end
                     end;
                 };
@@ -363,7 +363,7 @@ for i = 1,2 do
 							if hst[xi]:GetScore() == stageStates[i]:GetScore() then
 								self:rainbow()
 							else
-								self:diffuse(GameColor.Judgment["JudgmentLine_W"..xi])
+								self:diffuse(JudgmentLineToColor("W"..xi))
 							end
 						end;
 						LoadFont("Common Normal")..{
@@ -397,22 +397,22 @@ for i = 1,2 do
 						OnCommand=function(self) self:zoom(0.3); self:x(170+15); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W1); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+15); self:y(20); self:diffuse(JudgmentLineToColor("W1")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W1"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40+15); self:y(20); self:diffuse(JudgmentLineToColor("W2")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W2"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*2+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*2+15); self:y(20); self:diffuse(JudgmentLineToColor("W3")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W3"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*3+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*3+15); self:y(20); self:diffuse(JudgmentLineToColor("W4")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W4"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*4+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*4+15); self:y(20); self:diffuse(JudgmentLineToColor("W5")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_W5"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
-						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*5+15); self:y(20); self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999)); end;
+						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*5+15); self:y(20); self:diffuse(JudgmentLineToColor("Miss")); self:settextf("%d",math.min(hst[xi]:GetTapNoteScore("TapNoteScore_Miss"),99999)); end;
 					};
 					LoadFont("Common Normal")..{
 						OnCommand=function(self) self:zoom(0.65); self:x(-175+40*6+15); self:y(20); self:diffuse(Color.Yellow); self:settextf("%d",math.min(hst[xi]:GetHoldNoteScore("HoldNoteScore_Held"),99999)); end;
@@ -472,12 +472,12 @@ for i = 1,2 do
 								
 							end
 							
-							CL = GameColor.Judgment["JudgmentLine_"..ToEnumShortString(v[1])]
+							CL = JudgmentLineToColor(ToEnumShortString(v[1]))
 							
 
 						else
 							Y = 9999
-							CL = GameColor.Judgment.JudgmentLine_Miss
+							CL = JudgmentLineToColor("Miss")
 							CL = {CL[1],CL[2],CL[3],0.3}
 						end
 
@@ -521,38 +521,38 @@ for i = 1,2 do
                 };
 
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("Miss")); self:y(70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_Miss); self:y(-70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
-                };
-
-                Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
-                };
-                Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W5); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("Miss")); self:y(-70); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W5")); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W4); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
-                };
-
-                Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
-                };
-                Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W3); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W5")); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW4"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W4")); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
                 Def.Quad{
-                    OnCommand=function(self) self:diffuse(GameColor.Judgment.JudgmentLine_W2); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W4")); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W3")); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W3")); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W2")); self:y(scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
+                };
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(JudgmentLineToColor("W2")); self:y(-scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW5"),0,70)); self:diffusealpha(0.3); self:zoomx(494*680/794); self:zoomy(1); end;
                 };
 
                 Def.Quad{

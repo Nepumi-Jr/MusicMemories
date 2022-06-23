@@ -7,27 +7,27 @@ local II = 0;
 local Ni = Def.ActorFrame{
 	Def.ActorFrame{
 		Def.Quad{
-			InitCommand=function(self) self:zoomx(WID); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W5"]); end;
+			InitCommand=function(self) self:zoomx(WID); self:zoomy(7); self:diffuse(JudgmentLineToColor("W5")); end;
 		};
 		Def.Quad{
 			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW4")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W4"]); end;
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(JudgmentLineToColor("W4")); end;
 		};
 		Def.Quad{
 			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW3")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W3"]); end;
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(JudgmentLineToColor("W3")); end;
 		};
 		Def.Quad{
 			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW2")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W2"]); end;
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(JudgmentLineToColor("W2")); end;
 		};
 		Def.Quad{
 			InitCommand=function(self) self:zoomx(WID*
 			PREFSMAN:GetPreference("TimingWindowSecondsW1")/
-			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(GameColor.Judgment["JudgmentLine_W1"]); end;
+			PREFSMAN:GetPreference("TimingWindowSecondsW5")); self:zoomy(7); self:diffuse(JudgmentLineToColor("W1")); end;
 			JudgmentMessageCommand=function()
 				II = math.mod(II+1,B);
 			end

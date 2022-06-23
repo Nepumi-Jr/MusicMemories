@@ -35,33 +35,33 @@ local function createTiming()
         t[#t+1] = Def.ActorFrame{
             InitCommand=function(self) self:y(i*19); self:zoom(0.8); end;
             LoadFont("Common normal").. {
-                InitCommand=function(self) self:settext(nameTime[vTime]); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); self:diffusebottomedge(LoadModule("Color.Judgment.lua")(vTime)); end;
+                InitCommand=function(self) self:settext(nameTime[vTime]); self:diffuse(JudgmentLineToColor(vTime,"AdvancedJudgment")); self:diffusebottomedge(JudgmentLineToColor(vTime,"AdvancedJudgment")); end;
                 UserPlayerJudgmentMessageCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     self:stoptweening():decelerate(0.5)
-                    self:diffusebottomedge(LoadModule("Color.Judgment.lua")(vTime))
+                    self:diffusebottomedge(JudgmentLineToColor(vTime,"AdvancedJudgment"))
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=function(self) self:x(100); self:horizalign(left); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
+                InitCommand=function(self) self:x(100); self:horizalign(left); self:zoom(0.3); self:diffuse(JudgmentLineToColor(vTime,"AdvancedJudgment")); end;
                 OnCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     local thisStr = string.format( "%g",math.mod( thisVal,1 ))
                     self:settext(string.sub( thisStr, 2,string.len(thisStr) ))
-                    if thisVal == 0 then self:diffuse(ColorDarkTone(LoadModule("Color.Judgment.lua")(vTime))) end
+                    if thisVal == 0 then self:diffuse(ColorDarkTone(JudgmentLineToColor(vTime,"AdvancedJudgment"))) end
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=function(self) self:x(100); self:horizalign(right); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
+                InitCommand=function(self) self:x(100); self:horizalign(right); self:zoom(0.3); self:diffuse(JudgmentLineToColor(vTime,"AdvancedJudgment")); end;
                 OnCommand=function(self)
                     local thisVal = getBoundSecondTap(vTime)
                     self:settextf("%d",thisVal)
-                    if thisVal == 0 then self:diffuse(ColorDarkTone(LoadModule("Color.Judgment.lua")(vTime))) end
+                    if thisVal == 0 then self:diffuse(ColorDarkTone(JudgmentLineToColor(vTime,"AdvancedJudgment"))) end
                 end;
             };
 
             LoadFont("Combo Number").. {
-                InitCommand=function(self) self:x(350); self:horizalign(left); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
+                InitCommand=function(self) self:x(350); self:horizalign(left); self:zoom(0.3); self:diffuse(JudgmentLineToColor(vTime,"AdvancedJudgment")); end;
                 OnCommand=function(self, param)
                     self:playcommand("ReloadTime", {})
                 end;
@@ -74,7 +74,7 @@ local function createTiming()
                 ReloadTimeCommand=function(self, param)
                     local thisVal = getBoundSecondTap(vTime, param.newScale)
                     local thisStr = string.format( "%g",math.mod( thisVal,1 ))
-                    local thisColor = LoadModule("Color.Judgment.lua")(vTime)
+                    local thisColor = JudgmentLineToColor(vTime,"AdvancedJudgment")
                     self:stoptweening():diffusealpha(0)
                     self:settext(string.sub( thisStr, 2,string.len(thisStr) ))
                     if thisVal == 0 then 
@@ -86,7 +86,7 @@ local function createTiming()
                 end;
             };
             LoadFont("Combo Number").. {
-                InitCommand=function(self) self:x(350); self:horizalign(right); self:zoom(0.3); self:diffuse(LoadModule("Color.Judgment.lua")(vTime)); end;
+                InitCommand=function(self) self:x(350); self:horizalign(right); self:zoom(0.3); self:diffuse(JudgmentLineToColor(vTime,"AdvancedJudgment")); end;
                 OnCommand=function(self, param)
                     self:playcommand("ReloadTime", {})
                 end;
@@ -98,7 +98,7 @@ local function createTiming()
                 end;
                 ReloadTimeCommand=function(self, param)
                     local thisVal = getBoundSecondTap(vTime, param.newScale)
-                    local thisColor = LoadModule("Color.Judgment.lua")(vTime)
+                    local thisColor = JudgmentLineToColor(vTime,"AdvancedJudgment")
                     self:stoptweening():diffusealpha(0)
                     self:settextf("%d",thisVal)
                     if thisVal == 0 then 

@@ -551,3 +551,38 @@ end
 function ColorCmp(a,b)
 	return (a[0]==b[0] and a[1]==b[1] and a[2]==b[2])
 end
+
+--? Overload from Fallback
+function JudgmentLineToColor( tapNoteScore, forceStyleTiming)
+	
+    local colorType = forceStyleTiming
+
+	if colorType == nil then
+		local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
+    	TName = LoadModule("Utils.SortTiming.lua")(TName)
+
+		if TName[1] == "ProW1" then
+			colorType = "AdvancedJudgment"
+		elseif TName[1] == "ProW5" then
+			colorType = "ECFAJudgment"
+		else
+			colorType = "Judgment"
+		end
+	end
+
+	local indUnder = string.find(tapNoteScore,"_")
+	if x ~= nil then
+		tapNoteScore = string.sub(tapNoteScore, string.find(tapNoteScore,"_") + 1, string.len(tapNoteScore))
+	end
+
+    if GameColor[colorType]["JudgmentLine_"..tapNoteScore] ~= nil then
+        return GameColor[colorType]["JudgmentLine_"..tapNoteScore]
+    else
+        return {1,1,1,1}
+    end
+end
+
+function JudgmentLineToStrokeColor( tapNoteScore )
+	local c = JudgmentLineToColor(tapNoteScore)
+	return { c[1]/2, c[2]/2, c[3]/2, c[4] }
+end

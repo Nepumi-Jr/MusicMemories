@@ -170,15 +170,15 @@ local t = Def.ActorFrame {};
 		local SA = LoadModule("Eva.CustomStageAward.lua")(player);
 
 		if string.find( SA,"W1") then
-            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W1"]);
+            cf.NumberOverlay:diffuse(JudgmentLineToColor("W1"));
 		elseif string.find( SA,"W2") then
-            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W2"]);
+            cf.NumberOverlay:diffuse(JudgmentLineToColor("W2"));
 		elseif string.find( SA,"W3") then
-			cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W3"]);
+			cf.NumberOverlay:diffuse(JudgmentLineToColor("W3"));
 		elseif string.find( SA,"Choke") then
-            cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W4"]);
+            cf.NumberOverlay:diffuse(JudgmentLineToColor("W4"));
 		elseif string.find( SA,"NoMiss") then
-			cf.NumberOverlay:diffuse(GameColor.Judgment["JudgmentLine_W5"]);
+			cf.NumberOverlay:diffuse(JudgmentLineToColor("W5"));
 		else
 			cf.NumberOverlay:diffuse({0,0,0,1});
 		end
@@ -288,18 +288,18 @@ local t = Def.ActorFrame {};
 
 		if param.FullComboW1 and LoadModule("Easter.today.lua")()~="FOOL" then
 			self:rainbow();
-			self:strokecolor( Alpha(GameColor.Judgment["JudgmentLine_W1"],0) );
+			self:strokecolor( Alpha(JudgmentLineToColor("W1"),0) );
             self:textglowmode("TextGlowMode_Stroke");
 		elseif param.FullComboW2 and LoadModule("Easter.today.lua")()~="FOOL" then
-			self:diffuse( Alpha(GameColor.Judgment["JudgmentLine_W2"],0) );
+			self:diffuse( Alpha(JudgmentLineToColor("W2"),0) );
 			self:diffusebottomedge(Alpha({1,1,1,1},0));
-			self:strokecolor( Alpha(GameColor.Judgment["JudgmentLine_W2"],0) );
+			self:strokecolor( Alpha(JudgmentLineToColor("W2"),0) );
             self:textglowmode("TextGlowMode_Stroke");
 			self:glowshift();
 		elseif param.FullComboW3 and LoadModule("Easter.today.lua")()~="FOOL" then
-			self:diffuse( Alpha(GameColor.Judgment["JudgmentLine_W3"],0) );
+			self:diffuse( Alpha(JudgmentLineToColor("W3"),0) );
 			self:diffusebottomedge(Alpha({1,1,1,1},0));
-			self:strokecolor( Alpha(GameColor.Judgment["JudgmentLine_W3"],0) );
+			self:strokecolor( Alpha(JudgmentLineToColor("W3"),0) );
             self:textglowmode("TextGlowMode_Stroke");
 			self:glowshift();
 		elseif param.Combo then

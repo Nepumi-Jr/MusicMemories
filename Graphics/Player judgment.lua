@@ -178,19 +178,19 @@ t[#t+1] = Def.ActorFrame {
 		Name="ProtimingGraphWindowW3";
 		InitCommand=function(self) self:visible(false); self:y(32); self:zoomto(ProtimingWidth-4,16-4); end;
 		ResetCommand=function(self) self:finishtweening(); self:diffusealpha(1); self:visible(false); end;
-		OnCommand=function(self) self:diffuse(GameColor.Judgment["JudgmentLine_W3"]); end;
+		OnCommand=function(self) self:diffuse(JudgmentLineToColor("W3")); end;
 	};
 	Def.Quad {
 		Name="ProtimingGraphWindowW2";
 		InitCommand=function(self) self:visible(false); self:y(32); self:zoomto(scale(PREFSMAN:GetPreference("TimingWindowSecondsW2"),0,PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,ProtimingWidth-4),16-4); end;
 		ResetCommand=function(self) self:finishtweening(); self:diffusealpha(1); self:visible(false); end;
-		OnCommand=function(self) self:diffuse(GameColor.Judgment["JudgmentLine_W2"]); end;
+		OnCommand=function(self) self:diffuse(JudgmentLineToColor("W2")); end;
 	};
 	Def.Quad {
 		Name="ProtimingGraphWindowW1";
 		InitCommand=function(self) self:visible(false); self:y(32); self:zoomto(scale(PREFSMAN:GetPreference("TimingWindowSecondsW1"),0,PREFSMAN:GetPreference("TimingWindowSecondsW3"),0,ProtimingWidth-4),16-4); end;
 		ResetCommand=function(self) self:finishtweening(); self:diffusealpha(1); self:visible(false); end;
-		OnCommand=function(self) self:diffuse(GameColor.Judgment["JudgmentLine_W1"]); end;
+		OnCommand=function(self) self:diffuse(JudgmentLineToColor("W1")); end;
 	};
 	Def.Quad {
 		Name="ProtimingGraphUnderlay";

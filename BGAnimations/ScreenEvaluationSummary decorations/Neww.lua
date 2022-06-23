@@ -283,7 +283,7 @@ local function createStageStatus(pplayer)
                 OnCommand=function(self)
                     self:settext("0000")
                     self:shadowlength(1)
-                    self:diffuse(GameColor.Judgment["JudgmentLine_"..v]);
+                    self:diffuse(JudgmentLineToColor(v));
                     self:playcommand("reloadNum")
                 end;
                 reloadNumCommand=function(self)
@@ -294,7 +294,7 @@ local function createStageStatus(pplayer)
                         self:settextf("%04d",round(newNum));
                         stageAnimate[pplayer][v] = newNum
                     end
-                    self:AddAttribute(0,{Length = math.max(3-math.floor(math.log10(round(math.max(nowNum,1)))),0); Diffuse = ColorDarkTone(GameColor.Judgment["JudgmentLine_"..v])})
+                    self:AddAttribute(0,{Length = math.max(3-math.floor(math.log10(round(math.max(nowNum,1)))),0); Diffuse = ColorDarkTone(JudgmentLineToColor(v))})
                     self:sleep(1/30):queuecommand("reloadNum")
                 end;
             };
