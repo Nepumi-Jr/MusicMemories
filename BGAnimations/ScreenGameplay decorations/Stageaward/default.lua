@@ -79,7 +79,7 @@ for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
             EXECommand=function(self) self:playcommand("MOD"); end;
             MODCommand=function(self)
                 if YEP[pn] then
-                    GAMESTATE:GetPlayerState(pn):GetPlayerOptions('ModsLevel_Song'):Stealth(1,1,true):Dark(1,1,true):Blind(1,1,true)
+                    GAMESTATE:GetPlayerState(pn):GetPlayerOptions('ModsLevel_Song'):Blind(1,1,true)
                     self:sleep(0.1):queuecommand("MOD");
                 end
             end;
