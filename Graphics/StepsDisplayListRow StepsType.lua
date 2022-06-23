@@ -14,19 +14,27 @@ local t = Def.ActorFrame{
 		SetMessageCommand=function(self,param)
             picList = {}
 
-            sStep = param.StepsType;
-            
-            --printf("%s",ToEnumShortString(sStep))
-            
-            picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Step",ToEnumShortString(sStep))
+            sStep = ToEnumShortString(param.StepsType);
+			--printf("%s",GAMESTATE:GetCurrentStyle():GetStepsType());
+			picStepPFPath = getThemeDir().."/Graphics/StepsPad_Mini/Step "..sStep
+			
+			--? very hard coded :|
+			if FILEMAN:DoesFileExist(picStepPFPath..".png") then
+				picList[1] = picStepPFPath..".png"
+			elseif FILEMAN:DoesFileExist(picStepPFPath.." (res 64x64).png") then
+				picList[1] = picStepPFPath.." (res 64x64).png"
+			else
+				--! Step picture not found
+				picList[1] = THEME:GetPathG("StepsPad_Mini/Step","unknown")
+			end
 
-            if string.find( string.lower(ToEnumShortString(sStep)),"routine") then
+            if string.find( string.lower(sStep),"routine") then
                 picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Type","Routine")
-            elseif string.find( string.lower(ToEnumShortString(sStep)),"couple") then
+            elseif string.find( string.lower(sStep),"couple") then
                 picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Type","Couple")
-            elseif string.find( string.lower(ToEnumShortString(sStep)),"versus") then
+            elseif string.find( string.lower(sStep),"versus") then
                 picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Type","Versus")
-            elseif string.find( string.lower(ToEnumShortString(sStep)),"double") then
+            elseif string.find( string.lower(sStep),"double") then
                 picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Type","Double")
             else
                 picList[#picList+1] = THEME:GetPathG("StepsPad_Mini/Type","Single")
@@ -48,6 +56,34 @@ local t = Def.ActorFrame{
                 self:Load(picList[1])
                 if picList[1] and string.find( picList[1],"(res 64x64)") then self:zoom(0.64) end --bruh
             end;
+        };
+		LoadFont("Common Normal")..{
+            Name = "P1-num";
+            InitCommand=function(self) self:x(0):y(9):horizalign(left); end;
+            SetMessageCommand=function(self)
+				if picList[1] ~= THEME:GetPathG("StepsPad_Mini/Step","unknown") then
+					return;
+				end
+
+				--* Just display the number of column of each *missing* step
+				--? get num collumn in each Step by reverse search
+				local styleDatas = GAMEMAN:GetStylesForGame(GAMESTATE:GetCurrentGame():GetName())
+				local nCol = -1
+				for i,v in ipairs(styleDatas) do
+					if ToEnumShortString(v:GetStepsType()) == sStep then
+						nCol = v:ColumnsPerPlayer()
+						break
+					end
+				end
+
+				if nCol == -1 then
+					--! NOT FOUND somehow
+					self:settextf("!")
+				else
+					self:settextf("%d",nCol)
+				end
+				self:diffuse({.85,.85,.85,.85})
+			end;
         };
         Def.Sprite{
             Name = "P2";
