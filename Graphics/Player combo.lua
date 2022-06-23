@@ -15,8 +15,8 @@ local madness = 0;
 local Grace = 0;--pumpkin :D
 local FN = "Combo Numbers";
 local FM = "Combo Misses";
-local CL = "_Combo/Memories_combo";
-local ML = "_Combo/Memories_misses";
+local CL = "Memories_combo";
+local ML = "Memories_misses";
 local NumInArr = {nil,nil,nil,nil};
 
 local QUE = {};
@@ -45,17 +45,22 @@ Stat ={
 {0,0,0,0,0,0,0,0,0}
 };
 
-local function GSB()
-local BI = 1;
-local TD = GAMESTATE:GetCurrentSong():GetTimingData();
+local thisSleepBeat;
 
-while (TD:GetElapsedTimeFromBeat(GAMESTATE:GetSongBeat()+BI) - TD:GetElapsedTimeFromBeat(GAMESTATE:GetSongBeat())) < 0.125 do
-BI = BI *  2
+local function timeFromBeat(beat)
+	return GAMESTATE:GetCurrentSong():GetTimingData():GetElapsedTimeFromBeat(beat)
 end
-return TD:GetElapsedTimeFromBeat(math.round(GAMESTATE:GetSongBeat())+BI)+0.05
-- TD:GetElapsedTimeFromBeat(math.round(GAMESTATE:GetSongBeat())) 
-- (TD:GetElapsedTimeFromBeat(math.round(GAMESTATE:GetSongBeat())+BI) - TD:GetElapsedTimeFromBeat(math.round(GAMESTATE:GetSongBeat())+(BI-0.4)))
---return math.abs(TD:GetElapsedTimeFromBeat(round(GAMESTATE:GetSongBeat()-0.1)+(BI-1)+0.9) - TD:GetElapsedTimeFromBeat(round(GAMESTATE:GetSongBeat())));
+
+local function GSB()
+	local BI = 1;
+	local nowBeat = GAMESTATE:GetSongBeat();
+	
+	--? searching to find best beat stamp
+	while (timeFromBeat(round(nowBeat) + BI) - timeFromBeat(nowBeat)) < 0.2 do
+		BI = BI * 2
+	end
+	local targetBeat = round(nowBeat) + BI
+	return timeFromBeat(targetBeat + 0.4) - timeFromBeat(nowBeat)
 end;
 
 
@@ -76,31 +81,31 @@ local t = Def.ActorFrame {};
 			Name="Number";
 			OnCommand = CMDofCB[1];
             WaitCommand=function(self)
-            self:sleep(GSB())
-            self:y(240-216-1.5);
-            self:queuecommand("GoO")
-            end;
-		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
+				thisSleepBeat = GSB()
+				self:sleep(thisSleepBeat)
+				self:queuecommand("GoO")
+			end;
+			GoOCommand=function(self) 
+				self:effectclock("beat"):bounce():effectmagnitude(0,5,0):effecttiming(0.05,0.05,0.25,0.65):effectoffset(0.1); 
+			end;
 		};
 		LoadFont(FM) .. {
 			Name="Misses";
 			OnCommand = CMDofCB[2];
-		WaitCommand=function(self)
-		self:sleep(GSB())--If 2 Players use Split Jud type(Eg:Sm5 and ITG)
-		self:y(240-216-1.5);
-		self:queuecommand("GoO")
-		end;
-		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
+			WaitCommand=function(self)
+				self:sleep(thisSleepBeat)
+				self:queuecommand("GoO")
+			end;
+			GoOCommand=function(self) self:effectclock("beat"):bounce():effectmagnitude(0,5,0):effecttiming(0.05,0.05,0.25,0.65):effectoffset(0.1);  end;
 		};
         LoadFont("Isla/_chakra petch semibold overlay 72px") .. {
 			Name="NumberOverlay";
 			OnCommand = CMDofCB[1];
             WaitCommand=function(self)
-            self:sleep(GSB())
-            self:y(240-216-1.5);
-            self:queuecommand("GoO")
-            end;
-		GoOCommand=function(self) self:effectclock("beat"); self:bounce(); self:effectmagnitude(0,-5,0); self:effecttiming(0.25,0.65,0.05,0.05); end;
+				self:sleep(thisSleepBeat)
+				self:queuecommand("GoO")
+			end;
+			GoOCommand=function(self)self:effectclock("beat"):bounce():effectmagnitude(0,5,0):effecttiming(0.05,0.05,0.25,0.65):effectoffset(0.1);  end;
 		};
 		LoadActor(CL)..{
 			Name="ComboLabel";
