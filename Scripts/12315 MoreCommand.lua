@@ -106,7 +106,7 @@ function TableToStringAdv(S)
 		local crt = 1;
 		Talk = "#"..tostring(#S)..":{";
 		for k, v in pairs(S) do
-			Talk = Talk..k..":"..TableToString(v)..", ";
+			Talk = Talk..k..":"..TableToStringAdv(v)..", ";
 			crt = crt + 1;
 			if crt == 10 then crt = 1; Talk = Talk.."\n"; end
 		end
