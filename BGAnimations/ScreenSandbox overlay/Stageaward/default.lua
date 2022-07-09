@@ -33,7 +33,7 @@ local t = Def.ActorFrame{
     FcStageMessageCommand=function(self)
         if true then--Stage
             
-            Color_SA[PLAYER_1] = GameColor.Judgment.JudgmentLine_W1
+            Color_SA[PLAYER_1] = JudgmentLineToColor("W1")
             TitleText[PLAYER_1] = "FC"
             SubText[PLAYER_1] = "Almost all perfect but 1 great..."
 

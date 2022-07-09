@@ -5,85 +5,61 @@ else
 	ratemod = 1.0
 end
 
-local Bpm1 = 0;
-local Bpm2 = 0;
-local Bpm = 0;
 
 local fz = 0.7;
 
-local t = Def.ActorFrame{
-	OnCommand=function(self) self:x(SCREEN_CENTER_X); self:y(53); self:zoom(0.9); end;
-LoadFont("Common Normal")..{
-OnCommand=function(self) self:diffuse(color("#FFFFFF")); self:zoom(0.7); self:playcommand('loop'); end;
-		loopCommand=function(self)
-		--[[if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
-		Bpm1 = GAMESTATE:GetPlayerState(PLAYER_1):GetSongPosition():GetCurBPS() * 60;
-		end
-		if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-		Bpm2 = GAMESTATE:GetPlayerState(PLAYER_2):GetSongPosition():GetCurBPS() * 60;
-		end
-		
-		if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-		Bpm=(Bpm1+Bpm2)/2;
-		elseif GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-		Bpm=Bpm2
-		elseif GAMESTATE:IsPlayerEnabled(PLAYER_1) then
-		Bpm=Bpm1
-		end]]--GetTrueBPS
-		Bpm = GAMESTATE:GetSongPosition():GetCurBPS() * 60*
-		SCREENMAN:GetTopScreen():GetHasteRate();
-
+local palentUpdateFunc = function(self)
+	local c = self:GetChildren();
+	local Bpm = GAMESTATE:GetSongPosition():GetCurBPS() * 60 *
+			SCREENMAN:GetTopScreen():GetHasteRate();
+	if ratemod == 1 then
 		if Bpm > 600 then
-		self:rainbowscroll(true)
+			c.NormalBPM:rainbowscroll(true)
 		else
-		self:rainbowscroll(false)
+			c.NormalBPM:rainbowscroll(false)
 		end
-		
-		if ratemod == 1 then
-		self:settext(round(Bpm))
-		end
-		self:diffuse(BPMColor(Bpm))
-		self:strokecolor(ColorTone(BPMColor(Bpm)))
-		
-		
-		self:sleep(1/30)
-		self:queuecommand('loop')
-		end;
+		c.NormalBPM:settext(round(Bpm))
+		c.NormalBPM:diffuse(BPMColor(Bpm))
+		c.NormalBPM:strokecolor(ColorTone(BPMColor(Bpm)))
+	else
+		c.RateBPMSub:settextf("%d x %.1f =",round(Bpm),ratemod)
+		c.RateBPMSub:diffuse(BPMColor(Bpm))
 
-};
-
-
-
-
-LoadFont("Common Normal")..{
-Condition=(ratemod ~= 1);
-OnCommand=function(self) self:x(-27.5); self:diffuse(color("#FFFFFF")); self:zoom(0.6); self:playcommand('loop'); end;
-		loopCommand=function(self)
-		self:settextf("%d x %.1f =",round(Bpm),ratemod)
-		self:diffuse(BPMColor(Bpm))
-		self:sleep(1/30)
-		self:queuecommand('loop')
-		end;
-};
-LoadFont("Common Normal")..{
-Condition=(ratemod ~= 1);
-OnCommand=function(self) self:x(20); self:diffuse(color("#FFFFFF")); self:zoom(0.7); self:playcommand('loop'); end;
-		loopCommand=function(self)
-
-		if Bpm*ratemod > 600 then
-		self:rainbowscroll(true)
+		if Bpm*  ratemod > 600 then
+			c.RateBPMMain:rainbowscroll(true)
 		else
-		self:rainbowscroll(false)
+			c.RateBPMMain:rainbowscroll(false)
 		end
-		if round(Bpm)*ratemod >= 1000 then
-		self:settextf("%.d",round(Bpm)*ratemod)
+		if Bpm * ratemod >= 1000 then
+			c.RateBPMMain:settextf("%.d",Bpm * ratemod)
 		else
-		self:settextf("%.1f",round(Bpm)*ratemod)
+			c.RateBPMMain:settextf("%.1f",Bpm * ratemod)
 		end
-		self:diffuse(BPMColor(Bpm*ratemod))
-		self:sleep(1/30)
-		self:queuecommand('loop')
-		end;
-};
+
+		c.RateBPMMain:diffuse(BPMColor(Bpm * ratemod))
+	end
+end;
+
+
+local t = Def.ActorFrame{
+	OnCommand=function(self) 
+		self:x(SCREEN_CENTER_X); self:y(53); self:zoom(0.9);
+		self:SetUpdateFunction(palentUpdateFunc);
+	end;
+	LoadFont("Common Normal")..{
+		Name = "NormalBPM";
+		OnCommand=function(self) self:diffuse(color("#FFFFFF")); self:zoom(0.7); end;
+	};
+
+	LoadFont("Common Normal")..{
+		Name = "RateBPMSub";
+		Condition=(ratemod ~= 1);
+		OnCommand=function(self) self:x(-27.5); self:diffuse(color("#FFFFFF")); self:zoom(0.6); self:playcommand('loop'); end;
+	};
+	LoadFont("Common Normal")..{
+		Name = "RateBPMMain";
+		Condition=(ratemod ~= 1);
+		OnCommand=function(self) self:x(20); self:diffuse(color("#FFFFFF")); self:zoom(0.7); self:playcommand('loop'); end;
+	};
 };
 return t;

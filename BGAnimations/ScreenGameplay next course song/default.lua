@@ -29,18 +29,17 @@ t[#t + 1] = Def.Quad {
 };
 
 t[#t + 1] = LoadFont("Common Large").. {
-	Text = "Isla : ERROR";
+	Text = "? Memories";
 	InitCommand = function(self) self:CenterX(); self:y(SCREEN_CENTER_Y * 1.3); self:diffuse(Color.Orange); self:zoom(0.75); self:diffusealpha(0); end;
-	BeforeLoadingNextCourseSongMessageCommand = function (self)
-	self: settext(NumtoST(GAMESTATE: GetCourseSongIndex() + 2)..
-		" Memories");
+	BeforeLoadingNextCourseSongMessageCommand = function(self)
+		self:settextf("%s Memories",FormatNumberAndSuffix(GAMESTATE:GetCourseSongIndex() + 2));
 	end;
 	FinishCommand = function(self) self:decelerate(0.5); self:diffusealpha(1); self:sleep(math.max(0.001, HOLD - 1)); self:decelerate(0.5); self:diffusealpha(0); end;
 };
 
 t[#t + 1] = LoadFont("Common Normal").. {
 	InitCommand = function(self) self:CenterX(); self:y(SCREEN_CENTER_Y + 150); self:zoom(1); self:cropright(1); self:diffusealpha(0); end;
-	BeforeLoadingNextCourseSongMessageCommand = function (self)
+	BeforeLoadingNextCourseSongMessageCommand = function(self)
 	local ppeng = SCREENMAN: GetTopScreen(): GetNextCourseSong();
 
 	Title = ppeng: GetDisplayMainTitle();

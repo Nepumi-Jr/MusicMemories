@@ -58,6 +58,7 @@ return Def.ActorFrame{
             self:xy(14,69);
             self:SetDrawState{Mode="DrawMode_Quads"}
         end;
+        CurrentSongChangedMessageCommand=function(self) self:queuecommand("Reload"); end;
         OnCommand=function(self) self:queuecommand("Reload"); end;
         ReloadCommand=function(self)
             startTime = GAMESTATE:GetCurrentSong():GetFirstSecond();
@@ -181,6 +182,7 @@ return Def.ActorFrame{
             self:xy(14,69);
             self:SetDrawState{Mode="DrawMode_Quads"}
         end;
+        CurrentSongChangedMessageCommand=function(self) self:queuecommand("Reload"); end;
         OnCommand=function(self) self:queuecommand("Reload"); end;
         ReloadCommand=function(self)
 

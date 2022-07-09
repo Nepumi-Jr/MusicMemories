@@ -5,46 +5,7 @@ local Time;
 local N_CL;
 local Tog_LEN = 0;
 
-ratemod = string.match(GAMESTATE:GetSongOptionsString(), "%d.%d");
-if ratemod then
-	ratemod = tonumber(ratemod);
-else
-	ratemod = 1.0
-end
 
-
-local function GetDiff()
-	local DIFFU =nil;
-	local METER = -1;
-	
-	for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
-		if GAMESTATE:IsCourseMode() then
-			x = GAMESTATE:GetCurrentTrail(pn);
-		else
-			x = GAMESTATE:GetCurrentSteps(pn);
-		end
-		if x:GetMeter() > METER then
-			METER = x:GetMeter()
-			DIFFU = THEME:GetString("CustomDifficulty",ToEnumShortString(x:GetDifficulty()))
-			if  x:GetDifficulty() == "Difficulty_Edit" then
-				if x:GetDescription() ~= "" then
-					if string.len(x:GetDescription()) > 6 then
-						DIFFU = string.sub(x:GetDescription(),1,5).."..."
-					else
-						DIFFU = x:GetDescription();
-					end
-				end
-			end
-		end
-	end
-	
-	if METER >= 99 then METER = "??" else METER = tostring(METER) end
-	if DIFFU then
-		return DIFFU.."("..METER..")"
-	else
-		return "??????"
-	end
-end;
 
 local function NOW_DAY()
 	return Hour()*60*60+Minute()*60+Second()
@@ -78,23 +39,32 @@ t[#t+1] = LoadFont("Common Normal") .. {
 			N_CL = NumStageColor(NS);
 		end
 		
+		local discordTitle;
+		local playerMasterName = GAMESTATE:GetPlayerDisplayName(GAMESTATE:GetMasterPlayerNumber())
+		local songTitle = PREFSMAN:GetPreference("ShowNativeLanguage") and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() or GAMESTATE:GetCurrentSong():GetTranslitFullTitle()
+		local discordStatusStr = THEME:GetString('DiscordRich',"State_PlaySong")
+
 		if GAMESTATE:IsCourseMode() then
-            --TODO : RPC_Update here
-			
+			local courseTitle = GAMESTATE:GetCurrentCourse():GetDisplayFullTitle()
+			local nowStage = tostring(GAMESTATE:GetCourseSongIndex() + 1);
+			local totalStage = "??"
+			if GAMESTATE:GetCurrentCourse():GetNumCourseEntries() then
+				totalStage = tostring(GAMESTATE:GetCurrentCourse():GetNumCourseEntries())
+			end
+
+			discordTitle = string.format("%s - %s (%s of %s)", songTitle, courseTitle, nowStage, totalStage)
 			self:settext(GAMESTATE:GetCurrentCourse():GetDisplayFullTitle())
 		else
-            --TODO : RPC_Update here
+			discordTitle = songTitle .. " - " .. GAMESTATE:GetCurrentSong():GetGroupName()
 			self:settext(GAMESTATE:GetCurrentSong():GetDisplayFullTitle())
 		end
 		
+		GAMESTATE:UpdateDiscordProfile(playerMasterName)
+		GAMESTATE:UpdateDiscordSongPlaying(discordStatusStr,discordTitle,GAMESTATE:GetCurrentSong():GetLastSecond() + 4)
+		
 		Tog_LEN = math.max((GAMESTATE:GetCurrentSong():GetFirstSecond() or 1)- 1,0);
 		
-		local player = GAMESTATE:GetMasterPlayerNumber()
-		local title = PREFSMAN:GetPreference("ShowNativeLanguage") and GAMESTATE:GetCurrentSong():GetDisplayMainTitle() or GAMESTATE:GetCurrentSong():GetTranslitFullTitle()
-		local songname = title .. " - " .. GAMESTATE:GetCurrentSong():GetGroupName()
-		local status = THEME:GetString('DiscordRich',"State_PlaySong")
-		GAMESTATE:UpdateDiscordProfile(GAMESTATE:GetPlayerDisplayName(player))
-		GAMESTATE:UpdateDiscordSongPlaying(status,songname,GAMESTATE:GetCurrentSong():GetLastSecond())
+		
 		
 		self:diffuse(N_CL)
 		
@@ -120,14 +90,10 @@ t[#t+1] = LoadFont("Common Normal") .. {
 			self:settext(GAMESTATE:GetCurrentSong():GetDisplayArtist())
 		end
 		self:diffuse(N_CL)
-		self:diffuseshift():effectcolor1(N_CL):effectcolor2(ColorMidTone(N_CL)):effectperiod(2):effectclock("beat")
-		
-		
-		
 		if GAMESTATE:IsCourseMode() then
-			self:zoom(0.35):diffusealpha(0.7):y(SCREEN_BOTTOM+50)
+			self:zoom(0.4):diffusealpha(0.7):y(SCREEN_BOTTOM-15)
 			self:zoomx(0)
-			self:sleep(Tog_LEN):decelerate(1):zoomx(0.35)
+			self:sleep(Tog_LEN):decelerate(1):zoomx(0.4)
 		else
 			self:sleep(Tog_LEN):decelerate(1):diffusealpha(0)
 		end

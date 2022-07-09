@@ -28,137 +28,172 @@ end
 
 
 local IG;
-local curStageState = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
-local nowScoring = 0
+local curStageState = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn);
+local nowScoring = 0;
 
+local timeDelta = 0;
+local lastTimeUpdate = -69;
+
+
+local palentUpdateFunc = function(self)
+	local c = self:GetChildren();
+	local thisTime = GetTimeSinceStart()
+
+	if lastTimeUpdate ~= -69 then
+		timeDelta = thisTime - lastTimeUpdate;
+	end
+	lastTimeUpdate = thisTime;
+
+	
+	if IG ~= curStageState:GetGrade() then
+		IG = curStageState:GetGrade()
+		if c.OuterScore then
+			c.OuterScore:playcommand("BoomYeah")
+		end
+		if c.OuterScore2 then
+			c.OuterScore2:playcommand("BoomYeah")
+		end
+	end
+
+	if c.OuterScore and c.OuterScore:GetChild("Score") then
+		c.OuterScore:GetChild("Score"):queuecommand("reloadScore")
+	end
+
+	if c.OuterScore2 and c.OuterScore2:GetChild("TimeSur") then
+		c.OuterScore2:GetChild("TimeSur"):queuecommand("Tick")
+	end
+	
+end;
 
 local t = Def.ActorFrame{};
 t[#t+1] = Def.ActorFrame{
---GetSurvivalSeconds
-Def.ActorFrame{
-	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-	InitCommand=function(self) self:x(xScore2); self:y(25); self:zoom(0.8); end;
-	BoomYeahMessageCommand=function(self,param)
-		if param.pn == pn then
-			self:zoom(0.9):decelerate(0.2):zoom(0.8)
-		end
+	OnCommand=function(self) 
+		self:SetUpdateFunction(palentUpdateFunc);
 	end;
-	LoadFont("Combo Numbers")..{
-		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=function(self) self:zoom(0.35); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
-		OnCommand=function(self)
-            
-			self:playcommand("reloadScore");
+	OffCommand=function(self)
+		self:SetUpdateFunction(nil)
+	end;
+	Def.ActorFrame{
+		Name = "OuterScore";
+		Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
+		InitCommand=function(self) self:x(xScore2); self:y(25); self:zoom(0.8); end;
+		BoomYeahCommand=function(self)
+			self:zoom(0.9):decelerate(0.2):zoom(0.8)
 		end;
-		reloadScoreCommand=function(self)
-			if TP.Battle.IsBattle then
-				if (TP.Battle.Hidden and TP.Battle.Mode == "Ac") or (TP.Battle.Mode == "Dr" and TP.Battle.Hidden and not TP.Battle.IsfailorIsDraw) then
-					self:settext("---,---,---");
-					SCREENMAN:GetTopScreen():GetChild('ScoreP'..(pn == PLAYER_1 and "1" or "2")):visible(false);
-					self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
-				else
-					self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
-					if STATSMAN:GetCurStageStats():GetPlayerStageStats(pn == PLAYER_1 and PLAYER_2 or PLAYER_1):GetPercentDancePoints() <= curStageState:GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
-						self:diffuse(Color.Green or {0,1,0,1}):diffusetopedge(ColorLightTone(Color.Green or {0,1,0,1}));
+		LoadFont("Combo Numbers")..{
+			Name = "Score";
+			Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni())));
+			InitCommand=function(self) self:zoom(0.35); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
+			reloadScoreCommand=function(self)
+				if TP.Battle.IsBattle then
+					if (TP.Battle.Hidden and TP.Battle.Mode == "Ac") or (TP.Battle.Mode == "Dr" and TP.Battle.Hidden and not TP.Battle.IsfailorIsDraw) then
+						self:settext("---,---,---");
+						SCREENMAN:GetTopScreen():GetChild('ScoreP'..(pn == PLAYER_1 and "1" or "2")):visible(false);
+						self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
 					else
-						self:diffuse(Color.Red or {1,0,0,1}):diffusetopedge(ColorLightTone(Color.Red or {1,0,0,1}));
+						self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
+						if STATSMAN:GetCurStageStats():GetPlayerStageStats(pn == PLAYER_1 and PLAYER_2 or PLAYER_1):GetPercentDancePoints() <= curStageState:GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
+							self:diffuse(Color.Green or {0,1,0,1}):diffusetopedge(ColorLightTone(Color.Green or {0,1,0,1}));
+						else
+							self:diffuse(Color.Red or {1,0,0,1}):diffusetopedge(ColorLightTone(Color.Red or {1,0,0,1}));
+						end
+					end
+				else
+					self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
+					nowScoring = nowScoring + ((curStageState:GetScore() - nowScoring) * 30 * timeDelta);
+					--printf("%d", curStageState:GetScore())
+					if ((curStageState:GetScore() - nowScoring) * 0.5) >= 0.01 then
+						local digits = math.floor(math.log10(nowScoring))
+						local thatString = string.format( "%09d",round(nowScoring))
+						for i = string.len(thatString) + 1 - 3, 2,-3 do
+							thatString = string.sub(thatString,1,i-1)..','..string.sub(thatString,i,string.len(thatString))
+						end
+						self:settext(thatString)
+						
+						if digits <= 9 then
+							self:AddAttribute(0,{Length = 10-digits - math.floor(digits/3); Diffuse = ColorDarkTone(GameColor.Grade[IG]);})
+						end
+						self:zoom(0.35*11/string.len(thatString))
+					elseif curStageState:GetScore() == 0 then
+						self:AddAttribute(0,{Length = 10; Diffuse = ColorDarkTone(GameColor.Grade[IG]);})
+						self:settext("000,000,000")
 					end
 				end
-			else
-				if IG ~= curStageState:GetGrade() then
-					IG = curStageState:GetGrade()
-					MESSAGEMAN:Broadcast("BoomYeah",{pn=pn});
+			end;
+			GETOUTOFGAMESMMessageCommand=function(self) 
+				
+				local finalScore = curStageState:GetScore();
+				local digits = math.floor(math.log10(finalScore))
+				local thatString = string.format( "%09d",round(finalScore))
+				for i = string.len(thatString) + 1 - 3, 2,-3 do
+					thatString = string.sub(thatString,1,i-1)..','..string.sub(thatString,i,string.len(thatString))
 				end
-                
-                nowScoring = nowScoring + ((curStageState:GetScore() - nowScoring) * 0.5);
-                if ((curStageState:GetScore() - nowScoring) * 0.5) >= 0.01 then
-                    local digits = math.floor(math.log10(nowScoring))
-                    local thatString = string.format( "%09d",round(nowScoring))
-                    for i = string.len(thatString) + 1 - 3, 2,-3 do
-                        thatString = string.sub(thatString,1,i-1)..','..string.sub(thatString,i,string.len(thatString))
-                    end
-
-                    self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
-                    self:settext(thatString)
-                    
-                    if digits <= 9 then
-                        self:AddAttribute(0,{Length = 10-digits - math.floor(digits/3); Diffuse = ColorDarkTone(GameColor.Grade[IG]);})
-                    end
-                    self:zoom(0.35*11/string.len(thatString))
-                elseif curStageState:GetScore() == 0 then
-                    self:AddAttribute(0,{Length = 10; Diffuse = ColorDarkTone(GameColor.Grade[IG]);})
-                    self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
-                    self:settext("000,000,000")
-                end
-			end
-            self:sleep(1/30):queuecommand("reloadScore")
-		end;
-		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
+				self:settext(thatString)
+				
+				if digits <= 9 then
+					self:AddAttribute(0,{Length = 10-digits - math.floor(digits/3); Diffuse = ColorDarkTone(GameColor.Grade[IG]);})
+				end
+				
+				self:zoom(0.35*11/string.len(thatString))
+				self:sleep(.75); self:accelerate(0.5); self:y(-100);
+			end;
+		};
 	};
-};
-Def.ActorFrame{
-	Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
-	InitCommand=function(self) self:x(xScore); self:y(25); self:zoom(0.8); end;
-	BoomYeahMessageCommand=function(self,param)
-		if param.pn == pn then
+	Def.ActorFrame{
+		Name = "OuterScore2";
+		Condition = not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
+		InitCommand=function(self) self:x(xScore); self:y(25); self:zoom(0.8); end;
+		BoomYeahCommand=function(self)
 			self:zoom(0.9):decelerate(0.2):zoom(0.8)
-		end
-	end;
-    LoadFont("Combo Numbers")..{
-		Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
-		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
-		OnCommand=function(self)
-			self:queuecommand("Judgment");
 		end;
-		JudgmentMessageCommand=function(self)
-			self:sleep(0.05):queuecommand("RealJud")
-		end;
-		RealJudCommand=function(self)
-			if TP.Battle.IsBattle then
-				if (TP.Battle.Hidden and TP.Battle.Mode == "Ac") or (TP.Battle.Mode == "Dr" and TP.Battle.Hidden and not TP.Battle.IsfailorIsDraw) then
-					self:settext("xx.xx%");
-					SCREENMAN:GetTopScreen():GetChild('ScoreP'..(pn == PLAYER_1 and "1" or "2")):visible(false);
-					self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
-				else
-					self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
-					if STATSMAN:GetCurStageStats():GetPlayerStageStats(pn == PLAYER_1 and PLAYER_2 or PLAYER_1):GetPercentDancePoints() <= curStageState:GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
-						self:pulse()
-						self:effecttiming(0.25,0.25,0.25,0.25);
-						self:effectmagnitude(1,1.15,1)
-						self:effectclock("beat")
-						self:diffuse(Color.Green or {0,1,0,1}):diffusetopedge(ColorLightTone(Color.Green or {0,1,0,1}));
+		LoadFont("Combo Numbers")..{
+			Name = "Percent";
+			Condition = (not(GAMESTATE:IsCourseMode() and (GAMESTATE:GetCurrentCourse():IsOni() or GAMESTATE:GetCurrentCourse():IsEndless())));
+			InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
+			OnCommand=function(self)
+				self:queuecommand("Judgment");
+			end;
+			JudgmentMessageCommand=function(self)
+				self:sleep(0.05):queuecommand("RealJud")
+			end;
+			RealJudCommand=function(self)
+				if TP.Battle.IsBattle then
+					if (TP.Battle.Hidden and TP.Battle.Mode == "Ac") or (TP.Battle.Mode == "Dr" and TP.Battle.Hidden and not TP.Battle.IsfailorIsDraw) then
+						self:settext("xx.xx%");
+						SCREENMAN:GetTopScreen():GetChild('ScoreP'..(pn == PLAYER_1 and "1" or "2")):visible(false);
+						self:diffuse(Color.Blue or {0,0,1,1}):diffusetopedge(ColorLightTone(Color.Blue or {0,0,1,1}));
 					else
-						self:diffuse(Color.Red or {1,0,0,1}):diffusetopedge(ColorLightTone(Color.Red or {1,0,0,1}));
-						self:stopeffect()
+						self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
+						if STATSMAN:GetCurStageStats():GetPlayerStageStats(pn == PLAYER_1 and PLAYER_2 or PLAYER_1):GetPercentDancePoints() <= curStageState:GetPercentDancePoints() and TP.Battle.Mode == "Ac" then
+							self:pulse()
+							self:effecttiming(0.25,0.25,0.25,0.25);
+							self:effectmagnitude(1,1.15,1)
+							self:effectclock("beat")
+							self:diffuse(Color.Green or {0,1,0,1}):diffusetopedge(ColorLightTone(Color.Green or {0,1,0,1}));
+						else
+							self:diffuse(Color.Red or {1,0,0,1}):diffusetopedge(ColorLightTone(Color.Red or {1,0,0,1}));
+							self:stopeffect()
+						end
 					end
+				else
+					self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
+					self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
 				end
-			else
-				if IG ~= curStageState:GetGrade() then
-					IG = curStageState:GetGrade()
-				end
+			end;
+			GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
+		};
+		LoadFont("Combo Numbers")..{
+			Name = "TimeSur";
+			Condition = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():IsEndless());
+			InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
+			TickCommand=function(self)
 				self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
-				self:settext(KodPercent(curStageState:GetPercentDancePoints()*100))
-			end
-		end;
-		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
+				self:settext(SecondsToMMSS(curStageState:GetSurvivalSeconds()))
+			
+			end;
+			GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
+		};
 	};
-	LoadFont("Combo Numbers")..{
-		Condition = (GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():IsEndless());
-		InitCommand=function(self) self:zoom(0.4); self:visible(GAMESTATE:IsPlayerEnabled(pn)); end;
-		OnCommand=function(self) self:playcommand("Tick"); end;
-		TickCommand=function(self)
-			if IG ~= curStageState:GetGrade() then
-				IG = curStageState:GetGrade()
-				MESSAGEMAN:Broadcast("BoomYeah",{pn=pn});
-			end
-			self:diffuse(GameColor.Grade[IG]):diffusetopedge(ColorLightTone(GameColor.Grade[IG]));
-			self:settext(SecondsToMMSS(curStageState:GetSurvivalSeconds()))
-		
-			self:sleep(0.04):queuecommand("Tick");
-		end;
-		GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
-	};
-};
 };
 t[#t+1] = LoadActor("Option.lua",pn)..{
 	InitCommand=function(self) self:x(xOption); self:y(70); self:diffusealpha(1); end;

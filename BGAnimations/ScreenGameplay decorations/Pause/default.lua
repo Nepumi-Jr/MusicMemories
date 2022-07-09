@@ -104,6 +104,7 @@ self:Center()
 end;
 Def.Quad{--control panel
 OnCommand=function(self) self:zoom(0); self:playcommand("Nep"); end;
+CurrentSongChangedMessageCommand=function(self) self:playcommand("Nep"); end;
 NepCommand=function(self)
 if TP.Battle.IsBattle and Karkao[4] == 1 and not NetNo then
 BatNo = true;

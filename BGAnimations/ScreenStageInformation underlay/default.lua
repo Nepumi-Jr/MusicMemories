@@ -54,8 +54,8 @@ local t = Def.ActorFrame{};
 			OnCommand=function(self)
 			
 			if GAMESTATE:IsCourseMode() and GAMESTATE:GetCurrentCourse():HasBanner() then
-			self:Load(GAMESTATE:GetCurrentCourse():GetBannerPath())
-			elseif GAMESTATE:GetCurrentSong():HasBanner() then
+			self:Load(GAMESTATE:GetCurrentCourse():GetBannerPath()):scaletoclipped(256,80)
+			elseif GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():HasBanner() then
 			self:Load(GAMESTATE:GetCurrentSong():GetBannerPath()):scaletoclipped(256,80)
 			else
 			self:Load(getThemeDir().."/Graphics/Common fallback banner.png"):scaletoclipped(256,80)

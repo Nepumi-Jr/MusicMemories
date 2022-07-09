@@ -18,6 +18,7 @@ end;
 
 local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); end;};
 	t[#t+1] = Def.ActorFrame{
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("On"); end;
 		OnCommand=function(self)
 			self:sleep(math.random(7*8,15*8)/8):decelerate(.5):rotationx(180)
 			self:sleep(math.random(7*8,15*8)/8):decelerate(.5):rotationx(360)
@@ -27,7 +28,8 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 			InitCommand=function(self) self:diffuse(Color.SkyBlue); self:zoom(1.7); self:rotationx(180); end; 
 			LoadFont("Combo Number") .. {
                 OnCommand=function(self) self:zoom(0.2); self:y(3); self:cullmode('back'); self:playcommand("Row"); end;
-                RowCommand=function(self)
+                CurrentSongChangedMessageCommand=function(self) self:playcommand("Row"); end;
+				RowCommand=function(self)
                     REM = math.max(GAMESTATE:GetCurrentSong():GetLastSecond() - GAMESTATE:GetCurMusicSeconds(),0)
                     if REM > 60*60 then
                         self:settext(SecondsToHHMMSS(REM))
@@ -43,6 +45,7 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 			LoadFont("Common Normal") .. {
 				Condition = not (TP.Battle.IsBattle);
 				InitCommand=function(self) self:y(3); self:cullmode('back'); end;
+				CurrentSongChangedMessageCommand=function(self) self:playcommand("On"); end;
 				OnCommand=function(self)
 					local NS = GAMESTATE:GetCurrentStageIndex()+1;
 					if IsNetConnected() then
@@ -50,12 +53,26 @@ local t = Def.ActorFrame{OnCommand=function(self) self:CenterX(); self:y(20); en
 					elseif TP.Battle.IsBattle then
 						self:settextf("%s Round",FormatNumberAndSuffix(NS)):diffuse(ModeIconColors["Rave"])
 					elseif GAMESTATE:IsCourseMode() then
+						
+						local nowCourseStage = GAMESTATE:GetCourseSongIndex() + 1;
+
+						if not GAMESTATE:GetCurrentCourse():IsEndless() then
+							local totalStage = "??"
+							if GAMESTATE:GetCurrentCourse():GetNumCourseEntries() then
+								totalStage = tostring(GAMESTATE:GetCurrentCourse():GetNumCourseEntries())
+							end
+							self:settextf("Mem. %d / %s", nowCourseStage, totalStage)
+						else
+							self:settextf(NameString("SMemories"),FormatNumberAndSuffix(nowCourseStage))
+						end
+
 						if GAMESTATE:GetCurrentCourse():IsNonstop()  then
-							self:settext("NonStop!!"):diffuse(ModeIconColors["Nonstop"])
+							self:diffuse(ModeIconColors["Nonstop"])
 						elseif GAMESTATE:GetCurrentCourse():IsOni()  then
-							self:settext("Survive!"):diffuse(ModeIconColors["Oni"])
+							self:diffuse(ModeIconColors["Oni"])
 						elseif GAMESTATE:GetCurrentCourse():IsEndless() then
-							self:settext("Endless"):diffuse(ModeIconColors["Endless"])
+							self:diffuse(NumStageColor(nowCourseStage))
+							self:diffusebottomedge(ModeIconColors["Endless"])
 						end
 					elseif ToEnumShortString(GAMESTATE:GetCurrentStage()) == "Event" then
 						self:settextf(NameString("SMemories"),FormatNumberAndSuffix(NS)):diffuse(NumStageColor(NS))

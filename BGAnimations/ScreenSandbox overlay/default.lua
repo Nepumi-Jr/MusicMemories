@@ -32,7 +32,7 @@ t[#t+1]=Def.Quad{
 	OnCommand=function(self) self:visible(false); self:sleep(9999999); end;
 };
 
-t[#t+1] = LoadActor("StarVector");
+--t[#t+1] = LoadActor("SH");
 
 t[#t+1] = Def.Quad{
     OnCommand=function(self)
