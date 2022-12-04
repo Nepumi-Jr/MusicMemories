@@ -32,7 +32,6 @@ t[#t+1] = Def.ActorFrame {
 		ColorComChangedMessageCommand=function(self,param)
 				self:stoptweening():decelerate(0.2)
 				if #num_players==2 then
-				SM(param.Player)
 					if param.Player == num_players[1] then
 					
 						self:diffuseleftedge(Alpha(Color[param.Jud],0.45))
