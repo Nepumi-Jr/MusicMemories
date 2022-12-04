@@ -1,6 +1,7 @@
 local BattleMemories = {};
 local Players = GAMESTATE:GetHumanPlayers();
 local thisTapTiming = {}
+local indTapTiming = {}
 
 return Def.ActorFrame{
 
@@ -10,6 +11,7 @@ return Def.ActorFrame{
         OnCommand=function(self)
             for pn in ivalues(Players) do
                 thisTapTiming[pn] = {};
+                indTapTiming[pn] = 1;
             end
         end;
         JudgmentMessageCommand=function(self,params)
@@ -20,17 +22,18 @@ return Def.ActorFrame{
             local TName,Length = LoadModule("Options.SmartTapNoteScore.lua")()
             local thisTime = GAMESTATE:GetCurMusicSeconds()
             
-            if FindInTable(smallTapNoteScore, TName) then
+            
+            if FindInTable(smallTapNoteScore, TName) or smallTapNoteScore == "Miss" then
 
                 if thisTapTiming[params.Player] == nil then
+                    --! This shouldn't happen
                     thisTapTiming[params.Player] = {}
+                    indTapTiming[params.Player] = 1;
                 end
 
-                if params.TapNoteScore == "TapNoteScore_Miss" then
-                    thisTapTiming[params.Player][#thisTapTiming[params.Player]+1] = {thisTime,params.TapNoteScore,1};
-                else
-                    thisTapTiming[params.Player][#thisTapTiming[params.Player]+1] = {thisTime,params.TapNoteScore,params.TapNoteOffset};
-                end
+                thisTapTiming[params.Player][indTapTiming[params.Player]] = {thisTime,params.TapNoteScore,
+                smallTapNoteScore == "Miss" and 1 or params.TapNoteOffset};
+                indTapTiming[params.Player] = indTapTiming[params.Player] + 1
             end
 
         end;
