@@ -200,7 +200,11 @@ t[#t+1] = Def.ActorFrame{
 LoadFont("Common Normal")..{
 		InitCommand=function(self) self:x(310); self:y(SCREEN_CENTER_Y*0.85-10+20*a); self:horizalign(left); self:zoom(0.7); self:rotationx((i==1) and 0 or 90); end;
 		OnCommand=function(self)
-		TWA(k:GetSong():GetDisplayMainTitle(),self,200)
+			if k:GetSong() and k:GetSong():GetDisplayMainTitle() then
+				TWA(k:GetSong():GetDisplayMainTitle(), self,200)
+			else
+				self:settext("?????")
+			end
 		end;
 		NepuMessageCommand=function(self)
 		if Sc == i*10 then
@@ -213,7 +217,11 @@ LoadFont("Common Normal")..{
 LoadFont("Common Normal")..{
 		InitCommand=function(self) self:x(545); self:y(SCREEN_CENTER_Y*0.85-10+20*a); self:horizalign(right); self:zoom(0.7); self:rotationx((i==1) and 0 or 90); end;
 		OnCommand=function(self)
-		self:settext(SecondsToMMSS(k:GetSong():GetLastSecond()))
+			if k:GetSong() and k:GetSong():GetLastSecond() then
+				self:settext(SecondsToMMSS(k:GetSong():GetLastSecond()))
+			else
+				self:settext("??:??")
+			end
 		end;
 		NepuMessageCommand=function(self)
 		if Sc == i*10 then
