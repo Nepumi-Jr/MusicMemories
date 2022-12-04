@@ -510,59 +510,57 @@ for i = 1,2 do
             thisTapMean = thisTapMean / (#TP.Eva.TapTiming[PNS[i]])
 
 		if TP.Eva.TapTiming[PNS[i]] then
-
+            --? hit timing graph... scatter... whatever
 			to[#to+1] = Def.ActorMultiVertex{
 				InitCommand=function(self)
-					self:SetDrawState{Mode="DrawMode_Quads"}
+                    --? for better visualisation and optimization?
+					self:SetDrawState{Mode="DrawMode_Points"}
+                    self:SetPointSize(5):SetPointState(true)
 				end;
                 
 				OnCommand=function(self)
 					local Vers = {}
-                    
-
+                    local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
 					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
-						local X = scale(v[1],1,TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1],-210,180)
-						local Y = 0
-						local CL = {1,1,1,0}
+						local thisX = scale(v[1],0,lastTimeData,-210,180)
+						local thisY = 0
 
 						if ToEnumShortString(v[2]) ~= "Miss" then
 							local p = scale(math.abs(v[3] or 0),0,maxBoundTiming,0,70)
+                            local thisColor = JudgmentLineToColor(ToEnumShortString(v[2]))
 							if (v[3] or 0) < 0 then
-								Y = -p
+								thisY = -p
 							else
-								Y = p
-								
+								thisY = p
 							end
-							CL = JudgmentLineToColor(ToEnumShortString(v[2]))
-							
-
-						else
-							Y = 9999
-							CL = JudgmentLineToColor("Miss")
-							CL = {CL[1],CL[2],CL[3],0.3}
+		
+							table.insert(Vers,{{thisX,thisY,0},thisColor})
 						end
-
-						if Y == 9999 then
-							table.insert(Vers,{{X-1,70,0},CL})
-							table.insert(Vers,{{X+1,70,0},CL})
-							table.insert(Vers,{{X+1,-70,0},CL})
-							table.insert(Vers,{{X-1,-70,0},CL})
-						else
-							table.insert(Vers,{{X-1,Y-1,0},CL})
-							table.insert(Vers,{{X+1,Y-1,0},CL})
-							table.insert(Vers,{{X+1,Y+1,0},CL})
-							table.insert(Vers,{{X-1,Y+1,0},CL})
-						end
-
-						
-					
 					end
-
 					self:SetNumVertices(#Vers):SetVertices( Vers )
-
 				end;
-			
-			
+			};
+            --? Miss
+            to[#to+1] = Def.ActorMultiVertex{
+				InitCommand=function(self)
+					self:SetDrawState{Mode="DrawMode_Quads"}
+				end;
+				OnCommand=function(self)
+					local Vers = {}
+                    local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
+					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+						local thisX = scale(v[1],0,lastTimeData,-210,180)
+						local thisY = 0
+						if ToEnumShortString(v[2]) == "Miss" then
+							local thisColor = Color.Alpha(JudgmentLineToColor(ToEnumShortString(v[2])), 0.5)
+							table.insert(Vers,{{thisX-1,-70,0},thisColor})
+                            table.insert(Vers,{{thisX+1,-70,0},thisColor})
+                            table.insert(Vers,{{thisX+1,70,0},thisColor})
+                            table.insert(Vers,{{thisX-1,70,0},thisColor})
+						end
+					end
+					self:SetNumVertices(#Vers):SetVertices( Vers )
+				end;
 			};	
             
             for i = 1,#TName do
