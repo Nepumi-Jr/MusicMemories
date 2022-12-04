@@ -32,7 +32,7 @@ local BTI = 1
 local ALL_Score = {};
 
 local function compareNoteData(lhs,rhs)--? Sort with time and note element
-    if lhs == rhs then--?if same time, Hold and roll will be first priority
+    if lhs[1] == rhs[1] then--?if same time, Hold and roll will be first priority
         local ll = 0;
         if FindInTable(lhs[3], {"TapNoteSubType_Hold","TapNoteSubType_Roll"}) then
             ll = 1;
@@ -91,18 +91,19 @@ local t = Def.ActorFrame{
             local nWarp = 1;
             local SegmentHoldAndRoll = {};
             local BeatMes= 0;
-            local noteData;
 
             
 
             for k,v in pairs( GAMESTATE:GetCurrentSong():GetAllSteps() ) do
-                if v == thisSteps then noteData = GAMESTATE:GetCurrentSong():GetNoteData(k) break end
+                if v == thisSteps then noteData = GAMESTATE:GetCurrentSong():GetNoteData(k, 0, GAMESTATE:GetCurrentSong():GetLastBeat()) break end
+                --GAMESTATE:GetCurrentSong():GetLastSecond()
             end
 
+            
             table.sort(noteData, compareNoteData);
-
-
             --printf("%s",TableToString(noteData))
+
+
             for k,v in pairs(noteData) do
                 --? {time, col, NoteType}
                 local NowBeat = v[1];
@@ -116,6 +117,7 @@ local t = Def.ActorFrame{
                         Now_Score = 1 + (0.7*nHold) + (1.5*nRoll)
 
                         if thisNoteType == "TapNoteSubType_Hold" then
+                            
                             --nHold = nHold + 1;
                             SegmentHoldAndRoll[thisCol] = 'H';
                         end
@@ -126,8 +128,12 @@ local t = Def.ActorFrame{
 
                 end
 
+                
                 if thisNoteType == "TapNoteType_HoldTail" then
+                    --TODO: HoldTail
                     --! TapNoteType_HoldTail never found in noteData :|
+                    --! or incorrect lua documentation?
+                    printf("TapNoteType_HoldTail FOUNDED\nplease change the code to support this");
                     if SegmentHoldAndRoll[thisCol] == "H" then
                         
                         --nHold = nHold - 1;
