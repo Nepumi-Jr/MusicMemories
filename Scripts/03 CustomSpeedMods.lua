@@ -70,7 +70,7 @@ end
 -- Parses a speed mod and returns the pair (type, number) or nil if parsing
 -- failed.
 local function CanonicalizeMod(mod)
-	num = tonumber(mod:match("^(%d+.?%d*)[xX]$"))
+	local num = tonumber(mod:match("^(%d+.?%d*)[xX]$"))
 	if num ~= nil then
 		return "x", num
 	end
@@ -88,6 +88,16 @@ local function CanonicalizeMod(mod)
 	num = tonumber(mod:match("^[aA](%d+.?%d*)$"))
 	if num ~= nil then
 		return "a", num
+	end
+
+	num = tonumber(mod:match("^[cC][aA](%d+.?%d*)$"))
+	if num ~= nil then
+		return "ca", num
+	end
+
+	num = tonumber(mod:match("^[aA][vV](%d+.?%d*)$"))
+	if num ~= nil then
+		return "av", num
 	end
 
 	return nil
@@ -125,7 +135,7 @@ local function ModTableToList(mods)
 	end
 
 	-- C- and m-mods
-	for _, modtype in ipairs({"C", "m", "a"}) do
+	for _, modtype in ipairs({"C", "m", "a", "ca"}) do
 		tmp = {}
 		for mod, _ in pairs(mods[modtype]) do
 			table.insert(tmp, mod)
@@ -353,6 +363,12 @@ function GetSpeedModeAndValueFromPoptions(pn)
 	if poptions:AvarageScrollBPM() > 0 then
 		mode= "a"
 		speed= math.round(poptions:AvarageScrollBPM())
+	elseif poptions:AverageVelocityBPM() > 0 then
+		mode= "av"
+		speed= math.round(poptions:AverageVelocityBPM())
+	elseif poptions:ConstAverageScrollBPM() > 0 then
+		mode= "ca"
+		speed= math.round(poptions:ConstAverageScrollBPM())
 	elseif poptions:MaxScrollBPM() > 0 then
 		mode= "m"
 		speed= math.round(poptions:MaxScrollBPM())
@@ -406,11 +422,21 @@ function ArbitrarySpeedMods()
 				stoptions:MMod(val.speed)
 				soptions:MMod(val.speed)
 				coptions:MMod(val.speed)
-			else
+			elseif val.mode == "a" then
 				poptions:AMod(val.speed)
 				stoptions:AMod(val.speed)
 				soptions:AMod(val.speed)
 				coptions:AMod(val.speed)
+			elseif val.mode == "av" then
+				poptions:AVMod(val.speed)
+				stoptions:AVMod(val.speed)
+				soptions:AVMod(val.speed)
+				coptions:AVMod(val.speed)
+			else
+				poptions:CAMod(val.speed)
+				stoptions:CAMod(val.speed)
+				soptions:CAMod(val.speed)
+				coptions:CAMod(val.speed)
 			end
 		end,
 		NotifyOfSelection= function(self, pn, choice)
@@ -427,7 +453,7 @@ function ArbitrarySpeedMods()
 					val.speed= math.round(new_val)
 				end
 			elseif real_choice >= 5 then
-				val.mode= ({"x", "C", "m", "a"})[real_choice - 4]
+				val.mode= ({"x", "C", "m", "a", "ca", "av"})[real_choice - 4]
 			end
 			self:GenChoices()
 			MESSAGEMAN:Broadcast("SpeedChoiceChanged", {pn= pn, mode= val.mode, speed= val.speed})
@@ -453,7 +479,7 @@ function ArbitrarySpeedMods()
 			end
 			self.Choices= {
 				"+" .. big_inc, "+" .. small_inc, "-" .. small_inc, "-" .. big_inc,
-				"Xmod", "Cmod", "Mmod", "Amod"}
+				"Xmod", "Cmod", "Mmod", "Amod", "CAmod", "AVmod"}
 			-- Insert the status element for P2 first so it will be second
 			for i, pn in ipairs({PLAYER_2, PLAYER_1}) do
 				local val= self.CurValues[pn]

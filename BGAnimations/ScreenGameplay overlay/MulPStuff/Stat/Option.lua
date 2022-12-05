@@ -22,7 +22,7 @@ local function N2P(n)
 if n == 1 then
 return ""
 else
-return string.format("%d",math.floor(n*100)).."% "
+return string.format("%d",round(n*100)).."% "
 end
 end;
 
@@ -61,16 +61,17 @@ t[#t+1] = Def.Quad{
 	InitCommand=function(self) self:visible(false); end;
 	OnCommand=function(self)
 			local Isla = "";
-			if Op1:CMod() then
-				Isla = "C"..string.format("%d",Op1:CMod())
-			elseif Op1:MMod() then
-				Isla = "m"..string.format("%d",Op1:MMod())
-			elseif Op1:XMod() then
-				Isla = string.format("%.2f",Op1:XMod()).."x"
+			
+			--Speed
+			local speed, mode = GetSpeedModeAndValueFromPoptions(PN);
+			if mode == "x" then
+				Isla = string.format("%.2fx",speed)
+			else
+				Isla = string.format("%s%d",mode,round(speed))
 			end
 
 				Isla = strpl(Isla,Op1:NoteSkin());
-				Isla = strpl(Isla,JudgeFileShortName(TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic) or "Memory");
+				Isla = strpl(Isla,JudgeFileShortName(TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic) or "????");
 				if Op1:Cover()*100 ~= 0 then
 					Isla = strpl(Isla,N2P(Op1:Cover()).."Hide Background");
 				end

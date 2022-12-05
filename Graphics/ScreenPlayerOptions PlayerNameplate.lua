@@ -65,10 +65,7 @@ local t = Def.ActorFrame {
 						format_bpm(song_bpms[2] * param.speed*.01)
 				end
 				no_change= param.speed == 100
-			elseif param.mode == "C" then
-				text= param.mode .. param.speed
-				no_change= param.speed == song_bpms[2] and song_bpms[1] == song_bpms[2]
-			else
+			elseif param.mode == "m" then
 				no_change= param.speed == song_bpms[2]
 				if song_bpms[1] == song_bpms[2] then
 					text= param.mode .. param.speed
@@ -77,12 +74,41 @@ local t = Def.ActorFrame {
 					text= param.mode .. format_bpm(param.speed * factor) .. " - "
 						.. param.mode .. param.speed
 				end
+			else
+				text= param.mode .. param.speed
+				no_change= param.speed == song_bpms[2] and song_bpms[1] == song_bpms[2]
 			end
 			self:settext(text)
 			if no_change then
 				self:queuecommand("BPMWillNotChange")
 			else
 				self:queuecommand("BPMWillChange")
+			end
+		end
+	},
+	LoadFont("Common Normal") .. {
+		Text="Sample Text",
+		Name="SpeedModeExplanation",
+		InitCommand= function(self)
+			self:x(68):y(10):maxwidth(88/(bpm_text_zoom*0.4)):shadowlength(1):zoom(bpm_text_zoom*0.4)
+			local speed, mode= GetSpeedModeAndValueFromPoptions(PlayerNumber)
+			self:playcommand("SpeedChoiceChanged", {pn= PlayerNumber, mode= mode, speed= speed})
+		end,
+		SpeedChoiceChangedMessageCommand= function(self, param)
+			if param.pn ~= PlayerNumber then return end
+			local textModeExplanation = {
+				x = "",
+				C = "Constant BPM",
+				m = "Maximum BPM",
+				a = "Average BPM",
+				ca = "Constant Average BPM",
+				av = "AutoVelocity BPM",
+			}
+			if textModeExplanation[param.mode] then
+				self:settext(textModeExplanation[param.mode])
+			else
+				--placeholder for now
+				self:settext("?????")
 			end
 		end
 	}
