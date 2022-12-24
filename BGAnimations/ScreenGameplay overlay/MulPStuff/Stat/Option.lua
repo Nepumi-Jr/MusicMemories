@@ -65,7 +65,7 @@ t[#t+1] = Def.Quad{
 			--Speed
 			local speed, mode = GetSpeedModeAndValueFromPoptions(PN);
 			if mode == "x" then
-				Isla = string.format("%.2fx",speed)
+				Isla = string.format("%.2fx",round(speed)/100)
 			else
 				Isla = string.format("%s%d",mode,round(speed))
 			end
