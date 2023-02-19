@@ -1,7 +1,7 @@
 return function(part, xOry)
     local choices = {}
     local values = {}
-    local numChoice = 31 --? it should be odd number
+    local numChoice = 81 --? it should be odd number
     local numChoiceHalf = math.ceil(numChoice / 2)
     for i = 1, numChoice do
         local posChoice = (i - numChoiceHalf) * 5
@@ -31,6 +31,10 @@ return function(part, xOry)
 			end
 
 			TP[ToEnumShortString(pn)].ActiveModifiers["Offset"..part..string.upper(xOry)] = sSave
-		end
+		end,
+		NotifyOfSelection = function(self, pn, choice)
+            MESSAGEMAN:Broadcast('offset'..part, {Player=pn, xyValue = self.Values[choice], xOry = xOry})
+            return false
+        end,
 	}
 end

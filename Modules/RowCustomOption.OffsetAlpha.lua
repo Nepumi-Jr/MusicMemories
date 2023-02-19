@@ -28,6 +28,10 @@ return function(part)
 			end
 
 			TP[ToEnumShortString(pn)].ActiveModifiers["Offset"..part.."Alpha"] = sSave
-		end
+		end,
+		NotifyOfSelection = function(self, pn, choice)
+            MESSAGEMAN:Broadcast('offset'..part, {Player=pn, alpha = self.Choices[choice]})
+            return false
+        end,
 	}
 end
