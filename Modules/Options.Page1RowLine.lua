@@ -12,7 +12,7 @@ return function()
             strrLine = strrLine .. ",NextScreen"
         end
     else
-        TP.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2"
+        TP.Global.ScreenAfterThisOption = "ScreenPlayerOptionsOffset"
     end
     return strrLine
 end

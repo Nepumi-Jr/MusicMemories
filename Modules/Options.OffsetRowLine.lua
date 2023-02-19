@@ -1,10 +1,10 @@
 return function()
-    local strrLine  = "1,2,3,4,5,6,7,8,9,10"
+    local strrLine  = ""
 
     if ThemePrefs.Get("OptionStyle") == 0 then
         strrLine = strrLine .. ",NextScreen"
     else
-        TP.Global.ScreenAfterThisOption = "ScreenStageInformation"
+        TP.Global.ScreenAfterThisOption = "ScreenPlayerOptions2"
     end
     return strrLine
 end

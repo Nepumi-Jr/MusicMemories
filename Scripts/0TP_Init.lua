@@ -40,10 +40,7 @@ local PlayerDefaults = {
 local GlobalDefaults = {
 	__index = {
 		initialize = function(self)
-			self.ScreenAfter = {
-				PlayerOptions = "ScreenGameplay",
-				PlayerOptions2 = "ScreenGameplay"
-			}
+			self.ScreenAfterThisOption = "ScreenGameplay"
             self.enableMeasure = true
 		end
 	}

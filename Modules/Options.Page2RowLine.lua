@@ -8,9 +8,9 @@ return function()
     if ThemePrefs.Get("OptionStyle") == 0 then
         strrLine = strrLine .. ",NextScreen"
     elseif ThemePrefs.Get("OptionStyle") == 1 then
-        TP.Global.ScreenAfter.PlayerOptions2 = "ScreenSongOptions"
+        TP.Global.ScreenAfterThisOption = "ScreenSongOptions"
     elseif ThemePrefs.Get("OptionStyle") == 2 then
-        TP.Global.ScreenAfter.PlayerOptions2 = "ScreenStageInformation"
+        TP.Global.ScreenAfterThisOption = "ScreenStageInformation"
     end
     return strrLine
 end

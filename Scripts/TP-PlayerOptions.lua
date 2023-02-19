@@ -66,22 +66,42 @@ end
 
 
 
-function ForwardOrBackward()
+
+
+function ForwardOrBackward(removeChoice)
+	local nextScreenValueMap = {
+		['Gameplay'] = 'ScreenStageInformation',
+		['Select Music'] = 'ScreenSelectMusic',
+		['Normal Modifiers'] = 'ScreenPlayerOptions',
+		['Offset Modifiers'] = 'ScreenPlayerOptionsOffset',
+		['Extra Modifiers'] = 'ScreenPlayerOptions2',
+		['Song Modifiers'] = 'ScreenSongOptions'
+	}
+	local nextScreenChoices = { 
+		'Gameplay',
+		'Select Music',
+		'Normal Modifiers',
+		'Offset Modifiers',
+		'Extra Modifiers',
+		'Song Modifiers'  
+	}
+	table.remove(nextScreenChoices, FindInTable(removeChoice, nextScreenChoices));
 	local t = {
 		Name = "ForwardOrBackward",
 		LayoutType = "ShowAllInRow",
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = true,
 		ExportOnChange = false,
-		Choices = { 'Gameplay', 'Select Music', 'Extra Modifiers', 'Song Modifiers' },
+		Choices = nextScreenChoices,
 		LoadSelections = function(self, list, pn)
 			list[1] = true
 		end,
 		SaveSelections = function(self, list, pn)
-			if list[1] then TP.Global.ScreenAfter.PlayerOptions = "ScreenStageInformation" end
-			if list[2] then TP.Global.ScreenAfter.PlayerOptions = "ScreenSelectMusic" end
-			if list[3] then TP.Global.ScreenAfter.PlayerOptions = "ScreenPlayerOptions2" end
-			if list[4] then TP.Global.ScreenAfter.PlayerOptions = "ScreenSongOptions" end
+			for i = 1,#self.Choices do
+				if list[i] then
+					TP.Global.ScreenAfterThisOption = nextScreenValueMap[self.Choices[i]]
+				end
+			end
 		end
 	}
 	return t
@@ -101,69 +121,6 @@ function ForwardOrBackwardBat()
 		SaveSelections = function(self, list, pn)
 			if list[1] then TP.Global.ScreenAfter.PlayerOptions = "ScreenStageInformation" end
 			if list[2] then TP.Global.ScreenAfter.PlayerOptions = "ScreenSelectMusic" end
-		end
-	}
-	return t
-end
-
-
-
-function ForwardOrBackward2()
-	local t = {
-		Name = "ForwardOrBackward2",
-		LayoutType = "ShowAllInRow",
-		SelectType = "SelectOne",
-		OneChoiceForAllPlayers = true,
-		ExportOnChange = false,
-		Choices = { 'Gameplay', 'Select Music', 'Normal Modifiers', 'Song Modifiers'  },
-		LoadSelections = function(self, list, pn)
-			list[1] = true
-		end,
-		SaveSelections = function(self, list, pn)
-			if list[1] then TP.Global.ScreenAfter.PlayerOptions2 =  "ScreenStageInformation" end
-			if list[2] then TP.Global.ScreenAfter.PlayerOptions2 =  "ScreenSelectMusic" end
-			if list[3] then TP.Global.ScreenAfter.PlayerOptions2 =  "ScreenPlayerOptions" end
-			if list[4] then TP.Global.ScreenAfter.PlayerOptions2 = "ScreenSongOptions" end
-		end
-	}
-	return t
-end
-
-function ForwardOrBackward3()
-	local t = {
-		Name = "ForwardOrBackward3",
-		LayoutType = "ShowAllInRow",
-		SelectType = "SelectOne",
-		OneChoiceForAllPlayers = true,
-		ExportOnChange = false,
-		Choices = { 'Gameplay', 'Select Music', 'Normal Modifiers', 'Extra Modifiers'  },
-		LoadSelections = function(self, list, pn)
-			list[1] = true
-		end,
-		SaveSelections = function(self, list, pn)
-			if list[1] then TP.Global.ScreenAfter.PlayerOptions3 =  "ScreenStageInformation" end
-			if list[2] then TP.Global.ScreenAfter.PlayerOptions3 =  "ScreenSelectMusic" end
-			if list[3] then TP.Global.ScreenAfter.PlayerOptions3 =  "ScreenPlayerOptions" end
-			if list[4] then TP.Global.ScreenAfter.PlayerOptions3 =  "ScreenPlayerOptions2" end
-		end
-	}
-	return t
-end
-
-function ForwardOrBackward4()
-	local t = {
-		Name = "ForwardOrBackward4",
-		LayoutType = "ShowAllInRow",
-		SelectType = "SelectOne",
-		OneChoiceForAllPlayers = true,
-		ExportOnChange = false,
-		Choices = { 'Gameplay', 'Select Music'},
-		LoadSelections = function(self, list, pn)
-			list[1] = true
-		end,
-		SaveSelections = function(self, list, pn)
-			if list[1] then TP.Global.ScreenAfter.PlayerOptions4 =  "ScreenStageInformation" end
-			if list[2] then TP.Global.ScreenAfter.PlayerOptions4 =  "ScreenSelectMusic" end
 		end
 	}
 	return t
