@@ -10,6 +10,26 @@ end
 
 LoadModule("Prefs.Insert.lua")()
 
+local elements = {"Judge", "SubJudge", "Combo"}
+
+for i, element in ipairs(elements) do
+	_G[element.."X"] = function()
+		return LoadModule("RowCustomOption.OffsetPosition.lua")(element,"x")
+	end
+
+	_G[element.."Y"] = function()
+		return LoadModule("RowCustomOption.OffsetPosition.lua")(element,"y")
+	end
+
+	_G[element.."Zoom"] = function()
+		return LoadModule("RowCustomOption.OffsetZoom.lua")(element)
+	end
+
+	_G[element.."Alpha"] = function()
+		return LoadModule("RowCustomOption.OffsetAlpha.lua")(element)
+	end
+end
+
 
 
 

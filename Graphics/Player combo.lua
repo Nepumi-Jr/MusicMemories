@@ -63,6 +63,7 @@ local function GSB()
 	return timeFromBeat(targetBeat + 0.4) - timeFromBeat(nowBeat)
 end;
 
+local comboOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "Combo")
 
 
 local t = Def.ActorFrame {};
@@ -77,6 +78,11 @@ local t = Def.ActorFrame {};
 	-- normal combo elements:
 	Def.ActorFrame {
 		Name="ComboFrame";
+		OnCommand=function(self)
+			self:xy(comboOffset.x, comboOffset.y)
+			self:zoom(comboOffset.zoom)
+			self:diffusealpha(comboOffset.alpha)
+		end;
 		LoadFont(FN) .. {
 			Name="Number";
 			OnCommand = CMDofCB[1];
@@ -261,8 +267,12 @@ local t = Def.ActorFrame {};
 
 	}
 
-	t[#t+1] = Def.ActorFrame{	
-		OnCommand=function(self) self:diffusealpha(1); end;
+t[#t+1] = Def.ActorFrame{	
+	OnCommand=function(self) 
+		self:xy(comboOffset.x, comboOffset.y)
+		self:zoom(comboOffset.zoom)
+		self:diffusealpha(comboOffset.alpha)
+	end;
 
 	LoadFont(FN)..{
 	InitCommand=function(self) self:diffusealpha(0); end;

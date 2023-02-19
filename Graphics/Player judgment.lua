@@ -123,20 +123,35 @@ local PomuLocation = {
 	}
 }
 
+
+local judgeOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "Judge")
+local subJudgeOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "SubJudge")
+
+local judgeActor;
+
+
 t[#t+1] = Def.ActorFrame {
-	Def.Sprite{                    
-		Name="Judgment";
-		OnCommand=function(self)
-		self:pause();
-		self:visible(false);
-			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-				self:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
-			else
-				self:Load(JudPath);
-			end
+	Def.ActorFrame {
+		Name="JudgeOffset";
+		OnCommand = function(self)
+			self:xy(judgeOffset.x,judgeOffset.y)
+			self:zoom(judgeOffset.zoom)
+			self:diffusealpha(judgeOffset.alpha)
 		end;
-		InitCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
-		ResetCommand=function(self) self:finishtweening(); self:stopeffect(); self:visible(false); end;
+		Def.Sprite{                    
+			Name="Judgment";
+			OnCommand=function(self)
+			self:pause();
+			self:visible(false);
+				if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
+					self:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
+				else
+					self:Load(JudPath);
+				end
+			end;
+			InitCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
+			ResetCommand=function(self) self:finishtweening(); self:stopeffect(); self:visible(false); end;
+		};
 	};
 	
 
@@ -144,7 +159,16 @@ t[#t+1] = Def.ActorFrame {
 		Name="FAIL";
 		OnCommand=function(self) end;
 	};
-    getSubJudge();
+
+	Def.ActorFrame {
+		Name="SubJudgeOffset";
+		OnCommand = function(self)
+			self:xy(subJudgeOffset.x,subJudgeOffset.y)
+			self:zoom(subJudgeOffset.zoom)
+			self:diffusealpha(subJudgeOffset.alpha)
+		end;
+    	getSubJudge();
+	};
 
 
 	LoadFont("_roboto Bold 54px") .. {
@@ -219,6 +243,7 @@ t[#t+1] = Def.ActorFrame {
 
 	InitCommand = function(self)
 		c = self:GetChildren();
+		judgeActor = self:GetChild("JudgeOffset"):GetChild("Judgment");
 		SS = 0 ;
 
         local miniFileName = JudPath;
@@ -226,9 +251,10 @@ t[#t+1] = Def.ActorFrame {
         miniFileName = string.match(miniFileName, ".*/(.*)")
         isDouble = string.find(miniFileName, "%[double%]")
 
-        if c.Judgment:GetNumStates() == #TName * 2 or string.find(miniFileName, "2x%d") ~= nil then
+        if judgeActor:GetNumStates() == #TName * 2 or string.find(miniFileName, "2x%d") ~= nil then
             isDouble = true
         end
+		
 
 	end;
 
@@ -292,14 +318,14 @@ t[#t+1] = Def.ActorFrame {
 		if param.HoldNoteScore then return end;
 
 		if param.Cor ~= nil then
-			c.Judgment:Load(getThemeDir().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
+			judgeActor:Load(getThemeDir().."/BGAnimations/ScreenGameplay overlay/IQ/IQJud 1x7.png");
 			PTAM=true;
 		elseif PTAM then
 			PTAM=false;
 			if string.match(tostring(SCREENMAN:GetTopScreen()),"ScreenEdit") then
-				c.Judgment:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
+				judgeActor:Load(LoadModule("Options.JudgmentGetPath.lua")("Edit 2x6.png"));
 			else
-				c.Judgment:Load(JudPath);
+				judgeActor:Load(JudPath);
 			end
 		end
 
@@ -315,7 +341,7 @@ t[#t+1] = Def.ActorFrame {
         end
 
         if tempTNS == "TapNoteScore_Miss" then
-            iFrame = c.Judgment:GetNumStates() - 1
+            iFrame = judgeActor:GetNumStates() - 1
         end
 
         if ((tempTNS == 'TapNoteScore_Miss'  or tempTNS == 'TapNoteScore_W5' or tempTNS == 'TapNoteScore_W4')
@@ -325,10 +351,10 @@ t[#t+1] = Def.ActorFrame {
             if not useThisJudge then return; end
             c.FAIL:play()
             MESSAGEMAN:Broadcast("SOFAIL", {pn=param.Player,fr=iFrame,cor=param.Cor})
-            c.Judgment:visible(false);
+            judgeActor:visible(false);
         else
             if not useThisJudge then return; end
-            c.Judgment:visible(true);
+            judgeActor:visible(true);
 		end
 
 		local fTapNoteOffset = param.TapNoteOffset;
@@ -354,11 +380,11 @@ t[#t+1] = Def.ActorFrame {
 
 		self:playcommand("Reset");
 
-		if Op ~= "None" or Op ~= "SM5ProTiming" then c.Judgment:setstate( iFrame ); end
+		if Op ~= "None" or Op ~= "SM5ProTiming" then judgeActor:setstate( iFrame ); end
 
 		if param.Cor ~= nil then
 			if not param.Cor then
-				c.Judgment:setstate( 7-1 );
+				judgeActor:setstate( 7-1 );
 			end
 		end
 
@@ -367,22 +393,22 @@ t[#t+1] = Def.ActorFrame {
 		if Op ~= "SM5ProTiming" then
 			if tempTNS ~= 'TapNoteScore_Miss' then
 				if param.Early then
-					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
 				else
-					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
 				end
 				muan = false;
 			else
 				if muan then
-					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
 					muan = false
 				else
-					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](c.Judgment);
+					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
 					muan = true
 				end
 			end
 
-			c.Judgment:visible( true );
+			judgeActor:visible( true );
 			c.ProtimingDisplay:visible( false );
 			c.ProtimingAverage:visible( false );
 			c.TextDisplay:visible( false );
@@ -395,7 +421,7 @@ t[#t+1] = Def.ActorFrame {
 			c.ProtimingGraphAverage:visible( false );
 			c.ProtimingGraphCenter:visible( false );
 		else
-			c.Judgment:visible( false );
+			judgeActor:visible( false );
 			c.ProtimingDisplay:visible( true );
 			c.ProtimingDisplay:settextf("%i",fTapNoteOffset * 1000);
 			ProtimingCmds[param.TapNoteScore](c.ProtimingDisplay);

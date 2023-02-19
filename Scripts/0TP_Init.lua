@@ -15,8 +15,30 @@ local PlayerDefaults = {
 				Streamu = "None",
 				Streamay = "Measures",
 				IconDir = "",
+				
+				OffsetJudgeX = 0,
+				OffsetJudgeY = 0,
+				OffsetJudgeZoom = "100%",
+				OffsetJudgeAlpha = "100%",
+
+				OffsetSubJudgeX = 0,
+				OffsetSubJudgeY = 0,
+				OffsetSubJudgeZoom = "100%",
+				OffsetSubJudgeAlpha = "100%",
+
+				OffsetComboX = 0,
+				OffsetComboY = 0,
+				OffsetComboZoom = "100%",
+				OffsetComboAlpha = "100%",
+				
+				--? coming soon
+				OffsetPlayerX = 0,
+				OffsetPlayerY = 0,
+				OffsetPlayerRotationX = 0,
+				OffsetPlayerRotationY = 0,
+				OffsetPlayerRotationZ = 0,
 			}
-			--[[self.Mission = {  //// comming soon
+			--[[self.Mission = {  //// comming soon ???
 				Level = 1,
 				Exp = 0,
 			}]]
