@@ -335,8 +335,16 @@ local CodeDetectorCodes = {
 	PrevOptionsList = {
 		default = "@MenuUp-MenuDown",
 	},
+	PrevOptionsList2 = {
+		default = "",
+		pump = "+UpRight",
+	},
 	NextOptionsList = {
 		default = "@MenuDown-MenuUp",
+	},
+	NextOptionsList2 = {
+		default = "",
+
 	},
 	-- sorts
 	NextSort1 = {
