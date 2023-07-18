@@ -455,17 +455,19 @@ local t = Def.ActorFrame{
             end
 
             --printf("BT : %s",TableToString(BreakTime))
-            if BTI <= #BreakTime then
+            if BTI <= #BreakTime and ThemePrefs.Get("BorderGameplayEffect") then
                 if CurSec >= BreakTime[BTI][1] and not SCS then
                     SCS = true;
                     this["CS_Top"]:stoptweening():decelerate(0.5):y(0)
                     this["CS_Bot"]:stoptweening():decelerate(0.5):y(SCREEN_BOTTOM)
+                    this["VertexLife"]:stoptweening():decelerate(0.5):y(0):diffusealpha(0.05)
                 end
     
                 if CurSec >= BreakTime[BTI][2] and SCS then
                     SCS = false;
                     this["CS_Top"]:stoptweening():decelerate(0.5):y(-75)
                     this["CS_Bot"]:stoptweening():decelerate(0.5):y(SCREEN_BOTTOM+75)
+                    this["VertexLife"]:stoptweening():decelerate(0.5):y(0):diffusealpha(1)
                     BTI = BTI + 1
                 end
             end

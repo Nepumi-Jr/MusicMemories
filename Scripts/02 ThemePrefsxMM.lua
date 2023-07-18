@@ -123,6 +123,12 @@ local Prefs =
 		Choices = { "Day" , "Night" , "Depend on time"},
 		Values = { 0 , 1 , 2 }
 	},
+	BorderGameplayEffect =
+	{
+		Default = true,
+		Choices = { OptionNameString('Off'), OptionNameString('On')},
+		Values = { false, true}
+	},
 }
 
 ThemePrefs.InitAll(Prefs)
