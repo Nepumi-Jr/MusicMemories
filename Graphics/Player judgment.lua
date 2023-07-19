@@ -131,6 +131,19 @@ local judgeActor;
 
 
 t[#t+1] = Def.ActorFrame {
+	OnCommand = function(self)
+		if IsGame("po-mu") then
+			self:zoom(0.7)
+		elseif IsGame("gddm") then
+			self:zoom(0.55)
+			if tonumber(ToEnumShortString(self:GetParent():GetName())) % 2 == 1 then
+				self:y(-20)
+			else
+				self:y(-40)
+			end
+		end
+		printf("Game : %s", GAMESTATE:GetCurrentGame():GetName())
+	end;
 	Def.ActorFrame {
 		Name="JudgeOffset";
 		OnCommand = function(self)
@@ -263,8 +276,9 @@ t[#t+1] = Def.ActorFrame {
         --*   -- Code modify from _fallback
 
         local useThisJudge = true;
+		
         if self:GetParent():GetName() ~= "Judgment" then
-            if IsGame("popn") then
+            if IsGame("po-mu") then
                 if PomuLocation[GAMESTATE:GetCurrentStyle():ColumnsPerPlayer()][param.FirstTrack] ~= tonumber(ToEnumShortString(self:GetParent():GetName())) then 
                     useThisJudge = false
                 end
