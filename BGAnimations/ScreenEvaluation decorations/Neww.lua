@@ -320,10 +320,12 @@ for iterPn in ivalues(Players) do
                     InitCommand=function(self) self:x(-63); self:y(3); self:zoom(0.3*math.min(6/#tapScoreName,1)); self:shadowlength(1); end;
                     OnCommand=function(self)
                         local nowNum = curPNStateStat:GetTapNoteScores("TapNoteScore_"..v)
-                        if v == LoadModule("Options.BestJudge.lua")() then--For Pump
-                            nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
-                        elseif v == "Miss" then--For Pump
-                            nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+                        if IsGame("pump") then
+                            if v == LoadModule("Options.BestJudge.lua")() then--For Pump
+                                nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointHit")
+                            elseif v == "Miss" then--For Pump
+                                nowNum = nowNum + curPNStateStat:GetTapNoteScores("TapNoteScore_CheckpointMiss")
+                            end
                         end
                         local thisCl  = JudgmentLineToColor(v)
                         self:diffuse(thisCl)

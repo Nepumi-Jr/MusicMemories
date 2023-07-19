@@ -281,11 +281,15 @@ t[#t+1] = Def.ActorFrame {
 		local tempTNS = param.TapNoteScore;
         local iFrame = -1;
 
-		if tempTNS== "TapNoteScore_CheckpointHit" then
-			tempTNS = "TapNoteScore_"..bestJudge;
-		elseif tempTNS== "TapNoteScore_CheckpointMiss" then
-			tempTNS = "TapNoteScore_Miss";
+		--this applies only pump mode
+		if IsGame("pump") then
+			if tempTNS== "TapNoteScore_CheckpointHit" then
+				tempTNS = "TapNoteScore_"..bestJudge;
+			elseif tempTNS== "TapNoteScore_CheckpointMiss" then
+				tempTNS = "TapNoteScore_Miss";
+			end
 		end
+		
 		
 		if LoadModule("Easter.today.lua")()=="FOOL" then
         --if false then
