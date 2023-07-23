@@ -142,7 +142,6 @@ t[#t+1] = Def.ActorFrame {
 				self:y(-40)
 			end
 		end
-		printf("Game : %s", GAMESTATE:GetCurrentGame():GetName())
 	end;
 	Def.ActorFrame {
 		Name="JudgeOffset";
