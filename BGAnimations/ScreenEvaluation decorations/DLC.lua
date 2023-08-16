@@ -101,6 +101,7 @@ for i = 1,2 do
 	end
     if TP.Eva.TapTiming[PNS[i]] then
         table.insert( ContentP[i], "TapOffset");
+        table.insert( ContentP[i], "TapHisto");
     end
     tapOffsetZoom[i] = #TName-1;
 end
@@ -478,7 +479,6 @@ for i = 1,2 do
 				};
 			end
             t[#t+1]=Def.ActorFrame{
-                Condition = FindInTable("HighScore",ContentP[i]);
                 InitCommand=function(self) self:diffusealpha(0); end;
                 OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
                 HighScoreOnMessageCommand=function(self,param)	if param.pni==i then 
@@ -499,90 +499,88 @@ for i = 1,2 do
 		end
 		
 
-
-		--Taps Offset
-
-		local to=Def.ActorFrame{};
-        local thisTapMean = 0;
-            for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
-                thisTapMean = thisTapMean + v[3]
-            end
-            thisTapMean = thisTapMean / (#TP.Eva.TapTiming[PNS[i]])
-
-		if TP.Eva.TapTiming[PNS[i]] then
-            --? hit timing graph... scatter... whatever
-			to[#to+1] = Def.ActorMultiVertex{
-				InitCommand=function(self)
-                    --? for better visualisation and optimization?
-					self:SetDrawState{Mode="DrawMode_Points"}
-                    self:SetPointSize(5):SetPointState(true)
-				end;
-                
-				OnCommand=function(self)
-					local Vers = {}
-                    local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
-					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
-						local thisX = scale(v[1],0,lastTimeData,-210,180)
-						local thisY = 0
-
-						if ToEnumShortString(v[2]) ~= "Miss" then
-							local p = scale(math.abs(v[3] or 0),0,maxBoundTiming,0,70)
-                            local thisColor = JudgmentLineToColor(ToEnumShortString(v[2]))
-							if (v[3] or 0) < 0 then
-								thisY = -p
-							else
-								thisY = p
-							end
-		
-							table.insert(Vers,{{thisX,thisY,0},thisColor})
-						end
-					end
-					self:SetNumVertices(#Vers):SetVertices( Vers )
-				end;
-			};
-            --? Miss
-            to[#to+1] = Def.ActorMultiVertex{
-				InitCommand=function(self)
-					self:SetDrawState{Mode="DrawMode_Quads"}
-				end;
-				OnCommand=function(self)
-					local Vers = {}
-                    local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
-					for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
-						local thisX = scale(v[1],0,lastTimeData,-210,180)
-						local thisY = 0
-						if ToEnumShortString(v[2]) == "Miss" then
-							local thisColor = Color.Alpha(JudgmentLineToColor(ToEnumShortString(v[2])), 0.5)
-							table.insert(Vers,{{thisX-1,-70,0},thisColor})
-                            table.insert(Vers,{{thisX+1,-70,0},thisColor})
-                            table.insert(Vers,{{thisX+1,70,0},thisColor})
-                            table.insert(Vers,{{thisX-1,70,0},thisColor})
-						end
-					end
-					self:SetNumVertices(#Vers):SetVertices( Vers )
-				end;
-			};	
-            
-            for i = 1,#TName do
-                to[#to + 1] = Def.Quad{
-                    OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
-                };
-                to[#to + 1] = Def.Quad{
-                    OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(-scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
-                };
-            end
-
-		end
-
+        --Taps Offset
 
         if FindInTable("TapOffset",ContentP[i]) then
+            local to=Def.ActorFrame{};
+            local thisTapMean = 0;
+                for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                    thisTapMean = thisTapMean + v[3]
+                end
+                thisTapMean = thisTapMean / (#TP.Eva.TapTiming[PNS[i]])
+
+            if TP.Eva.TapTiming[PNS[i]] then
+                --? hit timing graph... scatter... whatever
+                to[#to+1] = Def.ActorMultiVertex{
+                    InitCommand=function(self)
+                        --? for better visualisation and optimization?
+                        self:SetDrawState{Mode="DrawMode_Points"}
+                        self:SetPointSize(5):SetPointState(true)
+                    end;
+                    
+                    OnCommand=function(self)
+                        local Vers = {}
+                        local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
+                        for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                            local thisX = scale(v[1],0,lastTimeData,-210,180)
+                            local thisY = 0
+
+                            if ToEnumShortString(v[2]) ~= "Miss" then
+                                local p = scale(math.abs(v[3] or 0),0,maxBoundTiming,0,70)
+                                local thisColor = JudgmentLineToColor(ToEnumShortString(v[2]))
+                                if (v[3] or 0) < 0 then
+                                    thisY = -p
+                                else
+                                    thisY = p
+                                end
+            
+                                table.insert(Vers,{{thisX,thisY,0},thisColor})
+                            end
+                        end
+                        self:SetNumVertices(#Vers):SetVertices( Vers )
+                    end;
+                };
+                --? Miss
+                to[#to+1] = Def.ActorMultiVertex{
+                    InitCommand=function(self)
+                        self:SetDrawState{Mode="DrawMode_Quads"}
+                    end;
+                    OnCommand=function(self)
+                        local Vers = {}
+                        local lastTimeData = TP.Eva.TapTiming[PNS[i]][#TP.Eva.TapTiming[PNS[i]]][1]
+                        for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                            local thisX = scale(v[1],0,lastTimeData,-210,180)
+                            local thisY = 0
+                            if ToEnumShortString(v[2]) == "Miss" then
+                                local thisColor = Color.Alpha(JudgmentLineToColor(ToEnumShortString(v[2])), 0.5)
+                                table.insert(Vers,{{thisX-1,-70,0},thisColor})
+                                table.insert(Vers,{{thisX+1,-70,0},thisColor})
+                                table.insert(Vers,{{thisX+1,70,0},thisColor})
+                                table.insert(Vers,{{thisX-1,70,0},thisColor})
+                            end
+                        end
+                        self:SetNumVertices(#Vers):SetVertices( Vers )
+                    end;
+                };	
+                
+                for i = 1,#TName do
+                    to[#to + 1] = Def.Quad{
+                        OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    };
+                    to[#to + 1] = Def.Quad{
+                        OnCommand=function(self) self:diffuse(JudgmentLineToColor(TName[i])); self:y(-scale(getBoundSecondTap(TName[i]),0,maxBoundTiming,0,70)); self:diffusealpha(0.3); self:zoomx(423); self:zoomy(1); end;
+                    };
+                end
+
+            end
+
+
             t[#t+1]=Def.ActorFrame{
-                Condition = FindInTable("TapOffset",ContentP[i]);
                 InitCommand=function(self) self:diffusealpha(0); end;
                 OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
                 TapOffsetOnMessageCommand=function(self,param)	if param.pni==i then 
                             self:stoptweening():decelerate(0.2):diffusealpha(1) end end;
-                            TapOffsetOffMessageCommand=function(self,param) if param.pni==i then 
+                TapOffsetOffMessageCommand=function(self,param) if param.pni==i then 
                             self:stoptweening():accelerate(0.2):diffusealpha(0) end end;
                 Def.Quad{
                     OnCommand=function(self) self:diffuse(ColorDarkTone(Color.Purple)); self:diffusealpha(0.9); self:zoomx(423); self:zoomy(170*263/256); end;
@@ -649,6 +647,166 @@ for i = 1,2 do
                 };
             };
         end
+
+		--Taps Histrogram
+
+        if FindInTable("TapHisto",ContentP[i]) then
+            local to=Def.ActorFrame{};
+            local thisTapMean = 0;
+                for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                    thisTapMean = thisTapMean + v[3]
+                end
+                thisTapMean = thisTapMean / (#TP.Eva.TapTiming[PNS[i]])
+
+            if TP.Eva.TapTiming[PNS[i]] then
+                for i = 1,#TName do
+                    to[#to+1] = Def.Quad{
+                        InitCommand = function(self)
+                            self:diffuse(BoostColor(JudgmentLineToColor(TName[i]), 0.1))
+                        end;
+                        OnCommand=function(self)
+                            local boundBad = round(getBoundSecondTap(TName[#TName])*1000)
+                            local startX = scale(round(getBoundSecondTap(TName[i]) * 1000),-boundBad,boundBad,-210,210)
+                            local endX = 0
+                            if i ~= 1 then
+                                endX = scale(round(getBoundSecondTap(TName[i-1]) * 1000),-boundBad,boundBad,-210,210)
+                            end
+                            self:horizalign(left):vertalign(bottom)
+                            self:xy(startX, 85):zoomx(endX - startX):zoomy(155)
+                        end;
+                    };
+                    to[#to+1] = Def.Quad{
+                        InitCommand = function(self)
+                            self:diffuse(BoostColor(JudgmentLineToColor(TName[i]), 0.1))
+                        end;
+                        OnCommand=function(self)
+                            local boundBad = round(getBoundSecondTap(TName[#TName])*1000)
+                            local startX = scale(-round(getBoundSecondTap(TName[i]) * 1000),-boundBad,boundBad,-210,210)
+                            local endX = 0
+                            if i ~= 1 then
+                                endX = scale(-round(getBoundSecondTap(TName[i-1]) * 1000),-boundBad,boundBad,-210,210)
+                            end
+                            self:horizalign(left):vertalign(bottom)
+                            self:xy(startX, 85):zoomx(endX - startX):zoomy(155)
+                        end;
+                    };
+                end
+
+                to[#to+1] = Def.Quad{--Middle Line
+                    OnCommand=function(self) self:diffuse(Color.White); self:diffusealpha(0.9); self:x(-0.5) self:zoomx(1); self:diffuseshift() self:y(7.5) self:zoomy(155); end;
+                };
+
+                to[#to+1] = Def.ActorMultiVertex{
+                    InitCommand=function(self)
+                        self:SetDrawState{Mode="DrawMode_Quads"}
+                    end;
+                    
+                    OnCommand=function(self)
+                        local Vers = {}
+                        local bins = {}
+                        local boundBad = round(getBoundSecondTap(TName[#TName])*1000)
+                        local maxBin = 0
+
+                        for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                            --v[3]
+                            local timeToBin = round(v[3]*1000)
+                            bins[timeToBin] = (bins[timeToBin] or 0) + 1
+                            maxBin = math.max(maxBin, bins[timeToBin])
+                        end
+
+                        for idx = -boundBad,boundBad do
+                            local thisX = scale(idx,-boundBad,boundBad,-210,210)
+                            local thisBin = bins[idx] or 0
+                            local thisY = scale(thisBin,0,maxBin,85,-50)
+                            local thisColor = Color.White
+
+                            for k,v in pairs(TName) do
+                                if math.abs(idx) <= round(getBoundSecondTap(v)*1000) then
+                                    thisColor = JudgmentLineToColor(v)
+                                    break
+                                end
+                            end
+
+                            table.insert(Vers,{{thisX,85,0},thisColor})
+                            table.insert(Vers,{{thisX+1,85,0},thisColor})
+                            table.insert(Vers,{{thisX+1,thisY,0},thisColor})
+                            table.insert(Vers,{{thisX,thisY,0},thisColor})
+                        end
+
+
+                        self:SetNumVertices(#Vers):SetVertices( Vers )
+                    end;
+                };
+                
+
+            end
+
+
+            t[#t+1]=Def.ActorFrame{
+                InitCommand=function(self) self:diffusealpha(0); end;
+                OnCommand = function(self) self:x((i==2 and SCREEN_CENTER_X+5 or 0)); end;
+                TapHistoOnMessageCommand=function(self,param)	if param.pni==i then 
+                            self:stoptweening():decelerate(0.2):diffusealpha(1) end end;
+                TapHistoOffMessageCommand=function(self,param) if param.pni==i then 
+                            self:stoptweening():accelerate(0.2):diffusealpha(0) end end;
+                Def.Quad{
+                    OnCommand=function(self) self:diffuse(ColorDarkTone(Color.Magenta)); self:diffusealpha(0.9); self:zoomx(423); self:zoomy(170*263/256); end;
+                };
+
+                to;
+
+
+
+
+                -- LoadFont("Common Normal")..{
+                --     OnCommand=function(self) self:x(423/2); self:settext(string.format( "-%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(-65); self:horizalign(right); self:vertalign(top); self:zoom(0.6); self:diffuse(JudgmentLineToColor("Miss")); self:diffusealpha(0.7); end;
+                -- };
+                -- LoadFont("Common Normal")..{
+                --     OnCommand=function(self) self:x(423/2); self:settext(string.format( "%d ms", getBoundSecondTap(TName[#TName])*1000)); self:y(65); self:horizalign(right); self:vertalign(bottom); self:zoom(0.6); self:diffuse(JudgmentLineToColor("Miss")); self:diffusealpha(0.7); end;
+                -- };
+
+                Def.ActorFrame{
+                    OnCommand=function(self)
+                        self:x(scale(thisTapMean,0,maxBoundTiming,0,210))
+                    end;
+                    LoadFont("Common Normal")..{
+                        Text = "Mean";
+                        OnCommand=function(self) self:y(-65); self:zoom(0.5); self:diffuse(Color.Yellow); end;
+                    };
+                    LoadActor(THEME:GetPathG("Arrow","Down")).. {
+                        InitCommand=function(self) self:y(-55); self:zoom(0.2); end;
+                    }
+                };
+
+                
+
+                LoadFont("Common Large")..{
+                    OnCommand=function(self) self:x(-230+20); self:y(-85); self:settext("TapsOffset"); self:horizalign(left); self:zoom(0.15); self:shadowlength(3); self:diffusealpha(1); end;
+                };
+
+                LoadFont("Common Normal")..{
+                    OnCommand=function(self) self:x(-205); self:y(-50); self:settextf("Early-\n-%d ms",maxBoundTiming * 1000); self:horizalign(left); self:zoom(0.7); self:shadowlength(3); self:diffusealpha(0.5); end;
+                };
+                LoadFont("Common Normal")..{
+                    OnCommand=function(self) self:x(205); self:y(-50); self:settextf("Late+\n+%d ms",maxBoundTiming * 1000); self:horizalign(right); self:zoom(0.7); self:shadowlength(3); self:diffusealpha(0.5); end;
+                };
+                LoadFont("Common Normal")..{
+                    OnCommand=function(self)
+                        self:x(-110):y(-77):horizalign(left):zoom(0.7)
+                        :shadowlength(3):diffusealpha(1)
+
+                        local sd = 0;
+                        for k,v in pairs(TP.Eva.TapTiming[PNS[i]]) do
+                            sd = sd + math.pow(v[3] - thisTapMean,2)
+                        end
+                        sd = math.sqrt( sd / (#TP.Eva.TapTiming[PNS[i]]) )
+
+                        self:settextf("Mean = %.1f ms; SD = %.1f",thisTapMean*1000, sd*1000)
+                    end;
+                };
+            };
+        end
+
 
 	end
 end
