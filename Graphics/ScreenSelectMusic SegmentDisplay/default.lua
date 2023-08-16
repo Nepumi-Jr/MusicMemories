@@ -3,131 +3,123 @@ local iconPath = "_timingicons"
 local leftColX = -144
 local rightColX = -leftColX
 
-local showCmd = function(self) self:stoptweening(); self:accelerate(0.1); self:diffusealpha(1); end
-local hideCmd = function(self) self:stoptweening(); self:accelerate(0.1); self:diffusealpha(0); end
+local showCmd = function(self) self:finishtweening(); self:accelerate(0.1); self:diffusealpha(1); end
+local hideCmd = function(self) self:finishtweening(); self:accelerate(0.1); self:diffusealpha(0); end
 
 local SegmentTypes = {
-	Stops	=	{ Frame = 0, xPos = leftColX, yPos = 0 },
-	Warps	=	{ Frame = 2, xPos = leftColX, yPos = -16 },
-	Delays	=	{ Frame = 1, xPos = leftColX, yPos = -32 },
-	Attacks	=	{ Frame = 6, xPos = leftColX, yPos = 16 },
-	Scrolls	=	{ Frame = 3, xPos = rightColX, yPos = -32 },
-	Speeds	=	{ Frame = 4, xPos = rightColX, yPos = -17 },
-	Fakes	=	{ Frame = 5, xPos = rightColX, yPos = -2 },
+	Attacks	=	{ Frame = 6, xPos = 52, yPos = -36 },
+	Delays	=	{ Frame = 1, xPos = 52, yPos = -24 },
+	Fakes	=	{ Frame = 5, xPos = 52, yPos = -12 },
+	Scrolls	=	{ Frame = 3, xPos = 52, yPos = 0 },
+	Speeds	=	{ Frame = 4, xPos = 52, yPos = 12 },
+	Stops	=	{ Frame = 0, xPos = 52, yPos = 24 },
+	Warps	=	{ Frame = 2, xPos = 52, yPos = 36 },
 };
+
+local SegmentTypeString = {
+	"Stops",
+	"Warps",
+	"Delays",
+	"Attacks",
+	"Scrolls",
+	"Speeds",
+	"Fakes",
+}
+
+local indAnimate = 0
+local segments = {}
 
 local t = Def.ActorFrame{
 	BeginCommand=function(self) self:playcommand("SetIcons"); self:playcommand("SetAttacksIconMessage"); end;
 	--OffCommand=function(self) self:RunCommandsOnChildren(function(self) self:playcommand("Hide"); end); end;
 
 	SetIconsCommand=function(self)
-		local stops = self:GetChild("StopsIcon")
-		local delays = self:GetChild("DelaysIcon")
-		local warps = self:GetChild("WarpsIcon")
-		local scrolls = self:GetChild("ScrollsIcon")
-		local speeds = self:GetChild("SpeedsIcon")
-		local fakes = self:GetChild("FakesIcon")
-
-		-- hax
-		MESSAGEMAN:Broadcast("SetAttacksIcon",{Player = GAMESTATE:GetMasterPlayerNumber()})
-
+		self:finishtweening()
 		local song = GAMESTATE:GetCurrentSong()
+		segments = {}
 		if song then
 			local timing = song:GetTimingData()
 
-			if timing:HasWarps() then warps:playcommand("Show")
-			else warps:playcommand("Hide")
+			if timing:HasWarps() then segments[#segments + 1] = "Warps" end
+			if timing:HasStops() then segments[#segments + 1] = "Stops" end
+			if timing:HasDelays() then segments[#segments + 1] = "Delays" end
+			if timing:HasScrollChanges() then segments[#segments + 1] = "Scrolls" end
+			if timing:HasSpeedChanges() then segments[#segments + 1] = "Speeds" end
+			if timing:HasFakes() then segments[#segments + 1] = "Fakes" end
+
+			--for each player
+			for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
+				--get timing data from player
+				local steps = GAMESTATE:GetCurrentSteps(pn)
+				if steps and steps:GetTimingData() then
+					local timing = steps:GetTimingData()
+					if timing:HasWarps() then segments[#segments + 1] = "Warps" end
+					if timing:HasStops() then segments[#segments + 1] = "Stops" end
+					if timing:HasDelays() then segments[#segments + 1] = "Delays" end
+					if steps:HasAttacks() then segments[#segments + 1] = "Attacks" end
+					if timing:HasScrollChanges() then segments[#segments + 1] = "Scrolls" end
+					if timing:HasSpeedChanges() then segments[#segments + 1] = "Speeds" end
+					if timing:HasFakes() then segments[#segments + 1] = "Fakes" end
+				end
 			end
 
-			if timing:HasStops() then stops:playcommand("Show")
-			else stops:playcommand("Hide")
+			if #segments > 0 then
+				--sort and remove duplicates
+				table.sort(segments)
+				for i=#segments,2,-1 do
+					if segments[i] == segments[i-1] then
+						table.remove(segments,i)
+					end
+				end
 			end
-
-			if timing:HasDelays() then delays:playcommand("Show")
-			else delays:playcommand("Hide")
+		end
+		indAnimate = 0
+		if #segments > 1 then
+			self:playcommand("doAnimate")
+		elseif #segments == 1 then
+			for i=1,#SegmentTypeString do
+				self:GetChild(SegmentTypeString[i].."Icon"):playcommand("Hide")
 			end
-
-			if timing:HasScrollChanges() then scrolls:playcommand("Show")
-			else scrolls:playcommand("Hide")
-			end
-
-			if timing:HasSpeedChanges() then speeds:playcommand("Show")
-			else speeds:playcommand("Hide")
-			end
-
-			if timing:HasFakes() then fakes:playcommand("Show")
-			else fakes:playcommand("Hide")
-			end
+			self:GetChild(segments[1].."Icon"):playcommand("Show")
 		else
-			warps:playcommand("Hide")
-			stops:playcommand("Hide")
-			delays:playcommand("Hide")
-			scrolls:playcommand("Hide")
-			speeds:playcommand("Hide")
-			fakes:playcommand("Hide")
+			self:playcommand("Hide")
 		end
 	end;
-	SetAttacksIconMessageCommand=function(self,param)
-		local attacks = self:GetChild("AttacksIcon")
-		local song = GAMESTATE:GetCurrentSong()
-		if song then
-			local steps = GAMESTATE:GetCurrentSteps(param.Player)
-			if steps then
-				local hasAttacks = steps:HasAttacks()
-				attacks:playcommand(hasAttacks and "Show" or "Hide")
-			else
-				attacks:playcommand("Hide")
-			end
-		else
-			attacks:playcommand("Hide")
+	doAnimateCommand=function(self)
+		indAnimate = indAnimate + 1
+		if indAnimate > #segments then indAnimate = 1 end
+		local segment = segments[indAnimate]
+		--hide all icons from SegmentTypeString
+		for i=1,#SegmentTypeString do
+			self:GetChild(SegmentTypeString[i].."Icon"):playcommand("Hide")
 		end
+		self:GetChild(segment.."Icon"):playcommand("Show")
+		self:sleep(1.5)
+		self:queuecommand("doAnimate")
 	end;
-
-	LoadActor(iconPath)..{
-		Name="WarpsIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Warps.xPos); self:y(SegmentTypes.Warps.yPos); self:setstate(SegmentTypes.Warps.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="StopsIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Stops.xPos); self:y(SegmentTypes.Stops.yPos); self:setstate(SegmentTypes.Stops.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="DelaysIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Delays.xPos); self:y(SegmentTypes.Delays.yPos); self:setstate(SegmentTypes.Delays.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="AttacksIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Attacks.xPos); self:y(SegmentTypes.Attacks.yPos); self:setstate(SegmentTypes.Attacks.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="ScrollsIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Scrolls.xPos); self:y(SegmentTypes.Scrolls.yPos); self:setstate(SegmentTypes.Scrolls.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="SpeedsIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Speeds.xPos); self:y(SegmentTypes.Speeds.yPos); self:setstate(SegmentTypes.Speeds.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
-	LoadActor(iconPath)..{
-		Name="FakesIcon";
-		InitCommand=function(self) self:animate(false); self:x(SegmentTypes.Fakes.xPos); self:y(SegmentTypes.Fakes.yPos); self:setstate(SegmentTypes.Fakes.Frame); self:diffusealpha(0); end;
-		ShowCommand=showCmd;
-		HideCommand=hideCmd;
-	};
 	CurrentSongChangedMessageCommand=function(self) self:playcommand("SetIcons"); end;
-	CurrentStepsP1ChangedMessageCommand=function(self) MESSAGEMAN:Broadcast("SetAttacksIcon",{Player = PLAYER_1}) end;
-	CurrentStepsP2ChangedMessageCommand=function(self) MESSAGEMAN:Broadcast("SetAttacksIcon",{Player = PLAYER_2}) end;
+	CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("SetIcons") end;
+	CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("SetIcons") end;
 };
+
+for i=1,#SegmentTypeString do
+	t[#t+1] = LoadActor("Segments/"..SegmentTypeString[i])..{
+		Name=SegmentTypeString[i].."Icon";
+		ShowCommand=showCmd;
+		HideCommand=hideCmd;
+	};
+
+	t[#t+1] = LoadActor(iconPath)..{
+		InitCommand=function(self) self:animate(false); self:x(SegmentTypes[SegmentTypeString[i]].xPos); self:y(SegmentTypes[SegmentTypeString[i]].yPos); self:setstate(SegmentTypes[SegmentTypeString[i]].Frame); self:zoom(3/4); end;
+		SetIconsCommand = function(self) 
+			local thisSegment = SegmentTypeString[i];
+			if FindInTable(SegmentTypeString[i],segments) ~= nil then
+				self:diffusealpha(1)
+			else
+				self:diffusealpha(0.1)
+			end
+		end;
+	};
+end
 
 return t;

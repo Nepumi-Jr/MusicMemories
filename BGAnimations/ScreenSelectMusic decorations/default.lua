@@ -183,7 +183,7 @@ if not GAMESTATE:IsCourseMode() then
 		self:zoom(scale(height,32,480,1,32/480))
 	end;
 	t[#t+1] = Def.ActorFrame {
-		OnCommand=function(self) self:draworder(105); self:x(SCREEN_CENTER_X-300); self:y(SCREEN_CENTER_Y-150); self:rotationz(5); self:zoom(0); self:sleep(0.5); self:decelerate(0.25); self:zoom(1); self:thump(); self:effectclock("beat"); self:SetUpdateFunction(CDTitleUpdate); end;
+		OnCommand=function(self) self:draworder(105); self:x(SCREEN_CENTER_X-295); self:y(SCREEN_CENTER_Y-145); self:rotationz(-5); self:zoom(0); self:sleep(0.5); self:decelerate(0.25); self:thump():effectmagnitude(0.5,0.55,0); self:effectclock("beat"); self:SetUpdateFunction(CDTitleUpdate); end;
 		OffCommand=function(self) self:bouncebegin(0.15); self:zoomx(0); end;
 		Def.Sprite {
 			Name="CDTitle";
@@ -258,7 +258,13 @@ t[#t+1] = StandardDecorationFromFileOptional("SortOrder","SortOrderText") .. {
 		local s = GAMESTATE:GetSortOrder()
 		if s ~= nil then
 			local s = SortOrderToLocalizedString( s )
-			self:settext( s )
+			self:GetChild("DisplayText")
+			:finishtweening():settext( s ):x(10):diffusealpha(0):decelerate(0.3):diffusealpha(1):x(30)
+			
+			self:GetChild("Icon")
+			:finishtweening():x(0):diffusealpha(0):decelerate(0.3):x(5):diffusealpha(1)
+			self:GetChild("BG")
+			:finishtweening():decelerate(0.6):zoomto( (self:GetChild("DisplayText"):GetWidth()+30)/0.8, 40 )
 			self:playcommand("Sort")
 		else
 			return
