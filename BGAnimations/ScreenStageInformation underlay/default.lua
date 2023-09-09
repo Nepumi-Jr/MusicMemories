@@ -7,18 +7,24 @@ end
 local t = Def.ActorFrame{};
 
 	t[#t+1]=Def.Quad{
-		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,1}); end;
-		OnCommand=function(self) self:sleep(10.5); end;
+		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0}); end;
+		OnCommand=function(self) self:sleep(11.5); end;
 	};
 
 
 
+	-- t[#t+1]=Def.Quad{
+	-- 	InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
+	-- 	OnCommand=function(self) self:sleep(5); self:linear(0.7); self:diffusealpha(1); end;
+	-- };
 	t[#t+1]=Def.Quad{
-		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
-		OnCommand=function(self) self:sleep(2+2.5); self:linear(0.7); self:diffusealpha(1); end;
+		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,1}); end;
+		OnCommand=function(self) self:sleep(2.2); self:diffusealpha(0.5); end;
 	};
 	t[#t+1] = Def.ActorFrame{
 		InitCommand=function(self) self:Center(); self:zoom(1); self:rotationz(0); end;
+		OnCommand=function(self) self:sleep(2.2); self:queuecommand("app"); end;
+		appCommand=function(self) self:visible(false); end;
 		Def.Sprite {
 			InitCommand=function(self) self:diffusealpha(0); end;
 			BeginCommand=function(self) self:LoadFromCurrentSongBackground(); end;
@@ -33,15 +39,6 @@ local t = Def.ActorFrame{};
 			end;
 		};
 	}
-	t[#t+1]=Def.Quad{
-		InitCommand=function(self) self:FullScreen(); self:diffuse({1,1,1,0}); end;
-		OnCommand=function(self) self:sleep(2.2); self:diffusealpha(1); end;
-	};
-	t[#t+1]=LoadActor("BlurBG.lua")..{
-		InitCommand=function(self) self:visible(false); self:Center(); end;
-		OnCommand=function(self) self:sleep(2.2); self:queuecommand("app"); end;
-		appCommand=function(self) self:visible(true); self:linear(3.8); self:zoom(1.1); self:rotationz(1); end;
-	};
 	 
 	t[#t+1] = Def.ActorFrame{
 		InitCommand=function(self) self:zoom(1.2); self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y-100); self:visible(false); end;
@@ -86,7 +83,7 @@ local t = Def.ActorFrame{};
 
 	t[#t+1]=Def.Quad{
 		InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0}); end;
-		OnCommand=function(self) self:sleep(5); self:linear(1); self:diffusealpha(1); end;
+		OnCommand=function(self) self:sleep(6); self:linear(1); self:diffusealpha(1); end;
 	};
 
 

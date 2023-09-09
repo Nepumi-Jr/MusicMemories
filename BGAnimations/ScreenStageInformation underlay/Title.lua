@@ -176,24 +176,24 @@ end
 
 t[#t+1] =Def.ActorFrame{
 	InitCommand=function(self) self:diffusealpha(0); end;
-	OnCommand=function(self) self:sleep(1.773); self:decelerate(2); self:diffusealpha(1); self:sleep(1.259); self:linear(0.5); self:diffusealpha(0); end;
+	OnCommand=function(self) self:sleep(1.773); self:decelerate(2); self:diffusealpha(1); self:sleep(1.259 + 2); self:linear(0.5); self:diffusealpha(0); end;
 	Def.Quad{
 		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.5); self:zoomx(SCREEN_RIGHT); self:zoomy(SCREEN_CENTER_Y,0.7); self:diffuse({0,0,0,0}); self:fadetop(0.2); end;
 		OnCommand=function(self) self:diffusealpha(0.7); end;
 	};
 	LoadActor(Picdir)..{
 		InitCommand=function(self) self:CenterX(); self:y(SCREEN_CENTER_Y*1.15-50); self:diffusealpha(0); self:zoom(0.5); end;
-		OnCommand=function(self) self:decelerate(5); self:y(SCREEN_CENTER_Y*1.15); self:diffusealpha(1); end;
+		OnCommand=function(self) self:decelerate(6); self:y(SCREEN_CENTER_Y*1.15); self:diffusealpha(1); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = "-"..Text1.."-";
 		InitCommand=function(self) self:x(SCREEN_CENTER_X-50); self:y(SCREEN_CENTER_Y*1.3); self:diffuse(See1); self:zoom(0.6); end;
-		OnCommand=function(self) self:decelerate(5); self:x(SCREEN_CENTER_X); end;
+		OnCommand=function(self) self:decelerate(6); self:x(SCREEN_CENTER_X); end;
 	};
 	LoadFont("Common Normal")..{
 		Text = Text2;
 		InitCommand=function(self) self:x(SCREEN_CENTER_X+50); self:y(SCREEN_CENTER_Y*1.45); self:diffuse(See2); self:zoom(1.2); end;
-		OnCommand=function(self) self:decelerate(5); self:x(SCREEN_CENTER_X); end;
+		OnCommand=function(self) self:decelerate(6); self:x(SCREEN_CENTER_X); end;
 	};
 
 	at;
@@ -202,13 +202,13 @@ t[#t+1] =Def.ActorFrame{
 		Condition = GAMESTATE:IsHumanPlayer(PLAYER_1) and (not GAMESTATE:IsCourseMode()) ;
 		Text = "";
 		InitCommand=function(self) self:horizalign(left); self:x(0); self:y(SCREEN_CENTER_Y*1.7); self:diffuse(Color.Orange); end;
-		OnCommand=function(self) self:settext("Step by\n"..GAMESTATE:GetCurrentSteps(PLAYER_1):GetAuthorCredit() or "???"); self:decelerate(5); self:x(30); end;
+		OnCommand=function(self) self:settext("Step by\n"..GAMESTATE:GetCurrentSteps(PLAYER_1):GetAuthorCredit() or "???"); self:decelerate(6); self:x(30); end;
 	};
 	LoadFont("Common Normal")..{
 		Condition = GAMESTATE:IsHumanPlayer(PLAYER_2) and (not GAMESTATE:IsCourseMode()) ;
 		Text = "";
 		InitCommand=function(self) self:horizalign(right); self:x(SCREEN_RIGHT); self:y(SCREEN_CENTER_Y*1.7); self:diffuse(Color.Orange); end;
-		OnCommand=function(self) self:settext("Step by\n"..GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit() or "???"); self:decelerate(5); self:x(SCREEN_RIGHT-30); end;
+		OnCommand=function(self) self:settext("Step by\n"..GAMESTATE:GetCurrentSteps(PLAYER_2):GetAuthorCredit() or "???"); self:decelerate(6); self:x(SCREEN_RIGHT-30); end;
 	};
 };
 
