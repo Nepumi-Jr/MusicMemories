@@ -65,15 +65,13 @@ end;
 
 local function CreatePaneDisplayItemA( _pnPlayer, _sLabel, _rcRadarCategory )
 	return Def.ActorFrame {
-		LoadFont("Common Normal") .. {
-			Text=THEME:GetString("RadarCategory",_sLabel);
-			InitCommand=function(self) self:horizalign(left); self:x(-30); end;
-			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
+		LoadActor("Icon/".._sLabel..".lua")..{
+			InitCommand=function(self) self:zoom(0.25):x(-20) end;
 		};
-		LoadFont("Common Normal") .. {
+		LoadFont("Combo Number") .. {
 			Text=string.format("%04i", 0);
-			InitCommand=function(self) self:horizalign(right); self:x(40); end;
-			OnCommand=function(self) self:zoom(0.5875); self:shadowlength(1); end;
+			InitCommand=function(self) self:horizalign(right); self:x(20):maxwidth(180); end;
+			OnCommand=function(self) self:zoom(0.15); self:shadowlength(1); end;
 			CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			CurrentStepsP1ChangedMessageCommand=function(self) self:playcommand("Set"); end;
 			CurrentStepsP2ChangedMessageCommand=function(self) self:playcommand("Set"); end;
@@ -83,11 +81,18 @@ local function CreatePaneDisplayItemA( _pnPlayer, _sLabel, _rcRadarCategory )
 			SetCommand=function(self)
 				local song = GAMESTATE:GetCurrentSong()
 				local course = GAMESTATE:GetCurrentCourse()
-				if not song and not course then
-					self:settextf("%04i", 0);
-				else
-					self:settextf("%04i", GetRadarData( _pnPlayer, _rcRadarCategory ) );
+				local thatValue = 0;
+				if song or course then
+					thatValue = GetRadarData( _pnPlayer, _rcRadarCategory );
 				end
+				thatValue = math.floor(thatValue);
+				local digits = 0;
+				if thatValue > 0 then
+					digits = math.min(math.floor(math.log10(thatValue)+1), 4);
+				end
+				
+				self:settextf("%04i", thatValue);
+				self:AddAttribute(0,{Length = 4 - digits; Diffuse = color("#222222")});
 			end;
 		};
 	};
@@ -247,7 +252,7 @@ t[#t+1] = Def.ActorFrame {
 	Def.ActorFrame{
 		InitCommand=function(self) self:diffusealpha(1); end;
 		OnCommand=function(self) self:queuecommand("GOIWAP"); end;
-		GOIWAPCommand=function(self) self:sleep(3); self:decelerate(1); self:diffusealpha(0); self:sleep(3); self:decelerate(1); self:diffusealpha(1); self:queuecommand("GOIWAP"); end;
+		GOIWAPCommand=function(self) self:sleep(10); self:decelerate(1); self:diffusealpha(0); self:sleep(3); self:decelerate(1); self:diffusealpha(1); self:queuecommand("GOIWAP"); end;
 		OffCommand=function(self)
 			self:stoptweening();
 		end;
@@ -282,7 +287,7 @@ t[#t+1] = Def.ActorFrame {
 	Def.ActorFrame{
 		InitCommand=function(self) self:visible(true); self:diffusealpha(0); end;
 		OnCommand=function(self) self:queuecommand("GOIWAP"); end;
-		GOIWAPCommand=function(self) self:sleep(3); self:decelerate(1); self:diffusealpha(1); self:sleep(3); self:decelerate(1); self:diffusealpha(0); self:queuecommand("GOIWAP"); end;
+		GOIWAPCommand=function(self) self:sleep(10); self:decelerate(1); self:diffusealpha(1); self:sleep(3); self:decelerate(1); self:diffusealpha(0); self:queuecommand("GOIWAP"); end;
 		OffCommand=function(self)
 			self:stoptweening();
 		end;
