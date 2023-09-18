@@ -40,13 +40,12 @@ return Def.ActorFrame {
 			LoadActor(THEME:GetPathG("_StepsDisplayListRow","Cursor")) .. {
 				InitCommand=function(self) self:diffuse(PlayerColor(PLAYER_1)); self:x(8); self:zoom(0.75); end;
 			};
-			LoadActor(THEME:GetPathG("_StepsDisplayListRow","arrow")) .. {
-				InitCommand=function(self) self:x(20); self:diffuse(PlayerColor(PLAYER_1)); end;
-				OnCommand=function(self) self:wag(); self:effectmagnitude(0,0,15); self:effectclock('beat'); end;
+			LoadActor(THEME:GetPathG("Arrow","Right"), PlayerColor(PLAYER_1)) .. {
+				InitCommand=function(self) self:x(20):zoom(0.2) end;
 			};
 			LoadFont("Common Normal") .. {
 				Text="P1";
-				InitCommand=function(self) self:x(2); self:diffuse(PlayerColor(PLAYER_1)); self:shadowlength(1); end;
+				InitCommand=function(self) self:x(-2):y(2); self:diffuse(PlayerColor(PLAYER_1)); self:shadowlength(1); end;
 				OnCommand=function(self) self:zoom(0.75); end;
 			};
 		};
@@ -67,13 +66,12 @@ return Def.ActorFrame {
 			LoadActor(THEME:GetPathG("_StepsDisplayListRow","Cursor")) .. {
 				InitCommand=function(self) self:diffuse(PlayerColor(PLAYER_2)); self:x(-8); self:zoom(0.75); end;
 			};
-			LoadActor(THEME:GetPathG("_StepsDisplayListRow","arrow")) .. {
-				InitCommand=function(self) self:x(-20); self:diffuse(PlayerColor(PLAYER_2)); end;
-				OnCommand=function(self) self:wag(); self:effectmagnitude(0,0,15); self:effectclock('beat'); end;
+			LoadActor(THEME:GetPathG("Arrow","Right"), PlayerColor(PLAYER_2)) .. {
+				InitCommand=function(self) self:x(-20):zoom(0.2) end;
 			};
 			LoadFont("Common Normal") .. {
 				Text="P2";
-				InitCommand=function(self) self:x(-2); self:diffuse(PlayerColor(PLAYER_2)); self:shadowlength(1); end;
+				InitCommand=function(self) self:x(-2):y(2); self:diffuse(PlayerColor(PLAYER_2)); self:shadowlength(1); end;
 				OnCommand=function(self) self:zoom(0.75); end;
 			};
 		};

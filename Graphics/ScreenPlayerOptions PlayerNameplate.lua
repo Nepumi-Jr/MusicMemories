@@ -37,9 +37,9 @@ local t = Def.ActorFrame {
 		InitCommand=function(self) self:x(-40); self:maxwidth(88/bpm_text_zoom); end,
 		OnCommand=function(self) self:shadowlength(1); self:zoom(bpm_text_zoom); end
 	},
-	LoadActor(THEME:GetPathG("_StepsDisplayListRow","arrow")) .. {
+	LoadActor(THEME:GetPathG("Arrow","Right"),color("#CCCCCC")) .. {
 		Name="Seperator",
-		InitCommand=function(self) self:x(14); end
+		InitCommand=function(self) self:x(14):zoom(0.2) end
 	},
 	LoadFont("Common Normal") .. {
 		Text="100 - 200000";
