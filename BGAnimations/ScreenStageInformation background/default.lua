@@ -38,7 +38,7 @@ t[#t+1] = Def.ActorFrame{
 		self:x(100):y(0)
 		end
 	end;
-	LoadActor("3DStuff")..{
+	LoadActor(THEME:GetPathG("","3DTable"))..{
 		OnCommand=cmd(queuecommand,"INTC");
 		INTCCommand=function(self)
 		self:z(CAMPOS[CAMMOVER][1][3])

@@ -24,13 +24,19 @@ local t = Def.ActorFrame{
         InitCommand=function(self) self:FullScreen(); self:diffuse({0,0,0,0}); end;
         OnCommand=function(self) self:decelerate(1); self:diffusealpha(0.7); end;
     };
+    
     LoadActor("Sudden.png")..{
-        InitCommand=function(self) self:Center(); self:diffusealpha(0); end;
-        OnCommand=function(self) self:sleep(1); self:diffusealpha(1); end;
+        InitCommand=function(self) self:Center():addy(30) self:diffusealpha(0); end;
+        OnCommand=function(self) self:sleep(1); self:diffusealpha(1); self:sleep(7) end;
+    };
+    Def.Quad{
+        InitCommand=function(self) self:FullScreen(); self:diffuse(color("#441122")):cropbottom(1):fadebottom(0.5) end;
+        StartTransitioningCommand=function(self) self:sleep(8):decelerate(0.3):cropbottom(0):fadebottom(0) end;
     };
     LoadActor("SuddenDeath.mp3")..{
         StartTransitioningCommand=function(self) self:play(); end;
     };
+    
 
     Def.ActorFrame{
         OnCommand=function(self) self:Center(); end;

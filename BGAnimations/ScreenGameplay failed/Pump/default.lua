@@ -34,5 +34,9 @@ local t = Def.ActorFrame{
         InitCommand=function(self) self:FullScreen(); end;
         StartTransitioningCommand=function(self) self:play(); end;
     };
+    Def.Quad{
+        InitCommand=function(self) self:FullScreen(); self:diffuse(color("#441122")):cropbottom(1):fadebottom(0.5) end;
+        StartTransitioningCommand=function(self) self:sleep(5):decelerate(0.3):cropbottom(0):fadebottom(0) end;
+    };
 };
 return t;

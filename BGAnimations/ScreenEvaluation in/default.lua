@@ -3,7 +3,7 @@ local t = Def.ActorFrame{
         InitCommand=function(self)
             self:FullScreen()
         if STATSMAN:GetCurStageStats():AllFailed() then
-            self:diffuse(color("#FFAAAA"));
+            self:diffuse(color("#441122"));
         else
     
             local SA = false;

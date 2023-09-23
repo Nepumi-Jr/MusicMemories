@@ -140,27 +140,8 @@ t[#t+1] = Def.ActorFrame {
 
 	};
 	t[#t+1] = LoadActor("BlurBG.lua");
-if GAMESTATE:GetCurrentSong():GetDisplayMainTitle() == "Ring of Fortune" then
-	t[#t+1] = LoadActor("IslaChan") .. {
-		OnCommand=function(self) self:play(); end;
-	};
 
-elseif string.match( string.lower(GAMESTATE:GetCurrentSong():GetDisplayFullTitle()), "megalovania") and STATSMAN:GetCurStageStats():AllFailed() then
-	t[#t+1] = LoadActor("dog") .. {
-		OnCommand=function(self) self:play(); end;
-	};
-	t[#t+1] = LoadActor("fail-background")..{
-		Condition =(string.match( getPlayerName(PLAYER_1), "Isla") or string.match( getPlayerName(PLAYER_2), "Isla"));
-		InitCommand=function(self) self:FullScreen(); end;
-	};
-elseif TP.Battle.IsBattle then
-	t[#t+1] = LoadActor("Battle") .. {
-		OnCommand=function(self) self:play(); end;
-	};
-elseif STATSMAN:GetCurStageStats():AllFailed() then
-	t[#t+1] = LoadActor("Plastic Memories - OST - What do you say") .. {
-		OnCommand=function(self) self:play(); end;
-	};
+if STATSMAN:GetCurStageStats():AllFailed() then
 	t[#t+1] = Def.Quad {
 		InitCommand=function(self) self:Center(); self:scaletoclipped(SCREEN_WIDTH+1,SCREEN_HEIGHT); end;
 		OnCommand=function(self) self:rainbow(); self:diffusealpha(0.1); end;
@@ -170,20 +151,7 @@ elseif STATSMAN:GetCurStageStats():AllFailed() then
 		Condition =(string.match( getPlayerName(PLAYER_1), "Isla") or string.match( getPlayerName(PLAYER_2), "Isla"));
 		InitCommand=function(self) self:FullScreen(); end;
 	};
-elseif OMW == "ISLA" or OMW == "BEAT" or OMW == "WOW" then
-	--[[if URDOURBEST1 and URDOURBEST2 and IM then
-		t[#t+1] = LoadActor("Plastic Memories - OST - Bye") .. {
-			OnCommand=function(self) self:play(); end;
-		};
-	else]]
-		t[#t+1] = LoadActor("IslaChan") .. {
-			OnCommand=function(self) self:play(); end;
-		};
-	--end
 else
-	t[#t+1] = LoadActor("Plastic Memories OST 2 - 012 Changing mind") .. {
-		OnCommand=function(self) self:play(); end;
-	};
 	t[#t+1] = Def.Quad {
 		InitCommand=function(self) self:Center(); self:scaletoclipped(SCREEN_WIDTH+1,SCREEN_HEIGHT); end;
 		OnCommand=function(self) self:diffuse(color("#FFFFFF")); self:diffusebottomedge(color("#DDDDDD")); self:diffusealpha(0.1); end;
