@@ -77,6 +77,7 @@ local t = Def.ActorFrame{
             local thisSteps = GAMESTATE:GetCurrentSteps(_G['PLAYER_'..p]);
             local TD = thisSteps:GetTimingData();
             BreakTime[p] = {};
+            BTI = 1;
             local LN = -200;
 
 
@@ -110,6 +111,7 @@ local t = Def.ActorFrame{
                 local thisCol = v[2];
                 local thisNoteType = v[3];
                 local Now_Score = 0
+                
 
                 if thisNoteType == "TapNoteType_Tap" or 
                     thisNoteType == "TapNoteSubType_Hold" or 
@@ -158,7 +160,7 @@ local t = Def.ActorFrame{
                     lastnote = math.max(lastnote,B2S(NowBeat + 4))
                     
                     if math.abs(B2S(NowBeat) - LN) >= 4 and nHold == 0 and nRoll == 0 then
-                        BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-2};
+                        BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-0.5};
                     end
                     LN = B2S(NowBeat)
                 end
@@ -457,10 +459,12 @@ local t = Def.ActorFrame{
             --printf("BT : %s",TableToString(BreakTime))
             if BTI <= #BreakTime and ThemePrefs.Get("BorderGameplayEffect") then
                 if CurSec >= BreakTime[BTI][1] and not SCS then
+                    local csDuration = BreakTime[BTI][2] - math.max(BreakTime[BTI][1], CurSec);
                     SCS = true;
                     this["CS_Top"]:stoptweening():decelerate(0.5):y(0)
                     this["CS_Bot"]:stoptweening():decelerate(0.5):y(SCREEN_BOTTOM)
                     this["VertexLife"]:stoptweening():decelerate(0.5):y(0):diffusealpha(0.05)
+                    this["CS_ProgressBar"]:finishtweening():linear(csDuration):cropright(0)
                 end
     
                 if CurSec >= BreakTime[BTI][2] and SCS then
@@ -468,6 +472,7 @@ local t = Def.ActorFrame{
                     this["CS_Top"]:stoptweening():decelerate(0.5):y(-75)
                     this["CS_Bot"]:stoptweening():decelerate(0.5):y(SCREEN_BOTTOM+75)
                     this["VertexLife"]:stoptweening():decelerate(0.5):y(0):diffusealpha(1)
+                    this["CS_ProgressBar"]:stoptweening():decelerate(0.5):cropright(1)
                     BTI = BTI + 1
                 end
             end
@@ -493,6 +498,11 @@ t[#t+1] = Def.Quad{
     Name = "CS_Bot";
     InitCommand=function(self) self:vertalign(bottom); self:y(SCREEN_BOTTOM); self:zoomx(SCREEN_RIGHT); self:CenterX(); self:zoomy(75); self:diffuse({0,0,0,1}); self:fadetop(1); end;
     OnCommand=function(self) self:y(SCREEN_BOTTOM+75); end
+};
+t[#t+1] = Def.Quad{
+    Name = "CS_ProgressBar";
+    InitCommand=function(self) self:vertalign(bottom); self:CenterX(); self:y(SCREEN_BOTTOM) self:zoomx(SCREEN_RIGHT); self:zoomy(5); self:diffuse({1,1,1,1}); self:fadetop(0.3); end;
+    OnCommand=function(self) self:cropright(1); end
 };
 
 t[#t+1] = Def.ActorMultiVertex{
