@@ -20,7 +20,7 @@ t[#t+1] = LoadActor(gOverlayPath.."MulPStuff");
 
 
 
-t[#t+1]=LoadActor(gOverlayPath.."TitleAll");
+--t[#t+1]=LoadActor(gOverlayPath.."TitleAll");
 
 --if tostring(SCREENMAN:GetTopScreen():GetScreenType()) ~== "ScreenType_SystemMenu" then
 --end
