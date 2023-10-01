@@ -100,10 +100,22 @@ local t = Def.ActorFrame{
                 --GAMESTATE:GetCurrentSong():GetLastSecond()
             end
 
+            local finalNote = noteData;
+            local isTail = false;
+            for k,v in pairs(noteData) do
+                if v[3] == "TapNoteSubType_Hold" or v[3] == "TapNoteSubType_Roll" then
+                    if v.length then
+                        finalNote[#finalNote + 1] = {v[1]+v.length,v[2],"TapNoteType_HoldTail"}
+                        isTail = true;
+                    end
+                end
+            end
+            noteData = finalNote;
+            finalNote = nil;
+
             
             table.sort(noteData, compareNoteData);
-            --printf("%s",TableToString(noteData))
-
+            local holdRolls = {};
 
             for k,v in pairs(noteData) do
                 --? {time, col, NoteType}
@@ -119,12 +131,11 @@ local t = Def.ActorFrame{
                         Now_Score = 1 + (0.7*nHold) + (1.5*nRoll)
 
                         if thisNoteType == "TapNoteSubType_Hold" then
-                            
-                            --nHold = nHold + 1;
+                            if isTail then nHold = nHold + 1; end
                             SegmentHoldAndRoll[thisCol] = 'H';
                         end
                         if thisNoteType == "TapNoteSubType_Roll" then
-                            --nRoll = nRoll + 1;
+                            if isTail then nRoll = nRoll + 1; end
                             SegmentHoldAndRoll[thisCol] = 'R';
                         end
 
@@ -132,16 +143,11 @@ local t = Def.ActorFrame{
 
                 
                 if thisNoteType == "TapNoteType_HoldTail" then
-                    --TODO: HoldTail
-                    --! TapNoteType_HoldTail never found in noteData :|
-                    --! or incorrect lua documentation?
-                    printf("TapNoteType_HoldTail FOUNDED\nplease change the code to support this");
                     if SegmentHoldAndRoll[thisCol] == "H" then
-                        
-                        --nHold = nHold - 1;
+                        nHold = nHold - 1;
                         SegmentHoldAndRoll[thisCol] = "-"
                     elseif SegmentHoldAndRoll[thisCol] == "R" then
-                        --nRoll = nRoll - 1;
+                        nRoll = nRoll - 1;
                         SegmentHoldAndRoll[thisCol] = "-"
                     end
                 end
