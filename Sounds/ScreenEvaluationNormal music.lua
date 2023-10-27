@@ -10,6 +10,9 @@ elseif TP.Battle.IsBattle then
     audioFile = "Easter/Battle"
 elseif STATSMAN:GetCurStageStats():AllFailed() then
     audioFile = "IslaMemories/Plastic Memories - OST - What do you say"
+    if LoadModule("Easter.today.lua")() == "HALLOWEEN" then
+        audioFile = "MinecraftCaveSounds/"..math.random(1,6);
+    end
 elseif StateTier == "ISLA" or StateTier == "BEAT" or StateTier == "WOW" then
     if math.random(1, 10) == 1 then
         audioFile = "Easter/EPIC"

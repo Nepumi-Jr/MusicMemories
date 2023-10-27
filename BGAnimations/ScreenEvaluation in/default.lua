@@ -4,6 +4,9 @@ local t = Def.ActorFrame{
             self:FullScreen()
         if STATSMAN:GetCurStageStats():AllFailed() then
             self:diffuse(color("#441122"));
+            if LoadModule("Easter.today.lua")() == "HALLOWEEN" then
+                self:diffuse(color("#000000"));
+            end
         else
     
             local SA = false;
