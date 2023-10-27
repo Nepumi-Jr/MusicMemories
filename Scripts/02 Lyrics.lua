@@ -5,11 +5,13 @@ function Actor:LyricCommand(side)
 	self:finishtweening()
 	self:shadowlengthx(0)
 	self:shadowlengthy(0)
-	self:strokecolor(Color("Outline"))
 	self:zoomx(clamp(SCREEN_WIDTH/(self:GetZoomedWidth()+1), 0, 1))
 
 	local Color = Var "LyricColor"
 	local Factor = 1
+	local timeLen =  Var "LyricDuration" 
+
+
 	if side == "Back" then
 		Factor = 0.5
 	elseif side == "Front" then
@@ -22,45 +24,36 @@ function Actor:LyricCommand(side)
 		Color[4] * Factor
 	})
 
+
 	if side == "Front" then
-		self:cropright(1)
-		self:strokecolor(ColorTone(Color));
-        self:textglowmode("TextGlowMode_Stroke");
+		local timeLenClamp = clamp(timeLen, 0.5, 10)
+		self:cropright(1):y(0):rotationz(0)
+
+		self:strokecolor(ColorTone(Color)):textglowmode("TextGlowMode_Stroke");
+
+		self:sleep( timeLen * 0.1):linear( timeLen * 0.75)
+		self:cropright(0)
+
+		self:accelerate( timeLen * 0.14 )
+		self:diffusealpha(0):y(scale(timeLenClamp, 0.5, 10, 5, 12)):rotationz(scale(timeLenClamp, 0.5, 10, 0, 5))
 	elseif side == "Back" then
-		self:diffusealpha(0)
+		self:diffusealpha(0):y(-5)
 		if ColorCmp(ColorTone(Color),{1,1,1,0}) then
 			self:strokecolor({0.8,0.8,0.8,1});
 		else
 			self:strokecolor({0.2,0.2,0.2,1});
 		end
-		
         self:textglowmode("TextGlowMode_Stroke");
-	else
-		self:strokecolor(ColorTone(Color));
-		self:cropleft(0)
+
+		self:decelerate( timeLen * 0.15)
+		self:diffusealpha(1):y(0)
+
+		self:sleep( timeLen * 0.70)
+		self:diffusealpha(0)
 	end
 	
-	self:zoomy(1)
 	
-	if side == "Back" then
-		self:decelerate( Var "LyricDuration" * 0.15)
-		self:diffusealpha(1)
-	else
-	self:linear( Var "LyricDuration" * 0.1)
-	end
-	if side == "Back" then
-	self:sleep( Var "LyricDuration" * 0.70)
-	else
-	self:linear( Var "LyricDuration" * 0.75)
-	end
-	if side == "Front" then
-		self:cropright(0)
-	end
-	self:sleep(0.001)
-	if side == "Back" then
-	else
-	self:accelerate( Var "LyricDuration" * 0.15 )
-	end
-	self:diffusealpha(0)
+	
+	
 end
 
