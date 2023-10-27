@@ -163,7 +163,7 @@ local t = Def.ActorFrame{
                 end
                 
                 if FindInTable(thisNoteType, {"TapNoteType_Tap", "TapNoteSubType_Hold","TapNoteSubType_Roll","TapNoteType_Mine","TapNoteType_Fake","TapNoteType_Lift", "TapNoteType_HoldTail"}) then
-                    lastnote = math.max(lastnote,B2S(NowBeat + 4))
+                    lastnote = math.max(lastnote,B2S(NowBeat + (isTail and 0 or 4)))
                     
                     if math.abs(B2S(NowBeat) - LN) >= 4 and nHold == 0 and nRoll == 0 then
                         BreakTime[p][#BreakTime[p]+1] = {LN,B2S(NowBeat)-0.5};
@@ -375,19 +375,33 @@ local t = Def.ActorFrame{
                     --HP Go BRR
 
                     local GL = 0;
-                    for p = nsP,msP do
-                        GL = GL + SCREENMAN:GetTopScreen():GetLifeMeter(_G['PLAYER_'..p]):GetLife()/(msP-nsP+1);
-                    end
-                    
                     local CCL = {1,1,1,1}
-                    
-                    if GL >= 2/3 then
-                        CCL = ScaleColor(GL,2/3,1,Color.Green or {0,1,0,1},Color.SkyBlue or {0.5,0.5,1,1})
-                    elseif GL >= 1/3 then
-                        CCL = ScaleColor(GL,1/3,2/3,Color.Yellow or {1,1,0,1},Color.Green or {0,1,0,1})
+                    if GAMESTATE:GetPlayerState(_G['PLAYER_'..nsP]):GetPlayerOptions("ModsLevel_Preferred"):FailSetting() == "FailType_80Percent" then
+                        GL = 1
+                        for p = nsP,msP do
+                            GL = math.min(GL, SCREENMAN:GetTopScreen():GetLifeMeter(_G['PLAYER_'..p]):GetLife());
+                        end
+
+                        if GL >= 0.8 then
+                            CCL = Color.Red
+                        else
+                            CCL = Color.SkyBlue
+                        end
                     else
-                        CCL = ScaleColor(GL,0,1/3,Color.Red or {1,0,0,1},Color.Yellow or {1,1,0,1})
+                        for p = nsP,msP do
+                            GL = GL + SCREENMAN:GetTopScreen():GetLifeMeter(_G['PLAYER_'..p]):GetLife()/(msP-nsP+1);
+                        end
+
+
+                        if GL >= 2/3 then
+                            CCL = ScaleColor(GL,2/3,1,Color.Green or {0,1,0,1},Color.SkyBlue or {0.5,0.5,1,1})
+                        elseif GL >= 1/3 then
+                            CCL = ScaleColor(GL,1/3,2/3,Color.Yellow or {1,1,0,1},Color.Green or {0,1,0,1})
+                        else
+                            CCL = ScaleColor(GL,0,1/3,Color.Red or {1,0,0,1},Color.Yellow or {1,1,0,1})
+                        end
                     end
+
 
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+1,
                     {{Scaling*(N_Tile-2),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile-1] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},

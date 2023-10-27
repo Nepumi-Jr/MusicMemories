@@ -102,7 +102,7 @@ t[#t+1] = Def.ActorFrame {
 if ThemePrefs.Get("BorderGameplayEffect") then
 	if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 	t[#t+1]=LoadActor("Border.png")..{
-			Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
+			Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle') and GAMESTATE:GetPlayerState(PLAYER_1):GetPlayerOptions("ModsLevel_Preferred"):FailSetting() == "FailType_Immediate";
 			InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+10); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); self:diffuse(color("#FF0000")); end;
 			OnCommand=function(self) self:queuecommand("Judgment"); end;
 			JudgmentMessageCommand=function(self)
@@ -127,7 +127,7 @@ if ThemePrefs.Get("BorderGameplayEffect") then
 	end
 	if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 	t[#t+1]=LoadActor("Border.png")..{
-			Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle');
+			Condition = not (TP.Battle.IsBattle and TP.Battle.Mode == "Dr" and TP.Battle.Hidden) and not (GAMESTATE:GetPlayMode() == 'PlayMode_Rave' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle') and GAMESTATE:GetPlayerState(PLAYER_2):GetPlayerOptions("ModsLevel_Preferred"):FailSetting() == "FailType_Immediate";
 			InitCommand=function(self) self:x(SCREEN_CENTER_X); self:y(SCREEN_CENTER_Y+10); self:zoomtowidth(SCREEN_WIDTH); self:zoomtoheight(SCREEN_HEIGHT); self:diffuse(color("#FF0000")); end;
 			OnCommand=function(self) self:queuecommand("Judgment"); end;
 			JudgmentMessageCommand=function(self)

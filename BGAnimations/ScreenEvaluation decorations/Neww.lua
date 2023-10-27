@@ -166,6 +166,18 @@ for iterPn in ivalues(Players) do
         Condition = GAMESTATE:IsPlayerEnabled(thisPn);
         Def.ActorFrame{
             OnCommand=function(self) self:x(thisPn == PLAYER_1 and 0 or SCREEN_CENTER_X+3); self:y(SCREEN_BOTTOM-31); end;
+
+            Def.Sprite{
+                InitCommand=function(self)
+                    self:Load(getThemeDir().."/BGAnimations/ScreenEvaluation decorations/GraphBackgroud1.png")
+                        :y(-15):zoomto(423, 161):vertalign(bottom):horizalign(left)
+                    if GAMESTATE:GetPlayerState(thisPn):GetPlayerOptions("ModsLevel_Preferred"):FailSetting() == "FailType_80Percent" then
+                        self:Load(getThemeDir().."/BGAnimations/ScreenEvaluation decorations/GraphBackgroud2.png")
+                            :y(-15):zoomto(423, 161):vertalign(bottom):horizalign(left)
+                    end
+
+                end;
+            };
             --? from outfox
             Def.GraphDisplay{
                 InitCommand=function(self) self:vertalign(bottom):horizalign(left):y(-15) end;
@@ -175,7 +187,7 @@ for iterPn in ivalues(Players) do
                     local stageStats = STATSMAN:GetCurStageStats()
                     self:Set(stageStats, playerStageStats)
                     local Line = self:GetChild("Line")
-                    
+
                     Line:visible(false)
                 end;
             };
