@@ -39,7 +39,7 @@ end
 
 t[#t+1] = LoadActor("GatherInfo.lua");
 t[#t+1] = LoadActor("SoundReady");
-t[#t+1] = LoadActor("Time.lua")..{
+t[#t+1] = LoadActor("UpperStage")..{
 	GETOUTOFGAMESMMessageCommand=function(self) self:sleep(.75); self:accelerate(0.5); self:y(-100); end;
 };
 t[#t+1] = LoadActor("BPM")..{
