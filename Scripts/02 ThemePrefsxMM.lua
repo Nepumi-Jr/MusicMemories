@@ -129,6 +129,12 @@ local Prefs =
 		Choices = { OptionNameString('Off'), OptionNameString('On')},
 		Values = { false, true}
 	},
+	CenterLifeBar =
+	{
+		Default = 1,
+		Choices = { OptionNameString('Off'), OptionNameString('On').."(Two sides)", OptionNameString('On').."(Center)", OptionNameString('On')},
+		Values = { 0, 1, 2, 3}
+	},
 }
 
 ThemePrefs.InitAll(Prefs)

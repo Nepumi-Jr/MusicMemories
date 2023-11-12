@@ -37,6 +37,8 @@ if TexttoDeBUG ~= "" then
 t[#t+1] = LoadActor("BeatMann");
 end
 
+	t[#t+1] = LoadActor("Border/defaultBG.lua");
+
 t[#t+1] = LoadActor("GatherInfo.lua");
 t[#t+1] = LoadActor("SoundReady");
 t[#t+1] = LoadActor("UpperStage")..{

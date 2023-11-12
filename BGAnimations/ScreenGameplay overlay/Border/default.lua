@@ -9,6 +9,13 @@ local t = Def.ActorFrame{
 	OnCommand=function(self) self:y(-10); end;
 };
 
+local framePath = "Frames/Frame.png";
+local frameGlowPath = "Frames/Glow.png";
+
+if LoadModule("Gameplay.IsFrameSolo.lua")() then
+	framePath = "Frames/FrameSolo.png";
+	frameGlowPath = "Frames/FrameSoloGlow.png";
+end
 
 t[#t+1] = Def.ActorFrame{
     Def.ActorFrame{
@@ -49,7 +56,7 @@ t[#t+1] = Def.ActorFrame{
 		    end;
 			Def.ActorFrame{
 				OnCommand=function(self) self:diffuseshift(); self:effectcolor1({1,1,1,1}); self:effectcolor2({1,1,1,0.7}); self:effectclock("beat"); end;
-				LoadActor("Blur")..{
+				LoadActor(frameGlowPath)..{
 					InitCommand=function(self) self:x(SCREEN_CENTER_X); self:vertalign(top); self:y(10); self:zoomtowidth(SCREEN_WIDTH); end;
 					OnCommand=function(self) self:queuecommand("Nep"); end;
 					CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
@@ -71,7 +78,7 @@ t[#t+1] = Def.ActorFrame{
 };
 
 t[#t+1] = Def.ActorFrame {
-    LoadActor("BigBar.png")..{
+    LoadActor(framePath)..{
 		InitCommand=function(self) self:vertalign(top); self:CenterX(); self:zoomtowidth(SCREEN_WIDTH); self:y(10); end;
 		CurrentSongChangedMessageCommand=function(self) self:queuecommand("Nep"); end;
 		NepCommand=function(self)

@@ -85,9 +85,6 @@ function TheStreap()
 end
 
 
-
-
-
 function ForwardOrBackward(removeChoice)
 	local nextScreenValueMap = {
 		['Gameplay'] = 'ScreenStageInformation',
