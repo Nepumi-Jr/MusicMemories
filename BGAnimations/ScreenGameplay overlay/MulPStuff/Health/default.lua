@@ -125,14 +125,9 @@ for i = 1,#colorSegments do
 		Name = "Seg"..i;
 		InitCommand=function(self) self:horizalign(left):x(lifeWidth / #colorSegments *(i-1)):zoomx((lifeWidth / 128) /#colorSegments):zoomy(0.7) end;
 		OnCommand=function(self)
-			if math.mod(#colorSegments, 2) == 0 then
-				local startTextureX = (lifeWidth / #colorSegments * (i-1)) / 128
-				local endTextureX = (lifeWidth / #colorSegments * (i)) / 128
-				self:customtexturerect(startTextureX,0,endTextureX,1);
-			else
-				lua.ReportScriptError("WARNING : StreamDisplay passing texture is not divisible by 2")
-				self:customtexturerect(0,0,2/#colorSegments,1);
-			end
+			local startTextureX = (lifeWidth / #colorSegments * (i-1)) / 128
+			local endTextureX = (lifeWidth / #colorSegments * (i)) / 128
+			self:customtexturerect(startTextureX,0,endTextureX,1);
 			self:texcoordvelocity(-1.5,0);
 			self:diffuse(colorSegments[i]):diffusebottomedge(ColorDarkTone(colorSegments[i]))
 		end;

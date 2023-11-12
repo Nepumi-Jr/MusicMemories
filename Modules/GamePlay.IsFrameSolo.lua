@@ -5,6 +5,10 @@ return function()
     -- 2 is center
     -- 3 is on
 
+    if GAMESTATE:GetNumPlayersEnabled() == 2 then
+        return false
+    end
+
     if optionLifeBar == 0 then
         return false
     elseif optionLifeBar == 1 then
