@@ -213,6 +213,37 @@ if not GAMESTATE:IsCourseMode() then
 		end;
 	};
 	t[#t+1] = StandardDecorationFromFileOptional("StageDisplay","StageDisplay");
+	t[#t+1] = Def.ActorFrame{
+		InitCommand=function(self) self:playcommand("Set"); end;
+		BeginCommand=function(self) self:playcommand("Set"); end;
+		CurrentSongChangedMessageCommand=function(self) self:playcommand("Set"); end;
+		SetCommand=function(self)
+			local isLyric = false;
+			-- Start!
+			if GAMESTATE:GetCurrentSong() and GAMESTATE:GetCurrentSong():HasLyrics() then
+				isLyric = true;
+			end
+
+			self:visible(isLyric);
+		end;
+		LoadFont("LyricDisplay text")..{
+			Text = THEME:GetString("ScreenSelectMusic","haslyrics");
+			InitCommand = function(self)
+				self:xy(SCREEN_CENTER_X - 55, SCREEN_CENTER_Y-60):zoom(0.6):horizalign(right)
+				self:diffuse({0.5, 0.5, 0.5, 1}):strokecolor({0.2, 0.2, 0.2, 1}):textglowmode("TextGlowMode_Stroke");
+			end;
+		};
+		LoadFont("LyricDisplay text")..{
+			Text = THEME:GetString("ScreenSelectMusic","haslyrics");
+			InitCommand = function(self)
+				self:xy(SCREEN_CENTER_X - 55, SCREEN_CENTER_Y-60):zoom(0.6):horizalign(right)
+				self:strokecolor(ColorTone({1,1,1,1})):textglowmode("TextGlowMode_Stroke");
+			end;
+			OnCommand = function(self)
+				self:cropright(1):diffusealpha(1):sleep(0.2):linear(0.5):cropright(0):sleep(0.2):linear(0.3):diffusealpha(0):queuecommand("On");
+			end;
+		};
+	};
 end;
 
 if GAMESTATE:IsCourseMode() then

@@ -50,6 +50,14 @@ function ColorRandom()
 	return Color[ALCL[math.random(1,#ALCL)]];
 end
 
+function ScaleColor(num,l,r,cl,cr)
+	return {scale(num,l,r,cl[1],cr[1]),
+			scale(num,l,r,cl[2],cr[2]),
+			scale(num,l,r,cl[3],cr[3]),
+			scale(num,l,r,cl[4],cr[4])
+			}
+end
+
 setmetatable(Color, { __call = function(self, c) return self[c] end })
 
 -- Remapped Color Module, since some themes are crazy
@@ -93,7 +101,8 @@ GameColor = {
 		Difficulty_Challenge	= Color.Red,	
 		Difficulty_Edit 	= Color.Purple,		
 		Difficulty_Couple	= color("#ed0972"),				-- hot pink
-		Difficulty_Routine	= color("#ff9a00")				-- orange
+		Difficulty_Routine	= color("#ff9a00"),				-- orange
+
 	},
 	Stage = {
 		Stage_1st	= color("#00D877"),
@@ -160,6 +169,12 @@ GameColor = {
 		Grade_Failed = {1,0,0,1};--F
 	},
 }
+
+-- for other color (custom) difficulties
+for i=1,15 do
+	GameColor.Difficulty["D"..i] = ScaleColor(i,1,15,Color.Purple,Color.Magenta)
+	GameColor.Difficulty["Difficulty_D"..i] = ScaleColor(i,1,15,Color.Purple,Color.Magenta)
+end
 
 function Meter2Color(meter)
 local NV = GameColor.Difficulty.Beginner
@@ -529,13 +544,7 @@ function BPMColor(Bpm)
 	end
 end
 
-function ScaleColor(num,l,r,cl,cr)
-	return {scale(num,l,r,cl[1],cr[1]),
-			scale(num,l,r,cl[2],cr[2]),
-			scale(num,l,r,cl[3],cr[3]),
-			scale(num,l,r,cl[4],cr[4])
-			}
-end
+
 
 function ColorTone(c)
     -- Y = 0.299 R + 0.587 G + 0.114 B
@@ -546,6 +555,10 @@ function ColorTone(c)
 	else
 		return {1,1,1,c[4]}
 	end
+end
+
+function invertColor(c)
+	return {1-c[1],1-c[2],1-c[3],c[4]}
 end
 
 function ColorCmp(a,b)
@@ -569,9 +582,11 @@ function JudgmentLineToColor( tapNoteScore, forceStyleTiming)
 			colorType = "Judgment"
 		end
 	end
-
+	
 	local indUnder = string.find(tapNoteScore,"_")
-	if x ~= nil then
+
+	
+	if indUnder ~= nil then
 		tapNoteScore = string.sub(tapNoteScore, string.find(tapNoteScore,"_") + 1, string.len(tapNoteScore))
 	end
 
