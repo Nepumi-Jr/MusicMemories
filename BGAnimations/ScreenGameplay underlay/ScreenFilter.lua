@@ -22,7 +22,7 @@ local stepsType = style:GetStepsType()
 if numPlayers == 1 then
 	local player = GAMESTATE:GetMasterPlayerNumber()
 	local pNum = (player == PLAYER_1) and 1 or 2
-	filterWidth = GAMESTATE:GetStyleFieldSize(pNum-1) + padding
+	filterWidth = style:GetWidth(player) + padding
 
 	if TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == 'Hide' then
 		filterAlphas[player] = 1;
@@ -60,7 +60,7 @@ else
 		-- routine, just use one in the center.
 		local player = GAMESTATE:GetMasterPlayerNumber()
 		local pNum = player == PLAYER_1 and 1 or 2
-		filterWidth = GAMESTATE:GetStyleFieldSize(pNum-1) + padding
+		filterWidth = style:GetWidth(player) + padding
 		local metricName = "PlayerP".. pNum .."TwoPlayersSharedSidesX"
 		t[#t+1] = Def.Quad{
 			Name="RoutineFilter";
@@ -78,7 +78,7 @@ else
 		-- otherwise we need two separate ones. to the pairsmobile!
 		for i, player in ipairs(PlayerNumber) do
 			local pNum = (player == PLAYER_1) and 1 or 2
-			filterWidth = GAMESTATE:GetStyleFieldSize(pNum-1) + padding
+			filterWidth = style:GetWidth(player) + padding
 
 			if TP[ToEnumShortString(player)].ActiveModifiers.FilterPlayer == 'Hide' then
 				filterAlphas[player] = 1;
