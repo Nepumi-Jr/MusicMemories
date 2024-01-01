@@ -157,7 +157,6 @@ local t = Def.ActorFrame{
 						child["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						child["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						child["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(0)
-						child["LifeBeat"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						isHot = false;
 					end
 				else
@@ -165,7 +164,6 @@ local t = Def.ActorFrame{
 						child["lifeMax"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						child["lifeBG"]:stoptweening():decelerate(0.5):diffusealpha(1)
 						child["lifeMaxUp"]:stoptweening():decelerate(0.5):diffusealpha(1)
-						child["LifeBeat"]:stoptweening():decelerate(0.5):diffusealpha(0)
 						isHot = true;
 					end
 				end
@@ -180,10 +178,6 @@ local t = Def.ActorFrame{
 				OnCommand=function(self) self:effectclock("beat"); self:diffuseramp(); self:effectcolor1({1,1,1,0.7}); self:effectcolor2({1,1,1,0.2}); self:effectperiod(1/16); end;
 			};
 		};
-		LoadActor("Life_Fill_Beat.png")..{
-			Name = "LifeBeat";
-			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX); self:zoomy(15); self:effectclock("beat"); self:customtexturerect(0.75,0,1,1):zoomx(0); self:texcoordvelocity(-1/4,0):set_use_effect_clock_for_texcoords(true):effectclock("beat"):blend("BlendMode_WeightedMultiply"); end;
-		};
 		LoadActor("Life_Max2.png")..{
 			Name = "lifeMax";
 			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX); self:zoomy(15/128); self:effectclock("beat"); self:customtexturerect(0,0.9,0.9,1):zoomx(lifeWidth/248); self:texcoordvelocity(0,0.2); end;
@@ -193,6 +187,10 @@ local t = Def.ActorFrame{
 			Name = "lifeMaxUp";
 			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:zoomy(15/256); self:x(PX); self:customtexturerect(0,0,lifeWidth/248,0.1):zoomx(lifeWidth/248); self:texcoordvelocity(0,0.6); end;
 			OnCommand=function(self) self:effectclock("beat"); self:diffuseramp(); self:effectcolor1({1,1,1,1}); self:effectcolor2({0.7,0.7,0.7,1}); self:effectperiod(0.5); self:effecttiming(0.25,0.50,0,0.25); self:effectoffset(-0.25); end;
+		};
+		LoadActor("Life_Fill_Beat.png")..{
+			Name = "LifeBeat";
+			InitCommand=function(self) self:y(SCREEN_CENTER_Y-210.25+22); self:horizalign(left); self:x(PX); self:zoomy(15); self:effectclock("beat"); self:customtexturerect(0.75,0,1,1):zoomx(0); self:texcoordvelocity(-1/4,0):set_use_effect_clock_for_texcoords(true):effectclock("beat"):blend("BlendMode_WeightedMultiply"); end;
 		};
 	};
 
