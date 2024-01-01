@@ -27,10 +27,10 @@ local Inputne = function( event )
 
 	if event.type == "InputEventType_FirstPress" then
 		
-		if ((event.button == "MenuLeft") or (event.button == "Left")) and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
+		if (event.GameButton == "MenuLeft") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
 			Karkao[1] = 1
 		end
-		if ((event.button == "MenuRight") or (event.button == "Right")) and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
+		if (event.GameButton == "MenuRight") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
 			Karkao[2] = 1
 		end
 		if (event.button == "Start" or
@@ -56,10 +56,10 @@ and Pc ~= 1	then
 	
 	if event.type == "InputEventType_Release" then
 		
-		if ((event.button == "MenuLeft") or (event.button == "Left")) and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
+		if (event.GameButton == "MenuLeft") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
 			Karkao[1] = 0
 		end
-		if ((event.button == "MenuRight") or (event.button == "Right")) and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
+		if (event.GameButton == "MenuRight") and (event.PlayerNumber == PLAYER_1 or event.PlayerNumber == PLAYER_2) then
 			Karkao[2] = 0
 		end
 		if (event.button == "Start" or

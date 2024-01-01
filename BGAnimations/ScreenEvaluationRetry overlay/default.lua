@@ -3,7 +3,7 @@ local InputOfArrow = function( event )
 	if not event then return end
 
 	if event.type == "InputEventType_FirstPress" then
-		if event.button == "Start" or event.button == "Center" then
+		if (event.GameButton and event.GameButton == "Start") or event.GameButton == "Start" then
 			MESSAGEMAN:Broadcast('Confirm')
 			if selected == 1 then
 				TP.Eva.readyState = 2
@@ -11,22 +11,14 @@ local InputOfArrow = function( event )
 			SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 		end
 
-		if event.button == "Back" then
+		if (event.GameButton and event.GameButton == "Back") or event.GameButton == "Back" then
 			MESSAGEMAN:Broadcast('Nope')
 			SCREENMAN:GetTopScreen():StartTransitioningScreen("SM_GoToNextScreen")
 		end
 
-		if event.button == "Down" or 
-		event.button == "Up" or 
-		event.button == "Left" or 
-		event.button == "Right" or 
-		event.button == "MenuLeft" or
-		event.button == "MenuRight" or
-		event.button == "MenuUp" or
-		event.button == "MenuDown" or
-		event.button == "DownLeft" or
-		event.button == "DownRight"
-		then
+		local buttons = {"MenuLeft", "MenuRight", "MenuUp", "MenuDown"}
+
+		if event.GameButton and FindInTable(event.GameButton, buttons) then
 			selected = selected == 2 and 1 or 2
 			MESSAGEMAN:Broadcast('Reload')
 		end
@@ -73,15 +65,29 @@ return Def.ActorFrame{
 
 	LoadFont("Common Large")..{
 		Text="Retry?";
-		InitCommand=function(self) self:CenterX():y(SCREEN_CENTER_Y-200):zoom(0.7):diffuse(color("#FFFFFF"))
-			self:diffuseshift():effectcolor1(color("#FFFFFF")):effectcolor2(color("#FF9999")):effectperiod(3)
+		InitCommand=function(self) self:CenterX():y(SCREEN_CENTER_Y-200):zoom(0.7):diffuse(color("#FFFFFF")) end;
+		ReloadMessageCommand=function(self)
+			self:finishtweening()
+			self:decelerate(0.4)
+			if selected == 2 then
+				self:diffuse(color("#FF9999"))
+			else
+				self:diffuse(color("#FFFFFF"))
+			end
 		end;
 	};
 
 	--song Banner
 	Def.ActorFrame{
-		InitCommand=function(self) self:CenterX():y(SCREEN_CENTER_Y-70):diffuse(color("#FFFFFF"))
-			self:diffuseshift():effectcolor1(color("#FFFFFF")):effectcolor2(color("#FF9999")):effectperiod(3)
+		InitCommand=function(self) self:CenterX():y(SCREEN_CENTER_Y-70):diffuse(color("#FFFFFF"))end;
+		ReloadMessageCommand=function(self)
+			self:finishtweening()
+			self:decelerate(0.4)
+			if selected == 2 then
+				self:diffuse(color("#FF9999"))
+			else
+				self:diffuse(color("#FFFFFF"))
+			end
 		end;
 		Def.Sprite{
 			OnCommand=function(self)

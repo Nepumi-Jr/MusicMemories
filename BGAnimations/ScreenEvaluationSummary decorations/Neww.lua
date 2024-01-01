@@ -36,9 +36,9 @@ local inputHandler = function( event )
 		local DIR = "?"
 		local PNn = 0
 
-		if (event.button == "Left" or event.button == "DownLeft" or event.button == "MenuLeft") then
+		if event.GameButton == "MenuLeft" then
 			DIR = "L"
-		elseif (event.button == "Right" or event.button == "DownRight" or event.button == "MenuRight") then
+		elseif event.GameButton == "MenuRight" then
 			DIR = "R"
 		end
 

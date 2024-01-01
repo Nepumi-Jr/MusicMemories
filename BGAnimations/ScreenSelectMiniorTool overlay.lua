@@ -1,23 +1,28 @@
 local t = Def.ActorFrame{};
 local Row = 1;
+
+local function isDirPress(button)
+	return button == "MenuLeft" or button == "MenuRight" or button == "MenuUp" or button == "MenuDown"
+end
+
 local InputOfArrow = function( event )
 	if not event then return end
 
 	if event.type == "InputEventType_FirstPress" then
-		if (event.button == "Left" or event.button == "Down" or event.button == "Up" or event.button == "Right" or event.button == "DownLeft" or event.button == "DownRight") and Row == 1 then
+		if isDirPress(event.GameButton) and Row == 1 then
 			Row = 2;
 			MESSAGEMAN:Broadcast('Chan')
-		elseif (event.button == "Left" or event.button == "Down" or event.button == "Up" or event.button == "Right" or event.button == "DownLeft" or event.button == "DownRight") and Row == 2 then
+		elseif isDirPress(event.GameButton) and Row == 2 then
 			Row = 1;
 			MESSAGEMAN:Broadcast('Chan')
-		elseif event.button == "Start" or event.button == "Center" then
+		elseif event.GameButton == "Start" then
 			MESSAGEMAN:Broadcast('TorPai')--TorPai in Thai is mean Next
 			if Row == 1 then
 				SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMiniGames"):StartTransitioningScreen("SM_GoToNextScreen")
 			elseif Row == 2 then
 				SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectTools"):StartTransitioningScreen("SM_GoToNextScreen")
 			end
-		elseif event.button == "Back" or event.button == "UpLeft" or event.button == "UpRight" then
+		elseif event.GameButton == "Back" then
 			MESSAGEMAN:Broadcast('Nope')
 			SCREENMAN:GetTopScreen():SetNextScreenName(Branch.TitleMenu()):StartTransitioningScreen("SM_GoToNextScreen")
 			--SCREENMAN:GetTopScreen():RemoveInputCallback(InputOfArrow)

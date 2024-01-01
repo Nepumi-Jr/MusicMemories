@@ -51,9 +51,9 @@ local Inputne = function( event )
 		local DIR = "?"
 		local PNn = 0
 
-		if (event.button == "Left" or event.button == "DownLeft" or event.button == "MenuLeft") then
+		if event.GameButton == "MenuLeft" then
 			DIR = "L"
-		elseif (event.button == "Right" or event.button == "DownRight" or event.button == "MenuRight") then
+		elseif event.GameButton == "MenuRight" then
 			DIR = "R"
 		end
 
@@ -81,8 +81,7 @@ local Inputne = function( event )
         --     end
         -- end
 
-		if (event.button == "Start" or
-			event.button == "Center") and GAMESTATE:IsPlayerEnabled(event.PlayerNumber) then 
+		if event.GameButton == "Start" and GAMESTATE:IsPlayerEnabled(event.PlayerNumber) then 
 			MESSAGEMAN:Broadcast("RIPmannnn")
 		end
 		
