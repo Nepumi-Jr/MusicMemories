@@ -360,15 +360,12 @@ function GetSpeedModeAndValueFromPoptions(pn)
 	local poptions= GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred")
 	local speed= nil
 	local mode= nil
-	if poptions:AvarageScrollBPM() > 0 then
+	if poptions:AverageScrollBPM() > 0 then
 		mode= "a"
-		speed= math.round(poptions:AvarageScrollBPM())
-	elseif poptions:AverageVelocityBPM() > 0 then
-		mode= "av"
-		speed= math.round(poptions:AverageVelocityBPM())
-	elseif poptions:ConstAverageScrollBPM() > 0 then
+		speed= math.round(poptions:AverageScrollBPM())
+	elseif poptions:CAverageScrollBPM() > 0 then
 		mode= "ca"
-		speed= math.round(poptions:ConstAverageScrollBPM())
+		speed= math.round(poptions:CAverageScrollBPM())
 	elseif poptions:MaxScrollBPM() > 0 then
 		mode= "m"
 		speed= math.round(poptions:MaxScrollBPM())
