@@ -306,9 +306,9 @@ for iterPn in ivalues(Players) do
     };
     for i,v in pairs(tapScoreName) do
         t[#t+1] = Def.ActorFrame{
-            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 200 or 800); self:y(85 + 22*i*math.min(6/#tapScoreName,1)); end;
+            InitCommand=function(self) self:x(thisPn == PLAYER_1 and 200 or 780); self:y(85 + 22*i*math.min(6/#tapScoreName,1)); end;
             Def.Sprite{
-                InitCommand=function(self) self:x(thisPn == PLAYER_1 and -140 or 0); self:zoom(0.35*math.min(6/#tapScoreName,1)); self:shadowlength(3); end; 
+                InitCommand=function(self) self:x(thisPn == PLAYER_1 and -140 or 20); self:zoom(0.35*math.min(6/#tapScoreName,1)); self:shadowlength(3); end; 
                 OnCommand=function(self) self:pause();self:Load( jud1 );
                     local miniFileName = string.match(jud1, ".*/(.*)")
                     frame1 = string.find(miniFileName, "%[double%]")
@@ -316,14 +316,19 @@ for iterPn in ivalues(Players) do
                     if self:GetNumStates() == #tapScoreName * 2 or string.find(miniFileName, "2x%d") ~= nil then
                         frame1 = true
                     end
-                        if v == "Miss" then
-                            self:setstate(self:GetNumStates() - 1) 
-                        elseif frame1 then
-                            self:setstate((i-1)*2) 
-                        else
-                            self:setstate((i-1)) 
-                        end 
-                    end; 
+                    if v == "Miss" then
+                        self:setstate(self:GetNumStates() - 1) 
+                    elseif frame1 then
+                        self:setstate((i-1)*2) 
+                    else
+                        self:setstate((i-1)) 
+                    end 
+                    --auto zoom when width > 250
+                    local width = self:GetWidth()
+                    if width > 250 then
+                        self:zoom(self:GetZoom() * 250 / width)
+                    end
+                end;
             };
             Def.ActorFrame{
                 OnCommand=function(self) self:addx(-70 * (thisPn == PLAYER_1 and 1 or -1)); self:diffusealpha(0); self:sleep(0.7+i*0.06*math.min(6/#tapScoreName,1)); self:decelerate(0.25); self:addx(70 * (thisPn == PLAYER_1 and 1 or -1)); self:diffusealpha(1); end;
