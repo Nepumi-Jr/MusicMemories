@@ -37,7 +37,8 @@ local guaek = 1;
 
 
 
-local UseJudgeCmd = LoadModule("Options.JudgmentAnimation.lua")(JudgeName)
+local UseJudgeCmd = LoadModule("Options.JudgmentAnimation.lua")(JudgeName, false)
+local UseJudgeCmdReverse = LoadModule("Options.JudgmentAnimation.lua")(JudgeName, true)
 
 
 
@@ -76,6 +77,19 @@ local function getSubJudge()
         --printf("%s",thisSubJudge)
         return LoadModule("SubJudgment."..thisSubJudge..".lua")(player)..{
             InitCommand=function(self) self:x(40); self:y(40); end;
+			OnCommand=function(self) self:queuecommand("ReloadPosition") end;
+			JudgmentMessageCommand=function(self, param)
+				if param.Player ~= player then return end;
+				self:queuecommand("ReloadPosition")
+			end;
+			ReloadPositionMessageCommand=function(self)
+				local isReverse = LoadModule("Gameplay.IsNowReverse.lua")(player);
+				if isReverse then
+					self:y(-55)
+				else
+					self:y(40)
+				end
+			end
         };
     else
         return Def.ActorFrame{};
@@ -275,7 +289,8 @@ t[#t+1] = Def.ActorFrame {
         --*   -- Code modify from _fallback
 
         local useThisJudge = true;
-		
+		local isReverse = LoadModule("Gameplay.IsNowReverse.lua")(player);
+
         if self:GetParent():GetName() ~= "Judgment" then
             if IsGame("po-mu") then
                 if PomuLocation[GAMESTATE:GetCurrentStyle():ColumnsPerPlayer()][param.FirstTrack] ~= tonumber(ToEnumShortString(self:GetParent():GetName())) then 
@@ -405,22 +420,22 @@ t[#t+1] = Def.ActorFrame {
 			end
 		end
 
-
+		local thisUseJudgeCmd = isReverse and UseJudgeCmdReverse or UseJudgeCmd;
 		
 		if Op ~= "SM5ProTiming" then
 			if tempTNS ~= 'TapNoteScore_Miss' then
 				if param.Early then
-					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
+					thisUseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
 				else
-					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
+					thisUseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
 				end
 				muan = false;
 			else
 				if muan then
-					UseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
+					thisUseJudgeCmd[ToEnumShortString(tempTNS).."EarlyCommand"](judgeActor);
 					muan = false
 				else
-					UseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
+					thisUseJudgeCmd[ToEnumShortString(tempTNS).."LateCommand"](judgeActor);
 					muan = true
 				end
 			end
