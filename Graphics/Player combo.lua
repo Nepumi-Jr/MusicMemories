@@ -1,9 +1,16 @@
 local c;
 local cf;
 local player = Var "Player";
+
 local ShowComboAt = THEME:GetMetric("Combo", "ShowComboAt");
-local Pulse = THEME:GetMetric("Combo", "PulseCommand");
-local Pulse2 = THEME:GetMetric("Combo", "Pulse2Command");
+
+local Pulse = function(self, isReverse)
+	self:finishtweening();
+	self:diffusealpha(1);
+	self:skewy(0.125):addy(5 * (isReverse and -1 or 1)):rotationz(-5);
+	self:decelerate(0.05*2.5);
+	self:addy(5 * (isReverse and 1 or -1)):skewy(0):rotationz(0);
+end;
 local NumberMinZoom = THEME:GetMetric("Combo", "NumberMinZoom");
 local NumberMaxZoom = THEME:GetMetric("Combo", "NumberMaxZoom");
 local NumberMaxZoomAt = THEME:GetMetric("Combo", "NumberMaxZoomAt");
@@ -12,7 +19,6 @@ local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 local ShowFlashyCombo = ThemePrefs.Get("FlashyCombo")
 local MaxCom = 0;
 local madness = 0;
-local Grace = 0;--pumpkin :D
 local FN = "Combo Numbers";
 local FM = "Combo Misses";
 local CL = "Memories_combo";
@@ -26,13 +32,33 @@ local NPSi = 1;
 local ZSC = 3;
 
 local PS = STATSMAN:GetCurStageStats():GetPlayerStageStats(player);
-local CMDofCB = {}
+local numberOnCommand = THEME:GetMetric("Combo", "Numbertor12315OnCommand");
+local missNumberOnCommand = THEME:GetMetric("Combo", "Numbermisstor12315OnCommand");
+
+local comboLabelOnCommand = function(self, isReverse)
+	self:xy(-40,25 - 30 * (isReverse and 1 or 0));
+	self:shadowlength(1);
+	self:zoom(0.65);
+	self:align(0,1);
+end;
+
+local comboLabelPulse = function(self, isReverse, isMiss)
+	local rf = (isReverse and -1 or 1); -- reverse factor
+	self:finishtweening();
+	self:rotationz(-2 * rf):skewx(-0.125 * rf):addx(7):addy(2 * rf);
+
+	if isMiss then
+		self:glow(BoostColor(Color("Red"),1.2));
+	end
+
+	self:decelerate(0.05*2.5):glow(1,1,1,0)
+	self:rotationz(0):addx(-7):skewx(0):addy(-2 * rf);
+
+end;
 
 --Use to find Y Position for Bouncing :D
-CMDofCB[1] = THEME:GetMetric("Combo", "Numbertor12315OnCommand");
-CMDofCB[2] = THEME:GetMetric("Combo", "Numbermisstor12315OnCommand");
-CMDofCB[3] = THEME:GetMetric("Combo", "ComboLabelOnCommand");
-CMDofCB[4] = THEME:GetMetric("Combo", "MissLabelOnCommand");
+numberOnCommand = THEME:GetMetric("Combo", "Numbertor12315OnCommand");
+missNumberOnCommand = THEME:GetMetric("Combo", "Numbermisstor12315OnCommand");
 
 local Fac = 3;
 if not GAMESTATE:ShowW1() then
@@ -85,7 +111,7 @@ local t = Def.ActorFrame {};
 		end;
 		LoadFont(FN) .. {
 			Name="Number";
-			OnCommand = CMDofCB[1];
+			OnCommand = numberOnCommand;
             WaitCommand=function(self)
 				thisSleepBeat = GSB()
 				self:sleep(thisSleepBeat)
@@ -97,7 +123,7 @@ local t = Def.ActorFrame {};
 		};
 		LoadFont(FM) .. {
 			Name="Misses";
-			OnCommand = CMDofCB[2];
+			OnCommand = missNumberOnCommand;
 			WaitCommand=function(self)
 				self:sleep(thisSleepBeat)
 				self:queuecommand("GoO")
@@ -106,7 +132,7 @@ local t = Def.ActorFrame {};
 		};
         LoadFont("Isla/_chakra petch semibold overlay 72px") .. {
 			Name="NumberOverlay";
-			OnCommand = CMDofCB[1];
+			OnCommand = numberOnCommand;
             WaitCommand=function(self)
 				self:sleep(thisSleepBeat)
 				self:queuecommand("GoO")
@@ -116,12 +142,10 @@ local t = Def.ActorFrame {};
 		LoadActor(CL)..{
 			Name="ComboLabel";
 			InitCommand=function(self) self:draworder(105); end;
-			OnCommand = CMDofCB[3];
 		};
 		LoadActor(ML)..{
 			Name="MissLabel";
 			InitCommand=function(self) self:draworder(105); end;
-			OnCommand = CMDofCB[4];
 		};
 	};
 	InitCommand = function(self)
@@ -149,14 +173,16 @@ local t = Def.ActorFrame {};
 			return;
 		end
 
+		local isReverse = LoadModule("Gameplay.IsNowReverse.lua")(player);
+
 		if LoadModule("Easter.today.lua")()=="FOOL" then
 			local tod = param.Misses;
 			param.Misses=param.Combo;
 			param.Combo=tod;
 		end
-		
-		cf.ComboLabel:visible( false)
-		cf.MissLabel:visible( false)
+
+		comboLabelOnCommand( cf.ComboLabel, isReverse );
+		comboLabelOnCommand( cf.MissLabel, isReverse );
 
 		param.Zoom = scale( iCombo, 0, NumberMaxZoomAt, NumberMinZoom, NumberMaxZoom );
 		param.Zoom = clamp( param.Zoom, NumberMinZoom, NumberMaxZoom );
@@ -170,6 +196,7 @@ local t = Def.ActorFrame {};
 			cf.ComboLabel:visible( false)
 			cf.MissLabel:visible( true)
 		end
+
 		if iCombo > MaxCom and param.Combo then
 		MaxCom = iCombo
 		end
@@ -209,23 +236,19 @@ local t = Def.ActorFrame {};
         cf.NumberOverlay:visible(true);
 		
 		-- Pulse
-        Pulse( cf.NumberOverlay, param );
-		Pulse( cf.Number, param );
-		Pulse( cf.Misses, param );
+		Pulse( cf.NumberOverlay, isReverse );
+		Pulse( cf.Number, isReverse );
+		Pulse( cf.Misses, isReverse );
+
+		local curPulseLabel = param.Combo and cf.ComboLabel or cf.MissLabel;
+		local isCurMiss = not param.Combo;
 		
 		if MonthOfYear() == 4-1 and DayOfMonth() == 1 then
-		if param.Combo then
-			cf.MissLabel:finishtweening():rotationz(-2):skewx(-0.125):addx(7):addy(2):glow(BoostColor(Color("Red"),1.2)):decelerate(0.05*2.5):glow(1,1,1,0):rotationz(0):addx(-7):skewx(0):addy(-2)
-		else
-			cf.ComboLabel:finishtweening():rotationz(-2):skewx(-0.125):addx(7):addy(2):decelerate(0.05*2.5):glow(1,1,1,0):rotationz(0):addx(-7):skewx(0):addy(-2)
+			curPulseLabel = param.Combo and cf.MissLabel or cf.ComboLabel
+			isCurMiss = param.Combo;
 		end
-		else
-		if param.Combo then
-			cf.ComboLabel:finishtweening():rotationz(-2):skewx(-0.125):addx(7):addy(2):decelerate(0.05*2.5):glow(1,1,1,0):rotationz(0):addx(-7):skewx(0):addy(-2)
-		else
-			cf.MissLabel:finishtweening():rotationz(-2):skewx(-0.125):addx(7):addy(2):glow(BoostColor(Color("Red"),1.2)):decelerate(0.05*2.5):glow(1,1,1,0):rotationz(0):addx(-7):skewx(0):addy(-2)
-		end
-		end
+
+		comboLabelPulse( curPulseLabel, isReverse, isCurMiss );
 		
 		
 		cf.Number:y(17.5);
@@ -251,12 +274,12 @@ local t = Def.ActorFrame {};
 		--JUst DeBUg
 		LoadFont(FN)..{
 			Text = "000";
-			InitCommand=CMDofCB[1];
+			InitCommand=numberOnCommand;
 			OnCommand =function(self) end;
 		};
 		LoadFont(FN)..{
 			Text = "000";
-			InitCommand=CMDofCB[1];
+			InitCommand=numberOnCommand;
 			ComboCommand=function(self)
 				self:diffuse(Color.Red);
 				local lZSC = 3;
@@ -276,7 +299,7 @@ t[#t+1] = Def.ActorFrame{
 
 	LoadFont(FN)..{
 	InitCommand=function(self) self:diffusealpha(0); end;
-	OnCommand =CMDofCB[1];
+	OnCommand =numberOnCommand;
 		FiftyMilestoneCommand=function(self)
 			if ShowFlashyCombo and LoadModule("Easter.today.lua")()~="FOOL" then
 				--self:visible(true)
