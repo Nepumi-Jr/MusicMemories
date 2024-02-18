@@ -58,9 +58,7 @@ local InputOfArrow = function( event )
 			end
 		end
 
-		if event.button == "Left" or event.button == "Up" or
-		event.button == "DownLeft" or event.button == "UpRight" or
-		event.button == "MenuLeft" or event.button == "MenuUp" then
+		if event.GameButton == "MenuLeft" or event.GameButton == "MenuUp" then
 
 			if phase == 0 then
 				selectDiff = math.mod(selectDiff  + 2,3)
@@ -73,9 +71,7 @@ local InputOfArrow = function( event )
 			end
 		end
 
-		if event.button == "Right" or event.button == "Down" or
-		event.button == "DownRight" or event.button == "UpRight" or
-		event.button == "MenuRight" or event.button == "MenuDown" then
+		if event.GameButton == "MenuRight" or event.GameButton == "MenuDown" then
 			if phase == 0 then
 				selectDiff = math.mod(selectDiff  + 1,3)
 				MESSAGEMAN:Broadcast('ArrowPress')
@@ -87,7 +83,7 @@ local InputOfArrow = function( event )
 			end
 		end
 
-		if event.button == "Start" then
+		if event.GameButton == "Start" then
 			if phase == 0 then
 				numRemain = 3 + selectDiff * 2
 				numAnswer = math.random(1,maxNum[selectDiff + 1])
@@ -112,7 +108,7 @@ local InputOfArrow = function( event )
 			end
 		end
 
-		if event.button == "Back" then
+		if event.GameButton == "Back" then
 			MESSAGEMAN:Broadcast('BackS')
 			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMiniGames"):StartTransitioningScreen("SM_GoToNextScreen")
 		end

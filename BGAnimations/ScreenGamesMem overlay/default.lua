@@ -44,7 +44,7 @@ local InputOfArrow = function( event )
 
 	if event.type == "InputEventType_FirstPress" then
 		
-		if (event.button == "Left" or event.button == "DownLeft" or event.button == "MenuLeft") and event.PlayerNumber == PLAYER_1 then
+		if event.GameButton == "MenuLeft" and event.PlayerNumber == PLAYER_1 then
 			if Proce == 1 then
 				if DiffRow == 1 then
 					DiffRow = 3
@@ -75,7 +75,7 @@ local InputOfArrow = function( event )
 		end
 
 		
-		if (event.button == "Right" or event.button == "DownRight" or event.button == "MenuRight") and event.PlayerNumber == PLAYER_1 then
+		if event.GameButton == "MenuRight" and event.PlayerNumber == PLAYER_1 then
 			if Proce == 1 then
 				if DiffRow == 3 then
 					DiffRow = 1
@@ -99,7 +99,7 @@ local InputOfArrow = function( event )
 		end
 		
 		
-		if (event.button == "Up" or event.button == "MenuUp" or event.button == "UpLeft") and event.PlayerNumber == PLAYER_1 then
+		if event.GameButton == "MenuUp" and event.PlayerNumber == PLAYER_1 then
 			if Proce == 1 then
 				if DiffRow == 1 then
 					DiffRow = 3
@@ -122,7 +122,7 @@ local InputOfArrow = function( event )
 			MESSAGEMAN:Broadcast('Chan')
 		end
 		
-		if (event.button == "Down" or event.button == "MenuDown" or event.button == "UpRight") and event.PlayerNumber == PLAYER_1 then
+		if event.GameButton == "MenuDown" and event.PlayerNumber == PLAYER_1 then
 			if Proce == 1 then
 				if DiffRow == 3 then
 					DiffRow = 1
@@ -145,7 +145,7 @@ local InputOfArrow = function( event )
 			MESSAGEMAN:Broadcast('Chan')
 		end
 		
-		if event.button == "Start" and event.PlayerNumber == PLAYER_1 then
+		if event.GameButton == "Start" and event.PlayerNumber == PLAYER_1 then
 		MESSAGEMAN:Broadcast('Yeah')
 			if Proce == 1 then
 			Proce = Proce + 1
@@ -168,7 +168,7 @@ local InputOfArrow = function( event )
 		
 		
 		
-		if (event.button == "Left" or event.button == "MenuLeft" or event.button == "DownLeft") and event.PlayerNumber == PLAYER_2 then
+		if event.GameButton == "MenuLeft" and event.PlayerNumber == PLAYER_2 then
 			if Proce == 1 then
 				if DiffRow == 1 then
 					DiffRow = 3
@@ -199,7 +199,7 @@ local InputOfArrow = function( event )
 		end
 
 		
-		if (event.button == "Right" or event.button == "MenuRight" or event.button == "DownRight") and event.PlayerNumber == PLAYER_2 then
+		if event.GameButton == "MenuRight" and event.PlayerNumber == PLAYER_2 then
 			if Proce == 1 then
 				if DiffRow == 3 then
 					DiffRow = 1
@@ -223,7 +223,7 @@ local InputOfArrow = function( event )
 		end
 		
 		
-		if (event.button == "Up" or event.button == "MenuUp" or event.button == "UpLeft") and event.PlayerNumber == PLAYER_2 then
+		if event.GameButton == "MenuUp" and event.PlayerNumber == PLAYER_2 then
 			if Proce == 1 then
 				if DiffRow == 1 then
 					DiffRow = 3
@@ -246,7 +246,7 @@ local InputOfArrow = function( event )
 		MESSAGEMAN:Broadcast('Chan')
 		end
 		
-		if (event.button == "Down" or event.button == "MenuDown" or event.button == "UpRight") and event.PlayerNumber == PLAYER_2 then
+		if event.GameButton == "MenuDown" and event.PlayerNumber == PLAYER_2 then
 			if Proce == 1 then
 				if DiffRow == 3 then
 					DiffRow = 1
@@ -269,7 +269,7 @@ local InputOfArrow = function( event )
 		MESSAGEMAN:Broadcast('Chan')
 		end
 		
-		if event.button == "Start" and event.PlayerNumber == PLAYER_2 then
+		if event.GameButton == "Start" and event.PlayerNumber == PLAYER_2 then
 			MESSAGEMAN:Broadcast('Yeah')
 			if Proce == 1 then
 			Proce = Proce + 1
@@ -290,7 +290,7 @@ local InputOfArrow = function( event )
 			end
 		end
 		
-		if event.button == "Back" then
+		if event.GameButton == "Back" then
 			MESSAGEMAN:Broadcast('Nope')
 			SCREENMAN:GetTopScreen():SetNextScreenName("ScreenSelectMiniGames"):StartTransitioningScreen("SM_GoToNextScreen")
 		end
