@@ -70,17 +70,6 @@ local t = Def.ActorFrame {
 	OnCommand=function(self) self:draworder(5000); end;
 };
 
-local function getSubJudge()
-    local thisSubJudge = TP[ToEnumShortString(player)].ActiveModifiers.SubJudge
-    if thisSubJudge ~= "None" then
-        --printf("%s",thisSubJudge)
-        return LoadModule("SubJudgment."..thisSubJudge..".lua")(player)..{
-            InitCommand=function(self) self:x(40); self:y(40); end;
-        };
-    else
-        return Def.ActorFrame{};
-    end
-end
 
 local PomuLocation = {
 	[9] = {
@@ -125,12 +114,12 @@ local PomuLocation = {
 
 
 local judgeOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "Judge")
-local subJudgeOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "SubJudge")
 
 local judgeActor;
 
 
 t[#t+1] = Def.ActorFrame {
+	Name = "BigJudge";
 	OnCommand = function(self)
 		if IsGame("po-mu") then
 			self:zoom(0.7)
@@ -172,15 +161,6 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=function(self) end;
 	};
 
-	Def.ActorFrame {
-		Name="SubJudgeOffset";
-		OnCommand = function(self)
-			self:xy(subJudgeOffset.x,subJudgeOffset.y)
-			self:zoom(subJudgeOffset.zoom)
-			self:diffusealpha(subJudgeOffset.alpha)
-		end;
-    	getSubJudge();
-	};
 
 
 	LoadFont("_roboto Bold 54px") .. {

@@ -56,6 +56,18 @@ local function compareNoteData(lhs,rhs)--? Sort with time and note element
     end
 end
 
+local scaleMinY = 1;
+local scaleMaxY = 10;
+
+local function scaleYPosition(score, middle)
+    return SCREEN_BOTTOM - clamp(
+        scale(score,
+            0,( (middle*2) == 0 and 0.01 or middle*2),
+            scaleMinY, scaleMaxY), 
+        scaleMinY, scaleMaxY
+    );
+end
+
 
 local t = Def.ActorFrame{
 
@@ -96,9 +108,14 @@ local t = Def.ActorFrame{
             
 
             for k,v in pairs( GAMESTATE:GetCurrentSong():GetAllSteps() ) do
-                if v == thisSteps then noteData = GAMESTATE:GetCurrentSong():GetNoteData(k, 0, GAMESTATE:GetCurrentSong():GetLastBeat()) break end
+                if v == thisSteps then 
+                    noteData = GAMESTATE:GetCurrentSong():GetNoteData(k, 0, GAMESTATE:GetCurrentSong():GetLastBeat()) 
+                    break
+                end
                 --GAMESTATE:GetCurrentSong():GetLastSecond()
             end
+
+            
 
             local finalNote = noteData;
             local isTail = false;
@@ -115,13 +132,14 @@ local t = Def.ActorFrame{
 
             
             table.sort(noteData, compareNoteData);
+            
             local holdRolls = {};
 
             for k,v in pairs(noteData) do
                 --? {time, col, NoteType}
                 local NowBeat = v[1];
                 local thisCol = v[2];
-                local thisNoteType = v[3];
+                local thisNoteType = ToEnumShortString(v[3]); --! TapNoteType_TapNoteType_Tap???
                 local Now_Score = 0
                 
 
@@ -258,7 +276,7 @@ local t = Def.ActorFrame{
         local this = self:GetChildren()
         
         Vers = {};
-        local PP = 3;
+        local previousYPos = 1;
 
         for i = 1,MaxSegment/DIV do
 
@@ -270,19 +288,19 @@ local t = Def.ActorFrame{
 
             ALL_Score[i] = now_score;
 
-            
+            local yPosition = scaleYPosition(now_score, middle)
 
 
             local Starting = GAMESTATE:GetCurrentSong():GetFirstSecond()
             if (i-1)*0.25*DIV <= Starting then
 
-                table.insert(Vers,{{Scaling*(i-2),SCREEN_BOTTOM-PP,0},
+                table.insert(Vers,{{Scaling*(i-2),previousYPos,0},
                 ColorDarkTone(Color.Orange)
                 })
                 table.insert(Vers,{{Scaling*(i-1)-Scaling*0.5,SCREEN_BOTTOM,0},
                 ColorDarkTone(Color.Orange)
                 })
-                table.insert(Vers,{{Scaling*(i-1),SCREEN_BOTTOM-(math.max(math.min(scale(now_score,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                table.insert(Vers,{{Scaling*(i-1),yPosition,0},
                 ColorDarkTone(Color.Orange)
                 })
 
@@ -290,7 +308,7 @@ local t = Def.ActorFrame{
                 table.insert(Vers,{{Scaling*(i-1)-Scaling*0.5,SCREEN_BOTTOM,0},
                 ColorDarkTone(Color.Orange)
                 })
-                table.insert(Vers,{{Scaling*(i-1),SCREEN_BOTTOM-(math.max(math.min(scale(now_score,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                table.insert(Vers,{{Scaling*(i-1),yPosition,0},
                 ColorDarkTone(Color.Orange)
                 })
                 table.insert(Vers,{{Scaling*(i-1)+Scaling*0.5,SCREEN_BOTTOM,0},
@@ -299,13 +317,13 @@ local t = Def.ActorFrame{
 
             else
 
-                table.insert(Vers,{{Scaling*(i-2),SCREEN_BOTTOM-PP,0},
+                table.insert(Vers,{{Scaling*(i-2),previousYPos,0},
                 {1,1,1,0.5}
                 })
                 table.insert(Vers,{{Scaling*(i-1)-Scaling*0.5,SCREEN_BOTTOM,0},
                 {1,1,1,0.5}
                 })
-                table.insert(Vers,{{Scaling*(i-1),SCREEN_BOTTOM-(math.max(math.min(scale(now_score,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                table.insert(Vers,{{Scaling*(i-1),yPosition,0},
                 {1,1,1,0.5}
                 })
 
@@ -313,7 +331,7 @@ local t = Def.ActorFrame{
                 table.insert(Vers,{{Scaling*(i-1)-Scaling*0.5,SCREEN_BOTTOM,0},
                 {1,1,1,0.5}
                 })
-                table.insert(Vers,{{Scaling*(i-1),SCREEN_BOTTOM-(math.max(math.min(scale(now_score,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                table.insert(Vers,{{Scaling*(i-1),yPosition,0},
                 {1,1,1,0.5}
                 })
                 table.insert(Vers,{{Scaling*(i-1)+Scaling*0.5,SCREEN_BOTTOM,0},
@@ -321,12 +339,9 @@ local t = Def.ActorFrame{
                 })
             end
 
-            
-            PP = (math.max(math.min(scale(now_score,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3))
-
-            
-
+            previousYPos = yPosition;
         end
+
         this["VertexLife"]:SetNumVertices(#Vers):SetVertices( Vers )
         N_Tile = 1;
 
@@ -341,11 +356,14 @@ local t = Def.ActorFrame{
             
             while CurSec >= N_Tile*0.25*DIV and N_Tile <= MaxBorder do
                 
+                local previousYPos = scaleYPosition(ALL_Score[N_Tile-1] or 0, middle)
+                local curYPos = scaleYPosition(ALL_Score[N_Tile] or 0, middle)
+
                 if CurSec <= Starting then
 
 
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+1,
-                    {{Scaling*(N_Tile-2),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile-1] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-2),previousYPos,0},
                     Color.Orange
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+2,
@@ -353,7 +371,7 @@ local t = Def.ActorFrame{
                     Color.Orange
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+3,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile],0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),curYPos,0},
                     Color.Orange
                     })
 
@@ -362,7 +380,7 @@ local t = Def.ActorFrame{
                     Color.Orange
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+5,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile],0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),curYPos,0},
                     Color.Orange
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+6,
@@ -404,7 +422,7 @@ local t = Def.ActorFrame{
 
 
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+1,
-                    {{Scaling*(N_Tile-2),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile-1] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-2),previousYPos,0},
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+2,
@@ -412,7 +430,7 @@ local t = Def.ActorFrame{
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+3,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),curYPos,0},
                     CCL
                     })
 
@@ -423,7 +441,7 @@ local t = Def.ActorFrame{
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+5,
-                    {{Scaling*(N_Tile-1),SCREEN_BOTTOM-(math.max(math.min(scale(ALL_Score[N_Tile] or 0,0,((middle*2)==0 and 0.01 or middle*2),3,10),10),3)),0},
+                    {{Scaling*(N_Tile-1),curYPos,0},
                     CCL
                     })
                     this["VertexLife"]:SetVertex((N_Tile-1)*6+6,

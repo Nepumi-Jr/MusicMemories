@@ -7,8 +7,8 @@ local fake = 0;
 local real = 0;
 local start = 0;
 local ratemod = string.match(GAMESTATE:GetSongOptionsString(), "%d.%d");
-local ColorP1 = TP[ToEnumShortString(PLAYER_1)].ActiveModifiers.ComboColor or "#FFFF00";
-local ColorP2 = TP[ToEnumShortString(PLAYER_2)].ActiveModifiers.ComboColor or "#55FF55";
+local ColorP1 = "#FFFF00";
+local ColorP2 = "#55FF55";
 local P = 0;
 local RD = 0;
 local TP = 0;
@@ -43,8 +43,8 @@ local percentP2 = 0;
 local percentP1 = 0;
 LoadActor("../../_save/Battle.lua")								
 ----------------------------------------- A Lot Of Font Here -------------------------------------------------
-local NumF = TFO(todayis(31,10),"_terror pro 20px","_determination mono 24px");--NumF;
-local TextF = TFO(todayis(31,10),"_the unseen 24px","Common Normal");
+local NumF = "_determination mono 24px"
+local TextF = "Common Normal"
 --------------------------------------------------------------------------------------------------------------
 
 local Wario = {0,0,0,0};
@@ -523,7 +523,7 @@ end;
 	};
 	};
 };
-if todayis(31,10) then
+if false then
  t[#t+1] = Def.ActorFrame{
 	Def.ActorFrame{
 	OnCommand=function(self)
@@ -1014,7 +1014,7 @@ InitCommand=function(self) self:x(SCREEN_CENTER_X-305); self:y(SCREEN_BOTTOM-40-
 			self:zoom(0.8)
 			self:maxheight(20)
 			self:maxwidth(90)
-			self:settext(DTT(1))
+			self:settext(":D")
 		end;
 };
 LoadFont(TextF)..{

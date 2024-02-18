@@ -1,0 +1,7 @@
+Insert the picture that want to show as background in Evaluation Screen (Result)
+
+Support for type .jpg and .png
+
+Recommend for resolution 1920 x 1080 or any size that have ratio 16:9
+
+Warning : any file that start with '_' (underscore) will consider ignored

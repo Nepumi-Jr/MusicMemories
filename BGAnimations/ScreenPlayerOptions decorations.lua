@@ -31,84 +31,6 @@ if GAMESTATE:GetCurrentStyle():ColumnsPerPlayer() > 2 then
     columnName = GAMESTATE:GetCurrentStyle():GetColumnInfo(
                             GAMESTATE:GetMasterPlayerNumber(), 2)["Name"];
 end
---FROM Outfox
-
-local GetNoteSkinActor = function(ns)--FROM SL <3
-
-	local status, noteskin_actor_Re = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, columnName, "Receptor", ns)
-	local status, noteskin_actor_No = pcall(NOTESKIN.LoadActorForNoteSkin, NOTESKIN, columnName, "Tap Note", ns)
-
-    noto = Def.ActorFrame{
-        Name = "NS_"..ns;
-    };
-
-    if noteskin_actor_Re then
-        noto[#noto + 1]= noteskin_actor_Re..{
-            Name="Rec",
-            InitCommand=function(self) self:visible(false) end;
-            NoteChangedMessageCommand=function(self,param)
-                local f = false
-                for i=1,#num_players do
-                    if not f and NOTE[i]==ns then
-                        f = true;
-                    end
-                end
-                self:visible(f);
-            end;
-        };
-    else
-        SM("There are Lua errors in your " .. ns .. " NoteSkin.\nYou should fix them, or delete the NoteSkin.")
-        noto[#noto + 1] = Def.Quad{
-            Name="Rec",
-            InitCommand=function(self) self:visible(false); self:zoomx(100); self:zoomy(2); self:fadeleft(0.5); self:faderight(0.5); end;
-            NoteChangedMessageCommand=function(self,param)
-                local f = false
-                for i=1,#num_players do
-                    if not f and NOTE[i]==ns then
-                        f = true;
-                    end
-                end
-                self:visible(f);
-            end;
-        };
-    end
-
-	if noteskin_actor_No then
-		noto[#noto + 1] = noteskin_actor_No..{
-            Name="Tap",
-            InitCommand=function(self) self:visible(false) end;
-            NoteChangedMessageCommand=function(self,param)
-                local f = false
-                for i=1,#num_players do
-                    if not f and NOTE[i]==ns then
-                        f = true;
-                    end
-                end
-                self:visible(f);
-            end;
-        };
-	else
-		SM("There are Lua errors in your " .. ns .. " NoteSkin.\nYou should fix them, or delete the NoteSkin.")
-		noto[#noto + 1] = LoadActor(THEME:GetPathG("","_Robot_Note")) .. {
-            Name="Tap",
-            InitCommand=function(self) self:visible(false) end;
-            NoteChangedMessageCommand=function(self,param)
-                local f = false
-                for i=1,#num_players do
-                    if not f and NOTE[i]==ns then
-                        f = true;
-                    end
-                end
-                self:visible(f);
-            end;
-        };
-	end
-
-
-    return noto
-
-end
-
 
 
 t[#t+1] = Def.Quad{
@@ -118,11 +40,33 @@ t[#t+1] = Def.Quad{
     end;
 };
 
-local allNote =  NOTESKIN:GetNoteSkinNames();
+--edit from Outfox
+-- Load all noteskins for the previewer.
+local icol = 2
+if GAMESTATE:GetCurrentStyle():ColumnsPerPlayer() < 2 then
+	icol = 1
+end
+local column = GAMESTATE:GetCurrentStyle():GetColumnInfo( GAMESTATE:GetMasterPlayerNumber(), icol )
+for _,v in pairs(NOTESKIN:GetNoteSkinNames()) do
+    local note = NOTESKIN:LoadActorForNoteSkin( column["Name"] , "Tap Note", v )
+    local recep = NOTESKIN:LoadActorForNoteSkin( column["Name"] , "Receptor", v )
 
-for noteskin in ivalues( allNote ) do
-	t[#t+1] = GetNoteSkinActor(noteskin);
-    --dbNote = dbNote .. noteskin .. '!\n'
+    if note and recep then
+        t[#t+1] = note..{
+            Name="NSNote"..string.lower(v), InitCommand=function(s) s:visible(false) end,
+            OnCommand=function(s) s:diffusealpha(0):sleep(0.2):linear(0.2):diffusealpha(1) end,
+            OffCommand=function(s) s:linear(0.2):diffusealpha(0) end
+        }
+        t[#t+1] = recep..{
+            Name="NSRec"..string.lower(v), InitCommand=function(s) s:visible(false) end,
+            OnCommand=function(s) s:diffusealpha(0):sleep(0.2):linear(0.2):diffusealpha(1) end,
+            OffCommand=function(s) s:linear(0.2):diffusealpha(0) end
+        }
+    else
+        lua.ReportScriptError(string.format("The noteskin %s failed to load.", v))
+        t[#t+1] = Def.Actor{ Name="NSNote"..string.lower(v) }
+        t[#t+1] = Def.Actor{ Name="NSRec"..string.lower(v) }
+    end
 end
 
 
@@ -137,8 +81,8 @@ for i=1,#num_players do
 	};
     t[#t+1] = Def.ActorFrame{
         InitCommand=function(self)
-            self:x((i==1)and 75 or SCREEN_RIGHT-75):y(110):zoom(1.1):visible(false)
-            self:addx(-100*self:GetZoom()*((i==1)and 1 or -1)):visible(true):sleep(1):decelerate(0.5):addx(100*self:GetZoom()*((i==1)and 1 or -1))
+            self:x((i==1)and 75 or SCREEN_RIGHT-75):y(110):zoom(1.1)
+            self:addx(-100*self:GetZoom()*((i==1)and 1 or -1)):sleep(1):decelerate(0.5):addx(100*self:GetZoom()*((i==1)and 1 or -1))
         end;
         Def.ActorProxy{
             OnCommand=function(self)
@@ -147,11 +91,9 @@ for i=1,#num_players do
             NoteChangedMessageCommand=function(self,param)
             if param.Player==num_players[i] then
                 --printf("Loaded note %s...\n%s...\n%s",param.Noto,tostring(self:GetParent():GetParent():GetChild("NS_"..param.Noto)), dbNote)
-                local noteskin_actor = self:GetParent():GetParent():GetChild("NS_".. string.lower(param.Noto)):GetChild("Rec")
-                --printf("%s",dbNote)
-                if noteskin_actor then
-                    
-                    self:SetTarget( noteskin_actor )
+                local rec = SCREENMAN:GetTopScreen():GetChild("NSRec".. string.lower(param.Noto))
+                if rec then
+                    self:SetTarget( rec )
                 end
                 --self:hibernate(math.huge)
             end
@@ -202,14 +144,10 @@ for i=1,#num_players do
                     self:playcommand("NoteChanged",{Player=num_players[i], Noto=GAMESTATE:GetPlayerState(num_players[i]):GetCurrentPlayerOptions():NoteSkin()})
                 end,
                 NoteChangedMessageCommand=function(self,param)
-                if param.Player==num_players[i] then
-                    local noteskin_actor = self:GetParent():GetParent():GetParent():GetChild("NS_"..string.lower(param.Noto)):GetChild("Tap")
-                    if noteskin_actor then
-                        --SM("Founded "..param.Noto);
-                        self:SetTarget( noteskin_actor )
+                    local note = SCREENMAN:GetTopScreen():GetChild("NSNote".. string.lower(param.Noto))
+                    if note then
+                        self:SetTarget( note )
                     end
-                    --self:hibernate(math.huge)
-                end
                 end;
             };
         };
