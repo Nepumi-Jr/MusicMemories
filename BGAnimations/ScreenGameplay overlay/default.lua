@@ -80,9 +80,7 @@ t[#t+1] = LoadActor("Boom");
 
 t[#t+1] = LoadActor("FunStuff");
 
-if OP() or true then
-t[#t+1] = LoadActor("Niko");
-end
+t[#t+1] = LoadActor("Progress");
 
 t[#t+1] = LoadActor("Border");
 if TP.Battle.IsBattle  then

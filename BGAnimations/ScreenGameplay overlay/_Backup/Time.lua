@@ -56,7 +56,7 @@ local plused = false;
 local dat = 0;
 local Change = math.random(10,25)
 local hang = 12;
-local NumF = TFO(todayis(31,10),"_terror pro 20px","_determination mono 24px");--NumF;
+local NumF = "_determination mono 24px"
 LoadActor("../../_save/SampleText.lua")
 local Os = 0;
 if DayOfMonth() ~= day or MonthOfYear()-1 ~= mon or Year() ~= year then

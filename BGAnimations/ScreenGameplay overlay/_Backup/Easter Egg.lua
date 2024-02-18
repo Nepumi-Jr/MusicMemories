@@ -21,8 +21,8 @@ local profile1 = PROFILEMAN:GetProfile(PLAYER_1);
 local name1 = profile1:GetDisplayName();
 local profile2 = PROFILEMAN:GetProfile(PLAYER_2);
 local name2 = profile2:GetDisplayName();
-local fontP1 = kindof(name1,NeptuneName,"_powerweld 24px",kindof(name1,UndertaleName,"_determination mono 24px","Common Normal"));
-local fontP2 = kindof(name2,NeptuneName,"_powerweld 24px",kindof(name2,UndertaleName,"_determination mono 24px","Common Normal"));
+local fontP1 = "Common Normal"
+local fontP2 = "Common Normal"
 local t = Def.ActorFrame{};
 
 

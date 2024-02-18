@@ -85,8 +85,6 @@ Branch = {
 			else
 				if GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 					return "ScreenSelectBattleSM"
-				elseif THEME:GetMetric("Common","AutoSetStyle") == false then
-					return "ScreenSelectStyle"
 				else
 					return "ScreenProfileLoad"
 				end
@@ -120,12 +118,7 @@ Branch = {
 		-- if (GAMESTATE:IsPlayerEnabled(PLAYER_1) and GAMESTATE:IsPlayerEnabled(PLAYER_2)) and not IsNetConnected() then
 		-- 	return "ScreenSelectBattleSM"
 		-- else
-			if ( THEME:GetMetric("Common","AutoSetStyle") == true ) then
-				-- use SelectStyle in online...
-				return IsNetConnected() and "ScreenSelectStyle" or "ScreenSelectPlayMode"
-			else
-				return "ScreenSelectStyle"
-			end
+		return IsNetConnected() and "ScreenSelectStyle" or "ScreenSelectPlayMode"
 		--end
 	end,
 	AfterProfileLoad = function()

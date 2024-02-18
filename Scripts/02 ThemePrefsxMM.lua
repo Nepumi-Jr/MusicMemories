@@ -4,14 +4,45 @@ local function OptionNameString(str)
 end
 ThemePrefs.Load()
 -- Example usage of new system (not fully implemented yet)
+
+-- custom gameplay progress
+-- TODO: Change from module
+-- local customizePath = "Gameplay Time Progress";
+-- local customGameplayProgress = LoadModule("Utils.GetCustomizeFilesList.lua")( customizePath, {"lua"} );
+-- local customGameplayProgressShort = LoadModule("Utils.GetCustomizeFilesList.lua")( customizePath, {"lua"}, false );
+-- table.insert(customGameplayProgress,1,"Default")
+-- customGameplayProgress[#customGameplayProgress + 1] = "Random"
+-- table.insert(customGameplayProgressShort,1,"Default")
+-- customGameplayProgressShort[#customGameplayProgressShort + 1] = "Random"
+local fullProgressPath = THEME:GetCurrentThemeDirectory().."Customize/Gameplay Time Progress/";
+local fullProgressFiles = {};
+local progressFiles = {};
+for _,file in pairs(FILEMAN:GetDirListing(fullProgressPath)) do
+	
+	if string.sub(file,1, 1) ~= "_" then
+		local extStart,extEnd = string.find( file, "[.]" )
+		if extStart ~= nil and extEnd ~= nil then
+			local fileType = string.sub( file, extStart + 1, string.len(file) )
+			if fileType == "lua" then
+				progressFiles[#progressFiles+1] = file
+				fullProgressFiles[#fullProgressFiles+1] = fullProgressPath..file
+			end
+		end
+	end
+end
+
+if #progressFiles > 0 then
+	progressFiles[#progressFiles + 1] = "Random"
+	fullProgressFiles[#fullProgressFiles + 1] = "Random"
+end
+
+table.insert(progressFiles,1,"Default")
+table.insert(fullProgressFiles,1,"Default")
+
+
+
 local Prefs =
 {
-	AutoSetStyle =
-	{
-		Default = true,
-		Choices = { OptionNameString('Off'), OptionNameString('On') },
-		Values = { false, true }
-	},
 	GameplayShowStepsDisplay = 
 	{
 		Default = true,
@@ -29,12 +60,6 @@ local Prefs =
 		Default = true,
 		Choices = { OptionNameString('Many'), OptionNameString('Few') },
 		Values = { true, false }
-	},
-	LongFail =
-	{
-		Default = false,
-		Choices = { OptionNameString('Short'), OptionNameString('Long') },
-		Values = { false, true }
 	},
 	NotePosition =
 	{
@@ -134,6 +159,22 @@ local Prefs =
 		Default = 1,
 		Choices = { OptionNameString('Off'), OptionNameString('On').."(Two sides)", OptionNameString('On').."(Center)", OptionNameString('On')},
 		Values = { 0, 1, 2, 3}
+	},
+
+
+	--Evaluation Setting
+	EvaluationBackground =
+	{
+		Default = 0,
+		Choices = { "Song (default)", "Grade", "Type" },
+		Values = { 0, 1, 2 }
+	},
+
+	GameplayProgress =
+	{
+		Default = "Default",
+		Choices = progressFiles,
+		Values = fullProgressFiles
 	},
 }
 

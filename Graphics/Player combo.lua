@@ -90,9 +90,46 @@ local function GSB()
 end;
 
 local comboOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "Combo")
+local subJudgeOffset = LoadModule("PlayerOption.GetOffset.lua")(player, "SubJudge")
+
+local function getSubJudge()
+    local thisSubJudge = TP[ToEnumShortString(player)].ActiveModifiers.SubJudge
+    if thisSubJudge ~= "None" then
+        --printf("%s",thisSubJudge)
+        return LoadModule("SubJudgment."..thisSubJudge..".lua")(player)..{
+			OnCommand=function(self) self:queuecommand("ReloadPosition") end;
+			JudgmentMessageCommand=function(self, param)
+				if param.Player ~= player then return end;
+				self:queuecommand("ReloadPosition")
+			end;
+			ReloadPositionMessageCommand=function(self)
+				local isReverse = LoadModule("Gameplay.IsNowReverse.lua")(player);
+				self:x(40)
+				if isReverse then
+					self:y(5)
+				else
+					self:y(-20)
+				end
+			end
+        };
+    else
+        return Def.ActorFrame{};
+    end
+end
 
 
 local t = Def.ActorFrame {};
+
+	t[#t+1] = Def.ActorFrame {
+		Name="SubJudgeOffset";
+		OnCommand = function(self)
+			self:xy(subJudgeOffset.x,subJudgeOffset.y)
+			self:zoom(subJudgeOffset.zoom)
+			self:diffusealpha(subJudgeOffset.alpha)
+		end;
+    	getSubJudge();
+	};
+
 	t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self) self:vertalign(bottom); end;
 	-- flashy combo elements:

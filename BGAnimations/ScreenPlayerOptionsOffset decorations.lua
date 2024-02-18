@@ -109,22 +109,9 @@ for pn in ivalues(players) do
                 Def.Sprite{                
                     OnCommand=function(self)
                         self:pause();
-        
                         local JudF = TP[ToEnumShortString(pn)].ActiveModifiers.JudgmentGraphic
-                        JudF = LoadModule("Options.JudgmentsFileShortName.lua")(JudF)
-        
-                        local path = "/"..getThemeDir().."CustomStuff/Subjudge Fast Slow/";
-                        
-                        local files = FILEMAN:GetDirListing(path)
-                        local RealFile = THEME:GetPathG("Def","EL");
-                        
-                        for k,filename in ipairs(files) do
-                            if string.match(filename, " 1x2.png") and string.match(filename,JudF) then
-                                RealFile = path..filename;
-                                break
-                            end
-                        end
-                        self:Load(RealFile);
+                        local JudgeFastSlow = LoadModule("Judgement.GetFastSlowPath.lua")(JudF)
+                        self:Load(JudgeFastSlow);
                     end;
                     InitCommand=function(self) self:zoom(0.5):xy(40, 40); end;
                 };

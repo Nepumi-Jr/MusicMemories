@@ -1,5 +1,5 @@
 
 local PN = Var "Player" or GAMESTATE:GetMasterPlayerNumber();
 local JudF = TP[ToEnumShortString(PN)].ActiveModifiers.JudgmentGraphic
-return LoadActor(LoadModule("Options.JudgmentGetHoldPath.lua")(JudF));
+return LoadActor(LoadModule("Judgement.GetHoldPath.lua")(JudF));
 

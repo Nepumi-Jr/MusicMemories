@@ -234,7 +234,7 @@ for i = 1,2 do
             Def.Sprite { 
                 InitCommand=function(self)
                     local JudF = TP[i == 1 and "P1" or "P2"].ActiveModifiers.JudgmentGraphic
-                    self:Load(LoadModule("Options.JudgmentGetHoldPath.lua")(JudF)):pause():zoom(1.2)
+                    self:Load(LoadModule("Judgement.GetHoldPath.lua")(JudF)):pause():zoom(1.2)
                     self:x(-60):y(-55)
                 end;
             };

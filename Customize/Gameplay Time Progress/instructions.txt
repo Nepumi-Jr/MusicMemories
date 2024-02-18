@@ -1,0 +1,5 @@
+Insert the Lua script to custom time progress sprite on the buttom of game play
+
+Support for type .lua
+
+TIP and WARNING : any file that start with '_' (underscore) will consider ignored

@@ -1,0 +1,3 @@
+Insert the Lua script to have an option to set custom judgement animation
+
+Support for type .lua

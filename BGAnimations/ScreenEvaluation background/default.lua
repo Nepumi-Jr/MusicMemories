@@ -141,6 +141,97 @@ t[#t+1] = Def.ActorFrame {
 	};
 	t[#t+1] = LoadActor("BlurBG.lua");
 
+if ThemePrefs.Get("EvaluationBackground") ~= 0 then
+	t[#t+1] = Def.Sprite{
+		InitCommand=function(self) self:Center(); self:diffusealpha(0); end;
+		OnCommand=function(self)
+
+			local backgroundMode = ThemePrefs.Get("EvaluationBackground"); -- 0 = song, 1 = grade, 2 = type
+			local backgroundPath = nil;
+
+			local tierGradeToSymbol = {
+				["Tier01"] = "SS",
+				["Tier02"] = "S",
+				["Tier03"] = "A+",
+				["Tier04"] = "A",
+				["Tier05"] = "B",
+				["Tier06"] = "C",
+				["Tier07"] = "D",
+				["Failed"] = "F",
+			}
+
+			if backgroundMode == 1 then
+				--get the grade for each player
+				local bestGrade = nil;
+				local rEnum = Enum.Reverse(Grade);
+				local customizePath = "Evaluation Background/Grade "..tierGradeToSymbol["Tier01"];
+				for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+					local grade = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn):GetGrade();
+					if bestGrade == nil or rEnum[grade] < rEnum[bestGrade] then
+						bestGrade = grade;
+					end
+				end
+				if tierGradeToSymbol[ToEnumShortString(bestGrade)] then
+					customizePath = "Evaluation Background/Grade "..tierGradeToSymbol[ToEnumShortString(bestGrade)];
+				else
+					lua.ReportScriptError("Evaluation Background : Grade tier "..ToEnumShortString(bestGrade).." does not exist.");
+				end
+				
+
+				local pics = LoadModule("Utils.GetCustomizeFilesList.lua")( customizePath, {"png","jpg"} );
+				if pics and #pics > 0 then
+					backgroundPath = pics[math.random(1,#pics)];
+				end
+				
+			elseif backgroundMode == 2 then
+				-- Depend on best StageAward for each player 
+				-- AllFlawless, AllPerfect, AllFullCombo, Pass, Failed
+				local bestAwardIndex = 4; -- 1 = AllFlawless, 2 = AllPerfect, 3 = AllFullCombo, 4 = Pass, 5 = Failed
+				
+				if STATSMAN:GetCurStageStats():AllFailed() then
+					bestAwardIndex = 5
+				else
+					for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+						local stageAward = LoadModule("Eva.CustomStageAward.lua")(pn);
+						-- w1 in stageAward means the All Flawless
+						if string.find(stageAward, "w1") ~= nil then
+							bestAwardIndex = math.min(bestAwardIndex, 1);
+						elseif string.find(stageAward, "w2") ~= nil then
+							bestAwardIndex = math.min(bestAwardIndex, 2);
+						elseif stageAward ~= "Nope" then
+							bestAwardIndex = math.min(bestAwardIndex, 3);
+						end
+					end
+				end
+
+				local indexToAward = {
+					[1] = "AllFlawless",
+					[2] = "AllPerfect",
+					[3] = "FullCombo",
+					[4] = "Pass",
+					[5] = "Failed",
+				}
+
+				local customizePath = "Evaluation Background/Stage "..indexToAward[bestAwardIndex];
+				local pics = LoadModule("Utils.GetCustomizeFilesList.lua")( customizePath, {"png","jpg"} );
+				if pics and #pics > 0 then
+					backgroundPath = pics[math.random(1,#pics)];
+				end
+
+			end
+
+			local test = LoadModule("Utils.GetCustomizeFilesList.lua")( "Evaluation Background/Grade A", {"png","jpg"} );
+
+			if backgroundPath == nil then
+				return;
+			end
+
+			self:Load(backgroundPath);
+			self:stretchto(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+			self:diffusealpha(1);
+		end;	
+	};
+end
 if STATSMAN:GetCurStageStats():AllFailed() then
 	t[#t+1] = Def.Quad {
 		InitCommand=function(self) self:Center(); self:scaletoclipped(SCREEN_WIDTH+1,SCREEN_HEIGHT); end;
